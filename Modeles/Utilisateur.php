@@ -59,8 +59,6 @@ class Utilisateur extends Modele {
 
     }
 
-
-
     public function getIdUtilisateur(){
         return $this->idUtilisateur;
     }
