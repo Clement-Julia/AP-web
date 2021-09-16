@@ -1,6 +1,6 @@
 <?php
 
-class Role extends Utilisateur{
+class Role extends Modele{
 
     private $idRole;
     private $libelle;
