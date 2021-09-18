@@ -1,4 +1,5 @@
-var map = L.map('map').setView([47.2632836, -0.3299687], 8);
+var divMap = document.getElementById('map');
+var map = L.map('map').setView([divMap.dataset.lat, divMap.dataset.lng], divMap.dataset.zoom);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -9,7 +10,13 @@ var lines = [];
 Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
   lines.push([item.dataset.lat, item.dataset.lng]);
   L.marker([item.dataset.lat, item.dataset.lng]).addTo(map)
-    .bindPopup("<div class='town-picture'></div>")
+    .bindPopup(
+      `<div class='popup-container'>
+          <div>Souhaitez-vous vous rendre à ` + item.dataset.name + ` ?</div>
+          <div>
+              <button class='btn btn-success btn-sm'>J'y vais</button>
+          </div>
+      </div>`)
 })
 
 // il faudra créer un if (s'il existe des marker de point pour faire une ligne alors ... )

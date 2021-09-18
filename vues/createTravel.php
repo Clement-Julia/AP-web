@@ -1,38 +1,20 @@
 <?php
 require_once "header.php";
-require_once "../Modeles/Modele.php";
-require_once "../Modeles/Region.php";
+require_once "../Modeles/All.php";
 
 $_GET["idRegion"] = 2;
 
 $Lodging = new Region();
-$Lodgings = $Lodging->getLodgingByRegion($_GET["idRegion"]);
+$Lodgings = $Lodging->getTownByRegionId($_GET["idRegion"]);
 // à ce niveau il faudra avoir récupérer les coordonnées de la carte région de france et donc déjà avoir choisi la région
-
-// juste un tableau pour test
-$villes = [
-    [
-        'lat' => 47.218371,
-        'lng' => -1.553621,
-        'ville' => "Nantes"
-    ],
-    [
-        'lat' => 47.4711,
-        'lng' =>  -0.547307,
-        'ville' => "Anger"
-    ],
-    [
-        'lat' => 46.9833 ,
-        'lng' => -1.3167,
-        'ville' => "Montaigu"
-    ],
-];
 
 ?>
 
 <div id="create-travel-container">
     <div id="ct-choose-town">
-        <div id="choose-town-top">Choisir une ville</div>
+        <div id="choose-town-top">
+            Choisir une ville
+        </div>
         <div id="choose-town-bot">
             <?php
             foreach ($Lodgings as $item)
@@ -45,7 +27,7 @@ $villes = [
             ?>
         </div>
     </div>
-    <div class="map" id="map"></div>
+    <div data-lat="47.2632836" data-lng="-0.3299687" data-zoom="8" class="map" id="map"></div>
 </div>
 
 

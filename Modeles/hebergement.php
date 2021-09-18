@@ -6,7 +6,7 @@ class Hebergement extends Modele {
     private $libelle;
     private $description;
     private $idVille;
-    private $lattitude;
+    private $latitude;
     private $longitude;
     private $prix;
 
@@ -22,7 +22,7 @@ class Hebergement extends Modele {
             $this->libelle = $infoHotel["libelle"];
             $this->description = $infoHotel["description"];
             $this->idVille = $infoHotel["idVille"];
-            $this->lattitude = $infoHotel["lattitude"];
+            $this->latitude = $infoHotel["lattitude"];
             $this->longitude = $infoHotel["longitude"];
             $this->prix = $infoHotel["prix"];
 
@@ -30,13 +30,13 @@ class Hebergement extends Modele {
         
     }
 
-    public function initialiserHebergement($idHotel, $libelle, $description, $idVille, $lattitude, $longitude, $prix){
+    public function initialiserHebergement($idHotel, $libelle, $description, $idVille, $latitude, $longitude, $prix){
 
         $this->idHotel = $idHotel;
         $this->libelle = $libelle;
         $this->description = $description;
         $this->idVille = $idVille;
-        $this->lattitude = $lattitude;
+        $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->prix = $prix;
 
@@ -58,12 +58,12 @@ class Hebergement extends Modele {
         return $this->idVille;
     }
 
-    public function getLattitude(){
-        return $this->lattitude;
+    public function getLatitude(){
+        return $this->latitude;
     }
 
     public function getLongitude(){
-        return $this->lattitude;
+        return $this->longitude;
     }
     
     public function getPrix(){
