@@ -21,7 +21,7 @@ class Ville extends Modele {
             $this->libelle = $infoVille["libelle"];
             $this->latitude = $infoVille["latitude"];
             $this->longitude = $infoVille["longitude"];
-            $this->longitude = $infoVille["idRegion"];
+            $this->idRegion = $infoVille["idRegion"];
 
             $requete = $this->getBdd()->prepare("SELECT * FROM hebergement WHERE idVille = ?");
             $requete->execute([$idVille]);

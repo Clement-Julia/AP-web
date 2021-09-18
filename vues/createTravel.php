@@ -19,7 +19,7 @@ $Lodgings = $Lodging->getTownByRegionId($_GET["idRegion"]);
             <?php
             foreach ($Lodgings as $item)
             { ?>
-                <div data-name="<?= $item["libelle"]?>" data-lat="<?= $item["latitude"]?>" data-lng="<?= $item["longitude"]?>" class="town-item js-marker">
+                <div data-id="<?= $item["idVille"]?>" data-name="<?= $item["libelle"]?>" data-lat="<?= $item["latitude"]?>" data-lng="<?= $item["longitude"]?>" class="town-item js-marker">
                     <div class="town-picture"></div>
                     <div class="town-text"><?= $item["libelle"]?></div>
                 </div>

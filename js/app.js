@@ -14,7 +14,7 @@ Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
       `<div class='popup-container'>
           <div>Souhaitez-vous vous rendre à ` + item.dataset.name + ` ?</div>
           <div>
-              <button class='btn btn-success btn-sm'>J'y vais</button>
+              <a href="hebergementVille.php?idVille=` + item.dataset.id + `" class='btn btn-success btn-sm popup-a'>J'y vais</a>
           </div>
       </div>`)
 })
