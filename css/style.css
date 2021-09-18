@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#create-travel-container {
+    display: flex;
+    flex-direction: row;
+}
+#ct-choose-town, #map {
+    border: 1px solid black;
+    width: 50%;
+    height: 100vh;
+}
+
+#ct-choose-town {
+    display: flex;
+    flex-direction: column;
+}
+#choose-town-top {
+    height: 40%;
+    border: 1px solid black;
+}
+#choose-town-bot {
+    height: 60%;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.town-item {
+    margin: 15px;
+    height: 75px;
+    width: 25%;
+    border: 1px solid #d3d3d3;
+    background-color: rgba(199, 194, 194, 0.1);
+    border-radius: 15px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+.town-picture {
+    height: 60px;
+    width: 60px;
+    border: 1px solid black;
+    background-color: yellow;
+    margin-right: 15px;
+    border-radius: 15px;
+}

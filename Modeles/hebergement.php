@@ -70,10 +70,4 @@ class Hebergement extends Modele {
         return $this->prix;
     }
 
-    public function getAvis($idHotel){
-        $requete = $this->getBdd()->prepare("SELECT avis.* FROM avis inner join hebergements using(idHotel) where idHotel = ?");
-        $requete->execute([$idHotel]);
-        $infoAvis_Hotel = $requete->fetch(PDO::FETCH_ASSOC);
-        return $infoAvis_Hotel;
-    }
 }
