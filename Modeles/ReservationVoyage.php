@@ -20,28 +20,24 @@ class ReservationVoyage extends Modele {
             $this->prix = $infoReservation["prix"];
             $this->codeReservation = $infoReservation["codeReservation"];
             $this->idUtilisateur = $infoReservation["idUtilisateur"];
+
+            $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hotels WHERE idVoyage = ?;");
+            $requete->execute([$idReservationVoyage]);
+            $infosIdReservationsHotels = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($infosIdReservationsHotels as $item)
+            {
+                $this->reservationsHotels[] = new ReservationHotel($item->idReservationHotel);
+            }
         }
     }
 
-    public function initializeReservationVoyage($idReservationVoyage)
+    public function initializeReservationVoyage($idReservationVoyage, $prix, $codeReservation, $idUtilisateur)
     {
-        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_voyages WHERE idReservationVoyage = ?;");
-        $requete->execute([$idReservationVoyage]);
-        $infosIdReservationVoyage = $requete->fetch(PDO::FETCH_ASSOC);
-
-        $this->idReservationVoyage = $infosIdReservationVoyage["idReservationVoyage"];
-        $this->prix = $infosIdReservationVoyage["prix"];
-        $this->codeReservation = $infosIdReservationVoyage["codeReservation"];
-        $this->idUtilisateur = $infosIdReservationVoyage["idUtilisateur"];
-
-        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hotels WHERE idVoyage = ?;");
-        $requete->execute([$idReservationVoyage]);
-        $infosIdReservationsHotels = $requete->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($infosIdReservationsHotels as $item)
-        {
-            $this->reservationsHotels[] = new ReservationHotel($item->idReservationHotel);
-        }
+        $this->idReservationVoyage = $idReservationVoyage;
+        $this->prix = $prix;
+        $this->codeReservation = $codeReservation;
+        $this->idUtilisateur = $idUtilisateur;
 
     }
 

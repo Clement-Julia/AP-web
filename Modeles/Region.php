@@ -4,6 +4,7 @@ class Region extends Modele {
 
     private $idRegion;
     private $libelle;
+    private $hebergements = [];
 
     public function __construct($idRegion = null){
 
@@ -33,6 +34,14 @@ class Region extends Modele {
 
     public function getLibelle(){
         return $this->libelle;
+    }
+
+    public function getLodgingByRegion($idRegion){
+
+        $requete = $this->getBdd()->prepare("SELECT hebergement.libelle, hebergement.latitude, hebergement.longitude, prix FROM regions INNER JOIN villes USING(idRegion) INNER JOIN hebergement USING(idVille) WHERE idRegion = ?");
+        $requete->execute([$idRegion]);
+         return $requete->fetchAll(PDO::FETCH_ASSOC);
+
     }
 
 }

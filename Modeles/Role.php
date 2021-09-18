@@ -18,14 +18,10 @@ class Role extends Modele{
         }
     }
 
-    public function initializeRole($idRole)
+    public function initializeRole($idRole, $libelle)
     {
-        $requete = $this->getBdd()->prepare("SELECT libelle FROM roles WHERE idRole = ?;");
-        $requete->execute([$idRole]);
-        $infosRole = $requete->fetch(PDO::FETCH_ASSOC);
-
-        $this->idRole = $infosRole["idRole"];
-        $this->libelle= $infosRole["libelle"];
+        $this->idRole = $idRole;
+        $this->libelle= $libelle;
     }
 
     public function getIdRole(){

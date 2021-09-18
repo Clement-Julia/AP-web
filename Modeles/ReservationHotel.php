@@ -28,19 +28,15 @@ class ReservationHotel extends Modele {
         }
     }
 
-    public function initializeReservationHotel($idReservationHotel)
+    public function initializeReservationHotel($idReservationHotel, $dateDebut, $dateFin, $prix, $codeReservation, $nbJours, $idVoyage)
     {
-        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hotels WHERE idReservationHotel = ?;");
-        $requete->execute([$idReservationHotel]);
-        $infosIdReservationHotel = $requete->fetch(PDO::FETCH_ASSOC);
-
-        $this->idReservationHotel = $infosIdReservationHotel["idReservationHotel"];
-        $this->dateDebut = $infosIdReservationHotel["dateDebut"];
-        $this->dateFin = $infosIdReservationHotel["dateFin"];
-        $this->prix = $infosIdReservationHotel["prix"];
-        $this->codeReservation = $infosIdReservationHotel["codeReservation"];
-        $this->nbJours = $infosIdReservationHotel["nbJours"];
-        $this->idVoyage = $infosIdReservationHotel["idVoyage"];
+        $this->idReservationHotel = $idReservationHotel;
+        $this->dateDebut = $dateDebut;
+        $this->dateFin = $dateFin;
+        $this->prix = $prix;
+        $this->codeReservation = $codeReservation;
+        $this->nbJours = $nbJours;
+        $this->idVoyage = $idVoyage;
     }
 
     public function getIdReservationHotel()
