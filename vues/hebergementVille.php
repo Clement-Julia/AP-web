@@ -10,13 +10,16 @@ $Ville = new Ville($_GET["idVille"]);
 
 <div id="hv-container">
     <div id="choose-hebergement">
+        <div id="hv-back-button-container">
+            <a href="createTravel.php?idRegion=<?=$Ville->getIdRegion()?>" class="btn btn-sm btn-secondary back-button"><</a>
+        </div>
         <?php
         foreach ($Ville->getHebergements() as $item)
         { ?>
-            <div data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" class="hebergement-item js-marker">
+            <a data-hebergement="1" data-id="<?= $item->getIdHebergement()?>" data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" class="hebergement-item js-marker" href="hebergementDescription.php?idHebergement=<?=$item->getIdHebergement()?>">
                 <div class="hebergement-picture"></div>
                 <div class="hebergement-text"><?= $item->getDescription()?></div>
-            </div>
+            </a>
         <?php }
         ?>
     </div>

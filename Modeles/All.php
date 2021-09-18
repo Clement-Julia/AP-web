@@ -13,3 +13,4 @@ require_once "Agence.php";
 require_once "Avis.php";
 require_once "ReservationHotel.php";
 require_once "ReservationVoyage.php";
+require_once "Month.php";
