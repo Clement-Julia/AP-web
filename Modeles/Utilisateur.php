@@ -43,9 +43,42 @@ class Utilisateur extends Modele {
 
     public function inscription($email, $mdp, $nom, $prenom, $age, $idRole){
 
+        $mdp = password_hash($mdp, PASSWORD_BCRYPT);
         $requete = $this->getBdd()->prepare("INSERT INTO utilisateurs(email, mdp, nom, prenom, age, idRole) VALUES (?, ?, ?, ?, ?, ?);");
         $requete->execute([$email, $mdp, $nom, $prenom, $age, $idRole]);
 
+    }
+
+    public function connexion($email, $mdp){ 
+        
+        $requete = $this->getBdd()->prepare("SELECT * FROM utilisateurs WHERE email = ?");
+        $requete->execute([$email]);
+
+        if($requete->rowCount() > 0){
+
+            $utilisateur = $requete->fetch(PDO::FETCH_ASSOC);
+            
+            if(!password_verify($mdp, $utilisateur["mdp"])){
+                $return["success"] = false;
+                $return["error"] = 1;
+            }else{
+
+                $this->idUtilisateur = $utilisateur["idUtilisateur"];
+                $this->idRole = $utilisateur["idRole"];
+                $this->email = $utilisateur["email"];
+                $this->nom = $utilisateur["nom"];
+                $this->prenom = $utilisateur["prenom"];
+                $_SESSION["idUtilisateur"] = $this->getIdUtilisateur();
+                $_SESSION["nom"] = $this->getNom();
+                $_SESSION["prenom"] = $this->getPrenom();
+                $_SESSION["idRole"] = $this->getIdRole();
+                $_SESSION["email"] = $this->getEmail();
+                $_SESSION["mdp"] = $mdp;
+            }
+
+
+        }
+        return $return;
     }
 
     // vérification si l'email est déjà présent dans la base de donnée

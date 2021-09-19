@@ -12,7 +12,7 @@ require_once "../controleurs/traitement.php";
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <script src="https://kit.fontawesome.com/f3f16a7b72.js" crossorigin="anonymous"></script>
     <title>OwnTravel</title>
 </head>
@@ -21,15 +21,14 @@ require_once "../controleurs/traitement.php";
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                 <a class="nav-link" href="createTravel.php">Créez votre voyage</a>
+                <?=(!empty($_SESSION["idRole"]) == 2 ? "<a href='../admin' class='nav-link'>Accès admin</a>" : "");?>
             </div>
         </div>
+        <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' class='btn-group btn btn-outline-primary btn-sm align-self-center ml-auto'>Inscription</a>");?>
+        <?=(!empty($_SESSION["idUtilisateur"]) ? "<a href='../controleurs/deconnexion.php' class='btn btn-outline-danger btn-sm align-self-center '>Déconnexion</a>" : "<a href='connexion.php' class='btn btn-outline-success btn-sm align-self-center'>Connexion</a>");?>
     </div>
 </nav>
