@@ -12,7 +12,7 @@ $infos = $villes->getAllville();
 
             <div class="form-group text-center">
                 <label for="libelle">Nom : </label>
-                <input class="form-control" list="datalistOptions" name="libelle" id="exampleDataList" placeholder="Entrez le nom de la ville à modifier" required autocomplete="off">
+                <input class="form-control" list="datalistOptions" name="libelle" id="exampleDataList" placeholder="Entrez le nom de la ville à supprimer" required autocomplete="off">
                 <datalist id="datalistOptions">
                     <?php
                         foreach($infos as $info){
