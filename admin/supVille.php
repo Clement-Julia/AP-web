@@ -30,3 +30,6 @@ $infos = $villes->getAllville();
 
         </form>
 </div>
+
+<?php
+require_once "footerAdmin.php";
