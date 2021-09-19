@@ -7,6 +7,7 @@ class Ville extends Modele {
     private $latitude;
     private $longitude;
     private $idRegion;
+    private $description;
 
     public function __construct($idVille = null){
 
@@ -21,18 +22,20 @@ class Ville extends Modele {
             $this->latitude = $infoVille["latitude"];
             $this->longitude = $infoVille["longitude"];
             $this->longitude = $infoVille["idRegion"];
+            $this->description = $infoVille["description"];
 
         }
         
     }
 
-    public function initialiserVille($idVille, $libelle, $latitude, $longitude, $idRegion){
+    public function initialiserVille($idVille, $libelle, $latitude, $longitude, $idRegion, $description){
 
         $this->idVille = $idVille;
         $this->adresse = $adresse;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->longitude = $idRegion;
+        $this->description = $description;
 
     }
 
@@ -56,11 +59,20 @@ class Ville extends Modele {
         return $this->idRegion;
     }
 
+    public function getDescription(){
+        return $this->description;
+    }
+
     public function getRegion($idVille){
         $requete = $this->getBdd()->prepare("SELECT regions.* FROM regions inner join villes using(idRegion) where idVille = ?");
         $requete->execute([$idVille]);
         $infoRegion_Ville = $requete->fetch(PDO::FETCH_ASSOC);
         return $infoRegion_Ville;
+    }
+
+    public function addVille($libelle, $latitude, $longitude, $region, $description){
+        $requete = $this->getBdd()->prepare("INSERT into villes(libelle, latitude, longitude, idRegion, description) values(?,?,?,?,?)");
+        $requete->execute([$libelle, $latitude, $longitude, $region, $description]);
     }
 
 }
