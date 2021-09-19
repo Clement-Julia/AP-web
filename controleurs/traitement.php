@@ -1,2 +1,2 @@
 <?php
-require_once "../Modeles/Modele_All.php";
+require_once "../Modeles/All.php";

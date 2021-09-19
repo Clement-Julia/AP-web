@@ -1,6 +1,6 @@
 <?php
 require_once "headerAdmin.php";
-require_once "../Modeles/Modele_All.php";
+require_once "../Modeles/All.php";
 $region = new Region();
 $infos = $region->getAllregion();
 ?>

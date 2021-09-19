@@ -42,6 +42,13 @@ class Region extends Modele {
         return $this->libelle;
     }
 
+    public function getAllregion(){
+        $requete = $this->getBdd()->prepare("SELECT * FROM regions");
+        $requete->execute();
+        $Allregion = $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $Allregion;
+    }
+
     public function getTownByRegionId($idRegion){
 
         $requete = $this->getBdd()->prepare("SELECT idVille, villes.libelle, villes.latitude, villes.longitude FROM regions INNER JOIN villes USING(idRegion) WHERE idRegion = ?");
