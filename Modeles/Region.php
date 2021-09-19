@@ -57,4 +57,11 @@ class Region extends Modele {
 
     }
 
+    public function countRegion(){
+        $requete = $this->getBdd()->prepare("SELECT count(idRegion) as nbr from regions");
+        $requete->execute();
+        $info_nbr = $requete->fetch(PDO::FETCH_ASSOC);
+        return $info_nbr;
+    }
+
 }

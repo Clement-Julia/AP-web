@@ -124,4 +124,11 @@ class Utilisateur extends Modele {
         return $this->messages;
     }
 
+    public function countUser(){
+        $requete = $this->getBdd()->prepare("SELECT count(idUtilisateur) as nbr from utilisateurs");
+        $requete->execute();
+        $info_nbr = $requete->fetch(PDO::FETCH_ASSOC);
+        return $info_nbr;
+    }
+
 }

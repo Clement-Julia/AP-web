@@ -94,4 +94,35 @@ class Ville extends Modele {
         $requete->execute([$libelle, $latitude, $longitude, $region, $description]);
     }
 
+    public function countVille(){
+        $requete = $this->getBdd()->prepare("SELECT count(idVille) as nbr from villes");
+        $requete->execute();
+        $info_nbr = $requete->fetch(PDO::FETCH_ASSOC);
+        return $info_nbr;
+    }
+
+    public function getAllville(){
+        $requete = $this->getBdd()->prepare("SELECT * FROM villes");
+        $requete->execute();
+        $Allville = $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $Allville;
+    }
+
+    public function getVillebyName($libelle){
+        $requete = $this->getBdd()->prepare("SELECT * FROM villes WHERE libelle = ?");
+        $requete->execute([$libelle]);
+        $infoVille = $requete->fetch(PDO::FETCH_ASSOC);
+        return $infoVille;
+    }
+
+    public function updateVille($libelle, $latitude, $longitude, $idRegion, $description, $id){
+        $requete = $this->getBdd()->prepare("UPDATE villes set libelle = ?, latitude = ?, longitude = ?, idRegion = ?, description = ? where idVille = ?");
+        $requete->execute([$libelle, $latitude, $longitude, $idRegion, $description, $id]);
+    }
+
+    public function supVille($libelle){
+        $requete = $this->getBdd()->prepare("DELETE from villes where libelle = ?");
+        $requete->execute([$libelle]);
+    }
+
 }

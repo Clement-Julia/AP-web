@@ -44,7 +44,7 @@ require_once "../controleurs/traitement.php";
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="addVille.php">Ajout</a>
-                        <a class="collapse-item" href="gestionVille.php">Modification</a>
+                        <a class="collapse-item" href="modifVille.php">Modification</a>
                         <a class="collapse-item" href="supVille.php">Suppression</a>
                     </div>
                 </div>

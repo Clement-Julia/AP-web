@@ -131,4 +131,10 @@ class Hebergement extends Modele {
         return $this->options;
     }
 
+    public function countHotel(){
+        $requete = $this->getBdd()->prepare("SELECT count(idHebergement) as nbr from hebergement");
+        $requete->execute();
+        $info_nbr = $requete->fetch(PDO::FETCH_ASSOC);
+        return $info_nbr;
+    }
 }
