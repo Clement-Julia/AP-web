@@ -228,4 +228,14 @@
 }
 .calendar__overmonth{
     background-color: rgba(128, 128, 128, 0.171);
+    cursor: not-allowed!important;
+}
+.test{
+    background-color: red!important;
+}
+.test2{
+    cursor: grab;
+}
+.calendar-toggle{
+    background-color: aqua;
 }

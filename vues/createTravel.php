@@ -1,6 +1,5 @@
 <?php
 require_once "header.php";
-require_once "../Modeles/All.php";
 
 $_GET["idRegion"] = 2;
 

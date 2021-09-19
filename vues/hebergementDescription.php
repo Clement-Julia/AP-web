@@ -1,11 +1,20 @@
 <?php
 require_once "header.php";
-require_once "../Modeles/All.php";
+
+// ---------------------------------------------
+// le traitement ici sera fait sur une page controlleur au début de la création d'un voyage
+$_SESSION['date']['start_travel'] = [
+    'jour' => '20',
+    'mois' => '09',
+    'annee' => '2021'
+];
+// ---------------------------------------------
+$lastDayOfMonth = date('t', mktime(0, 0, 0, $_SESSION['date']['start_travel']['mois'], 1, $_SESSION['date']['start_travel']['annee']));
 
 $Hebergement = new Hebergement($_GET["idHebergement"]);
-$month = new Month($_GET['month'] ?? null, $_GET['year'] ?? null);
-$lastmonday = $month->getStartingDay()->modify('last monday');
 
+$month = new Month($_SESSION['date']['start_travel']['mois'], $_SESSION['date']['start_travel']['annee']);
+$lastmonday = $month->getStartingDay()->modify('last monday');
 $monthPlusOne = new Month((intval(date('m')) + 1), intval(date('Y')));
 $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
 
@@ -41,7 +50,7 @@ $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
             <div id="calendar-container">
                 <div class="calendar">
                     <?= $month->toString();?>
-                    <table class="calendar__table calendar__table--<?=$month->getWeeks();?>weeks">
+                    <table data-nbjour="<?=$lastDayOfMonth?>" data-date="<?=$_SESSION['date']['start_travel']['jour']?>" id="table1" class="calendar__table calendar__table--<?=$month->getWeeks();?>weeks">
                         <tr>
                             <?php foreach($month->days as $day){?>
                                 <th>
@@ -53,8 +62,8 @@ $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
                         <tr>
                             <?php foreach($month->days as $k => $day){
                                 $date = (clone $lastmonday)->modify("+" . ($k + $i * 7) ." days") ?>
-                                <td class="<?=$month->withinMonth($date) ? '' : 'calendar__overmonth';?>">
-                                    <div><?= $date->format('d');?></div>
+                                <td class="<?=$month->withinMonth($date) ? '' : 'calendar__overmonth';?> <?=$date->format('d') == $_SESSION['date']['start_travel']['jour'] ? 'test' : '';?> ">
+                                    <div class="<?=$date->format('d') > $_SESSION['date']['start_travel']['jour'] ? 'test2' : '';?>"><?= $date->format('d');?></div>
                                 </td>
                             <?php } ?>
                         </tr>
@@ -67,7 +76,7 @@ $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
     -->
                 <div class="calendar">
                     <?= $monthPlusOne->toString();?>
-                    <table class="calendar__table calendar__table--<?=$monthPlusOne->getWeeks();?>weeks">
+                    <table id="table2" class="calendar__table calendar__table--<?=$monthPlusOne->getWeeks();?>weeks">
                         <tr>
                             <?php foreach($monthPlusOne->days as $day){?>
                                 <th>
@@ -101,13 +110,13 @@ $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
         </div>
         <div id="hd-price">
             <div class="hd-title">Détail du prix</div>
-            <div>Nombre de nuits * le prix = au montant à payer</div>
+            <div><span id="nuits"></span> nuits * <span data-prix="<?=$Hebergement->getPrix()?>" id="prix"></span> = <span id="total"></span></div>
         </div>
     </div>
     <div id="hd-avis"></div>
 </div>
 
-
+<script src="../js/hebergementDescription.js"></script>
 
 <?php
 require_once "footer.php";
