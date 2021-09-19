@@ -4,7 +4,10 @@ class Region extends Modele {
 
     private $idRegion;
     private $libelle;
-    private $hebergements = [];
+    private $latitude;
+    private $longitude;
+    private $lvZoom;
+    private $villes = [];
 
     public function __construct($idRegion = null){
 
@@ -16,6 +19,9 @@ class Region extends Modele {
 
             $this->idRegion = $infoRegion["idRegion"];
             $this->libelle = $infoRegion["libelle"];
+            $this->latitude = $infoRegion["latitude"];
+            $this->longitude = $infoRegion["longitude"];
+            $this->lvZoom = $infoRegion["lv_zoom"];
 
         }
         
@@ -36,16 +42,9 @@ class Region extends Modele {
         return $this->libelle;
     }
 
-    public function getAllregion(){
-        $requete = $this->getBdd()->prepare("SELECT * FROM regions");
-        $requete->execute();
-        $Allregion = $requete->fetchALL(PDO::FETCH_ASSOC);
-        return $Allregion;
-    }
+    public function getTownByRegionId($idRegion){
 
-    public function getLodgingByRegion($idRegion){
-
-        $requete = $this->getBdd()->prepare("SELECT hebergement.libelle, hebergement.latitude, hebergement.longitude, prix FROM regions INNER JOIN villes USING(idRegion) INNER JOIN hebergement USING(idVille) WHERE idRegion = ?");
+        $requete = $this->getBdd()->prepare("SELECT idVille, villes.libelle, villes.latitude, villes.longitude FROM regions INNER JOIN villes USING(idRegion) WHERE idRegion = ?");
         $requete->execute([$idRegion]);
         return $requete->fetchAll(PDO::FETCH_ASSOC);
 
