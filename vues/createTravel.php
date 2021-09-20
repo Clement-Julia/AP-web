@@ -1,10 +1,8 @@
 <?php
 require_once "header.php";
 
-$_GET["idRegion"] = 2;
-
-$Lodging = new Region();
-$Lodgings = $Lodging->getTownByRegionId($_GET["idRegion"]);
+$Lodging = new Region($_GET['idRegion']);
+$Lodgings = $Lodging->getVilles();
 // à ce niveau il faudra avoir récupérer les coordonnées de la carte région de france et donc déjà avoir choisi la région
 
 ?>
@@ -18,15 +16,15 @@ $Lodgings = $Lodging->getTownByRegionId($_GET["idRegion"]);
             <?php
             foreach ($Lodgings as $item)
             { ?>
-                <a href="hebergementVille.php?idVille=<?= $item["idVille"]?>" data-id="<?= $item["idVille"]?>" data-name="<?= $item["libelle"]?>" data-lat="<?= $item["latitude"]?>" data-lng="<?= $item["longitude"]?>" class="town-item js-marker">
+                <a href="hebergementVille.php?idVille=<?= $item->getIdVille();?>" data-id="<?= $item->getIdVille()?>" data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" class="town-item js-marker">
                     <div class="town-picture"></div>
-                    <div class="town-text"><?= $item["libelle"]?></div>
+                    <div class="town-text"><?= $item->getLibelle()?></div>
                 </a>
             <?php }
             ?>
         </div>
     </div>
-    <div data-lat="47.2632836" data-lng="-0.3299687" data-zoom="8" class="map" id="map"></div>
+    <div data-lat="<?=$Lodging->getLatitude();?>" data-lng="<?=$Lodging->getLongitude();?>" data-zoom="8" class="map" id="map"></div>
 </div>
 
 

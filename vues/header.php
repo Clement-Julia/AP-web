@@ -28,7 +28,6 @@ require_once "../controleurs/traitement.php";
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-                <a class="nav-link" href="createTravel.php">Créez votre voyage</a>
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ var th = document.getElementById('table1');
 var tds = th.querySelectorAll('td');
 var th2 = document.getElementById('table2');
 var tds2 = th2.querySelectorAll('td');
+var submitButton = document.getElementById('submit');
 
 
 tds.forEach(item => {
@@ -29,9 +30,12 @@ tds.forEach(item => {
 
             item.classList.add('calendar-toggle');
             nbNuits = Number(date) - Number(th.dataset.date);
-            document.getElementById('nuits').innerHTML = nbNuits;
-            document.getElementById('prix').innerHTML = prix;
-            document.getElementById('total').innerHTML = prix * nbNuits;
+            if (nbNuits > 1){
+                document.getElementById('nuits').innerHTML = nbNuits + " nuits";
+            } else {
+                document.getElementById('nuits').innerHTML = nbNuits + " nuit";
+            }
+            document.getElementById('total').innerHTML = prix * nbNuits + " €";
         })
     }
 });
@@ -58,13 +62,21 @@ tds2.forEach(item => {
 
             item.classList.add('calendar-toggle');
             nbNuits = (Number(lastDayOfMonth) - Number(travelStartDate)) + Number(date);
-            document.getElementById('nuits').innerHTML = nbNuits;
-            document.getElementById('prix').innerHTML = prix;
-            document.getElementById('total').innerHTML = prix * nbNuits;
+            if (nbNuits > 1){
+                document.getElementById('nuits').innerHTML = nbNuits + " nuits";
+            } else {
+                document.getElementById('nuits').innerHTML = nbNuits + " nuit";
+            }
+            document.getElementById('total').innerHTML = prix * nbNuits + "€";
             
         })
     }
 });
 
-
+submitButton.addEventListener('click', () => {
+    if (prix != 0){
+        // on redirige avec toutes les infos dans une page de controleur
+        // il faudra vérifier côté back les paramètres 1 par 1 avant de valider
+    }
+})
 

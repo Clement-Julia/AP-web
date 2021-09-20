@@ -1,21 +1,13 @@
 <?php
 require_once "header.php";
 
-// ---------------------------------------------
-// le traitement ici sera fait sur une page controlleur au début de la création d'un voyage
-$_SESSION['date']['start_travel'] = [
-    'jour' => '20',
-    'mois' => '09',
-    'annee' => '2021'
-];
-// ---------------------------------------------
 $lastDayOfMonth = date('t', mktime(0, 0, 0, $_SESSION['date']['start_travel']['mois'], 1, $_SESSION['date']['start_travel']['annee']));
 
 $Hebergement = new Hebergement($_GET["idHebergement"]);
 
 $month = new Month($_SESSION['date']['start_travel']['mois'], $_SESSION['date']['start_travel']['annee']);
 $lastmonday = $month->getStartingDay()->modify('last monday');
-$monthPlusOne = new Month((intval(date('m')) + 1), intval(date('Y')));
+$monthPlusOne = new Month($_SESSION['date']['start_travel']['mois'] + 1, $_SESSION['date']['start_travel']['annee']);
 $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
 
 ?>
@@ -88,7 +80,7 @@ $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
                         <tr>
                             <?php foreach($monthPlusOne->days as $k => $day){
                                 $date = (clone $secondLastmonday)->modify("+" . ($k + $i * 7) ." days") ?>
-                                <td class="<?=$monthPlusOne->withinMonth($date) ? '' : 'calendar__overmonth';?>">
+                                <td class="<?=$monthPlusOne->withinMonth($date) ? '' : 'calendar__overmonth';?> test2">
                                     <div><?= $date->format('d');?></div>
                                 </td>
                             <?php } ?>
@@ -110,8 +102,11 @@ $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
         </div>
         <div id="hd-price">
             <div class="hd-title">Détail du prix</div>
-            <div><span id="nuits"></span> nuits * <span data-prix="<?=$Hebergement->getPrix()?>" id="prix"></span> = <span id="total"></span></div>
+            <div><span id="nuits">0 nuit</span> * <span data-prix="<?=$Hebergement->getPrix()?>" id="prix"><?=$Hebergement->getPrix()?> €</span> = <span id="total">0 €</span></div>
         </div>
+    </div>
+    <div>
+        <button id="submit" class="btn btn-success btn-sm">Valider</button>
     </div>
     <div id="hd-avis"></div>
 </div>
