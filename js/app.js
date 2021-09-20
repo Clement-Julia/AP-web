@@ -19,17 +19,20 @@ Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
       </div>`)
 })
 
-// il faudra créer un if (s'il existe des marker de point pour faire une ligne alors ... )
-
-// var pointA = new L.LatLng(47.7632836, -0.3299687);
-// var pointB = new L.LatLng(48.7632836, -0.3299687);
-// var pointC = new L.LatLng(48.7632836, -0.9299687);
-// var pointList = [pointA, pointB, pointC];
-
-// var firstpolyline = new L.Polyline(pointList, {
-//     color: 'red',
-//     weight: 5,
-//     opacity: 0.5,
-//     smoothFactor: 1
-// });
-// firstpolyline.addTo(map);
+if (document.getElementById('ligne-points') != undefined){
+  var points = document.getElementById('ligne-points').querySelectorAll('div');
+  var pointsList = [];
+  points.forEach(item => {
+    pointsList.push([item.dataset.lat, item.dataset.lng]);
+  });
+  console.log(pointsList);
+  if(pointsList.length >= 2){
+    var firstpolyline = new L.Polyline(pointsList, {
+      color: 'red',
+      weight: 5,
+      opacity: 0.5,
+    });
+    firstpolyline.addTo(map);
+  }
+  
+}

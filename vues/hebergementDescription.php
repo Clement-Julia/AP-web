@@ -12,7 +12,7 @@ $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
 
 ?>
 
-<div id="hebergement-description-container">
+<div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
     <div id="hd-title-container">
         <div id="hd-title"><a href="hebergementVille.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
         <div id="hd-infos">
@@ -107,6 +107,11 @@ $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
     </div>
     <div>
         <button id="submit" class="btn btn-success btn-sm">Valider</button>
+        <div id="hidden" class="d-none">
+            <div>Souhaitez vous ajoutez une destination à votre voyage ?</div>
+            <button id="submitYes" class="btn btn-sm btn-success">Oui</button>
+            <button id="submitNo" class="btn btn-sm btn-secondary">Non</button>
+        </div>
     </div>
     <div id="hd-avis"></div>
 </div>

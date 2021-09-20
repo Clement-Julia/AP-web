@@ -1,11 +1,21 @@
 <?php
 require_once "header.php";
 
-$Lodging = new Region($_GET['idRegion']);
+// echo "<pre>";
+// print_r($_SESSION['voyage']) ;
+// echo "</pre>";
+// print_r($_SESSION['date']);
+$idRegion = isset($_SESSION['idRegion']) ? $_SESSION['idRegion'] : $_GET['idRegion'];
+$Lodging = new Region($idRegion);
 $Lodgings = $Lodging->getVilles();
 // à ce niveau il faudra avoir récupérer les coordonnées de la carte région de france et donc déjà avoir choisi la région
-
-?>
+if (isset($_SESSION['voyage'])){ ?>
+<div id="ligne-points">
+    <?php foreach ($_SESSION['voyage'] as $ville){ ?>
+        <div data-lat="<?=$ville['villeLatitude']?>" data-lng="<?=$ville['villeLongitude']?>"></div>
+    <?php } ?>
+<?php } ?>
+</div>
 
 <div id="create-travel-container">
     <div id="ct-choose-town">

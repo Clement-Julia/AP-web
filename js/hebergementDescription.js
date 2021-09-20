@@ -1,3 +1,4 @@
+var idHebergement = document.getElementById('hebergement-description-container').dataset.idhebergement;
 var nbNuits = 0;
 var prix = document.getElementById('prix').dataset.prix;
 var lastDayOfMonth = document.getElementById('table1').dataset.nbjour;
@@ -7,7 +8,9 @@ var tds = th.querySelectorAll('td');
 var th2 = document.getElementById('table2');
 var tds2 = th2.querySelectorAll('td');
 var submitButton = document.getElementById('submit');
-
+var submitButtonYes = document.getElementById('submitYes');
+var submitButtonNo = document.getElementById('submitNo');
+var hiddenDiv = document.getElementById('hidden');
 
 tds.forEach(item => {
 
@@ -75,8 +78,14 @@ tds2.forEach(item => {
 
 submitButton.addEventListener('click', () => {
     if (prix != 0){
-        // on redirige avec toutes les infos dans une page de controleur
-        // il faudra vérifier côté back les paramètres 1 par 1 avant de valider
+        submitButton.style.display = "none";
+        hiddenDiv.classList.remove('d-none');
     }
+})
+submitButtonYes.addEventListener('click', () => {
+    document.location.href="../controleurs/addHebergement.php?idHebergement=" + idHebergement + "&nbNuit=" + nbNuits + "&continue=1"; 
+})
+submitButtonNo.addEventListener('click', () => {
+    document.location.href="../controleurs/addHebergement.php?idHebergement=" + idHebergement + "&nbNuit=" + nbNuits + "&continue=0"; 
 })
 

@@ -73,4 +73,50 @@ class ReservationHotel extends Modele {
     {
         return $this->idVoyage;
     }
+
+    public function isItBookedForThisDate($date, int $nb, int $idHebergement){
+
+        $tableau = explode("-", $date);
+        $lastDayOfMonth = date('t', mktime(0, 0, 0, $tableau[1], 1, $tableau[0]));
+        $dates = [];
+
+        for ($i = 0; $i <= $nb; $i++){
+
+            if($tableau[2] > $lastDayOfMonth){
+                $tableau[2] = 1;
+                $tableau[1] += 1;
+                if($tableau[1] > 12){
+                    $tableau[1] = 1;
+                    $tableau[0] += 1;
+                }
+            }
+            $dates[] = $tableau[0] . "-" . $tableau[1] . "-" . $tableau[2];
+            $dates[] = $tableau[0] . "-" . $tableau[1] . "-" . $tableau[2];
+            $tableau[2] += 1;
+        }
+        $dates[] = $idHebergement;
+
+        $str = "SELECT * FROM reservations_Hotels WHERE (". str_repeat("(dateDebut <= ? && dateFin >= ?) OR ", $nb + 1);
+        $str = substr($str, 0, -3);
+        $str .= ") AND idHebergement = ?;";
+
+        // echo "<pre>";
+        // print_r($dates);
+        // echo "</pre>";
+        // echo "<br>";
+        // echo $str;
+        // exit;
+
+        $requete = $this->getBdd()->prepare($str);
+        $requete->execute($dates);
+        $isBooked = $requete->rowCount();
+
+        if ($isBooked == 0){
+            return $dates[count($dates) - 2];
+        } else {
+            return false;
+        }
+
+    }
+
 }

@@ -9,7 +9,7 @@ class Region extends Modele {
     private $lvZoom;
     private $villes = [];
 
-    public function __construct($idRegion = null){
+    public function __construct(int $idRegion = null){
 
         if ( $idRegion != null ){
 

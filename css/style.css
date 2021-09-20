@@ -231,11 +231,11 @@
     height: 16.66%;
 }
 .calendar__overmonth{
-    background-color: rgba(128, 128, 128, 0.171);
+    background-color: rgba(128, 128, 128, 0.171)!important;
     cursor: not-allowed!important;
 }
 .test{
-    background-color: red!important;
+    background-color: red;
 }
 .test2{
     cursor: grab;

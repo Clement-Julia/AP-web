@@ -1,5 +1,8 @@
 <?php
 require_once "header.php";
+$_SESSION['voyage'] = [];
+$_SESSION['date'] = [];
+$_SESSION['index'] = [];
 ?>
 
 <p>c'est l'index</p>

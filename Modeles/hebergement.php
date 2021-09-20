@@ -131,4 +131,10 @@ class Hebergement extends Modele {
         return $this->options;
     }
 
+    public function getIdRegionByIdHebergement(int $idHebergement){
+        $requete = $this->getBdd()->prepare("SELECT idRegion FROM hebergement INNER JOIN villes USING(idVille) INNER JOIN regions USING(idRegion) WHERE idHebergement = ?");
+        $requete->execute([$idHebergement]);
+        return $requete->fetch(PDO::FETCH_ASSOC)['idRegion'];
+    }
+
 }

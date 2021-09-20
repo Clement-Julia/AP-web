@@ -21,7 +21,8 @@ if (!empty($_GET['jour']) &&
         $_SESSION['date']['start_travel'] = [
             'jour' => $_GET['jour'],
             'mois' => $_GET['mois'],
-            'annee' => $_GET['annee']
+            'annee' => $_GET['annee'],
+            'date_entiere' => $_GET['annee'] . '-' . $_GET['mois'] . '-' .$_GET['jour']
         ];
     
         header('Location: ../vues/choixRegion.php');
