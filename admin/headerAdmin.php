@@ -23,7 +23,7 @@ require_once "../controleurs/traitement.php";
 
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="indexAdmin.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-text mx-3">Dashboard</div>
             </a>
 
@@ -58,9 +58,9 @@ require_once "../controleurs/traitement.php";
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="addVille.php">Ajout</a>
-                        <a class="collapse-item" href="gestionVille.php">Modification</a>
-                        <a class="collapse-item" href="supVille.php">Suppression</a>
+                        <a class="collapse-item" href="addHotel.php">Ajout</a>
+                        <a class="collapse-item" href="modifHotel.php">Modification</a>
+                        <a class="collapse-item" href="supHotel.php">Suppression</a>
                     </div>
                 </div>
             </li>
@@ -79,9 +79,9 @@ require_once "../controleurs/traitement.php";
                 </a>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Ajout</a>
-                        <a class="collapse-item" href="#">Modification</a>
-                        <a class="collapse-item" href="#">Suppression</a>
+                        <a class="collapse-item" href="addUser.php">Ajout</a>
+                        <a class="collapse-item" href="modifUser.php">Modification</a>
+                        <a class="collapse-item" href="supUser.php">Suppression</a>
                     </div>
                 </div>
             </li>
