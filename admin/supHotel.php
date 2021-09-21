@@ -1,14 +1,14 @@
 <?php
 require_once "headerAdmin.php";
-$villes = new Ville();
-$infos = $villes->getAllville();
+$hotels = new Hebergement();
+$infos = $hotels->getAllhotel();
 ?>
 
 <div class="container">
 
-    <h1 class="mb-3">Suppression d'une ville :</h1>
+    <h1 class="mb-3">Suppression d'un hébergement :</h1>
 
-        <form method="GET" action="../controleurs/supVille.php">
+        <form method="GET" action="../controleurs/supHotel.php">
 
             <div class="form-group text-center">
                 <label for="libelle">Nom : </label>

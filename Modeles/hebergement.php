@@ -137,4 +137,37 @@ class Hebergement extends Modele {
         $info_nbr = $requete->fetch(PDO::FETCH_ASSOC);
         return $info_nbr;
     }
+
+    public function getAllHotel(){
+        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement");
+        $requete->execute();
+        $Allhotel = $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $Allhotel;
+    }
+
+    public function getHotelbyName($libelle){
+        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement WHERE libelle = ?");
+        $requete->execute([$libelle]);
+        $infoHotel = $requete->fetch(PDO::FETCH_ASSOC);
+        return $infoHotel;
+    }
+
+    public function addHotel($libelle, $description, $idVille, $latitude, $longitude, $prix, $television, $lave_linge, $seche_linge, $cuisine, $refrigirateur, $four, $parking_gratuit, $linge_de_maison, $vaiselle, $cafetiere, $climatisation){
+
+        $requete = $this->getBdd()->prepare("INSERT into hebergement(libelle, description, idVille, latitude, longitude, prix, television, lave_linge, seche_linge, cuisine, refrigirateur, four, parking_gratuit, linge_de_maison, vaiselle, cafetiere, climatisation) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $television, $lave_linge, $seche_linge, $cuisine, $refrigirateur, $four, $parking_gratuit, $linge_de_maison, $vaiselle, $cafetiere, $climatisation]);
+    }
+
+    public function updatehotel($libelle, $description, $idVille, $latitude, $longitude, $prix, $television, $lave_linge, $seche_linge, $cuisine, $refrigirateur, $four, $parking_gratuit, $linge_de_maison, $vaiselle, $cafetiere, $climatisation, $id){
+
+        $requete = $this->getBdd()->prepare("UPDATE hebergement set libelle = ?, description = ?, idVille = ?, latitude = ?, longitude = ?, prix = ?, television = ?, lave_linge = ?, seche_linge = ?, cuisine = ?, refrigirateur = ?, four = ?, parking_gratuit = ?, linge_de_maison = ?, vaiselle = ?, cafetiere = ?, climatisation = ? where idHebergement = ?");
+
+        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $television, $lave_linge, $seche_linge, $cuisine, $refrigirateur, $four, $parking_gratuit, $linge_de_maison, $vaiselle, $cafetiere, $climatisation, $id]);
+    }
+
+    public function supHotel($libelle){
+        $requete = $this->getBdd()->prepare("DELETE from hebergement where libelle = ?");
+        $requete->execute([$libelle]);
+    }
 }
