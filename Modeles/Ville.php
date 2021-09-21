@@ -2,12 +2,12 @@
 
 class Ville extends Modele {
 
-    private $idVille;
-    private $libelle;
-    private $latitude;
-    private $longitude;
-    private $idRegion;
-    private $description;
+    private $idVille; // int
+    private $libelle; // string
+    private $latitude; // float
+    private $longitude; // float
+    private $idRegion; // int
+    private $description; // string
     private $hebergements = []; //tableau d'objet hebergement
 
     public function __construct($idVille = null){
@@ -49,6 +49,7 @@ class Ville extends Modele {
         $this->longitude = $longitude;
         $this->description = $description;
         $this->idRegion = $idRegion;
+        $this->description = $description;
 
         // voir si ici aussi on requete pour les hebergements avec initialisation de ceux ci ?
 

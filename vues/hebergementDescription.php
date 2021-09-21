@@ -113,10 +113,12 @@ $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
             <button id="submitNo" class="btn btn-sm btn-secondary">Non</button>
         </div>
     </div>
-    <div id="hd-avis"></div>
+    <div id="hd-avis">
+        
+    </div>
 </div>
 
-<script src="../js/hebergementDescription.js"></script>
+<script src="../assets/js/hebergementDescription.js"></script>
 
 <?php
 require_once "footer.php";

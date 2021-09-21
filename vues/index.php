@@ -32,7 +32,7 @@ Créez votre voyage
     </form>
 </div>
 
-<script src="../js/index.js"></script>
+<script src="../assets/js/index.js"></script>
 
 <?php
 require_once "footer.php";

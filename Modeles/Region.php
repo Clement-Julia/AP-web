@@ -30,7 +30,7 @@ class Region extends Modele {
             foreach ($infosVilles as $item){
 
                 $ville = new Ville();
-                $ville->initialiserVille($item["idVille"], $item["libelle"], $item["latitude"], $item["longitude"], $item["idRegion"]);
+                $ville->initialiserVille($item["idVille"], $item["libelle"], $item["latitude"], $item["longitude"], $item["idRegion"], $item["description"]);
                 $this->villes[] = $ville;
 
             }
