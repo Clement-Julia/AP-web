@@ -1,47 +1,53 @@
 <?php
 
-class ReservationHotel extends Modele {
+class ReservationHebergement extends Modele {
 
-    private $idReservationHotel;
+    private $idReservationHebergement;
     private $dateDebut;
     private $dateFin;
     private $prix;
     private $codeReservation;
     private $nbJours;
     private $idVoyage;
+    private $idUtilisateur;
+    private $idHebergement;
 
-    public function __construct($idReservationHotel = null)
+    public function __construct($idReservationHebergement = null)
     {
-        if ($idReservationHotel != null)
+        if ($idReservationHebergement != null)
         {
-            $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hotels WHERE idReservationHotel = ?");
-            $requete->execute([$idReservationHotel]);
+            $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement WHERE idReservationHebergement = ?");
+            $requete->execute([$idReservationHebergement]);
             $infoReservation =  $requete->fetch(PDO::FETCH_ASSOC);
 
-            $this->idReservationHotel = $infoReservation["idReservationHotel"];
+            $this->idReservationHotel = $infoReservation["idReservationHebergement"];
             $this->dateDebut = $infoReservation["dateDebut"];
             $this->dateFin = $infoReservation["dateFin"];
             $this->prix = $infoReservation["prix"];
             $this->codeReservation = $infoReservation["codeReservation"];
             $this->nbJours = $infoReservation["nbJours"];
             $this->idVoyage = $infoReservation["idVoyage"];
+            $this->idUtilisateur = $infoReservation["idUtilisateur"];
+            $this->idHebergement = $infoReservation["idHebergement"];
         }
     }
 
-    public function initializeReservationHotel($idReservationHotel, $dateDebut, $dateFin, $prix, $codeReservation, $nbJours, $idVoyage)
+    public function initializeReservationHotel($idReservationHebergement, $dateDebut, $dateFin, $prix, $codeReservation, $nbJours, $idVoyage, $idUtilisateur, $idHebergement)
     {
-        $this->idReservationHotel = $idReservationHotel;
+        $this->idReservationHebergement = $idReservationHebergement;
         $this->dateDebut = $dateDebut;
         $this->dateFin = $dateFin;
         $this->prix = $prix;
         $this->codeReservation = $codeReservation;
         $this->nbJours = $nbJours;
         $this->idVoyage = $idVoyage;
+        $this->idUtilisateur = $idUtilisateur;
+        $this->idHebergement = $idHebergement;
     }
 
-    public function getIdReservationHotel()
+    public function getIdReservationHebergement()
     {
-        return $this->idReservationHotel;
+        return $this->idReservationHebergement;
     }
 
     public function getDateDebut()
@@ -74,6 +80,16 @@ class ReservationHotel extends Modele {
         return $this->idVoyage;
     }
 
+    public function getIdUtilisateur()
+    {
+        return $this->idUtilisateur;
+    }
+
+    public function getIdHebergement()
+    {
+        return $this->idHebergement;
+    }
+
     public function isItBookedForThisDate($date, int $nb, int $idHebergement){
 
         $tableau = explode("-", $date);
@@ -91,14 +107,17 @@ class ReservationHotel extends Modele {
                 }
             }
             $dates[] = $tableau[0] . "-" . $tableau[1] . "-" . $tableau[2];
-            $dates[] = $tableau[0] . "-" . $tableau[1] . "-" . $tableau[2];
             $tableau[2] += 1;
         }
+        
+        $str = "SELECT * FROM reservations_Hebergement WHERE 1 ";
+        
+        foreach($dates as $date){
+            $str .= " AND ? BETWEEN dateDebut AND dateFin ";
+        }
+        
         $dates[] = $idHebergement;
-
-        $str = "SELECT * FROM reservations_Hotels WHERE (". str_repeat("(dateDebut <= ? && dateFin >= ?) OR ", $nb + 1);
-        $str = substr($str, 0, -3);
-        $str .= ") AND idHebergement = ?;";
+        $str .= " AND idHebergement = ?;";
 
         // echo "<pre>";
         // print_r($dates);

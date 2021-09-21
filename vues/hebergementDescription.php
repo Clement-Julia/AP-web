@@ -27,10 +27,10 @@ $secondLastmonday = $monthPlusOne->getStartingDay()->modify('last monday');
             <div class="hd-title">Ce que propose le logement :</div>
             <div id="hd-tools-item-container">
             <?php
-            foreach ($Hebergement->getOptions() as $key => $item){
-                if ($item['option'] == 1){ ?>
-                    <div class="hd-tools-item"><?=$item['icon']?><span><?=$key?></span></div>
-                <?php }
+            foreach ($Hebergement->getOptions() as $item){
+                ?>
+                    <div class="hd-tools-item"><?=$item->getIcon()?><span><?=$item->getLibelle()?></span></div>
+                <?php
             }
             ?>
             </div>

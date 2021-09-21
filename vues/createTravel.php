@@ -1,10 +1,10 @@
 <?php
 require_once "header.php";
 
-// echo "<pre>";
-// print_r($_SESSION['voyage']) ;
-// echo "</pre>";
-// print_r($_SESSION['date']);
+echo "<pre>";
+print_r($_SESSION['voyage']) ;
+echo "</pre>";
+print_r($_SESSION['date']);
 $idRegion = isset($_SESSION['idRegion']) ? $_SESSION['idRegion'] : $_GET['idRegion'];
 $Lodging = new Region($idRegion);
 $Lodgings = $Lodging->getVilles();
