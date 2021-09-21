@@ -1,6 +1,5 @@
 <?php
 require_once "header.php";
-require_once "../Modeles/All.php";
 
 $Ville = new Ville($_GET["idVille"]);
 

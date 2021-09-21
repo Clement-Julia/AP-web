@@ -9,7 +9,7 @@ class Region extends Modele {
     private $lvZoom;
     private $villes = [];
 
-    public function __construct($idRegion = null){
+    public function __construct(int $idRegion = null){
 
         if ( $idRegion != null ){
 
@@ -22,6 +22,18 @@ class Region extends Modele {
             $this->latitude = $infoRegion["latitude"];
             $this->longitude = $infoRegion["longitude"];
             $this->lvZoom = $infoRegion["lv_zoom"];
+
+            $requete = $this->getBdd()->prepare("SELECT * FROM villes WHERE idRegion = ?");
+            $requete->execute([$idRegion]);
+            $infosVilles = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($infosVilles as $item){
+
+                $ville = new Ville();
+                $ville->initialiserVille($item["idVille"], $item["libelle"], $item["latitude"], $item["longitude"], $item["idRegion"]);
+                $this->villes[] = $ville;
+
+            }
 
         }
         
@@ -37,10 +49,24 @@ class Region extends Modele {
     public function getIdRegion(){
         return $this->idRegion;
     }
-
     public function getLibelle(){
         return $this->libelle;
     }
+    public function getLatitude(){
+        return $this->latitude;
+    }
+    public function getLongitude(){
+        return $this->longitude;
+    }
+    public function getLvZoom(){
+        return $this->lvZoom;
+    }
+    public function getVilles(){
+        return $this->villes;
+    }
+
+
+    // il va falloir remplacer cette partie par une initialisation automatique des objets ville dans le tableau villes
 
     public function getAllregion(){
         $requete = $this->getBdd()->prepare("SELECT * FROM regions");
@@ -55,6 +81,20 @@ class Region extends Modele {
         $requete->execute([$idRegion]);
         return $requete->fetchAll(PDO::FETCH_ASSOC);
 
+    }
+
+    public function getAllRegions(){
+        $requete = $this->getBdd()->prepare("SELECT * FROM regions");
+        $requete->execute();
+        $regions = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+        $array = [];
+
+        foreach ($regions as $region){
+            $array[$region['libelle']] = $region['idRegion'];
+        }
+
+        return $array;
     }
 
     public function countRegion(){

@@ -47,8 +47,8 @@ class Ville extends Modele {
         $this->libelle = $libelle;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
-        $this->longitude = $idRegion;
         $this->description = $description;
+        $this->idRegion = $idRegion;
 
         // voir si ici aussi on requete pour les hebergements avec initialisation de ceux ci ?
 
