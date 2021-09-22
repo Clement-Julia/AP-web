@@ -6,28 +6,32 @@ class ReservationVoyage extends Modele {
     private $prix;
     private $codeReservation;
     private $idUtilisateur;
-    private $reservationsHotels = [];
+    private $reservationsHebergement = [];
 
     public function __construct($idReservationVoyage = null)
     {
         if ($idReservationVoyage != null)
         {
-            $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hotels WHERE idReservation = ?");
+            $requete = $this->getBdd()->prepare("SELECT * FROM reservations_voyages WHERE idReservationVoyage = ?");
             $requete->execute([$idReservationVoyage]);
             $infoReservation =  $requete->fetch(PDO::FETCH_ASSOC);
 
             $this->idReservationVoyage = $infoReservation["idReservationVoyage"];
             $this->prix = $infoReservation["prix"];
-            $this->codeReservation = $infoReservation["codeReservation"];
+            $this->codeReservation = $infoReservation["code_reservation"];
             $this->idUtilisateur = $infoReservation["idUtilisateur"];
 
-            $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hotels WHERE idVoyage = ?;");
+            $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement WHERE idVoyage = ?;");
             $requete->execute([$idReservationVoyage]);
             $infosIdReservationsHotels = $requete->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($infosIdReservationsHotels as $item)
             {
-                $this->reservationsHotels[] = new ReservationHotel($item->idReservationHotel);
+
+                $Reservation = new ReservationHebergement();
+                $Reservation->initializeReservationHebergement($item['idReservationHebergement'], $item['dateDebut'], $item['dateFin'], $item['prix'], $item['code_reservation'], $item['nbJours'], $item['idVoyage'], $item['idUtilisateur'], $item['idHebergement'] );
+                $this->reservationsHebergement[] = $Reservation;
+
             }
         }
     }
@@ -59,6 +63,51 @@ class ReservationVoyage extends Modele {
     public function getIdUtilisateur()
     {
         return $this->idUtilisateur;
+    }
+
+    public function insertBaseTravel($prix, $codeReservation, $idUtilisateur, $boolean){
+
+        $requete = $this->getBdd()->prepare("INSERT INTO reservations_voyages (prix, code_reservation, idUtilisateur, is_building) VALUE (?, ?, ?, ?)");
+        $requete->execute([$prix, $codeReservation, $idUtilisateur, $boolean]);
+
+        $requete = $this->getBdd()->prepare("SELECT idReservationVoyage FROM reservations_voyages WHERE idUtilisateur = ? AND prix = ? AND code_reservation = ? AND is_building = ?");
+        $requete->execute([$idUtilisateur, $prix, $codeReservation, $boolean]);
+        return $requete->fetch(PDO::FETCH_ASSOC)['idReservationVoyage'];
+
+    }
+
+    public function getIdRegionForBuildingTravelByUserId($idUtilisateur){
+
+        $requete = $this->getBdd()->prepare("SELECT villes.idRegion FROM reservations_voyages
+        INNER JOIN reservations_hebergement ON idReservationVoyage = idVoyage
+        INNER JOIN hebergement USING(idHebergement)
+        INNER JOIN villes USING(idVille)
+        WHERE reservations_voyages.idUtilisateur = ?;");
+        $requete->execute([$idUtilisateur]);
+        return $requete->fetch(PDO::FETCH_ASSOC)['idRegion'];
+    }
+
+    public function getIsBuildingByUserId($idUtilisateur){
+        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_voyages WHERE idUtilisateur = ? AND is_building = ?");
+        $requete->execute([$idUtilisateur, true]);
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateTravelPrice($price, $idReservationVoyage){
+        $requete = $this->getBdd()->prepare("UPDATE reservations_voyages SET prix = ? WHERE idReservationVoyage = ?");
+        $requete->execute([$price, $idReservationVoyage]);
+    }
+
+    public function getVilleLatLngByUserId($idUtilisateur){
+
+        $requete = $this->getBdd()->prepare("SELECT villes.latitude, villes.longitude FROM reservations_voyages
+        INNER JOIN reservations_hebergement ON idReservationVoyage = idVoyage
+        INNER JOIN hebergement USING(idHebergement)
+        INNER JOIN villes USING(idVille)
+        WHERE reservations_voyages.idUtilisateur = ?
+        AND reservations_voyages.is_building = ?");
+        $requete->execute([$idUtilisateur, true]);
+        return $requete->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

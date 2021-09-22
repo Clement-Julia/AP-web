@@ -86,6 +86,6 @@ submitButtonYes.addEventListener('click', () => {
     document.location.href="../controleurs/addHebergement.php?idHebergement=" + idHebergement + "&nbNuit=" + nbNuits + "&continue=1"; 
 })
 submitButtonNo.addEventListener('click', () => {
-    document.location.href="../controleurs/addHebergement.php?idHebergement=" + idHebergement + "&nbNuit=" + nbNuits + "&continue=0"; 
+    document.location.href="../controleurs/addHebergement.php?idHebergement=" + idHebergement + "&nbNuit=" + nbNuits + "&continue=0";
 })
 

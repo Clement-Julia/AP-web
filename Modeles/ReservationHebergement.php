@@ -32,7 +32,7 @@ class ReservationHebergement extends Modele {
         }
     }
 
-    public function initializeReservationHotel($idReservationHebergement, $dateDebut, $dateFin, $prix, $codeReservation, $nbJours, $idVoyage, $idUtilisateur, $idHebergement)
+    public function initializeReservationHebergement($idReservationHebergement, $dateDebut, $dateFin, $prix, $codeReservation, $nbJours, $idVoyage, $idUtilisateur, $idHebergement)
     {
         $this->idReservationHebergement = $idReservationHebergement;
         $this->dateDebut = $dateDebut;
@@ -135,6 +135,13 @@ class ReservationHebergement extends Modele {
         } else {
             return false;
         }
+
+    }
+
+    public function insertReservationHebergement(int $idUtilisateur, int $idVoyage, string $code_reservation, $prix, $dateDebut, $dateFin, int $nbJours, int $idHebergement){
+
+        $requete = $this->getBdd()->prepare("INSERT INTO reservations_hebergement (idUtilisateur, idVoyage, code_reservation, prix, dateDebut, dateFin, nbJours, idHebergement) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $requete->execute([$idUtilisateur, $idVoyage, $code_reservation, $prix, $dateDebut, $dateFin, $nbJours, $idHebergement]);
 
     }
 
