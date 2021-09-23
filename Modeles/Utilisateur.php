@@ -10,6 +10,7 @@ class Utilisateur extends Modele {
     private $age;
     protected $idRole;
     private $messages = [];
+    private $avis = [];
 
     public function __construct($idUtilisateur = null){
 
