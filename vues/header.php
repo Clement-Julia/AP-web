@@ -28,7 +28,22 @@ require_once "../controleurs/traitement.php";
                 <?=(!empty($_SESSION["idRole"]) == 2 ? "<a href='../admin' class='nav-link'>Accès admin</a>" : "");?>
             </div>
         </div>
-        <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' class='btn-group btn btn-outline-primary btn-sm align-self-center ml-auto'>Inscription</a>");?>
-        <?=(!empty($_SESSION["idUtilisateur"]) ? "<a href='../controleurs/deconnexion.php' class='btn btn-outline-danger btn-sm align-self-center '>Déconnexion</a>" : "<a href='connexion.php' class='btn btn-outline-success btn-sm align-self-center'>Connexion</a>");?>
+
+        <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' class='btn-group btn btn-outline-primary btn-sm align-self-center ml-auto'>Inscription</a><a href='connexion.php' class='btn btn-outline-success btn-sm align-self-center'>Connexion</a>");?>
+        <?php if(!empty($_SESSION["idUtilisateur"])){
+                ?>
+                <div class="dropdown">
+                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?= $_SESSION["prenom"] ." " . $_SESSION["nom"]?>
+                    </a>
+            
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="avis.php">Avis</a></li>
+                        <li><a class="dropdown-item" href="../controleurs/deconnexion.php">Déconnexion</a></li>
+                    </ul>
+                </div>
+                <?php
+            }
+        ?>
     </div>
 </nav>
