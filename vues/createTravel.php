@@ -2,9 +2,11 @@
 require_once "header.php";
 
 // (SECURITE) On vérifie que le paramètre récupéré est bien du type INT attendu
-if (is_numeric($_GET['idRegion'])){
+if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET['idRegion'])){
 
-    $_SESSION['idRegion'] = $_GET['idRegion'];
+    if (!empty($_GET['idRegion'])){
+        $_SESSION['idRegion'] = $_GET['idRegion'];
+    }
     $ReservationVoyage = new ReservationVoyage();
     $BuildingTravelId = $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']);
     if($BuildingTravelId != null){

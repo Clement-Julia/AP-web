@@ -77,7 +77,7 @@ tds2.forEach(item => {
 });
 
 submitButton.addEventListener('click', () => {
-    if (prix != 0){
+    if (nbNuits != 0){
         submitButton.style.display = "none";
         hiddenDiv.classList.remove('d-none');
     }

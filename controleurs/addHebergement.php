@@ -12,14 +12,14 @@ if (!empty($_GET['idHebergement']) &&
         $isBuilding = $ReservationVoyage->getIsBuildingByUserId($_SESSION['idUtilisateur']);
         if (empty($isBuilding)){
 
-            $dateDebut = new DateTime($_SESSION['date']['start_travel']['date_entiere']);
-            $dateFin = new DateTime($_SESSION['date']['start_travel']['date_entiere'] . "+" . $_GET['nbNuit'] . " days");
+            $dateDebut = new DateTime($_SESSION['date']);
+            $dateFin = new DateTime($_SESSION['date'] . "+" . $_GET['nbNuit'] . " days");
 
         } else {
             
             $lastReservation = $ReservationVoyage->getLastReservationHebergement($isBuilding['idReservationVoyage']);
             $dateDebut = new DateTime($lastReservation['dateFin']);
-            $dateFin = new DateTime($_SESSION['date']['start_travel']['date_entiere'] . "+" . $_GET['nbNuit'] . " days");
+            $dateFin = new DateTime($_SESSION['date'] . "+" . $_GET['nbNuit'] . " days");
 
         }
 
@@ -34,7 +34,6 @@ if (!empty($_GET['idHebergement']) &&
         } else {
 
             $Hebergement = new Hebergement($_GET['idHebergement']);
-            // $Ville = new Ville($Hebergement->getIdVille());
             $Voyage = new ReservationVoyage();
             
             // On créer un voyage
