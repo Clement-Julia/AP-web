@@ -3,6 +3,8 @@ require_once "header.php";
 $_SESSION['voyage'] = [];
 $_SESSION['date'] = [];
 $_SESSION['index'] = [];
+ // ------------------ a supprimer car entré en dur pour phase de test -------------------------------
+ $_SESSION['idUtilisateur'] = 1;
 ?>
 
 <p>c'est l'index</p>
@@ -13,7 +15,7 @@ Créez votre voyage
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form action="../controleurs/startTravelTime.php" method="GET">
+    <form action="../controleurs/startTravelTime.php" method="POST">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -21,11 +23,11 @@ Créez votre voyage
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <input id="start-date" type="date" require>
+                    <input id="start-date" name="date" type="date" require>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button id="submit" type="button" class="btn btn-success">Start</button>
+                    <button id="submit" type="submit" class="btn btn-success">Start</button>
                 </div>
             </div>
         </div>

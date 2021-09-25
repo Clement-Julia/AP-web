@@ -90,24 +90,21 @@ class ReservationHebergement extends Modele {
         return $this->idHebergement;
     }
 
+    public function insertReservationHebergement(int $idUtilisateur, int $idVoyage, string $code_reservation, $prix, $dateDebut, $dateFin, int $nbJours, int $idHebergement){
+
+        $requete = $this->getBdd()->prepare("INSERT INTO reservations_hebergement (idUtilisateur, idVoyage, code_reservation, prix, dateDebut, dateFin, nbJours, idHebergement) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $requete->execute([$idUtilisateur, $idVoyage, $code_reservation, $prix, $dateDebut, $dateFin, $nbJours, $idHebergement]);
+
+    }
+
     public function isItBookedForThisDate($date, int $nb, int $idHebergement){
 
-        $tableau = explode("-", $date);
-        $lastDayOfMonth = date('t', mktime(0, 0, 0, $tableau[1], 1, $tableau[0]));
         $dates = [];
 
         for ($i = 0; $i <= $nb; $i++){
 
-            if($tableau[2] > $lastDayOfMonth){
-                $tableau[2] = 1;
-                $tableau[1] += 1;
-                if($tableau[1] > 12){
-                    $tableau[1] = 1;
-                    $tableau[0] += 1;
-                }
-            }
-            $dates[] = $tableau[0] . "-" . $tableau[1] . "-" . $tableau[2];
-            $tableau[2] += 1;
+            $Date = new DateTime($date . "+" . $i . " days");
+            $dates[] = $Date->format('Y-m-d');
         }
         
         $str = "SELECT * FROM reservations_Hebergement WHERE 1 ";
@@ -118,13 +115,6 @@ class ReservationHebergement extends Modele {
         
         $dates[] = $idHebergement;
         $str .= " AND idHebergement = ?;";
-
-        // echo "<pre>";
-        // print_r($dates);
-        // echo "</pre>";
-        // echo "<br>";
-        // echo $str;
-        // exit;
 
         $requete = $this->getBdd()->prepare($str);
         $requete->execute($dates);
@@ -138,11 +128,10 @@ class ReservationHebergement extends Modele {
 
     }
 
-    public function insertReservationHebergement(int $idUtilisateur, int $idVoyage, string $code_reservation, $prix, $dateDebut, $dateFin, int $nbJours, int $idHebergement){
-
-        $requete = $this->getBdd()->prepare("INSERT INTO reservations_hebergement (idUtilisateur, idVoyage, code_reservation, prix, dateDebut, dateFin, nbJours, idHebergement) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $requete->execute([$idUtilisateur, $idVoyage, $code_reservation, $prix, $dateDebut, $dateFin, $nbJours, $idHebergement]);
-
+    public function getHebergementById($hebergementId){
+        $requete = $this->getBdd()->prepare("SELECT villes.idRegion, villes.libelle as villeNom, hebergement.libelle as nomHebergement, hebergement.description FROM hebergement INNER JOIN reservations_hebergement USING(idHebergement) INNER JOIN villes USING(idVille) INNER JOIN regions USING(idRegion) WHERE idHebergement = ?");
+        $requete->execute([$hebergementId]);
+        return $requete->fetch(PDO::FETCH_ASSOC);
     }
 
 }

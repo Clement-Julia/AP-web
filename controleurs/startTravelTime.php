@@ -1,33 +1,33 @@
 <?php
 require_once "traitement.php";
 
-if (!empty($_GET['jour']) &&
-    !empty($_GET['mois']) &&
-    !empty($_GET['annee'])
+// (SECURITE) on vérifie qu'on récupère une variable et on vérifie que c'est bien une date
+if (!empty($_POST['date']) && isValidDate($_POST['date'])
 ){
 
-    // on tente de vérifier que la date rentrée est bien dans le futur
-    $originDate = date("Y-m-d H:i:s");
-    $targetDate = $_GET['annee'] . '-' . $_GET['mois'] . '-' . $_GET['jour'] . ' 0:0:0';
-    $origin = new DateTime($originDate);
-    $target = new DateTime($targetDate);
-    $interval = $origin->diff($target);
-    $diff = $interval->format('%R%a days');
+    $actualDate = new DateTime();
+    $postDate = new DateTime($_POST['date']);
+    $diff = $actualDate->diff($postDate);
 
-    if ($diff < 0){
-        // ERREUR, la date de réservation ne peut pas être dans le passé
-    } else {
+    // Si invert est égal à 0, la date est dans le présent. Le cas spécial de la date du jour est gérée ici.
+    if ($diff->invert == 0 || ($diff->invert == 1 && $diff->d == 0)){
+
+        $ReservationVoyage = new ReservationVoyage();
+        $isBuilding = $ReservationVoyage->getIsBuildingByUserId($_SESSION['idUtilisateur']);
+
+        $_SESSION['date'] = $_POST['date'];
+
+        if (!empty($isBuilding)){
+            header('Location: ../vues/resumeTravel.php?building=1');
+        } else {
+            header('Location: ../vues/choixRegion.php');
+        }
         
-        $_SESSION['date']['start_travel'] = [
-            'jour' => $_GET['jour'],
-            'mois' => $_GET['mois'],
-            'annee' => $_GET['annee'],
-            'date_entiere' => $_GET['annee'] . '-' . $_GET['mois'] . '-' .$_GET['jour']
-        ];
-    
-        header('Location: ../vues/choixRegion.php');
-
+    } else {
+        // ERREUR, la date de réservation ne peut pas être dans le passé
     }
 
 
+} else {
+    header('Location: ../vues/index.php');
 }
