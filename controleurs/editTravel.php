@@ -24,6 +24,7 @@ if (!empty($_POST['options'])){
                         break;
                     case 4:
                         $Reservation->deleteReservationHebergement($key);
+                        header('location: ../vues/createTravel.php');
                         break;
                     default:
                         break;

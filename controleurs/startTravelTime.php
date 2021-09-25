@@ -24,7 +24,7 @@ if (!empty($_POST['date']) && isValidDate($_POST['date'])
         }
         
     } else {
-        // ERREUR, la date de réservation ne peut pas être dans le passé
+        header('Location: ../vues/index.php');
     }
 
 
