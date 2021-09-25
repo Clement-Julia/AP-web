@@ -37,8 +37,8 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
                     foreach ($ReservationVoyage->getReservationHebergement() as $reservationHebergement){
                         $infos = $reservationHebergement->getHebergementById($reservationHebergement->getIdHebergement());
                         ?>
-                        <div class="mx-3 my-3">
-                            <div>
+                        <div class="mx-3 my-3 ct-resume-container">
+                            <div class="ct-resume">
                                 <div>Etape : <?=$index?></div>
                                 <div>Ville : <?=$infos['villeNom']?></div>
                                 <div>Hébergement : <?=$infos['nomHebergement']?></div>
@@ -47,6 +47,19 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
                                 <div>Date de départ : <?=$reservationHebergement->getDateFin()?></div>
                                 <div>Code réservation : <?=$reservationHebergement->getCodeReservation()?></div>
                                 <div>Prix : <?=$reservationHebergement->getPrix()?></div>
+                            </div>
+                            <div class="edit-container">
+                                <button class="btn btn-sm btn-warning editButton">Modifier</button>
+                                <form action="../controleurs/editTravel.php" method="POST" class="editForm">
+                                    <label for="options">Modifier :</label>
+                                    <select name="options[<?=$reservationHebergement->getIdReservationHebergement()?>]">
+                                        <option value="1">La date du voyage</option>
+                                        <option value="2">La ville</option>
+                                        <option value="3">L'hotel</option>
+                                        <option value="4">Supprimer cette étape</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-warning">Modifier</button>
+                                </form>
                             </div>
                         </div>
                         <?php
@@ -80,6 +93,8 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
 <?php } else { ?>
     <div class="alert alert-warning">Un problème est survenu avec les paramètres</div>
 <?php } ?>
+
+<script src="../js/createTravel.js"></script>
 
 <?php
 require_once "footer.php";

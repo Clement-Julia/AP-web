@@ -24,7 +24,7 @@ class ReservationHebergement extends Modele {
             $this->dateDebut = $infoReservation["dateDebut"];
             $this->dateFin = $infoReservation["dateFin"];
             $this->prix = $infoReservation["prix"];
-            $this->codeReservation = $infoReservation["codeReservation"];
+            $this->codeReservation = $infoReservation["code_reservation"];
             $this->nbJours = $infoReservation["nbJours"];
             $this->idVoyage = $infoReservation["idVoyage"];
             $this->idUtilisateur = $infoReservation["idUtilisateur"];
@@ -132,6 +132,58 @@ class ReservationHebergement extends Modele {
         $requete = $this->getBdd()->prepare("SELECT villes.idRegion, villes.libelle as villeNom, hebergement.libelle as nomHebergement, hebergement.description FROM hebergement INNER JOIN reservations_hebergement USING(idHebergement) INNER JOIN villes USING(idVille) INNER JOIN regions USING(idRegion) WHERE idHebergement = ?");
         $requete->execute([$hebergementId]);
         return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // ELLE EST RIDICULE CETTE FONCTION ???? XD A REVOIR 
+    public function getReservationHebergementById($reservationHebergementId){
+        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement WHERE idReservationHebergement = ?");
+        $requete->execute([$reservationHebergementId]);
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteReservationHebergement($reservationHebergementId){
+        $requete = $this->getBdd()->prepare("DELETE * FROM reservations_hebergement WHERE idReservationHebergement = ?");
+        $requete->execute([$reservationHebergementId]);
+    }
+
+    public function getIdVilleByHebergementId($idHebergement){
+        $requete = $this->getBdd()->prepare("SELECT idVille FROM reservations_hebergement INNER JOIN hebergement USING(idHebergement) WHERE idHebergement = ?");
+        $requete->execute([$idHebergement]);
+        return $requete->fetch(PDO::FETCH_ASSOC)['idVille'];
+    }
+
+    public function getFreeHebergement($idVille, $dateDebut, $nbJours){
+
+        try {
+            $date = new DateTime($dateDebut);
+        } catch (\Throwable $th) {
+            return false;
+        }
+
+        $requete = $this->getBdd()->prepare("SELECT * FROM `hebergement` LEFT JOIN reservations_hebergement USING(idHebergement) WHERE idVille = ?");
+        $requete->execute([$idVille]);
+        $hebergements = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+        $array = [];
+
+        foreach($hebergements as $hebergement){
+            if(!$hebergement['idReservationHebergement'] == null){
+                $date = new DateTime($dateDebut);
+                $Reservation = new ReservationHebergement();
+                $isBooked = $Reservation->isItBookedForThisDate($date->format('Y-m-d'), $nbJours, $hebergement['idHebergement']);
+
+                if (!empty($isBooked)){
+                    $array[] = new Hebergement($hebergement['idHebergement']);
+                }
+
+            } else {
+                $array[] = new Hebergement($hebergement['idHebergement']);
+            }
+
+        }
+
+        return $array;
+
     }
 
 }

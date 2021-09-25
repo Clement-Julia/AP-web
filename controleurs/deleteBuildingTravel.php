@@ -9,6 +9,8 @@ if (!empty($_POST['cancel']) && is_numeric($_POST['cancel'])){
     // L'utilisateur ne continue pas son voyage, on le supprime et on le redirige
     $ReservationVoyage = new ReservationVoyage();
     $ReservationVoyage->deleteBuildingTravelByUserId($_SESSION['idUtilisateur']);
-    header("location: ../vues/choixRegion.php");
-
+    header("location: ../vues/index.php");
+    
+} else {
+    header("location: ../vues/createTravel.php");
 }
