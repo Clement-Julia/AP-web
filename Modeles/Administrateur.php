@@ -58,4 +58,20 @@ class Admin extends Modele {
         return $this->idRole;
     }
 
+    public function getAllUsers(){
+        $requete = $this->getBdd()->prepare("SELECT * FROM utilisateurs");
+        $requete->execute();
+        $AllUser = $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $AllUser;
+    }
+
+    public function updateUser($email, $nom, $prenom, $age, $id){
+        $requete = $this->getBdd()->prepare("UPDATE utilisateurs set email = ?, nom = ?, prenom = ?, age = ? where idUtilisateur = ?");
+        $requete->execute([$email, $nom, $prenom, $age, $id]);
+    }
+
+    public function supUser($id){
+        $requete = $this->getBdd()->prepare("DELETE from utilisateurs where idUtilisateur = ?");
+        $requete->execute([$id]);
+    }
 }

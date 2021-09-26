@@ -75,6 +75,24 @@ $infos = $region->getAllregion();
 
             <div class="form-group text-center mt-4">
                 <button type="submit" class="btn btn-warning">Modifier</button>
+
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                Supprimer
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                Vous êtes sur le point de supprimer <?=$_GET["libelle"]?>
+                                <br> Êtes-vous sûr ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
+                                <a href="../controleurs/supVille.php?libelle=<?=$_GET["libelle"]?>"><button type="button" class="btn btn-danger">Oui</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </form>

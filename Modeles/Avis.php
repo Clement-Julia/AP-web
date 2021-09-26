@@ -72,7 +72,7 @@ class Avis extends Modele {
     }
 
     public function getHebergementbynonAvis($idUtilisateur){
-        $requete = $this->getBdd()->prepare("SELECT hebergement.* FROM hebergement inner join (reservations_hotels inner join utilisateurs using(idUtilisateur)) using(idHebergement) where idUtilisateur = ?");
+        $requete = $this->getBdd()->prepare("SELECT hebergement.* FROM hebergement inner join reservations_hebergement using(idHebergement) inner join utilisateurs using(idUtilisateur) LEFT join avis using(idHebergement) where utilisateurs.idUtilisateur = ? and (avis.idUtilisateur is null or avis.idUtilisateur != utilisateurs.idUtilisateur)");
         $requete->execute([$idUtilisateur]);
         $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);
         return $infoAvis;

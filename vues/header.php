@@ -1,6 +1,5 @@
 <?php
 require_once "../controleurs/traitement.php";
-
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +24,7 @@ require_once "../controleurs/traitement.php";
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                 <a class="nav-link" href="createTravel.php">Créez votre voyage</a>
-                <?=(!empty($_SESSION["idRole"]) == 2 ? "<a href='../admin' class='nav-link'>Accès admin</a>" : "");?>
+                <?=(!empty($_SESSION["idRole"]) && $_SESSION["idRole"] == 2 ? "<a href='../admin' class='nav-link'>Accès admin</a>" : "");?>
             </div>
         </div>
 

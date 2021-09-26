@@ -4,17 +4,19 @@ $hebergement = new Hebergement();
 $hotels = $hebergement->getAllHotel();
 
 $villes = new Ville();
-$infos = $villes->getAllville();
-?>
+$infos_v = $villes->getAllville();
 
+$options = new Option();
+$infos_o = $options->getAllOption();
+?>
 
 <div class="container">
     <h1 class="mb-3">Ajout d'un hébergement :</h1>
     <form method="POST" action="../controleurs/addHotel.php" enctype="multipart/form-data">
 
         <div class="form-group">
-            <label for="name">Nom : </label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Entrez le nom d'un hébergement" required>
+            <label for="libelle">Nom : </label>
+            <input type="text" class="form-control" name="libelle" id="name" placeholder="Entrez le nom d'un hébergement" required>
         </div>
 
         <div class="form-group">
@@ -27,7 +29,7 @@ $infos = $villes->getAllville();
             <select class="custom-select" aria-label="Default select example" name="ville" required>
                 <option selected disabled>Selectionnez le nom de la ville</option>
                 <?php
-                    foreach($infos as $info){
+                    foreach($infos_v as $info){
                         ?>
                             <option value="<?= $info["idVille"] ?>"><?= $info["libelle"] ?></option>
                         <?php
@@ -43,62 +45,18 @@ $infos = $villes->getAllville();
 
         <div class="my-4">
             <label>Extras : </label>
-            <div class="custom-control custom-switch mx-2">
-                <input type="checkbox" class="custom-control-input" name="television" id="customSwitch1">
-                <label class="custom-control-label" for="customSwitch1">Télévision</label>
-                <br>
-            </div>
-
-            <div class="custom-control custom-switch m-2">
-                <input type="checkbox" class="custom-control-input" name="lave_linge" id="customSwitch2">
-                <label class="custom-control-label" for="customSwitch2">Lave linge</label>
-            </div>
-
-            <div class="custom-control custom-switch m-2">
-                <input type="checkbox" class="custom-control-input" name="seche_linge" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">Sèche ling</label>
-            </div>
-
-            <div class="custom-control custom-switch m-2">
-                <input type="checkbox" class="custom-control-input" name="cuisine" id="customSwitch4">
-                <label class="custom-control-label" for="customSwitch4">Cuisine</label>
-            </div>
-
-            <div class="custom-control custom-switch m-2">
-                <input type="checkbox" class="custom-control-input" name="réfrigirateur" id="customSwitch5">
-                <label class="custom-control-label" for="customSwitch5">Réfrigirateur</label>
-            </div>
-
-            <div class="custom-control custom-switch m-2">
-                <input type="checkbox" class="custom-control-input" name="four" id="customSwitch6">
-                <label class="custom-control-label" for="customSwitch6">Four</label>
-            </div>
-
-            <div class="custom-control custom-switch m-2">
-                <input type="checkbox" class="custom-control-input" name="parking" id="customSwitch7">
-                <label class="custom-control-label" for="customSwitch7">Parking</label>
-            </div>
-
-            <div class="custom-control custom-switch m-2">
-                <input type="checkbox" class="custom-control-input" name="linge_de_maison" id="customSwitch8">
-                <label class="custom-control-label" for="customSwitch8">Linge de l'hotel</label>
-            </div>
-
-            <div class="custom-control custom-switch m-2">
-                <input type="checkbox" class="custom-control-input" name="vaisselle" id="customSwitch9">
-                <label class="custom-control-label" for="customSwitch9">Vaisselle</label>
-            </div>
-
-            <div class="custom-control custom-switch m-2">
-                <input type="checkbox" class="custom-control-input" name="cafetiere" id="customSwitch10">
-                <label class="custom-control-label" for="customSwitch10">Cafetière</label>
-            </div>
-
-            <div class = "custom-control custom-switch m-2">
-                <input type="checkbox" class="custom-control-input" name="climatisation" id="customSwitch11">
-                <label class="custom-control-label" for="customSwitch11">Climatisation</label>
-            </div>
-
+            <?php
+            $i = 1;
+            foreach($infos_o as $info){
+                ?>
+                <div class="custom-control custom-switch mx-2">
+                    <input type="checkbox" class="custom-control-input" name="options[]" id="customSwitch<?=$i?>" value=<?= $info["idOption"]?>>
+                    <label class="custom-control-label mb-1" for="customSwitch<?=$i?>"><?= $info["libelle"] ?></label>
+                </div>
+                <?php
+                $i++;
+            }
+            ?>
         </div>
 
         <nav>
@@ -125,6 +83,11 @@ $infos = $villes->getAllville();
                     <input type="text" class="form-control" name="link" id="link" placeholder="Entrez le lien">
                 </div>
             </div>
+        </div>
+
+        <div class="form-group mt-4">
+            <input type="file" name="file[]" id="file" class="inputfile inputfile-1 d-none" data-multiple-caption="{count} fichiers" multiple />
+            <label for="file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choisissez une image&hellip;</span></label>
         </div>
 
         <div class="form-group text-center mt-4">

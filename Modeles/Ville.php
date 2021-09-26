@@ -8,6 +8,7 @@ class Ville extends Modele {
     private $longitude;
     private $idRegion;
     private $description;
+    private $uuid;
     private $hebergements = []; //tableau d'objet hebergement
 
     public function __construct($idVille = null){
@@ -24,6 +25,7 @@ class Ville extends Modele {
             $this->longitude = $infoVille["longitude"];
             $this->description = $infoVille["description"];
             $this->idRegion = $infoVille["idRegion"];
+            $this->uuid = $infoVille["uuid"];
 
             $requete = $this->getBdd()->prepare("SELECT * FROM hebergement WHERE idVille = ?");
             $requete->execute([$idVille]);
@@ -49,6 +51,7 @@ class Ville extends Modele {
         $this->longitude = $longitude;
         $this->longitude = $idRegion;
         $this->description = $description;
+        $this->uuid = $uuid;
 
         // voir si ici aussi on requete pour les hebergements avec initialisation de ceux ci ?
 
@@ -82,6 +85,10 @@ class Ville extends Modele {
         return $this->hebergements;
     }
 
+    public function getUuid(){
+        return $this->uuid;
+    }
+
     public function getRegion($idVille){
         $requete = $this->getBdd()->prepare("SELECT regions.* FROM regions inner join villes using(idRegion) where idVille = ?");
         $requete->execute([$idVille]);
@@ -89,9 +96,9 @@ class Ville extends Modele {
         return $infoRegion_Ville;
     }
 
-    public function addVille($libelle, $latitude, $longitude, $region, $description){
-        $requete = $this->getBdd()->prepare("INSERT into villes(libelle, latitude, longitude, idRegion, description) values(?,?,?,?,?)");
-        $requete->execute([$libelle, $latitude, $longitude, $region, $description]);
+    public function addVille($libelle, $latitude, $longitude, $region, $description, $uuid){
+        $requete = $this->getBdd()->prepare("INSERT into villes(libelle, latitude, longitude, idRegion, description, uuid) values(?,?,?,?,?,?)");
+        $requete->execute([$libelle, $latitude, $longitude, $region, $description, $uuid]);
     }
 
     public function countVille(){
