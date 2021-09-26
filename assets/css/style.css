@@ -350,3 +350,10 @@
     border-radius: 5px;
     box-shadow: 2px 2px 10px gray;
   }
+
+
+
+/*----------------------------Avis----------------------------*/
+.test.active{
+    background-color: rgba(128, 128, 128, 0.171) !important;
+}
