@@ -35,6 +35,27 @@
     overflow-y: auto;
 }
 
+.ct-resume-container{
+    display: flex;
+}
+.ct-resume{
+    width: 60%;
+}
+.edit-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.editForm{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+
 .town-item {
     margin: 15px;
     height: 75px;
@@ -237,13 +258,19 @@
 .test{
     background-color: red;
 }
-.test2{
+.grabCursor{
     cursor: grab;
+}
+.standardCursor{
+    cursor:auto;
 }
 .calendar-toggle{
     background-color: aqua;
 }
-
+.booking {
+    background-color: rgba(126, 52, 52, 0.507);
+    cursor: not-allowed!important;
+}
 
 
 
