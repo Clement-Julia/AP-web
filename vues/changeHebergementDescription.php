@@ -9,10 +9,12 @@ if (is_numeric($_GET['idHebergement'])){
     $idRegionReservation = $Reservation->getIdRegionByHebergementId($Reservation->getIdHebergement());
     $Hebergement = new Hebergement($_GET["idHebergement"]);
     $OldHebergement = new Hebergement($Reservation->getIdHebergement());
-    $idRegionHebergement = $Hebergement->getIdRegionByIdHebergement($Hebergement->getIdHebergement());
+    if (!$Hebergement->getIdHebergement() == null){
+        $idRegionHebergement = $Hebergement->getIdRegionByIdHebergement($Hebergement->getIdHebergement());
+    }
 
     // Si l'hôtel est bien dans la bonne région ...
-    if($idRegionReservation === $idRegionHebergement){
+    if(!empty($idRegionHebergement) && $idRegionReservation === $idRegionHebergement){
 
         // On vérifie que l'hôtel est réellement disponible
         $dateDebut = new DateTime($Reservation->getDateDebut());
@@ -84,7 +86,7 @@ if (is_numeric($_GET['idHebergement'])){
     <?php }
         
     } else {?>
-        <div class="alert alert-warning">Un problème est survenu, l'hebergement choisi n'est pas disponible dans la région de votre voyage</div>
+        <div class="alert alert-warning">Un problème est survenu, l'hebergement choisi n'est pas disponible dans la région de votre voyage ou n'existe simplement pas</div>
 <?php }
 
 } else { ?>
