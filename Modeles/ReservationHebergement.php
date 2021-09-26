@@ -20,7 +20,7 @@ class ReservationHebergement extends Modele {
             $requete->execute([$idReservationHebergement]);
             $infoReservation =  $requete->fetch(PDO::FETCH_ASSOC);
 
-            $this->idReservationHotel = $infoReservation["idReservationHebergement"];
+            $this->idReservationHebergement = $infoReservation["idReservationHebergement"];
             $this->dateDebut = $infoReservation["dateDebut"];
             $this->dateFin = $infoReservation["dateFin"];
             $this->prix = $infoReservation["prix"];
@@ -152,6 +152,12 @@ class ReservationHebergement extends Modele {
         return $requete->fetch(PDO::FETCH_ASSOC)['idVille'];
     }
 
+    public function getIdRegionByHebergementId($idHebergement){
+        $requete = $this->getBdd()->prepare("SELECT idRegion FROM reservations_hebergement INNER JOIN hebergement USING(idHebergement) INNER JOIN villes USING(idVille) WHERE idHebergement = ?");
+        $requete->execute([$idHebergement]);
+        return $requete->fetch(PDO::FETCH_ASSOC)['idRegion'];
+    }
+
     public function getFreeHebergement($idVille, $dateDebut, $nbJours){
 
         try {
@@ -184,6 +190,12 @@ class ReservationHebergement extends Modele {
 
         return $array;
 
+    }
+
+    public function updateReservationHebergement($codeReservation, $prix, $dateDebut, $dateFin, $nbJours, $idVoyage, $idUtilisateur, $idHebergement, $reservationHebergementId){
+
+        $requete = $this->getBdd()->prepare("UPDATE reservations_hebergement SET code_reservation = ?, prix = ?, dateDebut = ?, dateFin = ?, nbjours = ?, idVoyage = ?, idUtilisateur = ?, idHebergement = ? WHERE idReservationHebergement = ?");
+        $requete->execute([$codeReservation, $prix, $dateDebut, $dateFin, $nbJours, $idVoyage, $idUtilisateur, $idHebergement, $reservationHebergementId]);
     }
 
 }

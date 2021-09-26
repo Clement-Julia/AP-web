@@ -98,7 +98,7 @@ class Hebergement extends Modele {
 
         $array = [];
         foreach ($requete->fetchAll(PDO::FETCH_ASSOC) as $reservation){
-            echo "<br>";
+            
             $begin = new DateTime( $reservation['dateDebut'] );
             $end = new DateTime( $reservation['dateDebut'] );
             $end = $end->modify( '+' . $reservation['nbJours'] . ' day' );

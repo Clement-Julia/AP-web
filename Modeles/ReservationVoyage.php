@@ -136,4 +136,13 @@ class ReservationVoyage extends Modele {
         $requete->execute([$idUtilisateur, $idUtilisateur, true]);
     }
 
+    public function updatePrix($idVoyage){
+        $requete = $this->getBdd()->prepare("SELECT SUM(prix) as prix FROM `reservations_hebergement` WHERE idVoyage = ?");
+        $requete->execute([$idVoyage]);
+        $prixTotal = $requete->fetch(PDO::FETCH_ASSOC)['prix'];
+        
+        $requete = $this->getBdd()->prepare("UPDATE reservations_voyages SET prix = ? WHERE idReservationVoyage = ?");
+        $requete->execute([$prixTotal, $idVoyage]);
+    }
+
 }

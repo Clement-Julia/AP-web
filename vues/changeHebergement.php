@@ -46,7 +46,10 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
 
         <?php
 
-        }
+        } else { ?>
+            <div class="alert alert-warning">Aucun hôtel n'est libre pour cette date</div>
+            
+        <?php }
 
     }
 
