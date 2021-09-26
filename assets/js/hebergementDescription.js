@@ -4,9 +4,9 @@ var prix = document.getElementById('prix').dataset.prix;
 var lastDayOfMonth = document.getElementById('table1').dataset.nbjour;
 var travelStartDate = document.getElementById('table1').dataset.date;
 var th = document.getElementById('table1');
-var tds = th.querySelectorAll('td');
+var tds = th.querySelectorAll('td div.grabCursor');
 var th2 = document.getElementById('table2');
-var tds2 = th2.querySelectorAll('td');
+var tds2 = th2.querySelectorAll('td div.grabCursor');
 var submitButton = document.getElementById('submit');
 var submitButtonYes = document.getElementById('submitYes');
 var submitButtonNo = document.getElementById('submitNo');
@@ -14,7 +14,7 @@ var hiddenDiv = document.getElementById('hidden');
 
 tds.forEach(item => {
 
-    var date = item.querySelector('div').outerText;
+    var date = item.outerText;
 
     if (date > th.dataset.date){
         item.addEventListener('click', () => {
@@ -46,7 +46,7 @@ tds.forEach(item => {
 
 tds2.forEach(item => {
 
-    var date = item.querySelector('div').outerText;
+    var date = item.outerText;
 
     if (!item.classList.contains('calendar__overmonth')){
         item.addEventListener('click', () => {
@@ -77,7 +77,7 @@ tds2.forEach(item => {
 });
 
 submitButton.addEventListener('click', () => {
-    if (prix != 0){
+    if (nbNuits != 0){
         submitButton.style.display = "none";
         hiddenDiv.classList.remove('d-none');
     }
@@ -86,6 +86,6 @@ submitButtonYes.addEventListener('click', () => {
     document.location.href="../controleurs/addHebergement.php?idHebergement=" + idHebergement + "&nbNuit=" + nbNuits + "&continue=1"; 
 })
 submitButtonNo.addEventListener('click', () => {
-    document.location.href="../controleurs/addHebergement.php?idHebergement=" + idHebergement + "&nbNuit=" + nbNuits + "&continue=0";
+    document.location.href="../controleurs/addHebergement.php?idHebergement=" + idHebergement + "&nbNuit=" + nbNuits + "&continue=false";
 })
 
