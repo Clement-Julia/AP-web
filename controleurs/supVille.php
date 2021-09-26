@@ -5,7 +5,7 @@ $ville = new Ville();
 if(!empty($_GET["libelle"])){
     try{
         $ville->supVille($_GET["libelle"]);
-        header("location:../admin/supVille.php");
+        header("location:../admin/modifVille.php");
     }catch(exception $e){
         header("location:../admin/index.php");
     }

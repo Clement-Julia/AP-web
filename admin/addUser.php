@@ -4,7 +4,7 @@ require_once "headerAdmin.php";
 
 <div class="container">
     <h1>Création d'un utilisateur :</h1>
-    <form method="POST" action="../controleurs/addUser.php">
+    <form method="POST" action="../controleurs/inscription.php">
     
         <div class="form-group my-3">
             <label for="email" class="mb-1">Email : </label>

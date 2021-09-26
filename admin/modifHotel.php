@@ -2,6 +2,9 @@
 require_once "headerAdmin.php";
 $villes = new Ville();
 $infos = $villes->getAllville();
+
+$options = new Option();
+$infos_o = $options->getAllOption();
 ?>
 
 <div class="container">
@@ -65,62 +68,23 @@ $infos = $villes->getAllville();
 
             <div class="my-4">
                 <label>Extras : </label>
-                <div class="custom-control custom-switch mx-2">
-                    <input type="checkbox" class="custom-control-input" name="television" id="customSwitch1" <?= ($info_hotel["television"] == 1) ? "checked" : "" ?>>
-                    <label class="custom-control-label" for="customSwitch1">Télévision</label>
-                    <br>
-                </div>
-
-                <div class="custom-control custom-switch m-2">
-                    <input type="checkbox" class="custom-control-input" name="lave_linge" id="customSwitch2" <?= ($info_hotel["lave_linge"] == 1) ? "checked" : "" ?>>
-                    <label class="custom-control-label" for="customSwitch2">Lave linge</label>
-                </div>
-
-                <div class="custom-control custom-switch m-2">
-                    <input type="checkbox" class="custom-control-input" name="seche_linge" id="customSwitch3" <?= ($info_hotel["seche_linge"] == 1) ? "checked" : "" ?>>
-                    <label class="custom-control-label" for="customSwitch3">Sèche ling</label>
-                </div>
-
-                <div class="custom-control custom-switch m-2">
-                    <input type="checkbox" class="custom-control-input" name="cuisine" id="customSwitch4" <?= ($info_hotel["cuisine"] == 1) ? "checked" : "" ?>>
-                    <label class="custom-control-label" for="customSwitch4">Cuisine</label>
-                </div>
-
-                <div class="custom-control custom-switch m-2">
-                    <input type="checkbox" class="custom-control-input" name="réfrigirateur" id="customSwitch5" <?= ($info_hotel["refrigirateur"] == 1) ? "checked" : "" ?>>
-                    <label class="custom-control-label" for="customSwitch5">Réfrigirateur</label>
-                </div>
-
-                <div class="custom-control custom-switch m-2">
-                    <input type="checkbox" class="custom-control-input" name="four" id="customSwitch6" <?= ($info_hotel["four"] == 1) ? "checked" : "" ?>>
-                    <label class="custom-control-label" for="customSwitch6">Four</label>
-                </div>
-
-                <div class="custom-control custom-switch m-2">
-                    <input type="checkbox" class="custom-control-input" name="parking" id="customSwitch7" <?= ($info_hotel["parking_gratuit"] == 1) ? "checked" : "" ?>>
-                    <label class="custom-control-label" for="customSwitch7">Parking</label>
-                </div>
-
-                <div class="custom-control custom-switch m-2">
-                    <input type="checkbox" class="custom-control-input" name="linge_de_maison" id="customSwitch8" <?= ($info_hotel["linge_de_maison"] == 1) ? "checked" : "" ?>>
-                    <label class="custom-control-label" for="customSwitch8">Linge de l'hotel</label>
-                </div>
-
-                <div class="custom-control custom-switch m-2">
-                    <input type="checkbox" class="custom-control-input" name="vaisselle" id="customSwitch9" <?= ($info_hotel["vaiselle"] == 1) ? "checked" : "" ?>>
-                    <label class="custom-control-label" for="customSwitch9">Vaisselle</label>
-                </div>
-
-                <div class="custom-control custom-switch m-2">
-                    <input type="checkbox" class="custom-control-input" name="cafetiere" id="customSwitch10" <?= ($info_hotel["cafetiere"] == 1) ? "checked" : "" ?>>
-                    <label class="custom-control-label" for="customSwitch10">Cafetière</label>
-                </div>
-
-                <div class = "custom-control custom-switch m-2">
-                    <input type="checkbox" class="custom-control-input" name="climatisation" id="customSwitch11" <?= ($info_hotel["climatisation"] == 1) ? "checked" : "" ?>>
-                    <label class="custom-control-label" for="customSwitch11">Climatisation</label>
-                </div>
-
+                <?php
+                $infos_c = $options->getOptionChecked($info_hotel["idHebergement"]);
+                $i = 1;
+                $tab = [];
+                foreach($infos_c as $checked){
+                    $tab[] = $checked["idOption"];
+                }
+                foreach($infos_o as $info){
+                    ?>
+                    <div class="custom-control custom-switch mx-2">
+                        <input type="checkbox" class="custom-control-input" name="options[]" id="customSwitch<?=$i?>" value=<?= $info["idOption"]?> <?= (in_array($info["idOption"], $tab)) ? "checked" : "" ?>>
+                        <label class="custom-control-label mb-1" for="customSwitch<?=$i?>"><?= $info["libelle"] ?></label>
+                    </div>
+                    <?php
+                    $i++;
+                }
+                ?>
             </div>
 
             <div class="form-group">
@@ -140,6 +104,24 @@ $infos = $villes->getAllville();
 
             <div class="form-group text-center mt-4">
                 <button type="submit" class="btn btn-warning">Modifier</button>
+
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                Supprimer
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                Vous êtes sur le point de supprimer <?=$_GET["libelle"]?>
+                                <br> Êtes-vous sûr ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
+                                <a href="../controleurs/supHotel.php?libelle=<?=$_GET["libelle"]?>"><button type="button" class="btn btn-danger">Oui</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </form>

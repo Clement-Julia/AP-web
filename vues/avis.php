@@ -3,8 +3,6 @@ require_once "header.php";
 $avis = new Avis();
 $luas = $avis->getHebergementbynonAvis($_SESSION["idUtilisateur"]);
 $alls = $avis->getAllAvis();
-$tab = [];
-print_r($tab);
 ?>
 
 <div class="container mt-3">
@@ -22,24 +20,20 @@ print_r($tab);
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade" id="pills-0" role="tabpanel" aria-labelledby="pills-0-tab">
             <?php
-                foreach($alls as $all){
-                    foreach($luas as $lua){
-                        if($all["idHebergement"] != $lua["idHebergement"] || empty($all["idHebergement"])){
-                            ?>
-                            <div class ="col-6 mt-3">
-                                <div class="card text-center" style="width: 30rem;">
-                                    <a href="#" class="mb-3 lien">
-                                        <!-- <img src="<?=$all["photo"]?>" class="card-img-top" style= "height: 300px"> -->
-                                        <div class="card-body">
-                                            <h5 class="card-title"><?=$lua["libelle"]?></h5>
-                                            <p class="card-text"><?= $lua["description"]?></p>
-                                        </div>
-                                    </div>
-                                </a>
+                foreach($luas as $lua){
+                    ?>
+                    <div class ="col-6 mt-3">
+                        <div class="card text-center" style="width: 30rem;">
+                            <a href="#" class="mb-3 lien">
+                                <!-- <img src="<?=$all["photo"]?>" class="card-img-top" style= "height: 300px"> -->
+                                <div class="card-body">
+                                    <h5 class="card-title"><?=$lua["libelle"]?></h5>
+                                    <p class="card-text"><?= $lua["description"]?></p>
+                                </div>
                             </div>
-                            <?php
-                        }
-                    }
+                        </a>
+                    </div>
+                    <?php
                 }
             ?>
         </div>
@@ -48,7 +42,6 @@ print_r($tab);
             <?php
             
                 foreach($alls as $all){
-                    $tab[] = $all["idHebergement"];
                     ?>
                     <div class ="col-6 mt-3">
                         <div class="card text-center" style="width: 30rem;">
