@@ -9,15 +9,17 @@ if (!empty($_POST['options'])){
             
             $Reservation = new ReservationHebergement();
             $isReservation = $Reservation->getReservationHebergementById($key);
-            
-            if(!empty($isReservation)){
+            if(!empty($isReservation) && ($_SESSION['idUtilisateur'] == $isReservation['idUtilisateur'])){
+
                 // Variable $_SESSION pour que l'utilisateur ne voit pas cette transmision de donnée
                 $_SESSION['idReservationHebergement'] = $key;
 
                 switch (intval($value)){
                     case 1:
+                        header('location: ../vues/changeDate.php');
                         break;
                     case 2:
+                        header('location: ../vues/changeVille.php');
                         break;
                     case 3:
                         header('location: ../vues/changeHebergement.php');

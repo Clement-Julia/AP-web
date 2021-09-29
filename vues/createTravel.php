@@ -1,6 +1,7 @@
 <?php
 require_once "header.php";
 
+unset($_SESSION['idReservationHebergement']);
 // (SECURITE) On vérifie que le paramètre récupéré est bien du type INT attendu
 if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET['idRegion'])){
 

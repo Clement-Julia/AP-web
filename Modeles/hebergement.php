@@ -91,10 +91,16 @@ class Hebergement extends Modele {
         return $requete->fetch(PDO::FETCH_ASSOC)['idRegion'];
     }
 
-    public function getWhenHebergementIsBooking(int $idHebergement, $date){
+    public function getWhenHebergementIsBooking(int $idHebergement, $date = null){
 
-        $requete = $this->getBdd()->prepare("SELECT dateDebut, nbJours FROM reservations_hebergement INNER JOIN reservations_voyages ON idVoyage = idReservationVoyage WHERE idHebergement = ? AND (? BETWEEN dateDebut AND dateFIn OR dateDebut > ?) AND is_building = ?");
-        $requete->execute([$idHebergement, $date, $date, false]);
+        if ($date == null){
+            $requete = $this->getBdd()->prepare("SELECT dateDebut, nbJours FROM reservations_hebergement INNER JOIN reservations_voyages ON idVoyage = idReservationVoyage WHERE idHebergement = ? AND is_building = ?");
+            $requete->execute([$idHebergement, false]);
+        } else {
+            $requete = $this->getBdd()->prepare("SELECT dateDebut, nbJours FROM reservations_hebergement INNER JOIN reservations_voyages ON idVoyage = idReservationVoyage WHERE idHebergement = ? AND (? BETWEEN dateDebut AND dateFIn OR dateDebut > ?) AND is_building = ?");
+            $requete->execute([$idHebergement, $date, $date, false]);
+        }
+        
 
         $array = [];
         foreach ($requete->fetchAll(PDO::FETCH_ASSOC) as $reservation){

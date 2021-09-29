@@ -4,13 +4,28 @@ require_once "header.php";
 // (SECURITE) On vérifie que le paramètre récupéré est bien du type INT attendu
 if (is_numeric($_SESSION['idReservationHebergement'])){
 
-    
     $Reservation = new ReservationHebergement($_SESSION['idReservationHebergement']);
     
-    
+    // L'utilisateur actuel est "propriétaire" de la réservation qu'il tente de modifier
     if($Reservation->getIdUtilisateur() == $_SESSION['idUtilisateur']){
         
-        $idVille = $Reservation->getIdVilleByHebergementId($Reservation->getIdHebergement());
+        // Si $_GET['idVille'], alors on vient de la page changeVille (choix 2 lors de la modification d'une étape) sinon on fait comme d'habitude
+        if (!empty($_GET['idVille']) && is_numeric($_GET['idVille'])){
+            $idVille = $_GET['idVille'];
+
+            $Ville = new Ville();
+            $idRegionVille = $Ville->getRegion($idVille)['idRegion'];
+            $idRegionHebergement = $Reservation->getIdRegionByHebergementId($Reservation->getIdHebergement());
+
+            // Si l'utilisateur tente de changer manuellement le $_GET['idVille']
+            if($idRegionVille != $idRegionHebergement){
+                header('location: changeVille.php');
+            }
+
+        } else {
+            $idVille = $Reservation->getIdVilleByHebergementId($Reservation->getIdHebergement());
+        }
+
         // Il faut vérifier et afficher uniquement les hôtels libres sur cet interval
         $freeHebergement = $Reservation->getFreeHebergement($idVille, $Reservation->getDateDebut(), $Reservation->getNbJours());
         
