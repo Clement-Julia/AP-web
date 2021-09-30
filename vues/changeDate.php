@@ -147,10 +147,10 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
             <div id="cd-resume-container">
                 <!-- Le résumé avant / après  -->
                 <div>
-                    <div>Date d'arrivée : </div>
-                    <div>Date de départ : </div>
-                    <div>Nombre de jour : </div>
-                    <div id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>" >Prix : </div>
+                    <div>Date d'arrivée : <?=$Reservation->getDateDebut()?></div>
+                    <div>Date de départ : <?=$Reservation->getDateFin()?></div>
+                    <div>Nombre de jour : <?=$Reservation->getNbJours()?></div>
+                    <div id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>" >Prix : <?=$Reservation->getPrix()?></div>
                 </div>
                 <div>
                     <div>Date d'arrivée : <span id="d-start"></span></div>
