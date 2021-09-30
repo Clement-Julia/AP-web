@@ -7,11 +7,12 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
 
     $Hebergement = new Hebergement($Reservation->getIdHebergement());
 
-    $Month = new DateTime($Reservation->getDateDebut());
-    $PreviousMonth = new DateTime($Month->format('Y-m-d') . '-1 month');
-    $NextMonth = new DateTime($Month->format('Y-m-d') . '+1 month');
+    $dateDebut = new DateTime($Reservation->getDateDebut());
+    $dateFin = new DateTime($Reservation->getDateFin());
+    $PreviousMonth = new DateTime($dateDebut->format('Y-m-d') . '-1 month');
+    $NextMonth = new DateTime($dateDebut->format('Y-m-d') . '+1 month');
 
-    $Calendar = new Month($Month->format('m'), $Month->format('y'));
+    $Calendar = new Month($dateDebut->format('m'), $dateDebut->format('y'));
     $PreviousCalendar = new Month($PreviousMonth->format('m'), $PreviousMonth->format('y'));
     $NextCalendar = new Month($NextMonth->format('m'), $NextMonth->format('y'));
 
@@ -21,6 +22,8 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
 
     // Variante de la fonction, sans la var $date on récupère toutes les dates indisponibles de l'hôtel
     $bookingDates = $Hebergement->getWhenHebergementIsBooking($Hebergement->getIdHebergement());
+
+    print_r($bookingDates);
 
     if($Reservation->getIdUtilisateur() == $_SESSION['idUtilisateur']){
 
@@ -38,9 +41,41 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                 <!-- Les 3 calendriers -->
 
 
+                <div>
+                    <div class="calendar">
+                        <?= $PreviousCalendar->toString();?>
+                        <table data-nbjour="" data-date="" id="table1" class="calendar__table calendar__table--<?=$PreviousCalendar->getWeeks();?>weeks">
+                            <tr>
+                                <?php foreach($PreviousCalendar->days as $day){?>
+                                    <th>
+                                        <div><?=$day;?></div>
+                                    </th>
+                                <?php } ?>
+                            </tr>
+                        <?php for ($i = 0; $i < $PreviousCalendar->getWeeks(); $i++){ ?>
+                            <tr>
+                                <?php foreach($PreviousCalendar->days as $k => $day){
+                                    $date = (clone $previousLastmonday)->modify("+" . ($k + $i * 7) ." days")
+                                    ?>
+                                    
+                                    <td class="
+                                    ">
+                                        <div data-bool="False" id="<?=$date->format("Y-m-d")?>" class="
+                                        <?=$PreviousCalendar->withinMonth($date) ? 'selectable' : 'calendar__overmonth';?> 
+                                        <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $PreviousCalendar->withinMonth($date) ? 'date-debut' : '';?> 
+                                        <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $PreviousCalendar->withinMonth($date) ? 'date-fin' : '';?> 
+                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
+                                        "><?= $date->format('d');?></div>
+                                    </td>
+                                <?php } ?>
+                            </tr>
+                        <?php } ?>
+                        </table>
+                    </div>
+                </div>
 
                 <div>
-                <div class="calendar">
+                    <div class="calendar">
                         <?= $Calendar->toString();?>
                         <table data-nbjour="" data-date="" id="table1" class="calendar__table calendar__table--<?=$Calendar->getWeeks();?>weeks">
                             <tr>
@@ -53,12 +88,16 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                         <?php for ($i = 0; $i < $Calendar->getWeeks(); $i++){ ?>
                             <tr>
                                 <?php foreach($Calendar->days as $k => $day){
-                                    $date = (clone $lastmonday)->modify("+" . ($k + $i * 7) ." days") ?>
+                                    $date = (clone $lastmonday)->modify("+" . ($k + $i * 7) ." days")
+                                    ?>
+                                    
                                     <td class="
                                     ">
-                                        <div class="
-                                        <?=$Calendar->withinMonth($date) ? '' : 'calendar__overmonth';?> 
-                                        <?= array_search($date->format('Y-m-d'), $bookingDates) != false ? 'booking' : 'grabCursor';?> 
+                                        <div data-bool="False" id="<?=$date->format("Y-m-d")?>" class="
+                                        <?=$Calendar->withinMonth($date) ? 'selectable' : 'calendar__overmonth';?> 
+                                        <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $Calendar->withinMonth($date) ? 'date-debut' : '';?> 
+                                        <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $Calendar->withinMonth($date) ? 'date-fin' : '';?> 
+                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
                                         "><?= $date->format('d');?></div>
                                     </td>
                                 <?php } ?>
@@ -72,30 +111,63 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
 
 
                 <div>
-
+                    <div class="calendar">
+                        <?= $NextCalendar->toString();?>
+                        <table data-nbjour="" data-date="" id="table1" class="calendar__table calendar__table--<?=$NextCalendar->getWeeks();?>weeks">
+                            <tr>
+                                <?php foreach($NextCalendar->days as $day){?>
+                                    <th>
+                                        <div><?=$day;?></div>
+                                    </th>
+                                <?php } ?>
+                            </tr>
+                        <?php for ($i = 0; $i < $NextCalendar->getWeeks(); $i++){ ?>
+                            <tr>
+                                <?php foreach($NextCalendar->days as $k => $day){
+                                    $date = (clone $nextLastmonday)->modify("+" . ($k + $i * 7) ." days")
+                                    ?>
+                                    
+                                    <td class="
+                                    ">
+                                        <div data-bool="False" id="<?=$date->format("Y-m-d")?>" class="
+                                        <?=$NextCalendar->withinMonth($date) ? 'selectable' : 'calendar__overmonth';?> 
+                                        <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $NextCalendar->withinMonth($date) ? 'date-debut' : '';?> 
+                                        <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $NextCalendar->withinMonth($date) ? 'date-fin' : '';?> 
+                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
+                                        "><?= $date->format('d');?></div>
+                                    </td>
+                                <?php } ?>
+                            </tr>
+                        <?php } ?>
+                        </table>
+                    </div>
                 </div>
-
-
-
-
-                <div>
-
-                </div>
-
-
 
             </div>
             <div id="cd-resume-container">
                 <!-- Le résumé avant / après  -->
-                <div></div>
-                <div></div>
+                <div>
+                    <div>Date d'arrivée : </div>
+                    <div>Date de départ : </div>
+                    <div>Nombre de jour : </div>
+                    <div id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>" >Prix : </div>
+                </div>
+                <div>
+                    <div>Date d'arrivée : <span id="d-start"></span></div>
+                    <div>Date de départ : <span id="d-end"></span></div>
+                    <div>Nombre de jour : <span id="nbJours"></span></div>
+                    <div>Prix : <span id="prix"></span></div>
+                </div>
             </div>
             <div id="cd-buttons-container">
                 <!-- Les boutons -->
-                <button class="btn btn-success mx-1">Validez</button>
+                <button class="btn btn-success mx-1">Valider</button>
                 <button class="btn btn-secondary mx-1">Annuler</button>
             </div>
         </div>
+
+        <script src="../js/changeDate.js"></script>
+        <script src="../js/moment.js"></script>
 
         <?php
     } else { ?>

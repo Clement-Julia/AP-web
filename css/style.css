@@ -366,3 +366,18 @@
     margin-right: auto;
 }
 
+td .date-debut{
+    background-color: red;
+}
+td .date-fin{
+    background-color: red;
+}
+.booking{
+    background-color: #3d1e1e91;
+}
+.selectable {
+    cursor: grab;
+}
+.calendar-selected{
+    background-color: yellow!important;
+}
