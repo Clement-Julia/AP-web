@@ -3,11 +3,15 @@ var dEnd = document.getElementById('d-end');
 var nbJours = document.getElementById('nbJours');
 var prix = document.getElementById('prix');
 var prixHebergement = document.getElementById('prixHebergement').dataset.prix;
+var diff_jours = null;
+var alertWarning = document.getElementById('alert-warning');
+var alertDanger = document.getElementById('alert-danger');
 
 var idCalendars = document.getElementById('cd-calendar-container');
 var allTds = idCalendars.querySelectorAll('td div');
 var dateDebut = document.getElementsByClassName('date-debut')[0].id;
 var dateFin = document.getElementsByClassName('date-fin')[0].id;
+var nbJoursVoyage = 0;
 
 var bookingDays = [];
 idCalendars.querySelectorAll('td div.booking').forEach((item) => {
@@ -61,9 +65,14 @@ allTds.forEach(element => {
                 }
             })
 
+            var diff_temps = date2.getTime() - date1.getTime(); 
+            diff_jours = diff_temps / (1000 * 3600 * 24);
+
+            if((element.id == dateDebut || element.id == dateFin) && element.dataset.bool == "False"){
+                validity();
+            }
+
             if(!indisponible){
-                var diff_temps = date2.getTime() - date1.getTime(); 
-                var diff_jours = diff_temps / (1000 * 3600 * 24); 
                 nbJours.innerHTML = diff_jours;
                 prix.innerHTML = prixHebergement * diff_jours;
             } else {
@@ -86,4 +95,33 @@ function getDates(startDate, stopDate) {
         currentDate = moment(currentDate).add(1, 'days');
     }
     return dateArray;
+}
+
+async function validity(){
+    var response = await fetch("../API/apiway.php?demande=checkValidity&da=" + dateDebut + "&nbj=" + diff_jours);
+    var check = await response.json();
+   
+    if(check.code == 401){
+        alertWarning.classList.remove('d-none');
+        alertWarning.innerHTML = check.message;
+        if(!alertDanger.classList.contains('d-none')){
+            alertDanger.classList.add('d-none')
+        }
+    }
+    if(check.code == 402){
+        alertDanger.classList.remove('d-none');
+        alertDanger.innerHTML = check.message;
+        if(!alertWarning.classList.contains('d-none')){
+            alertWarning.classList.add('d-none')
+        }
+    }
+    if(check.code == 200){
+        if(!alertDanger.classList.contains('d-none')){
+            alertDanger.classList.add('d-none')
+        }
+        if(!alertWarning.classList.contains('d-none')){
+            alertWarning.classList.add('d-none')
+        }
+    }
+
 }

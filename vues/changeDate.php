@@ -23,8 +23,6 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
     // Variante de la fonction, sans la var $date on récupère toutes les dates indisponibles de l'hôtel
     $bookingDates = $Hebergement->getWhenHebergementIsBooking($Hebergement->getIdHebergement());
 
-    print_r($bookingDates);
-
     if($Reservation->getIdUtilisateur() == $_SESSION['idUtilisateur']){
 
         // récupéré toutes les dates de cet hôtel (disponible, indisponible) et ça sur le mois en cours, celui d'avant et celui d'après
@@ -44,7 +42,7 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                 <div>
                     <div class="calendar">
                         <?= $PreviousCalendar->toString();?>
-                        <table data-nbjour="" data-date="" id="table1" class="calendar__table calendar__table--<?=$PreviousCalendar->getWeeks();?>weeks">
+                        <table id="table1" class="calendar__table calendar__table--<?=$PreviousCalendar->getWeeks();?>weeks">
                             <tr>
                                 <?php foreach($PreviousCalendar->days as $day){?>
                                     <th>
@@ -150,14 +148,18 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                     <div>Date d'arrivée : <?=$Reservation->getDateDebut()?></div>
                     <div>Date de départ : <?=$Reservation->getDateFin()?></div>
                     <div>Nombre de jour : <?=$Reservation->getNbJours()?></div>
-                    <div id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>" >Prix : <?=$Reservation->getPrix()?></div>
+                    <div id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>" >Prix : <?=$Reservation->getPrix()?> €</div>
                 </div>
                 <div>
                     <div>Date d'arrivée : <span id="d-start"></span></div>
                     <div>Date de départ : <span id="d-end"></span></div>
                     <div>Nombre de jour : <span id="nbJours"></span></div>
-                    <div>Prix : <span id="prix"></span></div>
+                    <div>Prix : <span id="prix">-</span> €</div>
                 </div>
+            </div>
+            <div>
+                <div id="alert-warning" class="alert alert-warning d-none"></div>
+                <div id="alert-danger" class="alert alert-danger d-none"></div>
             </div>
             <div id="cd-buttons-container">
                 <!-- Les boutons -->
