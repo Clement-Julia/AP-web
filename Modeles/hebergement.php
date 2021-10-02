@@ -105,7 +105,7 @@ class Hebergement extends Modele {
         $array = [];
         foreach ($requete->fetchAll(PDO::FETCH_ASSOC) as $reservation){
             
-            $begin = new DateTime( $reservation['dateDebut'] );
+            $begin = new DateTime( $reservation['dateDebut'] . "+1 days" );
             $end = new DateTime( $reservation['dateDebut'] );
             $end = $end->modify( '+' . $reservation['nbJours'] . ' day' );
 
@@ -120,6 +120,12 @@ class Hebergement extends Modele {
         usort($array, "sortFunction");
 
         return $array;
+    }
+
+    public function getVilleLibelle($idVille){
+        $requete = $this->getBdd()->prepare("SELECT villes.libelle FROM hebergement INNER JOIN villes USING(idVille) WHERE idVille = ?");
+        $requete->execute([$idVille]);
+        return $requete->fetch(PDO::FETCH_ASSOC)['libelle'];
     }
 
 }
