@@ -19,24 +19,22 @@ class Api extends Modele {
 
                 $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement WHERE (? BETWEEN dateDebut AND dateFin) AND idHebergement = ?");
                 $requete->execute([$date->format("Y-m-d"), $Hebergement->getIdHebergement()]);
-                $reservations = $requete->fetch(PDO::FETCH_ASSOC);
+                $reservation = $requete->fetch(PDO::FETCH_ASSOC);
 
-                if(!empty($reservations)){
+                if(!empty($reservation)){
                     
-                    foreach($reservations as $reservation){
-                        if($reservation['idUtilisateur'] != $_SESSION['idUtilisateur']){
-                            $boolean = true;
-                            $return['message'] = "Un autre voyageur à déjà réservé l'hébergement sur tout ou partie de la période choisie";
-                            $return['code'] = 402;
-                            $this->sendJSON($return);
-                            exit;
-                        }
-                        if(!$boolean){
-                            // il faudrait comparer ici si la date choisi correspond à une réservation, et la ça marche pas comme ça, car si pas de réservation sur cet hotel, bah ca teste pas si on écrase un de nos autres voyages à nous
-                            
-                            if(!in_array($reservation, $verdict)){
-                                $verdict[] = $reservation;
-                            }
+                    if($reservation['idUtilisateur'] != $_SESSION['idUtilisateur']){
+                        $boolean = true;
+                        $return['message'] = "Un autre voyageur à déjà réservé l'hébergement sur tout ou partie de la période choisie";
+                        $return['code'] = 402;
+                        $this->sendJSON($return);
+                        exit;
+                    }
+                    if(!$boolean){
+                        // il faudrait comparer ici si la date choisi correspond à une réservation, et la ça marche pas comme ça, car si pas de réservation sur cet hotel, bah ca teste pas si on écrase un de nos autres voyages à nous
+                        
+                        if(!in_array($reservation, $verdict)){
+                            $verdict[] = $reservation;
                         }
                     }
                 }

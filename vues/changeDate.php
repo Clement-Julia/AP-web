@@ -59,10 +59,10 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                                     <td class="
                                     ">
                                         <div data-bool="False" id="<?=$date->format("Y-m-d")?>" class="
-                                        <?=$PreviousCalendar->withinMonth($date) ? 'selectable' : 'calendar__overmonth';?> 
+                                        <?=$PreviousCalendar->withinMonth($date) ? '' : 'calendar__overmonth';?> 
                                         <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $PreviousCalendar->withinMonth($date) ? 'date-debut' : '';?> 
                                         <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $PreviousCalendar->withinMonth($date) ? 'date-fin' : '';?> 
-                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
+                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : 'selectable';?>
                                         "><?= $date->format('d');?></div>
                                     </td>
                                 <?php } ?>
@@ -92,10 +92,10 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                                     <td class="
                                     ">
                                         <div data-bool="False" id="<?=$date->format("Y-m-d")?>" class="
-                                        <?=$Calendar->withinMonth($date) ? 'selectable' : 'calendar__overmonth';?> 
+                                        <?=$Calendar->withinMonth($date) ? '' : 'calendar__overmonth';?> 
                                         <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $Calendar->withinMonth($date) ? 'date-debut' : '';?> 
                                         <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $Calendar->withinMonth($date) ? 'date-fin' : '';?> 
-                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
+                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : 'selectable';?>
                                         "><?= $date->format('d');?></div>
                                     </td>
                                 <?php } ?>
@@ -128,10 +128,10 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                                     <td class="
                                     ">
                                         <div data-bool="False" id="<?=$date->format("Y-m-d")?>" class="
-                                        <?=$NextCalendar->withinMonth($date) ? 'selectable' : 'calendar__overmonth';?> 
+                                        <?=$NextCalendar->withinMonth($date) ? '' : 'calendar__overmonth';?>
                                         <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $NextCalendar->withinMonth($date) ? 'date-debut' : '';?> 
                                         <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $NextCalendar->withinMonth($date) ? 'date-fin' : '';?> 
-                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
+                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : 'selectable';?>
                                         "><?= $date->format('d');?></div>
                                     </td>
                                 <?php } ?>
