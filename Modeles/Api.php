@@ -31,7 +31,6 @@ class Api extends Modele {
                         exit;
                     }
                     if(!$boolean){
-                        // il faudrait comparer ici si la date choisi correspond à une réservation, et la ça marche pas comme ça, car si pas de réservation sur cet hotel, bah ca teste pas si on écrase un de nos autres voyages à nous
                         
                         if(!in_array($reservation, $verdict)){
                             $verdict[] = $reservation;
@@ -93,6 +92,18 @@ class Api extends Modele {
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json");
         echo json_encode($infos,JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getReservBetweenDate($date, $idHebergement){
+        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement WHERE (? BETWEEN dateDebut AND dateFin) AND idHebergement = ?");
+        $requete->execute([$date, $idHebergement]);
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getOurOwnReserv($date, $idUtilisateur, $idReservationHebergement){
+        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement WHERE (? BETWEEN dateDebut AND dateFin) AND idUtilisateur = ? AND idReservationHebergement != ? AND dateFin != ?");
+        $requete->execute([$date, $idUtilisateur, $idReservationHebergement, $date]);
+        return $requete->fetch(PDO::FETCH_ASSOC);
     }
 
 }

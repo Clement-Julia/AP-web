@@ -55,11 +55,21 @@ class ReservationHebergement extends Modele {
         return $this->dateDebut;
     }
 
+    public function setDateDebut($dateDebut)
+    {
+        $this->dateDebut = $dateDebut;
+    }
+    
     public function getDateFin()
     {
         return $this->dateFin;
     }
-
+    
+    public function setDateFin($dateFin)
+    {
+        $this->dateFin = $dateFin;
+    }
+    
     public function getPrix()
     {
         return $this->prix;

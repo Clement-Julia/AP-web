@@ -7,6 +7,7 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
 
     $Hebergement = new Hebergement($Reservation->getIdHebergement());
 
+    $today = new DateTime();
     $dateDebut = new DateTime($Reservation->getDateDebut());
     $dateFin = new DateTime($Reservation->getDateFin());
     $PreviousMonth = new DateTime($dateDebut->format('Y-m-d') . '-1 month');
@@ -62,7 +63,8 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                                         <?=$PreviousCalendar->withinMonth($date) ? '' : 'calendar__overmonth';?> 
                                         <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $PreviousCalendar->withinMonth($date) ? 'date-debut' : '';?> 
                                         <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $PreviousCalendar->withinMonth($date) ? 'date-fin' : '';?> 
-                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : 'selectable';?>
+                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
+                                        <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $today->format("Y-m-d")) ? 'selectable' : '';?>
                                         "><?= $date->format('d');?></div>
                                     </td>
                                 <?php } ?>
@@ -95,7 +97,8 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                                         <?=$Calendar->withinMonth($date) ? '' : 'calendar__overmonth';?> 
                                         <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $Calendar->withinMonth($date) ? 'date-debut' : '';?> 
                                         <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $Calendar->withinMonth($date) ? 'date-fin' : '';?> 
-                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : 'selectable';?>
+                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
+                                        <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $today->format("Y-m-d")) ? 'selectable' : '';?>
                                         "><?= $date->format('d');?></div>
                                     </td>
                                 <?php } ?>
@@ -131,7 +134,8 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                                         <?=$NextCalendar->withinMonth($date) ? '' : 'calendar__overmonth';?>
                                         <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $NextCalendar->withinMonth($date) ? 'date-debut' : '';?> 
                                         <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $NextCalendar->withinMonth($date) ? 'date-fin' : '';?> 
-                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : 'selectable';?>
+                                        <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
+                                        <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $today->format("Y-m-d")) ? 'selectable' : '';?>
                                         "><?= $date->format('d');?></div>
                                     </td>
                                 <?php } ?>
@@ -163,8 +167,12 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
             </div>
             <div id="cd-buttons-container">
                 <!-- Les boutons -->
-                <button class="btn btn-success mx-1">Valider</button>
-                <button class="btn btn-secondary mx-1">Annuler</button>
+                <form action="../controleurs/changeDate.php" method="POST">
+                    <input id="inputDateDebut" name="dateDebut" value="" type="hidden" >
+                    <input id="inputDateFin" name="dateFin" value="" type="hidden" >
+                    <button type="submit" class="btn btn-success mx-1">Valider</button>
+                </form>
+                <a href="createTravel.php" class="btn btn-secondary mx-1">Annuler</a>
             </div>
         </div>
 

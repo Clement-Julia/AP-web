@@ -1,3 +1,5 @@
+var inputDateDebut = document.getElementById('inputDateDebut');
+var inputDateFin = document.getElementById('inputDateFin');
 var dStart = document.getElementById('d-start');
 var dEnd = document.getElementById('d-end');
 var nbJours = document.getElementById('nbJours');
@@ -104,6 +106,8 @@ async function validity(){
     if(check.code == 401){
         alertWarning.classList.remove('d-none');
         alertWarning.innerHTML = check.message;
+        inputDateDebut.value = dateDebut;
+        inputDateFin.value = dateFin;
         if(!alertDanger.classList.contains('d-none')){
             alertDanger.classList.add('d-none')
         }
@@ -111,11 +115,15 @@ async function validity(){
     if(check.code == 402){
         alertDanger.classList.remove('d-none');
         alertDanger.innerHTML = check.message;
+        inputDateDebut.value = null;
+        inputDateFin.value = null;
         if(!alertWarning.classList.contains('d-none')){
             alertWarning.classList.add('d-none')
         }
     }
     if(check.code == 200){
+        inputDateDebut.value = dateDebut;
+        inputDateFin.value = dateFin;
         if(!alertDanger.classList.contains('d-none')){
             alertDanger.classList.add('d-none')
         }
