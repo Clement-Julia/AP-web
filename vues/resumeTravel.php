@@ -45,10 +45,11 @@ $ReservationVoyage = new ReservationVoyage($BuildingTravelId);
                 <button name="cancel" value="1" class="btn btn-secondary btn-sm">Annuler ce voyage</button>
             </form>
     <?php } else { ?>
-        <div>
-                <button class="btn btn-success btn-sm">Valider ce voyage</button>
-                <button class="btn btn-secondary btn-sm">Annuler ce voyage</button>
-            </div>
+            <form action="../controleurs/deleteBuildingTravel.php" method="POST">
+                <button name="validate" value="1" class="btn btn-success btn-sm">Valider et Payer</button>
+                <button name="cancel" value="1" class="btn btn-secondary btn-sm">Annuler ce voyage</button>
+                <button class="btn btn-primary btn-sm">Retour au résumé</button>
+            </form>
     <?php } ?>
 </div>
 

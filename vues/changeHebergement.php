@@ -4,13 +4,28 @@ require_once "header.php";
 // (SECURITE) On vérifie que le paramètre récupéré est bien du type INT attendu
 if (is_numeric($_SESSION['idReservationHebergement'])){
 
-    
     $Reservation = new ReservationHebergement($_SESSION['idReservationHebergement']);
     
-    
+    // L'utilisateur actuel est "propriétaire" de la réservation qu'il tente de modifier
     if($Reservation->getIdUtilisateur() == $_SESSION['idUtilisateur']){
         
-        $idVille = $Reservation->getIdVilleByHebergementId($Reservation->getIdHebergement());
+        // Si $_GET['idVille'], alors on vient de la page changeVille (choix 2 lors de la modification d'une étape) sinon on fait comme d'habitude
+        if (!empty($_GET['idVille']) && is_numeric($_GET['idVille'])){
+            $idVille = $_GET['idVille'];
+
+            $Ville = new Ville();
+            $idRegionVille = $Ville->getRegion($idVille)['idRegion'];
+            $idRegionHebergement = $Reservation->getIdRegionByHebergementId($Reservation->getIdHebergement());
+
+            // Si l'utilisateur tente de changer manuellement le $_GET['idVille']
+            if($idRegionVille != $idRegionHebergement){
+                header('location: changeVille.php');
+            }
+
+        } else {
+            $idVille = $Reservation->getIdVilleByHebergementId($Reservation->getIdHebergement());
+        }
+
         // Il faut vérifier et afficher uniquement les hôtels libres sur cet interval
         $freeHebergement = $Reservation->getFreeHebergement($idVille, $Reservation->getDateDebut(), $Reservation->getNbJours());
         
@@ -23,7 +38,7 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
             <div id="hv-container">
                 <div id="choose-hebergement">
                     <div id="hv-back-button-container">
-                        <a href="createTravel.php?idRegion=<?=$Ville->getIdRegion()?>" class="btn btn-sm btn-secondary back-button"><</a>
+                        <a href="<?= isset($_GET['idVille']) ? "changeVille.php" : "createTravel.php?idRegion=" . $Ville->getIdRegion() ?>" class="btn btn-sm btn-secondary back-button"><</a>
                     </div>
                     <?php
                     foreach ($freeHebergement as $item)
@@ -46,7 +61,10 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
 
         <?php
 
-        }
+        } else { ?>
+            <div class="alert alert-warning">Aucun hôtel n'est libre pour cette date</div>
+            
+        <?php }
 
     }
 

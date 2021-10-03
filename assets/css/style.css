@@ -357,3 +357,34 @@
 .test.active{
     background-color: rgba(128, 128, 128, 0.171) !important;
 }
+
+/* --------------------------------------------------------------------------------- TEST CSS MAP CARTE FRANCE ------------------------------------------------------------------- */
+#change-date-container, #cd-header, #cd-calendar-container, #cd-resume-container, #cd-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#change-date-container, #cd-header {
+    flex-direction: column;
+}
+#change-date-container{
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td .date-debut{
+    background-color: red;
+}
+td .date-fin{
+    background-color: red;
+}
+.booking{
+    background-color: #3d1e1e91;
+}
+.selectable {
+    cursor: grab;
+}
+.calendar-selected{
+    background-color: yellow!important;
+}

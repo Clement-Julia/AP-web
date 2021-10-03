@@ -11,6 +11,12 @@ if (!empty($_POST['cancel']) && is_numeric($_POST['cancel'])){
     $ReservationVoyage->deleteBuildingTravelByUserId($_SESSION['idUtilisateur']);
     header("location: ../vues/index.php");
     
+} else if(!empty($_POST['validate']) && is_numeric($_POST['validate'])){
+    $ReservationVoyage = new ReservationVoyage();
+    $idReservationVoyage = $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']);
+    $ReservationVoyage->updateIsBuilding($idReservationVoyage, False);
+
+    header("location: ../vues/index.php");
 } else {
     header("location: ../vues/createTravel.php");
 }

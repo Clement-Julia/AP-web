@@ -131,15 +131,21 @@ class Hebergement extends Modele {
         return $requete->fetch(PDO::FETCH_ASSOC)['idRegion'];
     }
 
-    public function getWhenHebergementIsBooking(int $idHebergement, $date){
+    public function getWhenHebergementIsBooking(int $idHebergement, $date = null){
 
-        $requete = $this->getBdd()->prepare("SELECT dateDebut, nbJours FROM reservations_hebergement INNER JOIN reservations_voyages ON idVoyage = idReservationVoyage WHERE idHebergement = ? AND (? BETWEEN dateDebut AND dateFIn OR dateDebut > ?) AND is_building = ?");
-        $requete->execute([$idHebergement, $date, $date, false]);
+        if ($date == null){
+            $requete = $this->getBdd()->prepare("SELECT dateDebut, nbJours FROM reservations_hebergement INNER JOIN reservations_voyages ON idVoyage = idReservationVoyage WHERE idHebergement = ? AND is_building = ?");
+            $requete->execute([$idHebergement, false]);
+        } else {
+            $requete = $this->getBdd()->prepare("SELECT dateDebut, nbJours FROM reservations_hebergement INNER JOIN reservations_voyages ON idVoyage = idReservationVoyage WHERE idHebergement = ? AND (? BETWEEN dateDebut AND dateFIn OR dateDebut > ?) AND is_building = ?");
+            $requete->execute([$idHebergement, $date, $date, false]);
+        }
+        
 
         $array = [];
         foreach ($requete->fetchAll(PDO::FETCH_ASSOC) as $reservation){
-            echo "<br>";
-            $begin = new DateTime( $reservation['dateDebut'] );
+            
+            $begin = new DateTime( $reservation['dateDebut'] . "+1 days" );
             $end = new DateTime( $reservation['dateDebut'] );
             $end = $end->modify( '+' . $reservation['nbJours'] . ' day' );
 
@@ -154,6 +160,12 @@ class Hebergement extends Modele {
         usort($array, "sortFunction");
 
         return $array;
+    }
+
+    public function getVilleLibelle($idVille){
+        $requete = $this->getBdd()->prepare("SELECT villes.libelle FROM hebergement INNER JOIN villes USING(idVille) WHERE idVille = ?");
+        $requete->execute([$idVille]);
+        return $requete->fetch(PDO::FETCH_ASSOC)['libelle'];
     }
 
 }
