@@ -43,7 +43,7 @@ class Ville extends Modele {
         
     }
 
-    public function initialiserVille($idVille, $libelle, $latitude, $longitude, $idRegion, $description){
+    public function initialiserVille($idVille, $libelle, $latitude, $longitude, $idRegion, $description, $uuid){
 
         $this->idVille = $idVille;
         $this->libelle = $libelle;

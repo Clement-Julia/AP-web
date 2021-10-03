@@ -176,8 +176,8 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
             </div>
         </div>
 
-        <script src="../js/changeDate.js"></script>
-        <script src="../js/moment.js"></script>
+        <script src="../assets/js/changeDate.js"></script>
+        <script src="../assets/js/moment.js"></script>
 
         <?php
     } else { ?>

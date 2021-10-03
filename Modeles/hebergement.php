@@ -27,8 +27,8 @@ class Hebergement extends Modele {
             $this->longitude = $infoHotel["longitude"];
             $this->prix = $infoHotel["prix"];
             
-            $requete = $this->getBdd()->prepare("SELECT * FROM options_by_hebergement INNER JOIN options USING(idOption) WHERE idHebergement = ? AND actif = ?");
-            $requete->execute([$idHebergement, 1]);
+            $requete = $this->getBdd()->prepare("SELECT * FROM options_by_hebergement INNER JOIN options USING(idOption) WHERE idHebergement = ?");
+            $requete->execute([$idHebergement]);
             $infosOptions =  $requete->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($infosOptions as $infoOption){

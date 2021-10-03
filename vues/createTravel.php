@@ -96,7 +96,7 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
     <div class="alert alert-warning">Un problème est survenu avec les paramètres</div>
 <?php } ?>
 
-<script src="../js/createTravel.js"></script>
+<script src="../assets/js/createTravel.js"></script>
 
 <?php
 require_once "footer.php";
