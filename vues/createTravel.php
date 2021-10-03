@@ -1,6 +1,7 @@
 <?php
 require_once "header.php";
 
+unset($_SESSION['idReservationHebergement']);
 // (SECURITE) On vérifie que le paramètre récupéré est bien du type INT attendu
 if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET['idRegion'])){
 
@@ -30,6 +31,7 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
 
     <div id="create-travel-container">
         <div id="ct-choose-town">
+            <a href="resumeTravel.php" class="btn btn-sm btn-success">Valider voyage</a>
             <div id="choose-town-top">
                 <?php 
                 if($BuildingTravelId != null){

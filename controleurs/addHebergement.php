@@ -19,7 +19,8 @@ if (!empty($_GET['idHebergement']) &&
             
             $lastReservation = $ReservationVoyage->getLastReservationHebergement($isBuilding['idReservationVoyage']);
             $dateDebut = new DateTime($lastReservation['dateFin']);
-            $dateFin = new DateTime($_SESSION['date'] . "+" . $_GET['nbNuit'] . " days");
+            $dateFin = new DateTime($lastReservation['dateFin'] . "+" . $_GET['nbNuit'] . " days");
+            $_SESSION['date'] = "";
 
         }
 

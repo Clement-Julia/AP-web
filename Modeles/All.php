@@ -16,3 +16,4 @@ require_once "ReservationVoyage.php";
 require_once "Month.php";
 require_once "Option.php";
 require_once "OptionsByHebergement.php";
+require_once "Api.php";

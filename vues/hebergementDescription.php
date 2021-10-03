@@ -145,8 +145,12 @@ if (is_numeric($_GET['idHebergement'])){
         </div>
         <div id="hd-avis"></div>
     </div>
+    <div id="hd-avis">
+        
+    </div>
+</div>
 
-    <script src="../assets/js/hebergementDescription.js"></script>
+<script src="../assets/js/hebergementDescription.js"></script>
 <?php
 } else { ?>
     <div class="alert alert-warning">Un problème est survenu avec les paramètres</div>
