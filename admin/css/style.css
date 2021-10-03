@@ -471,3 +471,10 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
 .action{
 	width: 10% !important;
 }
+
+.position-badge{
+	position: relative;
+    right: 40px;
+    top: -60px;
+	cursor: pointer;
+}

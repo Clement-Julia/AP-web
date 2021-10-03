@@ -3,8 +3,6 @@ require_once "header.php";
 $_SESSION['voyage'] = [];
 $_SESSION['date'] = [];
 $_SESSION['index'] = [];
- // ------------------ a supprimer car entré en dur pour phase de test -------------------------------
- $_SESSION['idUtilisateur'] = 1;
 ?>
 
 <p>c'est l'index</p>

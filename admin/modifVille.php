@@ -95,6 +95,15 @@ $infos = $region->getAllregion();
                 </div>
             </div>
 
+            <!-- <div class="form-group">
+                <?php
+                    // lister_images("../src/test/");
+                ?>
+                <button type="button" id="test" style="visibility: hidden">
+                    <span class="badge badge-danger rounded position-badge" style="visibility: visible"><i class="fas fa-times fa-lg" aria-hidden=true></i></span>
+                </button>
+            </div> -->
+
         </form>
         <?php
     }
