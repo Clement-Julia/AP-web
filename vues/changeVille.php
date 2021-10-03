@@ -7,6 +7,7 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
     if (!empty($_GET['idRegion'])){
         $_SESSION['idRegion'] = $_GET['idRegion'];
     }
+
     $ReservationVoyage = new ReservationVoyage();
     $BuildingTravelId = $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']);
     if($BuildingTravelId != null){
@@ -18,6 +19,15 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
 
     $Lodging = new Region($idRegion);
     $Lodgings = $Lodging->getVilles();
+
+    $ReservationHebergement = new ReservationHebergement($_SESSION['idReservationHebergement']);
+    $idVilleToChange = $ReservationHebergement->getIdVilleByHebergementId($ReservationHebergement->getIdHebergement());
+
+    foreach($Lodgings as $key => $value){
+        if($value->getIdVille() == $idVilleToChange){
+            unset($Lodgings[$key]);
+        }
+    }
 
     ?>
     <div id="ligne-points">
@@ -32,6 +42,7 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
         <div id="ct-choose-town">
             
             <div id="choose-town-bot">
+                <a href="<?="createTravel.php?idRegion=" . $Lodging->getIdRegion()?>" class="btn btn-sm btn-secondary back-button"><</a>
                 <?php
                 foreach ($Lodgings as $item)
                 { ?>
