@@ -145,4 +145,11 @@ class ReservationVoyage extends Modele {
         $requete->execute([$prixTotal, $idVoyage]);
     }
 
+    // Permet lors du paiement d'un voyage en construction, de le valider.
+    public function updateIsBuilding(int $idReservationVoyage, bool $boolean){
+        if($boolean){ $boolean = 1; } else { $boolean = 0;}
+        $requete = $this->getBdd()->prepare("UPDATE reservations_voyages SET is_building = ? WHERE idReservationVoyage = ?");
+        $requete->execute([$boolean, $idReservationVoyage]);
+    }
+
 }

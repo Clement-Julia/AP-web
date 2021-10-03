@@ -145,6 +145,9 @@ if (
                 $ReservationHebergement->getIdReservationHebergement()
             );
 
+            $ReservationVoyage = new ReservationVoyage();
+            $ReservationVoyage->updatePrix($ReservationHebergement->getIdVoyage());
+
             header('location: ../vues/createTravel.php');
 
         }
