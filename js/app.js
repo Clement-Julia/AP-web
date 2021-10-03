@@ -23,7 +23,7 @@ Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
   markers.push(marker);
     
     item.addEventListener('click', () => {
-      map.flyTo([item.dataset.lat, item.dataset.lng], 9);
+      map.flyTo([item.dataset.lat, item.dataset.lng], item.dataset.zoom);
       setTimeout(() => {
         for(var i = 0; i < markers.length; ++i){
           if (marker["id"] === item.dataset.id) {

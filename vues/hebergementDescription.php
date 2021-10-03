@@ -41,9 +41,9 @@ if (is_numeric($_GET['idHebergement'])){
         <div id="hd-pictures"></div>
         <div id="hd-description-container">
             <div id="hd-description"><?= $Hebergement->getDescription() ?></div>
-            <div id="hd-tools">
-                <div class="hd-title">Ce que propose le logement :</div>
-                <div id="hd-tools-item-container">
+                <div class="card">
+                    <div class="card-header"><h6>Ce que propose le logement : </h6></div>
+                    <div class="card-body d-flex flex-wrap">
                 <?php
                 foreach ($Hebergement->getOptions() as $item){
                     ?>
@@ -51,20 +51,38 @@ if (is_numeric($_GET['idHebergement'])){
                     <?php
                 }
                 ?>
+                    </div>
                 </div>
-            </div>
         </div>
+
+
+
+
+        <!-- <div class="card">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                <p>A well-known quote, contained in a blockquote element.</p>
+                <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                </blockquote>
+            </div>
+        </div> -->
+
+
+
+
+
         <div id="hd-date-price-container">
-            <div id="hd-date">
-                <div class="hd-title">Calendrier</div>
-                <div id="calendar-container">
+            <div id="hd-date" class="card">
+                <div class="card-header"><h6>Calendrier</h6></div>
+                <div id="calendar-container" class="card-body">
                     <div class="calendar">
-                        <?= $actualMonthCalendar->toString();?>
+                        <div class="calendar-header"><?= $actualMonthCalendar->toString();?></div>
                         <table data-nbjour="<?=$lastDayOfMonth?>" data-date="<?=$actualDate->format('d')?>" id="table1" class="calendar__table calendar__table--<?=$actualMonthCalendar->getWeeks();?>weeks">
                             <tr>
                                 <?php foreach($actualMonthCalendar->days as $day){?>
                                     <th>
-                                        <div><?=$day;?></div>
+                                        <?=$day;?>
                                     </th>
                                 <?php } ?>
                             </tr>
@@ -73,7 +91,7 @@ if (is_numeric($_GET['idHebergement'])){
                                 <?php foreach($actualMonthCalendar->days as $k => $day){
                                     $date = (clone $lastmonday)->modify("+" . ($k + $i * 7) ." days") ?>
                                     <td class="
-                                    <?=$date->format('Y-m-d') == $actualDate->format('Y-m-d') ? 'test' : '';?>  
+                                    <?=$date->format('Y-m-d') == $actualDate->format('Y-m-d') ? 'dateDebut' : '';?>  
                                     ">
                                         <div class="
                                         <?=$actualMonthCalendar->withinMonth($date) ? '' : 'calendar__overmonth';?> 
@@ -91,7 +109,7 @@ if (is_numeric($_GET['idHebergement'])){
         On va avoir la date de départ qui sera fixe et stocké dans une variable depuis le début. Puis avec le click utilisateur, on sera combien de jour (avec une fonction) il aura choisi.
         -->
                     <div class="calendar">
-                        <?= $nextMonthCalendar->toString();?>
+                        <div class="calendar-header"><?= $nextMonthCalendar->toString();?></div>
                         <table id="table2" class="calendar__table calendar__table--<?=$nextMonthCalendar->getWeeks();?>weeks">
                             <tr>
                                 <?php foreach($nextMonthCalendar->days as $day){?>
@@ -117,14 +135,6 @@ if (is_numeric($_GET['idHebergement'])){
                     </div>
 
                 </div>
-
-
-
-
-
-
-
-
 
             </div>
             <div id="hd-price">

@@ -18,7 +18,7 @@ class Api extends Modele {
             if(in_array($date->format("Y-m-d"), $bookingDates)){
 
                 $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement WHERE (? BETWEEN dateDebut AND dateFin) AND idHebergement = ?");
-                $requete->execute([$date->format("Y-m-d"), $Hebergement->getIdHebergement()]);
+                $requete->execute([$date->format("Y-m-d"), $Hebergement->getIdHebergement(), 0]);
                 $reservation = $requete->fetch(PDO::FETCH_ASSOC);
 
                 if(!empty($reservation)){
