@@ -19,7 +19,7 @@ require_once "../controleurs/traitement.php";
 <body>
     <!-- on refait toutes la navbar -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@ require_once "../controleurs/traitement.php";
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
             </div>
         </div>
     </div>

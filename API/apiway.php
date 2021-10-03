@@ -11,6 +11,10 @@ try{
                 $Api = new Api();
                 $Api->getValidity($_GET['da'], $_GET['nbj'], $_SESSION['idReservationHebergement']);
                 break;
+            case "region" :
+                $Api = new Api();
+                $Api->getInfosRegions($_GET['idRegion']);
+                break;
             default : throw new Exception ("La demande n'est pas valide, vérifiez l'url");
         }
     } else {

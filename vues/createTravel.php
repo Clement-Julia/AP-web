@@ -31,7 +31,6 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
 
     <div id="create-travel-container">
         <div id="ct-choose-town">
-            <a href="resumeTravel.php" class="btn btn-sm btn-success">Valider voyage</a>
             <div id="choose-town-top">
                 <?php 
                 if($BuildingTravelId != null){
@@ -40,28 +39,37 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
                         $infos = $reservationHebergement->getHebergementById($reservationHebergement->getIdHebergement());
                         ?>
                         <div class="mx-3 my-3 ct-resume-container">
-                            <div class="ct-resume">
-                                <div>Etape : <?=$index?></div>
-                                <div>Ville : <?=$infos['villeNom']?></div>
-                                <div>Hébergement : <?=$infos['nomHebergement']?></div>
-                                <div>Description hébergement : <?=$infos['description']?></div>
-                                <div>Date d'arrivée : <?=$reservationHebergement->getDateDebut()?></div>
-                                <div>Date de départ : <?=$reservationHebergement->getDateFin()?></div>
-                                <div>Code réservation : <?=$reservationHebergement->getCodeReservation()?></div>
-                                <div>Prix : <?=$reservationHebergement->getPrix()?></div>
-                            </div>
-                            <div class="edit-container">
-                                <button class="btn btn-sm btn-warning editButton">Modifier</button>
-                                <form action="../controleurs/editTravel.php" method="POST" class="editForm">
-                                    <label for="options">Modifier :</label>
-                                    <select name="options[<?=$reservationHebergement->getIdReservationHebergement()?>]">
-                                        <option value="1">La date du voyage</option>
-                                        <option value="2">La ville</option>
-                                        <option value="3">L'hotel</option>
-                                        <option value="4">Supprimer cette étape</option>
-                                    </select>
-                                    <button type="submit" class="btn btn-sm btn-warning">Modifier</button>
-                                </form>
+                            <div class="card ct-resume">
+                                    <div class="card-header">Etape : <?=$index?></div>
+                                    <div class="d-flex">
+                                        <div class="card-body ct-p-container">
+                                            <p class="card-text">Ville : <?=$infos['villeNom']?></p>
+                                            <p class="card-text">Hébergement : <?=$infos['nomHebergement']?></p>
+                                            <p class="card-text">Description hébergement : <?=$infos['description']?></p>
+                                            <p class="card-text">Date d'arrivée : <?=$reservationHebergement->getDateDebut()?></p>
+                                            <p class="card-text">Date de départ : <?=$reservationHebergement->getDateFin()?></p>
+                                            <p class="card-text">Code réservation : <?=$reservationHebergement->getCodeReservation()?></p>
+                                            <p class="card-text">Prix : <?=$reservationHebergement->getPrix()?></p>
+                                        </div>
+
+                                        <div class="edit-container">
+                                            <button class="btn btn-sm btn-warning editButton">Modifier</button>
+                                            <form action="../controleurs/editTravel.php" method="POST" class="editForm">
+                                                <select name="options[<?=$reservationHebergement->getIdReservationHebergement()?>]" class="form-control">
+                                                    <option disabled selected>Modifier ...</option>
+                                                    <option value="1">La date du voyage</option>
+                                                    <option value="2">La ville</option>
+                                                    <option value="3">L'hotel</option>
+                                                    <option value="4">Supprimer cette étape</option>
+                                                </select>
+                                                <button type="submit" class="btn btn-sm btn-warning">Modifier</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                
+                                
+
                             </div>
                         </div>
                         <?php
@@ -69,16 +77,25 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
                     }
                 }
                 ?>
-                <div></div>
-            </div>
+                </div>
+
+<!-- ------------------------------------------- -->
+                    <a href="resumeTravel.php" class="btn btn-sm btn-success">Valider voyage</a>
+<!-- ------------------------------------------- -->
+
+                
             <div id="choose-town-bot">
                 <?php
                 foreach ($Lodgings as $item)
                 { ?>
-                    <a href="hebergementVille.php?idVille=<?= $item->getIdVille();?>" data-id="<?= $item->getIdVille()?>" data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" class="town-item js-marker">
-                        <div class="town-picture"></div>
-                        <div class="town-text"><?= $item->getLibelle()?></div>
-                    </a>
+                    <div class="col-md-4 mb-3 col-lg-3">
+                        <div data-id="<?= $item->getIdVille()?>" data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" class="card ct-a js-marker">
+                            <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1530735606451-8f5f13955328?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80">
+                            <div class="card-body ct-text-ville">
+                                <h6 class="card-title"><?= $item->getLibelle()?></h6>
+                            </div>
+                </div>
+                </div>
                 <?php }
                 ?>
             </div>

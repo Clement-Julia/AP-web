@@ -106,4 +106,10 @@ class Api extends Modele {
         return $requete->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getInfosRegions($idRegion){
+        $requete = $this->getBdd()->prepare("SELECT description FROM regions WHERE idRegion = ?");
+        $requete->execute([$idRegion]);
+        return $this->sendJSON($requete->fetch(PDO::FETCH_ASSOC));
+    }
+
 }

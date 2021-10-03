@@ -28,3 +28,36 @@ paths.forEach(function (path) {
 map.addEventListener('mouseover', function (){
     activeArea();
 })
+// ajout de l'apparition des infos de la régions
+paths.forEach(function (path) {
+    path.addEventListener('click', () => {
+        regionDescription(path.dataset.idregion);
+    })
+})
+
+async function regionDescription(idregion){
+    var response = await fetch("../API/apiway.php?demande=region&idRegion=" + idregion);
+    var description = await response.json();
+    document.getElementById('description').innerHTML = description.description;
+    document.getElementById('link').href = "createTravel?idRegion=" + idregion;
+    var containerDescription = document.getElementById('description-region');
+    var linkContainer = document.getElementById('link-container');
+    if(linkContainer.classList.contains('d-none')){
+        linkContainer.classList.remove('d-none');
+    }
+
+    switch (idregion){
+        case "1":
+            containerDescription.style.backgroundImage = "url('../src/img/bretagne.jpg')";
+            break;
+        case "2":
+            containerDescription.style.backgroundImage = "url('../src/img/nantes.jpg')";
+            break;
+        case "3":
+            containerDescription.style.backgroundImage = "url('../src/img/centre-val-de-loire.jpg')";
+            break;
+        case "22":
+            containerDescription.style.backgroundImage = "url('../src/img/aquitaine.jpg')";
+            break;
+    }
+}
