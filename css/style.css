@@ -82,6 +82,12 @@
 .ct-resume-container{
     display: flex;
 }
+.ct-resume-container .card-body {
+    font-size: 0.9em;
+}
+.ct-resume-container .bold {
+    font-weight: 600;
+}
 .ct-resume{
     width: 100%;
 }
@@ -385,18 +391,30 @@
 
   /* --------------------------------------------------------------------------------- TEST CSS MAP CARTE FRANCE ------------------------------------------------------------------- */
 
-  #change-date-container, #cd-header, #cd-calendar-container, #cd-resume-container, #cd-buttons-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#change-date-container, #cd-header {
-    flex-direction: column;
-}
 #change-date-container{
     max-width: 1080px;
     margin-left: auto;
     margin-right: auto;
+}
+#cd-calendar-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 20px;
+}
+#cd-resume-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.modification{
+    margin: 10px;
+    min-width: 30%;
+}
+.float-right{
+    float: right;
 }
 
 .date-debut{

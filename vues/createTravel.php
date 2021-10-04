@@ -40,16 +40,16 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
                         ?>
                         <div class="mx-3 my-3 ct-resume-container">
                             <div class="card ct-resume">
-                                    <div class="card-header">Etape : <?=$index?></div>
+                                    <div class="card-header"><span class="bold">Etape : </span><?=$index?></div>
                                     <div class="d-flex">
                                         <div class="card-body ct-p-container">
-                                            <p class="card-text">Ville : <?=$infos['villeNom']?></p>
-                                            <p class="card-text">Hébergement : <?=$infos['nomHebergement']?></p>
-                                            <p class="card-text">Description hébergement : <?=$infos['description']?></p>
-                                            <p class="card-text">Date d'arrivée : <?=$reservationHebergement->getDateDebut()?></p>
-                                            <p class="card-text">Date de départ : <?=$reservationHebergement->getDateFin()?></p>
-                                            <p class="card-text">Code réservation : <?=$reservationHebergement->getCodeReservation()?></p>
-                                            <p class="card-text">Prix : <?=$reservationHebergement->getPrix()?></p>
+                                            <p class="card-text"><span class="bold">Ville : </span><?=$infos['villeNom']?></p>
+                                            <p class="card-text"><span class="bold">Hébergement : </span><?=$infos['nomHebergement']?></p>
+                                            <p class="card-text"><span class="bold">Description hébergement : </span><?=$infos['description']?></p>
+                                            <p class="card-text"><span class="bold">Date d'arrivée : </span><?=$reservationHebergement->getDateDebut()?></p>
+                                            <p class="card-text"><span class="bold">Date de départ : </span><?=$reservationHebergement->getDateFin()?></p>
+                                            <p class="card-text"><span class="bold">Code réservation : </span><?=$reservationHebergement->getCodeReservation()?></p>
+                                            <p class="card-text"><span class="bold">Prix : </span><?=$reservationHebergement->getPrix()?> €</p>
                                         </div>
 
                                         <div class="edit-container">
