@@ -204,6 +204,9 @@
     display: flex;
     flex-direction: column;
 }
+#hebergement-description-container .card{
+    margin-bottom: 10px;
+}
 #hd-title {
     font-size: 1.8em;
     font-weight: 700;
@@ -233,9 +236,6 @@
     width: 100%;
     margin: 1em 0;
     background-color: bisque;
-}
-#hd-description, .hd-title, #hd-date-price-container{
-    margin-bottom: 20px;
 }
 .hd-title{
     font-size: 1.4em;
@@ -323,6 +323,12 @@
     cursor: not-allowed!important;
 }
 
+#hidden{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
 
 /* --------------------------------------------------------------------------------- TEST CSS MAP CARTE FRANCE ------------------------------------------------------------------- */

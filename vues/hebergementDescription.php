@@ -48,7 +48,11 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
                 </div>
                 <div id="hd-pictures"></div>
                 <div id="hd-description-container">
-                    <div id="hd-description"><?= $Hebergement->getDescription() ?></div>
+                    <div id="hd-description" class="card">
+                        <div class="card-header"><h6>Description</h6></div>
+                        <div class="card-body"><?= $Hebergement->getDescription() ?></div>
+                        
+                    </div>
                         <div class="card">
                             <div class="card-header"><h6>Ce que propose le logement : </h6></div>
                             <div class="card-body d-flex flex-wrap">
@@ -62,23 +66,6 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
                             </div>
                         </div>
                 </div>
-
-
-
-
-                <!-- <div class="card">
-                    <div class="card-header"></div>
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-0">
-                        <p>A well-known quote, contained in a blockquote element.</p>
-                        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                        </blockquote>
-                    </div>
-                </div> -->
-
-
-
-
 
                 <div id="hd-date-price-container">
                     <div id="hd-date" class="card">
@@ -111,10 +98,7 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
                                 <?php } ?>
                                 </table>
                             </div>
-                <!-- L'idée est d'avoir 2 mois pour pouvoir être sur d'obtenir une selection valide de l'utilisateur 
 
-                On va avoir la date de départ qui sera fixe et stocké dans une variable depuis le début. Puis avec le click utilisateur, on sera combien de jour (avec une fonction) il aura choisi.
-                -->
                             <div class="calendar">
                                 <div class="calendar-header"><?= $NextCalendar->toString();?></div>
                                 <table id="table2" class="calendar__table calendar__table--<?=$NextCalendar->getWeeks();?>weeks">
@@ -142,13 +126,16 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
                                 <?php } ?>
                                 </table>
                             </div>
-
                         </div>
-
                     </div>
-                    <div id="hd-price">
-                        <div class="hd-title">Détail du prix</div>
-                        <div><span id="nbJours">0 nuit</span> x <span id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>"><?=$Hebergement->getPrix()?> €</span> = <span id="prix">0 €</span></div>
+
+
+                    <div id="hd-price" class="card">
+                        <div class="card-header"><h6>Détail du prix</h6></div>
+                        <div class="card-body">
+                            <span>Vous allez réserver : </span>
+                            <span id="nbJours">0 nuit</span> x <span id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>"><?=$Hebergement->getPrix()?> €</span> = <span id="prix">0 €</span>
+                        </div>
                     </div>
                     <div>
                         <div id="alert-danger" class="alert alert-danger d-none"></div>
@@ -157,12 +144,16 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
                 <?php if(!empty($_GET['error'])){ ?>
                     <div class="alert alert-warning">Les dates sélectionnées ne sont pas valide. Veuillez selectionner une plage de date libre.</div>
                 <?php } ?>
-                <div>
-                    <button id="submit" class="btn btn-success btn-sm">Valider</button>
-                    <div id="hidden" class="d-none">
-                        <div>Souhaitez vous ajoutez une destination à votre voyage ?</div>
-                        <button id="submitYes" class="btn btn-sm btn-success">Oui</button>
-                        <button id="submitNo" class="btn btn-sm btn-secondary">Non</button>
+                <div class="card">
+                    <div class="card-body d-flex justify-content-center">
+                        <button id="submit" class="btn btn-success btn-sm">Valider</button>
+                        <div id="hidden" class="d-none">
+                            <div>Souhaitez vous ajoutez une destination à votre voyage ?</div>
+                            <div>
+                                <button id="submitYes" class="btn btn-sm btn-success">Oui</button>
+                                <button id="submitNo" class="btn btn-sm btn-secondary">Non</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="hd-avis"></div>
