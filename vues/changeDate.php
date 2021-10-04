@@ -77,7 +77,7 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                 <div>
                     <div class="calendar">
                         <?= $Calendar->toString();?>
-                        <table data-nbjour="" data-date="" id="table1" class="calendar__table calendar__table--<?=$Calendar->getWeeks();?>weeks">
+                        <table id="table1" class="calendar__table calendar__table--<?=$Calendar->getWeeks();?>weeks">
                             <tr>
                                 <?php foreach($Calendar->days as $day){?>
                                     <th>
@@ -114,7 +114,7 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                 <div>
                     <div class="calendar">
                         <?= $NextCalendar->toString();?>
-                        <table data-nbjour="" data-date="" id="table1" class="calendar__table calendar__table--<?=$NextCalendar->getWeeks();?>weeks">
+                        <table id="table1" class="calendar__table calendar__table--<?=$NextCalendar->getWeeks();?>weeks">
                             <tr>
                                 <?php foreach($NextCalendar->days as $day){?>
                                     <th>

@@ -312,6 +312,7 @@
 }
 .booking {
     background-color: rgba(126, 52, 52, 0.507);
+    border-radius: 10px;
     cursor: not-allowed!important;
 }
 
@@ -387,15 +388,15 @@
     margin-right: auto;
 }
 
-#change-date-container td .date-debut{
+.date-debut{
     background-color: rgb(160, 255, 147);
     border-radius: 50%;
 }
-#change-date-container td .date-fin{
+.date-fin{
     background-color: rgb(255, 139, 139);
     border-radius: 50%;
 }
-#change-date-container .booking{
+.booking{
     background-color: #3d1e1e91;
     border-radius: 10px;
 }
