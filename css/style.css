@@ -170,8 +170,6 @@
     height: calc(100vh - var(--navbar-height));
 }
 #hv-back-button-container{
-    display: flex;
-    justify-content: center;
     padding-left: 1em;
     padding-top: 1em;
 }
