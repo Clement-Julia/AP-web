@@ -32,11 +32,12 @@ if (is_numeric($_GET['idVille'])){
         $Ville = new Ville($_GET["idVille"]);
         $idRegion = $Ville->getIdRegion();
         $Hebergs = $Ville->getFreeHebergement($dateDebut, $Ville->getIdVille());
-        // echo "<pre>";
-        // print_r($Hebergs);
-        // echo "</pre>";
+
         // Lorsqu'on modifie manuellement l'idVille dans l'url, si la ville choisi ne correspond pas à la région -> erreur
         if ($BuildingRegionId == $idRegion){
+
+            // Pour la vérification lors de la page suivante
+            $_SESSION['idVille'] = $_GET["idVille"];
 
             ?>
 

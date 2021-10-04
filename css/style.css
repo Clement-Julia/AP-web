@@ -44,6 +44,13 @@
     width: 50%;
 }
 
+#total-prix-container{
+    text-align: center;
+    padding: 8px 0;
+    border: 4px double rgb(22, 129, 22);
+    background-color: rgba(22, 129, 22, 0.459);
+}
+
 #ct-choose-town {
     display: flex;
     flex-direction: column;

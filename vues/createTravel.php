@@ -80,7 +80,8 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
                 </div>
 
 <!-- ------------------------------------------- -->
-                    <a href="resumeTravel.php" class="btn btn-sm btn-success">Valider voyage</a>
+                <div id="total-prix-container"><?= $BuildingTravelId != null ? "Le prix total de votre voyage est de : " . $ReservationVoyage->getPrix() . " €" : "" ?></div>
+                <a href="resumeTravel.php" class="btn btn-sm btn-success">Valider voyage</a>
 <!-- ------------------------------------------- -->
 
                 

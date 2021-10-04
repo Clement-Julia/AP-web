@@ -100,7 +100,7 @@ class Ville extends Modele {
 
                 $Hebergement = new Hebergement($hebergement['idHebergement']);
                 $array = $Hebergement->getWhenHebergementIsBooking($Hebergement->getIdHebergement(), $date->format('Y-m-d'));
-                
+
                 if(!in_array($date->format('Y-m-d'), $array) && !empty($array)){
                     $lenght = count($array);
                     for ($i = 0; $i < $lenght; $i++){
@@ -123,16 +123,12 @@ class Ville extends Modele {
                         }
                     }
 
-                    
-                    
-
-                } else if(empty($array)){
-                    $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 7 jours";
+                } else if(count($array) == 0){
+                    $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 jours";
                 } else {
                     $response[$Hebergement->getIdHebergement()][0] = "indisponible";
                 }
                 $response[$Hebergement->getIdHebergement()][1] = $Hebergement;
-                // exit;
                 
             
         }
