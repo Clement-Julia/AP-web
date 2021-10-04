@@ -432,3 +432,32 @@
 
 
 /* --------------------------------------------------------------------------------- END RESUME TRAVEL------------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+/* test index */
+#index-form{
+    background-color: #fbe6e67a;
+    box-shadow: 0 0 30px #d3d3d3;
+}
+#index-form .card-header{
+    background-color: #2ca0a04d;
+}
+#item-button-container, #item-input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#item-input input{
+    background: #fbe6e67a;
+    border: none;
+    cursor: grab;
+}

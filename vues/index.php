@@ -10,6 +10,20 @@ require_once "header.php";
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Créez votre voyage
         </button>
+        <div id="index-form" class="card d-none">
+            <form action="../controleurs/startTravelTime.php" method="POST">
+                <div class="card-header text-center"><h6>Choississez votre départ</h6></div>
+                <div class="card-body d-flex">
+                    <div id="item-input">
+                        <input id="start-date" name="date" type="date" require>
+                    </div>
+                    <div id="item-button-container p-1">
+                        <button id="submit" type="submit" class="btn btn-outline-success btn-sm m-1">Start</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm my-1" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     
 
