@@ -451,8 +451,18 @@
 
 /* --------------------------------------------------------------------------------- END RESUME TRAVEL------------------------------------------------------------------- */
 
+#change-create-travel-container, #change-choose-town-bot{
+    display: flex;
+}
 
-
+#change-choose-town-bot{
+    width: 50%;
+    height: 100%;
+    flex-wrap: wrap;
+}
+#change-create-travel-container #map{
+    width: 50%;
+}
 
 
 

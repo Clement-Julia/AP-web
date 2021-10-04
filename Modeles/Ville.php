@@ -118,15 +118,19 @@ class Ville extends Modele {
 
                         if($nbJours > 14){
                             $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 jours";
+                            $response[$Hebergement->getIdHebergement()][2] = $nbJours;
                         } else {
                             $response[$Hebergement->getIdHebergement()][0] = "disponible " . $nbJours . " jours";
+                            $response[$Hebergement->getIdHebergement()][2] = $nbJours;
                         }
                     }
 
                 } else if(count($array) == 0){
                     $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 jours";
+                    $response[$Hebergement->getIdHebergement()][2] = 999;
                 } else {
                     $response[$Hebergement->getIdHebergement()][0] = "indisponible";
+                    $response[$Hebergement->getIdHebergement()][2] = 0;
                 }
                 $response[$Hebergement->getIdHebergement()][1] = $Hebergement;
                 

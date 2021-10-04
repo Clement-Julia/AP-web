@@ -27,27 +27,38 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
         }
 
         // Il faut vérifier et afficher uniquement les hôtels libres sur cet interval
-        $freeHebergement = $Reservation->getFreeHebergement($idVille, $Reservation->getDateDebut(), $Reservation->getNbJours());
+        $dateDebut = new DateTime($Reservation->getDateDebut());
+        $Ville = new Ville($idVille);
+        $idRegion = $Ville->getIdRegion();
+        $Hebergs = $Ville->getFreeHebergement($dateDebut, $Ville->getIdVille());
         
-        if(!empty($freeHebergement)){
-
-            $Ville = new Ville($idVille);
+        if(!empty($Hebergs)){
 
             ?>
 
             <div id="hv-container">
+                <div id="hv-back-button-container">
+                    <a href="<?= isset($_GET['idVille']) ? "changeVille.php" : "createTravel.php?idRegion=" . $Ville->getIdRegion() ?>" class="btn btn-sm btn-secondary back-button"><</a>
+                </div>
                 <div id="choose-hebergement">
-                    <div id="hv-back-button-container">
-                        <a href="<?= isset($_GET['idVille']) ? "changeVille.php" : "createTravel.php?idRegion=" . $Ville->getIdRegion() ?>" class="btn btn-sm btn-secondary back-button"><</a>
-                    </div>
                     <?php
-                    foreach ($freeHebergement as $item)
-                    { ?>
-                        <a data-hebergement="1" data-id="<?= $item->getIdHebergement()?>" data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" class="hebergement-item js-marker" href="changeHebergementDescription.php?idHebergement=<?=$item->getIdHebergement()?>">
-                            <div class="hebergement-picture"></div>
-                            <div class="hebergement-text"><?= $item->getDescription()?></div>
-                        </a>
+                    foreach ($Hebergs as $item)
+                    { 
+                        if($item[0] != "indisponible" && $item[2] >= $Reservation->getNbJours()){?>
+
+                        <div class="col-xs-12 col-sm-12 col-md-6 mb-3 col-xl-4">
+                            <div data-hebergement="1" data-id="<?= $item[1]->getIdHebergement()?>" data-name="<?= $item[1]->getLibelle()?>" data-lat="<?= $item[1]->getLatitude()?>" data-lng="<?= $item[1]->getLongitude()?>" data-zoom="12" class="card ct-a js-marker">
+                                <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1530735606451-8f5f13955328?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80">
+                                <div class="card-body hv-text-hebergement">
+                                    <h6 class="card-title"><?= $item[1]->getLibelle()?></h6>
+                                    <p><?= $item[1]->getDescription()?></p>
+                                </div>
+                                <div class="card-footer text-muted"><?=$item[0]?></div>
+                            </div>
+                        </div>
+
                     <?php }
+                    }
                     ?>
                 </div>
                 <div data-lat="<?= $Ville->getLatitude()?>" data-lng="<?= $Ville->getLongitude()?>" data-zoom="12" class="map-hebergement" id="map"></div>
