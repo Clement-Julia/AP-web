@@ -33,16 +33,17 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
         ?>
 
         <div id="change-date-container">
-            <div id="cd-header">
-                <div id="cd-title">Bienvenu dans le modificateur de date KEVIN !</div>
+            <div class="card">
+                <div class="card-header text-center"><h6>Modification des dates du séjour</h6></div>
             </div>
-            <div id="cd-calendar-container">
+            <div id="cd-calendar-container" class="card">
                 <!-- Les 3 calendriers -->
 
 
-                <div>
+                <div id="cd-calendar" class="card">
                     <div class="calendar">
-                        <?= $PreviousCalendar->toString();?>
+                        <div class="calendar-header"><?= $PreviousCalendar->toString();?></div>
+                        
                         <table id="table1" class="calendar__table calendar__table--<?=$PreviousCalendar->getWeeks();?>weeks">
                             <tr>
                                 <?php foreach($PreviousCalendar->days as $day){?>
@@ -75,9 +76,9 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                 </div>
 
                 <div>
-                    <div class="calendar">
-                        <?= $Calendar->toString();?>
-                        <table data-nbjour="" data-date="" id="table1" class="calendar__table calendar__table--<?=$Calendar->getWeeks();?>weeks">
+                    <div class="calendar card">
+                        <div class="calendar-header"><?= $Calendar->toString();?></div> 
+                        <table id="table1" class="calendar__table calendar__table--<?=$Calendar->getWeeks();?>weeks">
                             <tr>
                                 <?php foreach($Calendar->days as $day){?>
                                     <th>
@@ -112,9 +113,9 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
 
 
                 <div>
-                    <div class="calendar">
-                        <?= $NextCalendar->toString();?>
-                        <table data-nbjour="" data-date="" id="table1" class="calendar__table calendar__table--<?=$NextCalendar->getWeeks();?>weeks">
+                    <div class="calendar card">
+                        <div class="calendar-header"><?= $NextCalendar->toString();?></div> 
+                        <table id="table1" class="calendar__table calendar__table--<?=$NextCalendar->getWeeks();?>weeks">
                             <tr>
                                 <?php foreach($NextCalendar->days as $day){?>
                                     <th>
@@ -146,33 +147,46 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                 </div>
 
             </div>
-            <div id="cd-resume-container">
+            <div id="cd-resume-container" class="card">
                 <!-- Le résumé avant / après  -->
-                <div>
-                    <div>Date d'arrivée : <?=$Reservation->getDateDebut()?></div>
-                    <div>Date de départ : <?=$Reservation->getDateFin()?></div>
-                    <div>Nombre de jour : <?=$Reservation->getNbJours()?></div>
-                    <div id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>" >Prix : <?=$Reservation->getPrix()?> €</div>
+                <div class="card modification">
+                    <div class="card-header">
+                        <h6>Avant modification :</h6>
+                    </div>
+                    <div class="card-body">
+                        <div>Date d'arrivée : <span class="float-right"><?=$Reservation->getDateDebut()?></span></div>
+                        <div>Date de départ : <span class="float-right"><?=$Reservation->getDateFin()?></span></div>
+                        <div>Nombre de jour : <span class="float-right"><?=$Reservation->getNbJours()?></span></div>
+                        <div id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>" >Prix : <span class="float-right"><?=$Reservation->getPrix()?> €</span></div>
+                    </div>
                 </div>
-                <div>
-                    <div>Date d'arrivée : <span id="d-start"></span></div>
-                    <div>Date de départ : <span id="d-end"></span></div>
-                    <div>Nombre de jour : <span id="nbJours"></span></div>
-                    <div>Prix : <span id="prix">-</span> €</div>
+
+                <div class="card modification">
+                    <div class="card-header">
+                        <h6>Après modification :</h6>
+                    </div>
+                    <div class="card-body">
+                        <div>Date d'arrivée : <span class="float-right" id="d-start"> -</span></div>
+                        <div>Date de départ : <span class="float-right" id="d-end"> -</span></div>
+                        <div>Nombre de jour : <span class="float-right" id="nbJours"> -</span></div>
+                        <div>Prix : <span class="float-right" id="prix"> -</span></div>
+                    </div>
                 </div>
             </div>
             <div>
                 <div id="alert-warning" class="alert alert-warning d-none"></div>
                 <div id="alert-danger" class="alert alert-danger d-none"></div>
             </div>
-            <div id="cd-buttons-container">
+            <div id="cd-buttons-container" class="card">
                 <!-- Les boutons -->
                 <form action="../controleurs/changeDate.php" method="POST">
-                    <input id="inputDateDebut" name="dateDebut" value="" type="hidden" >
-                    <input id="inputDateFin" name="dateFin" value="" type="hidden" >
-                    <button type="submit" class="btn btn-success mx-1">Valider</button>
+                    <div class="card-body text-center">
+                        <input id="inputDateDebut" name="dateDebut" value="" type="hidden" >
+                        <input id="inputDateFin" name="dateFin" value="" type="hidden" >
+                        <button type="submit" class="btn btn-success mx-1">Valider</button>
+                        <a href="createTravel.php" class="btn btn-secondary mx-1">Annuler</a>
+                    </div>
                 </form>
-                <a href="createTravel.php" class="btn btn-secondary mx-1">Annuler</a>
             </div>
         </div>
 

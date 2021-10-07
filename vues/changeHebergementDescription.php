@@ -35,7 +35,7 @@ if (is_numeric($_GET['idHebergement'])){
 
             <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
                 <div id="hd-title-container">
-                    <div id="hd-title"><a href="changeHebergement.php" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
+                    <div id="hd-title"><a href="changeHebergement.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
                     <div id="hd-infos">
                         <div id="hd-rate"></div>
                         <div id="hd-heart">"<3"</div>
@@ -43,10 +43,14 @@ if (is_numeric($_GET['idHebergement'])){
                 </div>
                 <div id="hd-pictures"></div>
                 <div id="hd-description-container">
-                    <div id="hd-description"><?= $Hebergement->getDescription() ?></div>
-                    <div id="hd-tools">
-                        <div class="hd-title">Ce que propose le logement :</div>
-                        <div id="hd-tools-item-container">
+                    <div id="hd-description" class="card">
+                        <div class="card-header"><h6>Description</h6></div>
+                        <div class="card-body"><?= $Hebergement->getDescription() ?></div>
+                        
+                    </div>
+                        <div class="card">
+                            <div class="card-header"><h6>Ce que propose le logement : </h6></div>
+                            <div class="card-body d-flex flex-wrap">
                         <?php
                         foreach ($Hebergement->getOptions() as $item){
                             ?>
@@ -59,23 +63,29 @@ if (is_numeric($_GET['idHebergement'])){
                 </div>
                 <div id="hd-date-price-container">
 
-                    <div id="hd-price">
-                        <div class="hd-title">Détail du prix</div>
-                        <div><span id="nuits"><?=$Reservation->getNbJours()?> <?=$Reservation->getNbJours() > 1 ? 'nuits' : 'nuit'?></span> x <span data-prix="<?=$Hebergement->getPrix()?>" id="prix"><?=$Hebergement->getPrix()?> €</span> = <span id="total"><?=$Hebergement->getPrix() * $Reservation->getNbJours()?> €</span></div>
+                    <div id="hd-price" class="card">
+                        <div class="card-header"><h6>Détail du prix</h6></div>
+                        <div class="card-body">
+                            <span id="nuits"><?=$Reservation->getNbJours()?> <?=$Reservation->getNbJours() > 1 ? 'nuits' : 'nuit'?></span> x <span data-prix="<?=$Hebergement->getPrix()?>" id="prix"><?=$Hebergement->getPrix()?> €</span> = <span id="total"><?=$Hebergement->getPrix() * $Reservation->getNbJours()?> €</span>
+                            <div class="card-text">
+                                <?php if($Reservation->getPrix() <= $Hebergement->getPrix() * $Reservation->getNbJours()){ ?>
+                                <div>Réserver cet hébergement à la place de "<?=$OldHebergement->getLibelle()?>" vous coûtera <?=($Hebergement->getPrix() * $Reservation->getNbJours() - $Reservation->getPrix())?>€ de plus</div>
+                                <?php } else { ?>
+                                    <div>Réserver cet hébergement à la place de "<?=$OldHebergement->getLibelle()?>" vous fera économiser <?=$Reservation->getPrix() - ($Hebergement->getPrix() * $Reservation->getNbJours())?>€</div>
+                                <?php } ?>
+                            </div>
+                        </div>
                     </div>
-                    <?php if($Reservation->getPrix() <= $Hebergement->getPrix() * $Reservation->getNbJours()){ ?>
-                        <div>Réserver cet hébergement à la place de "<?=$OldHebergement->getLibelle()?>" vous coûtera <?=($Hebergement->getPrix() * $Reservation->getNbJours() - $Reservation->getPrix())?>€ de plus</div>
-                    <?php } else { ?>
-                        <div>Réserver cet hébergement à la place de "<?=$OldHebergement->getLibelle()?>" vous fera économiser <?=$Reservation->getPrix() - ($Hebergement->getPrix() * $Reservation->getNbJours())?>€</div>
-                    <?php } ?>
                 </div>
 
-                <div>
-                    <form action="../controleurs/changeHebergement.php" method="POST">
-                        <input type="hidden" name="idHebergement" value="<?=$_GET['idHebergement'];?>">
-                        <button id="submit" class="btn btn-success btn-sm">Changer pour cet hôtel</button>
-                    </form>
-                </div>
+                <form action="../controleurs/changeHebergement.php" method="POST">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <input type="hidden" name="idHebergement" value="<?=$_GET['idHebergement'];?>">
+                            <button id="submit" class="btn btn-success btn-sm">Changer pour cet hôtel</button>
+                        </div>
+                    </div>
+                </form>
                 <div id="hd-avis"></div>
             </div>
 

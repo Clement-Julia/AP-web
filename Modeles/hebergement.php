@@ -145,8 +145,10 @@ class Hebergement extends Modele {
         $array = [];
         foreach ($requete->fetchAll(PDO::FETCH_ASSOC) as $reservation){
             
-            $begin = new DateTime( $reservation['dateDebut'] . "+1 days" );
+            // $begin = new DateTime( $reservation['dateDebut'] . "+1 days" );
+            $begin = new DateTime( $reservation['dateDebut']);
             $end = new DateTime( $reservation['dateDebut'] );
+            // $end = $end->modify( '+' . $reservation['nbJours'] . ' day' );
             $end = $end->modify( '+' . $reservation['nbJours'] . ' day' );
 
             $interval = new DateInterval('P1D');

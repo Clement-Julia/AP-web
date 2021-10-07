@@ -10,17 +10,18 @@ class Api extends Modele {
 
         $boolean = false;
         $verdict = [];
-
+        
         for($i = 0; $i < $nbj; $i++){
-
+            
             $date = new DateTime($da . '+' . $i . 'days');
-
+            
             if(in_array($date->format("Y-m-d"), $bookingDates)){
-
-                $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement WHERE (? BETWEEN dateDebut AND dateFin) AND idHebergement = ?");
-                $requete->execute([$date->format("Y-m-d"), $Hebergement->getIdHebergement()]);
+                
+                $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement INNER JOIN reservations_voyages ON idVoyage = idReservationVoyage WHERE (? BETWEEN dateDebut AND dateFin) AND idHebergement = ? AND is_building = ?");
+                $requete->execute([$date->format("Y-m-d"), $Hebergement->getIdHebergement(), 0]);
                 $reservation = $requete->fetch(PDO::FETCH_ASSOC);
-
+                
+                
                 if(!empty($reservation)){
                     
                     if($reservation['idUtilisateur'] != $_SESSION['idUtilisateur']){
@@ -39,10 +40,9 @@ class Api extends Modele {
                 }
             }
 
-            $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement WHERE (? BETWEEN dateDebut AND dateFin) AND idUtilisateur = ? AND idReservationHebergement != ? AND dateFin != ?");
-            $requete->execute([$date->format("Y-m-d"), $_SESSION['idUtilisateur'], $idreser, $date->format("Y-m-d")]);
+            $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement INNER JOIN reservations_voyages ON idVoyage = idReservationVoyage WHERE (? BETWEEN dateDebut AND dateFin) AND reservations_hebergement.idUtilisateur = ? AND idReservationHebergement != ? AND dateFin != ? AND is_building = ?");
+            $requete->execute([$date->format("Y-m-d"), $_SESSION['idUtilisateur'], $idreser, $date->format("Y-m-d"), 1]);
             $reserve = $requete->fetch(PDO::FETCH_ASSOC);
-            
             if (!empty($reserve) && !in_array($reserve, $verdict)){
                 $verdict[] = $reserve;
             }
@@ -104,6 +104,37 @@ class Api extends Modele {
         $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement WHERE (? BETWEEN dateDebut AND dateFin) AND idUtilisateur = ? AND idReservationHebergement != ? AND dateFin != ?");
         $requete->execute([$date, $idUtilisateur, $idReservationHebergement, $date]);
         return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getInfosRegions($idRegion){
+        $requete = $this->getBdd()->prepare("SELECT description FROM regions WHERE idRegion = ?");
+        $requete->execute([$idRegion]);
+        return $this->sendJSON($requete->fetch(PDO::FETCH_ASSOC));
+    }
+
+    public function getHebergementBooking($dateArrivee, $nbJours, $idHebergement){
+
+        $boolean = false;
+        $Hebergement = new Hebergement($idHebergement);
+        $bookingDates = $Hebergement->getWhenHebergementIsBooking($Hebergement->getIdHebergement());
+
+        for($i = 0; $i < $nbJours; $i++){
+
+            $date = new DateTime($dateArrivee . '+' . $i . 'days');
+
+            if(in_array($date->format("Y-m-d"), $bookingDates)){
+                $boolean = true;
+            }
+        }
+
+        if($boolean){
+            $return['message'] = "La réservation n'est pas disponible, un autre utilisateur ayant déjà réservé une partie des dates que vous souhaitiez";
+            $return['code'] = 402;
+        } else {
+            $return['code'] = 200;
+        }
+
+        $this->sendJSON($return);
     }
 
 }
