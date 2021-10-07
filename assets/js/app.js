@@ -6,17 +6,32 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 var lines = [];
+var markers = [];
 
 Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
   lines.push([item.dataset.lat, item.dataset.lng]);
-  L.marker([item.dataset.lat, item.dataset.lng]).addTo(map)
-    .bindPopup(
+  var marker = L.marker([item.dataset.lat, item.dataset.lng])
+  marker['id'] = item.dataset.id;
+  marker.bindPopup(
       `<div id="` + item.dataset.id + `" class='popup-container'>
           <div>Souhaitez-vous vous rendre à ` + item.dataset.name + ` ?</div>
           <div>
               <a href="` + (item.dataset.hebergement ? 'hebergementDescription' : 'hebergementVille') + `.php?` + (item.dataset.hebergement ? 'idHebergement=' : 'idVille=') + item.dataset.id + `" class='btn btn-success btn-sm popup-a'>J'y vais</a>
           </div>
       </div>`)
+  marker.addTo(map);
+  markers.push(marker);
+    
+    item.addEventListener('click', () => {
+      map.flyTo([item.dataset.lat, item.dataset.lng], item.dataset.zoom);
+      setTimeout(() => {
+        for(var i = 0; i < markers.length; ++i){
+          if (marker["id"] === item.dataset.id) {
+            marker.openPopup();
+          }
+        }
+      },300)
+    })
 })
 
 if (document.getElementById('ligne-points') != undefined){

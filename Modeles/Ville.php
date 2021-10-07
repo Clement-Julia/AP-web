@@ -132,5 +132,57 @@ class Ville extends Modele {
         $requete = $this->getBdd()->prepare("DELETE from villes where libelle = ?");
         $requete->execute([$libelle]);
     }
+    
+    public function getFreeHebergement($date, $idVille){
+
+        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement LEFT JOIN villes using(idVille) LEFT JOIN reservations_hebergement USING(idHebergement) where idVille = ?");
+        $requete->execute([$idVille]);
+        $hebergements = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+        $response = [];
+
+        foreach($hebergements as $hebergement){
+
+                $Hebergement = new Hebergement($hebergement['idHebergement']);
+                $array = $Hebergement->getWhenHebergementIsBooking($Hebergement->getIdHebergement(), $date->format('Y-m-d'));
+
+                if(!in_array($date->format('Y-m-d'), $array) && !empty($array)){
+                    $lenght = count($array);
+                    for ($i = 0; $i < $lenght; $i++){
+                        if($array[$i] < $date->format('Y-m-d')){
+                            unset($array[$i]);
+                        }
+                    }
+
+                    if(count($array) == 0){
+                        $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 jours";
+                    } else {
+                        $origin = new DateTime($date->format('Y-m-d'));
+                        $target = new DateTime($array[key($array)]);
+                        $nbJours = $origin->diff($target)->d;
+
+                        if($nbJours > 14){
+                            $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 jours";
+                            $response[$Hebergement->getIdHebergement()][2] = $nbJours;
+                        } else {
+                            $response[$Hebergement->getIdHebergement()][0] = "disponible " . $nbJours . " jours";
+                            $response[$Hebergement->getIdHebergement()][2] = $nbJours;
+                        }
+                    }
+
+                } else if(count($array) == 0){
+                    $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 jours";
+                    $response[$Hebergement->getIdHebergement()][2] = 999;
+                } else {
+                    $response[$Hebergement->getIdHebergement()][0] = "indisponible";
+                    $response[$Hebergement->getIdHebergement()][2] = 0;
+                }
+                $response[$Hebergement->getIdHebergement()][1] = $Hebergement;
+                
+            
+        }
+
+        return $response;
+    }
 
 }

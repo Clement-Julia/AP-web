@@ -18,11 +18,11 @@ require_once "../controleurs/traitement.php";
 <body>
     <!-- on refait toutes la navbar -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
                 <a class="nav-link" href="createTravel.php">Créez votre voyage</a>
                 <?=(!empty($_SESSION["idRole"]) && $_SESSION["idRole"] == 2 ? "<a href='../admin' class='nav-link'>Accès admin</a>" : "");?>
             </div>
