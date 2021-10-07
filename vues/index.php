@@ -1,8 +1,5 @@
 <?php
 require_once "header.php";
-$_SESSION['voyage'] = [];
-$_SESSION['date'] = [];
-$_SESSION['index'] = [];
 ?>
 
 <div id="index-container">
@@ -51,12 +48,7 @@ $_SESSION['index'] = [];
     </div>
 </div>
 
-<<<<<<< HEAD
 <script src="../assets/js/index.js"></script>
-=======
-
-<script src="../js/index.js"></script>
->>>>>>> 9763174f869cac01778c96f55732c28f5d5d503d
 
 <?php
 require_once "footer.php";

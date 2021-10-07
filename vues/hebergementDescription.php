@@ -159,8 +159,8 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
                 <div id="hd-avis"></div>
             </div>
 
-            <script src="../js/hebergementDescription.js"></script>
-            <script src="../js/moment.js"></script>
+            <script src="../assets/js/hebergementDescription.js"></script>
+            <script src="../assets/js/moment.js"></script>
         <?php
 
         }
