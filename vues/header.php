@@ -38,7 +38,9 @@ require_once "../controleurs/traitement.php";
             
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" href="avis.php">Avis</a></li>
-                        <li><a class="dropdown-item" href="../controleurs/deconnexion.php">Déconnexion</a></li>
+                        <li><a class="dropdown-item" href="#">Favoris</a></li>
+                        <li><a class="dropdown-item" href="#">Paramètres</a></li>
+                        <li><a class="dropdown-item li" href="../controleurs/deconnexion.php">Déconnexion</a></li>
                     </ul>
                 </div>
                 <?php

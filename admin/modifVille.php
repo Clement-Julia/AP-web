@@ -72,6 +72,15 @@ $infos = $region->getAllregion();
                 <label for="longitude">Longitude : </label>
                 <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Entrez une longitude" autocomplete="off" value="<?= $info_ville["longitude"] ?>">
             </div>
+            
+            <div class="form-group" id="image">
+                <label>Images :</label>
+                <div>
+                    <?php
+                        lister_images("../src/test/");
+                    ?>
+                </div>
+            </div>
 
             <div class="form-group text-center mt-4">
                 <button type="submit" class="btn btn-warning">Modifier</button>
@@ -94,15 +103,6 @@ $infos = $region->getAllregion();
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="form-group">
-                <?php
-                    // lister_images("../src/test/");
-                ?>
-                <button type="button" id="test" style="visibility: hidden">
-                    <span class="badge badge-danger rounded position-badge" style="visibility: visible"><i class="fas fa-times fa-lg" aria-hidden=true></i></span>
-                </button>
-            </div> -->
 
         </form>
         <?php
