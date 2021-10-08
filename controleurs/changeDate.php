@@ -1,6 +1,5 @@
 <?php
 require_once "traitement.php";
-
 // (SECURITE) On vérifie que tout existe puis si les dates sont bien des dates et si la réservation est bien un chiffre
 if (
     !empty($_POST['dateDebut']) && 
@@ -145,4 +144,6 @@ if (
             header('location: ../vues/createTravel.php');
 
         }
+    } else {
+        header('location: ../vues/changeDate.php?error=dates-de-voyage-incorrectes');
     }

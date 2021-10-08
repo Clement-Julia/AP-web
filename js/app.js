@@ -10,7 +10,16 @@ var markers = [];
 
 Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
   lines.push([item.dataset.lat, item.dataset.lng]);
-  var marker = L.marker([item.dataset.lat, item.dataset.lng])
+  if(item.dataset.hebergement){
+     var myIcon = L.divIcon({className: 'my-div-icon', html: item.dataset.price + " €"});
+     var marker = L.marker([item.dataset.lat, item.dataset.lng], {icon: myIcon})
+  } else {
+    var marker = L.marker([item.dataset.lat, item.dataset.lng])
+  }
+ 
+  marker.addEventListener('click', () => {
+    document.getElementById(item.dataset.id).focus();
+  })
   marker['id'] = item.dataset.id;
   marker.bindPopup(
       `<div id="` + item.dataset.id + `" class='popup-container'>

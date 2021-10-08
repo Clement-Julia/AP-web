@@ -52,11 +52,12 @@ if (is_numeric($_GET['idVille'])){
                         if($item[0] != "indisponible"){?>
 
                         <div class="col-xs-12 col-sm-12 col-md-6 mb-3 col-xl-4">
-                            <div data-hebergement="1" data-id="<?= $item[1]->getIdHebergement()?>" data-name="<?= $item[1]->getLibelle()?>" data-lat="<?= $item[1]->getLatitude()?>" data-lng="<?= $item[1]->getLongitude()?>" data-zoom="12" class="card ct-a js-marker">
+                            <div id="<?= $item[1]->getIdHebergement()?>" data-hebergement="1" data-id="<?= $item[1]->getIdHebergement()?>" data-name="<?= $item[1]->getLibelle()?>" data-lat="<?= $item[1]->getLatitude()?>" data-lng="<?= $item[1]->getLongitude()?>" data-zoom="12" data-price="<?=$item[1]->getPrix()?>" class="card ct-a js-marker">
                                 <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1530735606451-8f5f13955328?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80">
                                 <div class="card-body hv-text-hebergement">
                                     <h6 class="card-title"><?= $item[1]->getLibelle()?></h6>
                                     <p><?= $item[1]->getDescription()?></p>
+                                    <span>Prix : <?= $item[1]->getPrix()?> €</span>
                                 </div>
                                 <div class="card-footer text-muted"><?=$item[0]?></div>
                             </div>
