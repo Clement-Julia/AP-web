@@ -17,9 +17,11 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
     $PreviousCalendar = new Month($PreviousMonth->format('m'), $PreviousMonth->format('y'));
     $NextCalendar = new Month($NextMonth->format('m'), $NextMonth->format('y'));
 
-    $lastmonday = $Calendar->getStartingDay()->modify('last monday');
-    $previousLastmonday = $PreviousCalendar->getStartingDay()->modify('last monday');
-    $nextLastmonday = $NextCalendar->getStartingDay()->modify('last monday');
+    $lastmonday = $Calendar->getStartingDay()->format('N') === '1' ? $Calendar->getStartingDay() : $Calendar->getStartingDay()->modify('last monday');
+
+    $previousLastmonday = $PreviousCalendar->getStartingDay()->format('N') === '1' ? $PreviousCalendar->getStartingDay() : $PreviousCalendar->getStartingDay()->modify('last monday');
+
+    $nextLastmonday = $NextCalendar->getStartingDay()->format('N') === '1' ? $NextCalendar->getStartingDay() : $NextCalendar->getStartingDay()->modify('last monday');
 
     // Variante de la fonction, sans la var $date on récupère toutes les dates indisponibles de l'hôtel
     $bookingDates = $Hebergement->getWhenHebergementIsBooking($Hebergement->getIdHebergement());

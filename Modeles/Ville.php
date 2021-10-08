@@ -110,23 +110,23 @@ class Ville extends Modele {
                     }
 
                     if(count($array) == 0){
-                        $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 jours";
+                        $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 nuits";
                     } else {
                         $origin = new DateTime($date->format('Y-m-d'));
                         $target = new DateTime($array[key($array)]);
                         $nbJours = $origin->diff($target)->d - 1;
 
-                        if($nbJours > 14){
-                            $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 jours";
+                        if($nbJours > 15){
+                            $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 nuits";
                             $response[$Hebergement->getIdHebergement()][2] = $nbJours;
                         } else {
-                            $response[$Hebergement->getIdHebergement()][0] = "disponible " . $nbJours . " jours";
+                            $response[$Hebergement->getIdHebergement()][0] = "disponible " . $nbJours . ($nbJours > 1 ? " nuits" : " nuit");
                             $response[$Hebergement->getIdHebergement()][2] = $nbJours;
                         }
                     }
 
                 } else if(count($array) == 0){
-                    $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 jours";
+                    $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 nuits";
                     $response[$Hebergement->getIdHebergement()][2] = 999;
                 } else {
                     $response[$Hebergement->getIdHebergement()][0] = "indisponible";

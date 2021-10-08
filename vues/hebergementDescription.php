@@ -30,12 +30,11 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
             $Calendar = new Month($dateDebut->format('m'), $dateDebut->format('y'));
             $NextCalendar = new Month($NextMonth->format('m'), $NextMonth->format('y'));
 
-            $lastmonday = $Calendar->getStartingDay()->modify('last monday');
-            $nextLastmonday = $NextCalendar->getStartingDay()->modify('last monday');
+            $lastmonday = $Calendar->getStartingDay()->format('N') === '1' ? $Calendar->getStartingDay() : $Calendar->getStartingDay()->modify('last monday');
+            $nextLastmonday = $NextCalendar->getStartingDay()->format('N') === '1' ? $NextCalendar->getStartingDay() : $NextCalendar->getStartingDay()->modify('last monday');
 
             $Hebergement = new Hebergement($_GET["idHebergement"]);
             $bookingDates = $Hebergement->getWhenHebergementIsBooking($Hebergement->getIdHebergement(), $dateDebut->format('y-m-d'));
-
             ?>
 
             <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
