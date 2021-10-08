@@ -114,7 +114,7 @@ class Ville extends Modele {
                     } else {
                         $origin = new DateTime($date->format('Y-m-d'));
                         $target = new DateTime($array[key($array)]);
-                        $nbJours = $origin->diff($target)->d;
+                        $nbJours = $origin->diff($target)->d - 1;
 
                         if($nbJours > 14){
                             $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 jours";

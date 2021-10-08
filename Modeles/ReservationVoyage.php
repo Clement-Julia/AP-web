@@ -6,6 +6,7 @@ class ReservationVoyage extends Modele {
     private $prix;
     private $codeReservation;
     private $idUtilisateur;
+    private $isBuilding;
     private $reservationsHebergement = [];
 
     public function __construct($idReservationVoyage = null)
@@ -20,6 +21,7 @@ class ReservationVoyage extends Modele {
             $this->prix = $infoReservation["prix"];
             $this->codeReservation = $infoReservation["code_reservation"];
             $this->idUtilisateur = $infoReservation["idUtilisateur"];
+            $this->isBuilding = $infoReservation["is_building"];
 
             $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement WHERE idVoyage = ? ORDER BY idReservationHebergement ASC;");
             $requete->execute([$idReservationVoyage]);
@@ -36,12 +38,13 @@ class ReservationVoyage extends Modele {
         }
     }
 
-    public function initializeReservationVoyage($idReservationVoyage, $prix, $codeReservation, $idUtilisateur)
+    public function initializeReservationVoyage($idReservationVoyage, $prix, $codeReservation, $idUtilisateur, $isBuilding)
     {
         $this->idReservationVoyage = $idReservationVoyage;
         $this->prix = $prix;
         $this->codeReservation = $codeReservation;
         $this->idUtilisateur = $idUtilisateur;
+        $this->isBuilding = $isBuilding;
 
     }
 
@@ -68,6 +71,11 @@ class ReservationVoyage extends Modele {
     public function getReservationHebergement()
     {
         return $this->reservationsHebergement;
+    }
+
+    public function getIsBuilding()
+    {
+        return $this->isBuilding;
     }
 
     public function insertBaseTravel($prix, $codeReservation, $idUtilisateur, $boolean){
