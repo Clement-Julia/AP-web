@@ -5,8 +5,11 @@ unset($_SESSION['idReservationHebergement']);
 // (SECURITE) On vérifie que le paramètre récupéré est bien du type INT attendu
 if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET['idRegion'])){
 
+    // Si la variable existe (l'utilisateur à pas encore réservé une étape) sinon on peut la supprimer car on récupère l'info à partir de la bdd
     if (!empty($_GET['idRegion'])){
         $_SESSION['idRegion'] = $_GET['idRegion'];
+    } else {
+        unset($_SESSION['idRegion']);
     }
     $ReservationVoyage = new ReservationVoyage();
     $BuildingTravelId = $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']);

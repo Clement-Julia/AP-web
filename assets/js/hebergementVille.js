@@ -19,7 +19,7 @@ Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
       `<div id="` + item.dataset.id + `" class='popup-container'>
           <div>Souhaitez-vous vous rendre à ` + item.dataset.name + ` ?</div>
           <div>
-              <a href="` + (item.dataset.hebergement ? 'changeHebergementDescription' : 'changeHebergement') + `.php?` + (item.dataset.hebergement ? 'idHebergement=' : 'idVille=') + item.dataset.id + `" class='btn btn-success btn-sm popup-a'>J'y vais</a>
+              <a href="hebergementDescription.php?idHebergement=` + item.dataset.id + `" class='btn btn-success btn-sm popup-a'>J'y vais</a>
           </div>
       </div>`)
   marker.addTo(map);

@@ -55,7 +55,7 @@ if (!empty($_GET['idHebergement']) &&
             $Reservation->insertReservationHebergement($_SESSION['idUtilisateur'], $idVoyage, 'azerty', $prixNuitsHebergement, $dateDebut->format('Y-m-d'), $dateFin->format('Y-m-d'), $_GET['nbNuit'], $Hebergement->getIdHebergement());
 
             if ($_GET['continue'] == 1){
-                header('location: ../vues/createTravel.php?continue=1');
+                header('location: ../vues/createTravel.php');
             } else {
                 header('location: ../vues/resumeTravel.php');
             }
