@@ -9,6 +9,10 @@
     box-sizing: border-box;
 }
 
+.z-index{
+    z-index: 1000 !important;
+}
+
 /* ----------------- NAVBAR ----------------------- */
 
 #navbar{
@@ -332,6 +336,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.btn-radius{
+    border-radius: 100px !important;
+    visibility: visible;
+}
+
+.rating_size{
+    font-size: 20px !important;
 }
 
 

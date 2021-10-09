@@ -33,6 +33,14 @@ try{
                     throw new Exception ("La demande n'est pas valide, vérifiez l'url");
                 }
                 break;
+            case "image":
+                if(!empty($_GET['name'])){
+                    $Api = new Api();
+                    $Api->supImage($_GET['name']);
+                } else {
+                    throw new Exception ("La demande n'est pas valide, vérifiez l'url");
+                }
+                break;
             default : throw new Exception ("La demande n'est pas valide, vérifiez l'url");
         }
     } else {

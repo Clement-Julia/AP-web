@@ -10,11 +10,11 @@ if(!empty($_POST["nom"]) && !empty($_POST["prenom"]) && !empty($_POST["age"]) &&
             $inscription->inscription($_POST["email"], $_POST["mdp"], $_POST["nom"], $_POST["prenom"], $_POST["age"], 1);
             header("location:../vues/");
         }else{
-            header("location:../vues/inscription.php?erreur=mdp");
+            header("location:../admin/addUser.php?erreur=mdp");
         }
     }else{
-        header("location:../vues/inscription.php?erreur=email");
+        header("location:../admin/addUser.php?erreur=email");
     }
 }else {
-    header("location:../vues/inscription.php?erreur=all");
+    header("location:../admin/addUser.php?erreur=all");
 }

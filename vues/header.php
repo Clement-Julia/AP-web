@@ -13,12 +13,13 @@ require_once "../controleurs/traitement.php";
    crossorigin=""/>
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <script src="https://kit.fontawesome.com/f3f16a7b72.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/png" href="../src/img/logo.png">
     <title>OwnTravel</title>
 </head>
 <body>
     <!-- on refait toutes la navbar -->
 
-<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light z-index">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
@@ -31,7 +32,7 @@ require_once "../controleurs/traitement.php";
         <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' class='btn-group btn btn-outline-primary btn-sm align-self-center ml-auto'>Inscription</a><a href='connexion.php' class='btn btn-outline-success btn-sm align-self-center'>Connexion</a>");?>
         <?php if(!empty($_SESSION["idUtilisateur"])){
                 ?>
-                <div class="dropdown">
+                <div class="dropdown me-3">
                     <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <?= $_SESSION["prenom"] ." " . $_SESSION["nom"]?>
                     </a>

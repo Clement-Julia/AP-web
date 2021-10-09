@@ -4,16 +4,22 @@ require_once "header.php";
 
 <div class="container mt-3">
     <h1>Formulaire de connexion</h1>
-    <form method="POST" action="../controleurs/connexion.php">
+    <form method="POST" action="../controleurs/connexion.php" class="needs-validation" novalidate>
 
         <div class="form-group my-4">
             <label for="email">Email : </label>
-            <input type="email" class="form-control" name="email" id="email" placeholder="Entrez votre email">
+            <input type="email" class="form-control <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all" || $_GET["erreur"] == "email")) ? "is-invalid" : ""?>" name="email" id="email" placeholder="Entrez votre email">
+
+            <div class="valid-feedback">Ok !</div>
+            <div class="invalid-feedback">Email invalide</div>
         </div>
 
         <div class="form-group my-4">
             <label for="mdp">Mot de passe : </label>
-            <input type="password" class="form-control" name="mdp" id="mdp" placeholder="Entrez votre mot de passe">
+            <input type="password" class="form-control <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all" || $_GET["erreur"] == "mdp")) ? "is-invalid" : ""?>" name="mdp" id="mdp" placeholder="Entrez votre mot de passe">
+
+            <div class="valid-feedback">Ok !</div>
+            <div class="invalid-feedback">Mot-de-passe invalide</div>
         </div>
 
         <div class="form-group text-center mt-3">
@@ -22,6 +28,27 @@ require_once "header.php";
         </div>
     </form>
 </div>
+
+<script>
+    (function () {
+    'use strict'
+
+    var forms = document.querySelectorAll('.needs-validation');
+
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+        }, false)
+        })
+    })()
+
+</script>
 
 <?php
 require_once "footer.php";

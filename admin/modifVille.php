@@ -73,11 +73,11 @@ $infos = $region->getAllregion();
                 <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Entrez une longitude" autocomplete="off" value="<?= $info_ville["longitude"] ?>">
             </div>
             
-            <div class="form-group" id="image">
+            <div class="form-group">
                 <label>Images :</label>
-                <div>
+                <div id="image">
                     <?php
-                        lister_images("../src/test/");
+                        lister_images("../src/uuid/test/");
                     ?>
                 </div>
             </div>

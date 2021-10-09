@@ -9,7 +9,8 @@ function isValidDate($date, $format = 'Y-m-d'){
     return $dt && $dt->format($format) === $date;
 }
 
-function lister_images($repertoire){  
+function lister_images($repertoire){
+    $i = 1;
     if(is_dir($repertoire)){  
         if($iteration = opendir($repertoire)){  
             while(($fichier = readdir($iteration)) !== false){  
@@ -18,8 +19,8 @@ function lister_images($repertoire){
                     $mime_type = finfo_file($fichier_info, $repertoire.$fichier);
                     if(strpos($mime_type, 'image/') === 0){
                         echo
-                        '<img src="'.$repertoire.$fichier.'" class="img-fluid rounded float-start badgetest" style="max-width: 300px">' . 
-                        '<button type="button" id="test" style="visibility: hidden">
+                        '<img src="'.$repertoire.$fichier.'"id="img'.$i.'" name="'.$repertoire.$fichier.'" class="img-fluid rounded float-start badgetest" style="max-width: 300px">' . 
+                        '<button type="button" id="btn'.$i.'" style="visibility: hidden" onclick="supImage()">
                             <span class="badge badge-danger rounded position-badge" style="visibility: visible"><i class="fas fa-times fa-lg" aria-hidden=true></i></span>
                         </button>';
                     }

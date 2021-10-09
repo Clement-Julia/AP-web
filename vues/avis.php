@@ -18,13 +18,15 @@ $alls = $avis->getAllAvis();
     </div>
 
     <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade" id="pills-0" role="tabpanel" aria-labelledby="pills-0-tab">
+        <div class="tab-pane fade mb-3" id="pills-0" role="tabpanel" aria-labelledby="pills-0-tab">
+            <div class="row">
             <?php
                 $i = 0;
+                $x = 1;
                 foreach($luas as $lua){
                     ?>
                     <div class ="col-12 col-md-4 mt-3">
-                        <div class="card text-center" style="width: 30rem;">
+                        <div class="card text-center" style="max-width: 30rem;">
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal<?=$i?>">
                                 <img src="https://img2.freepng.fr/20180505/wle/kisspng-w-hotels-starwood-marriott-international-logo-5aed9c54873c61.5086030315255214925539.jpg" class="card-img-top" style= "height: 300px">
                                 <div class="card-body">
@@ -44,20 +46,25 @@ $alls = $avis->getAllAvis();
                                         <div class="modal-body pt-0">
                                             <!-- Système de rating -->
                                             <div class="rating">
-                                                <input type="radio" name="rating" value="5" id="5">
-                                                <label for="5">☆</label>
+                                                <input type="radio" name="rating" value="5" id="<?=$x?>">
+                                                <label for="<?=$x?>">☆</label>
+                                                <?php $x++ ?>
 
-                                                <input type="radio" name="rating" value="4" id="4">
-                                                <label for="4">☆</label>
+                                                <input type="radio" name="rating" value="4" id="<?=$x?>">
+                                                <label for="<?=$x?>">☆</label>
+                                                <?php $x++ ?>
 
-                                                <input type="radio" name="rating" value="3" id="3">
-                                                <label for="3">☆</label>
+                                                <input type="radio" name="rating" value="3" id="<?=$x?>">
+                                                <label for="<?=$x?>">☆</label>
+                                                <?php $x++ ?>
 
-                                                <input type="radio" name="rating" value="2" id="2">
-                                                <label for="2">☆</label>
+                                                <input type="radio" name="rating" value="2" id="<?=$x?>">
+                                                <label for="<?=$x?>">☆</label>
+                                                <?php $x++ ?>
                                                 
-                                                <input type="radio" name="rating" value="1" id="1" checked>
-                                                <label for="1">☆</label>
+                                                <input type="radio" name="rating" value="1" id="<?=$x?>" checked>
+                                                <label for="<?=$x?>">☆</label>
+                                                <?php $x++ ?>
                                             </div>
                                             <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."></textarea>
                                         </div>
@@ -73,6 +80,7 @@ $alls = $avis->getAllAvis();
                     $i++;
                 }
             ?>
+            </div>
         </div>
 
         <div class="tab-pane fade mb-3" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
@@ -101,20 +109,26 @@ $alls = $avis->getAllAvis();
                                         <div class="modal-body pt-0">
                                             <!-- Système de rating -->
                                             <div class="rating">
-                                                <input type="radio" name="rating" value="5" id="5" <?= (5 == $all["note"]) ? "checked" : "" ?>>
-                                                <label for="5">☆</label>
+                                                <input type="radio" name="rating" value="5" id="<?=$x?>" <?= (5 == $all["note"]) ? "checked" : "" ?>>
+                                                <label for="<?=$x?>">☆</label>
+                                                <?php $x++ ?>
 
-                                                <input type="radio" name="rating" value="4" id="4" <?= (4 == $all["note"]) ? "checked" : "" ?>>
-                                                <label for="4">☆</label>
+                                                <input type="radio" name="rating" value="4" id="<?=$x?>" <?= (4 == $all["note"]) ? "checked" : "" ?>>
+                                                <label for="<?=$x?>">☆</label>
+                                                <?php $x++ ?>
 
-                                                <input type="radio" name="rating" value="3" id="3"<?= (3 == $all["note"]) ? "checked" : "" ?>>
-                                                <label for="3">☆</label>
+                                                <?php $x++ ?>
+                                                <input type="radio" name="rating" value="3" id="<?=$x?>"<?= (3 == $all["note"]) ? "checked" : "" ?>>
+                                                <label for="<?=$x?>">☆</label>
+                                                <?php $x++ ?>
 
-                                                <input type="radio" name="rating" value="2" id="2"<?= (2 == $all["note"]) ? "checked" : "" ?>>
-                                                <label for="2">☆</label>
+                                                <input type="radio" name="rating" value="2" id="<?=$x?>"<?= (2 == $all["note"]) ? "checked" : "" ?>>
+                                                <label for="<?=$x?>">☆</label>
+                                                <?php $x++ ?>
                                                 
-                                                <input type="radio" name="rating" value="1" id="1" <?= (1 == $all["note"]) ? "checked" : "" ?>>
-                                                <label for="1">☆</label>
+                                                <input type="radio" name="rating" value="1" id="<?=$x?>" <?= (1 == $all["note"]) ? "checked" : "" ?>>
+                                                <label for="<?=$x?>">☆</label>
+                                                <?php $x++ ?>
                                             </div>
 
                                             <!-- Commentaire -->

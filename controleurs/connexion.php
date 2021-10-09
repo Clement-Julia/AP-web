@@ -4,11 +4,19 @@ $connexion = new Utilisateur();
 
 
 if(!empty($_POST["email"]) && !empty($_POST["mdp"])){
-    
-    $connexion->connexion($_POST["email"], $_POST["mdp"]);
-    header("location:../vues/");
+    $exist = $connexion->emailExiste($_POST["email"]);
 
+    if(!empty($exist)){
+        $return = $connexion->connexion($_POST["email"], $_POST["mdp"]);
+        if($return["success"] === false){
+            header("location:../vues/connexion.php?erreur=mdp");
+        }else{
+            header("location:../vues/");
+        }
+    }else{
+        header("location:../vues/connexion.php?erreur=email");
+    }
 
 }else {
-    header("location:../vues/connexion.php");
+    header("location:../vues/connexion.php?erreur=all");
 }

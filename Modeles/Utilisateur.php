@@ -81,15 +81,43 @@ class Utilisateur extends Modele {
         }
         return $return;
     }
+    
+    function check_mdp_format($mdp){
+
+        $erreursMdp = [];
+        $minuscule = preg_match("/[a-z]/", $mdp);
+        $majuscule = preg_match("/[A-Z]/", $mdp);
+        $chiffre = preg_match("/[0-9]/", $mdp);
+        $caractereSpecial = preg_match("/[^a-zA-Z0-9]/", $mdp);
+        $str = strlen($mdp);
+    
+        if(!$minuscule){
+            $erreursMdp[] = 4;
+        }
+        if(!$majuscule){
+            $erreursMdp[] = 5;
+        }
+        if(!$chiffre){
+            $erreursMdp[] = 6;
+        }
+        if(!$caractereSpecial){
+            $erreursMdp[] = 7;
+        }
+        if($str < 8){
+            $erreursMdp[] = 8;
+        }
+    
+        return $erreursMdp;
+    }
 
     // vérification si l'email est déjà présent dans la base de donnée
     public function emailExiste($email){
 
-        $requete = $this->getBdd()->prepare("SELECT email FROM utilisateurs WHERE email = ?;");
+        $requete = $this->getBdd()->prepare("SELECT email FROM utilisateurs WHERE email = ?");
         $requete->execute([$email]);
-        $emailExist = $requete->fetch(PDO::FETCH_ASSOC)->rowCount();
+        $emailExist = $requete->fetch(PDO::FETCH_ASSOC);
 
-        return $emailExist > 0 ? true : false;
+        return $emailExist;
 
     }
 

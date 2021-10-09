@@ -137,4 +137,9 @@ class Api extends Modele {
         $this->sendJSON($return);
     }
 
+    public function supImage($name){
+        unlink($name);
+        return "sup";
+    }
+
 }

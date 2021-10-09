@@ -92,4 +92,25 @@ class Avis extends Modele {
         $requete = $this->getBdd()->prepare("DELETE FROM avis where idHebergement = ?");
         $requete->execute([$idHebergement]);
     }
+
+    public function getAvisAsc($idHebergement){
+        $requete = $this->getBdd()->prepare("SELECT * FROM avis inner join utilisateurs using(idUtilisateur) where idHebergement = ? order by note ASC");
+        $requete->execute([$idHebergement]);
+        $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $infoAvis;
+    }
+
+    public function getAvisDesc($idHebergement){
+        $requete = $this->getBdd()->prepare("SELECT * FROM avis inner join utilisateurs using(idUtilisateur) where idHebergement = ? order by note DESC");
+        $requete->execute([$idHebergement]);
+        $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $infoAvis;
+    }
+
+    public function getAvisByDate($idHebergement){
+        $requete = $this->getBdd()->prepare("SELECT * FROM avis inner join utilisateurs using(idUtilisateur) where idHebergement = ? order by avis.date DESC");
+        $requete->execute([$idHebergement]);
+        $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $infoAvis;
+    }
 }
