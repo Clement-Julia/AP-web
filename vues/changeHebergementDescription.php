@@ -93,7 +93,7 @@ if (is_numeric($_GET['idHebergement'])){
                 <div id="hd-avis"></div>
             </div>
 
-            <script src="../js/changeHebergementDescription.js"></script>
+            <script src="../assets/js/changeHebergementDescription.js"></script>
         <?php
 
         } else { ?>

@@ -1,5 +1,9 @@
 <?php
 require_once "../controleurs/traitement.php";
+$url = $_SERVER['REQUEST_URI'];
+if(empty($_SESSION) && ($url != "/Projet/PPE/main/vues/index.php" && $url != "/Projet/PPE/main/vues/connexion.php" && $url != "/Projet/PPE/main/vues/inscription.php")){
+    header("location:../");
+}
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +28,6 @@ require_once "../controleurs/traitement.php";
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
-                <a class="nav-link" href="createTravel.php">Créez votre voyage</a>
                 <?=(!empty($_SESSION["idRole"]) && $_SESSION["idRole"] == 2 ? "<a href='../admin' class='nav-link'>Accès admin</a>" : "");?>
             </div>
         </div>
@@ -33,7 +36,7 @@ require_once "../controleurs/traitement.php";
         <?php if(!empty($_SESSION["idUtilisateur"])){
                 ?>
                 <div class="dropdown me-3">
-                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="btn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <?= $_SESSION["prenom"] ." " . $_SESSION["nom"]?>
                     </a>
             

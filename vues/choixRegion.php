@@ -53,7 +53,6 @@ $regions = $Region->getAllRegions();
     </div>
 
 
-<script src="../assets/js/map.js"></script>
 <script src="../assets/js/choixRegion.js"></script>
 
 <?php

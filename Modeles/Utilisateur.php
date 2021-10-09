@@ -42,11 +42,11 @@ class Utilisateur extends Modele {
         
     }
 
-    public function inscription($email, $mdp, $nom, $prenom, $age, $idRole){
+    public function inscription($email, $mdp, $nom, $prenom, $age, $idRole, $rgpd){
 
         $mdp = password_hash($mdp, PASSWORD_BCRYPT);
-        $requete = $this->getBdd()->prepare("INSERT INTO utilisateurs(email, mdp, nom, prenom, age, idRole) VALUES (?, ?, ?, ?, ?, ?);");
-        $requete->execute([$email, $mdp, $nom, $prenom, $age, $idRole]);
+        $requete = $this->getBdd()->prepare("INSERT INTO utilisateurs(email, mdp, nom, prenom, age, idRole, acceptRGPD, dateAcceptRGPD) VALUES (?, ?, ?, ?, ?, ?, ?, now())");
+        $requete->execute([$email, $mdp, $nom, $prenom, $age, $idRole, $rgpd]);
 
     }
 
