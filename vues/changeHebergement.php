@@ -38,7 +38,7 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
 
             <div id="hv-container">
                 <div id="hv-back-button-container">
-                    <a href="<?= isset($_GET['idVille']) ? "changeVille.php" : "createTravel.php?idRegion=" . $Ville->getIdRegion() ?>" class="btn btn-sm btn-secondary back-button"><</a>
+                    <a href="<?= isset($_GET['idVille']) ? "changeVille.php" : "createTravel.php" ?>" class="btn btn-sm btn-secondary back-button"><</a>
                 </div>
                 <div id="choose-hebergement">
                     <?php
