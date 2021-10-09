@@ -137,4 +137,18 @@ class Api extends Modele {
         }
     }
 
+    // On supprime ou on ajoute un favoris entre un hébergement et un utilisateur
+    public function insertOrDeleteLikeHebergement($idHebergement, $idUtilisateur){
+        $Favoris = new Favoris($idHebergement, $idUtilisateur);
+        if($Favoris->getIdHebergement() == null){
+            $requete = $this->getBdd()->prepare("INSERT INTO favoris VALUE (?,?)");
+            $requete->execute([$idHebergement, $idUtilisateur]);
+            $this->sendJSON(['status' => 'added']);
+        } else {
+            $requete = $this->getBdd()->prepare("DELETE FROM favoris WHERE idHebergement = ? AND idUtilisateur = ?");
+            $requete->execute([$idHebergement, $idUtilisateur]);
+            $this->sendJSON(['status' => 'deleted']);
+        }
+    }
+
 }

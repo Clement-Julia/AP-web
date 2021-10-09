@@ -234,6 +234,17 @@
 #hd-infos{
     display: flex;
     justify-content: space-between;
+    padding: 0 5px;
+}
+#hd-infos .far.fa-heart, #hd-infos .fas.fa-heart{
+    transition: 0.1s;
+    cursor: pointer;
+    transition-timing-function: ease-in-out;
+}
+
+#hd-infos .fas.fa-heart{
+    color: red;
+    background: radial-gradient();
 }
 #hd-pictures{
     height: 30em;
@@ -509,4 +520,9 @@
     background-color: rgb(255, 255, 255);
     transition: 0.333s;
     z-index: 1000!important;
+}
+
+.mouse-enter{
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.787);
+    border: 1px solid rgba(0, 0, 255, 0.787);
 }

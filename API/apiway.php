@@ -33,6 +33,10 @@ try{
                     throw new Exception ("La demande n'est pas valide, vérifiez l'url");
                 }
                 break;
+            case "favoris":
+                    $Api = new Api();
+                    $Api->insertOrDeleteLikeHebergement($_SESSION['idHebergement'], $_SESSION['idUtilisateur']);
+                break;
             default : throw new Exception ("La demande n'est pas valide, vérifiez l'url");
         }
     } else {

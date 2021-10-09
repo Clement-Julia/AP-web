@@ -38,7 +38,7 @@ if (is_numeric($_GET['idHebergement'])){
                     <div id="hd-title"><a href="changeHebergement.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
                     <div id="hd-infos">
                         <div id="hd-rate"></div>
-                        <div id="hd-heart">"<3"</div>
+                        <div id="hd-heart"><i class="far fa-heart"></i></div>
                     </div>
                 </div>
                 <div id="hd-pictures"></div>

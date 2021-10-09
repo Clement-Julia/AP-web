@@ -35,6 +35,8 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
 
             $Hebergement = new Hebergement($_GET["idHebergement"]);
             $bookingDates = $Hebergement->getWhenHebergementIsBooking($Hebergement->getIdHebergement(), $dateDebut->format('y-m-d'));
+
+            $Favoris = new Favoris($_SESSION['idHebergement'], $_SESSION['idUtilisateur']);
             ?>
 
             <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
@@ -42,7 +44,7 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
                     <div id="hd-title"><a href="hebergementVille.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
                     <div id="hd-infos">
                         <div id="hd-rate"></div>
-                        <div id="hd-heart">"<3"</div>
+                        <div id="hd-heart"><?=$Favoris->getIdHebergement() == null ? "<i class='far fa-heart'></i>" : "<i class='fas fa-heart'></i>"?></div>
                     </div>
                 </div>
                 <div id="hd-pictures"></div>
