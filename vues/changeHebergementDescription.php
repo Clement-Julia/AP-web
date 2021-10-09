@@ -31,6 +31,10 @@ if (is_numeric($_GET['idHebergement'])){
         if (!$boolean){
             // On insert une variable session afin de pouvoir comparer à la page de traitement suivant, si la value du bouton submit n'a pas été modifier (sinon on renvoi à cette page avec l'idHebergement de la variable SESSION), cela permet d'éviter de refaire les mêmes vérifications deux fois
             $_SESSION['changeIdHebergement'] = $_GET['idHebergement'];
+            // On inréinitialise la variable session pour que le bouton favoris fonctionne (il fonctionne avec cette variable session)
+            $_SESSION['idHebergement'] = $_GET['idHebergement'];
+            $Favoris = new Favoris($_SESSION['idHebergement'], $_SESSION['idUtilisateur']);
+
                 ?>
 
             <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
@@ -38,7 +42,7 @@ if (is_numeric($_GET['idHebergement'])){
                     <div id="hd-title"><a href="changeHebergement.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
                     <div id="hd-infos">
                         <div id="hd-rate"></div>
-                        <div id="hd-heart"><i class="far fa-heart"></i></div>
+                        <div id="hd-heart"><?=$Favoris->getIdHebergement() == null ? "<i class='far fa-heart'></i>" : "<i class='fas fa-heart'></i>"?></div>
                     </div>
                 </div>
                 <div id="hd-pictures"></div>
@@ -89,6 +93,7 @@ if (is_numeric($_GET['idHebergement'])){
                 <div id="hd-avis"></div>
             </div>
 
+            <script src="../js/changeHebergementDescription.js"></script>
         <?php
 
         } else { ?>

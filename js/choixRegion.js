@@ -1,5 +1,5 @@
 const map = document.querySelector('#map');
-const paths = map.querySelectorAll(".map__image a")
+const allA = map.querySelectorAll(".map__image a")
 
 // Polyfill du forEach car dans le cas présent on parcours un nodelist et non un tableau et ça ne marche que sur chrome pour l'instant
 if (NodeList.prototype.forEach === undefined){
@@ -18,8 +18,8 @@ var activeArea = function (id) {
     }
 }
 
-paths.forEach(function (path) {
-    path.addEventListener('mouseenter', function () {
+allA.forEach(function (a) {
+    a.addEventListener('mouseenter', function () {
         var id = this.id.replace('region-', '');
         activeArea(id);
     })
@@ -29,9 +29,9 @@ map.addEventListener('mouseover', function (){
     activeArea();
 })
 // ajout de l'apparition des infos de la régions
-paths.forEach(function (path) {
-    path.addEventListener('click', () => {
-        regionDescription(path.dataset.idregion);
+allA.forEach(function (a) {
+    a.addEventListener('click', () => {
+        regionDescription(a.dataset.idregion);
     })
 })
 

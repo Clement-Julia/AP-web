@@ -526,3 +526,10 @@
     box-shadow: 0 0 10px rgba(0, 0, 255, 0.787);
     border: 1px solid rgba(0, 0, 255, 0.787);
 }
+
+/* ---------- Changement hebergement ----------------- */
+.chheber-alert{
+    width:100%;
+    text-align:center;
+    margin: 0 2px;
+}

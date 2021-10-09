@@ -53,7 +53,7 @@ $regions = $Region->getAllRegions();
     </div>
 
 
-<script src="../js/map.js"></script>
+<script src="../js/choixRegion.js"></script>
 
 <?php
 require_once "footer.php";
