@@ -4,10 +4,6 @@ require_once "header.php";
 // (SECURITE) On vérifie que le paramètre récupéré est bien du type INT attendu
 if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET['idRegion'])){
 
-    if (!empty($_GET['idRegion'])){
-        $_SESSION['idRegion'] = $_GET['idRegion'];
-    }
-
     $ReservationVoyage = new ReservationVoyage();
     $BuildingTravelId = $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']);
     if($BuildingTravelId != null){
@@ -15,7 +11,7 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
     }
 
     // On récupère l'idRegion soit par le GET si l'utilisateur est en train de renseigner le début de son voyage (pas encore inscrit en BDD) ou bien alors par la BDD
-    $idRegion = isset($_GET['idRegion']) ? $_GET['idRegion'] : $ReservationVoyage->getIdRegionForBuildingTravelByUserId($_SESSION['idUtilisateur']);
+    $idRegion = $ReservationVoyage->getIdRegionForBuildingTravelByUserId($_SESSION['idUtilisateur']);
 
     $Lodging = new Region($idRegion);
     $Lodgings = $Lodging->getVilles();
@@ -40,7 +36,7 @@ if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET
 
     <div id="change-create-travel-container">
         <div id="hv-back-button-container">
-            <a href="createTravel.php?idRegion=<?=$idRegion?>" class="btn btn-sm btn-secondary back-button"><</a>
+            <a href="createTravel.php" class="btn btn-sm btn-secondary back-button"><</a>
         </div>
         
         <div id="change-choose-town-bot">
