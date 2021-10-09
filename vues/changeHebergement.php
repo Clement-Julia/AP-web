@@ -42,9 +42,12 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
                 </div>
                 <div id="choose-hebergement">
                     <?php
+                    $isAtLeastOne = false;
                     foreach ($Hebergs as $item)
                     { 
-                        if($item[0] != "indisponible" && $item[2] >= $Reservation->getNbJours()){?>
+                        if($item[0] != "indisponible" && $item[2] >= $Reservation->getNbJours() && $item[1]->getIdHebergement() != $Reservation->getIdHebergement()){
+                            $isAtLeastOne = true;
+                            ?>
 
                         <div class="col-xs-12 col-sm-12 col-md-6 mb-3 col-xl-4">
                             <div data-hebergement="1" data-id="<?= $item[1]->getIdHebergement()?>" data-name="<?= $item[1]->getLibelle()?>" data-lat="<?= $item[1]->getLatitude()?>" data-lng="<?= $item[1]->getLongitude()?>" data-zoom="12" class="card ct-a js-marker">
@@ -59,12 +62,17 @@ if (is_numeric($_SESSION['idReservationHebergement'])){
 
                     <?php }
                     }
+                    if(!$isAtLeastOne){
+                        ?>
+                        <div class="chheber-alert">
+                            <div class="alert alert-warning">Aucun hébergement n'est disponible sur ces dates, désolé.</div>
+                        </div>
+                        <?php
+                    }
                     ?>
                 </div>
                 <div data-lat="<?= $Ville->getLatitude()?>" data-lng="<?= $Ville->getLongitude()?>" data-zoom="12" class="map-hebergement" id="map"></div>
             </div>
-
-
 
             <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>

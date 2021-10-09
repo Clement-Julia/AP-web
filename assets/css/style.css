@@ -238,6 +238,17 @@
 #hd-infos{
     display: flex;
     justify-content: space-between;
+    padding: 0 5px;
+}
+#hd-infos .far.fa-heart, #hd-infos .fas.fa-heart{
+    transition: 0.1s;
+    cursor: pointer;
+    transition-timing-function: ease-in-out;
+}
+
+#hd-infos .fas.fa-heart{
+    color: red;
+    background: radial-gradient();
 }
 #hd-pictures{
     height: 30em;
@@ -583,4 +594,36 @@
 
 .li:active {
     background-color: #dc3545;
+}
+/* Icon de prix des hôtels sur la vue de la ville */
+.my-div-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px!important;
+    min-width: 50px!important;
+    background-color: rgba(255, 255, 255, 0.733);
+    border-radius: 7px!important;
+    border: 1px solid rgba(26, 26, 26, 0.63);
+    box-shadow: 0 0 20px #d3d3d3;
+    padding: 5px 5px!important;
+    font-weight: 700;
+    transition: 0.333s;
+}
+.my-div-icon:hover{
+    background-color: rgb(255, 255, 255);
+    transition: 0.333s;
+    z-index: 1000!important;
+}
+
+.mouse-enter{
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.787);
+    border: 1px solid rgba(0, 0, 255, 0.787);
+}
+
+/* ---------- Changement hebergement ----------------- */
+.chheber-alert{
+    width:100%;
+    text-align:center;
+    margin: 0 2px;
 }

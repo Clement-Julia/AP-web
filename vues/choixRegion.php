@@ -54,6 +54,7 @@ $regions = $Region->getAllRegions();
 
 
 <script src="../assets/js/map.js"></script>
+<script src="../assets/js/choixRegion.js"></script>
 
 <?php
 require_once "footer.php";

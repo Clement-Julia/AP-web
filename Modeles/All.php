@@ -17,3 +17,4 @@ require_once "Month.php";
 require_once "Option.php";
 require_once "OptionsByHebergement.php";
 require_once "Api.php";
+require_once "Favoris.php";
