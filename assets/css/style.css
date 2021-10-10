@@ -22,6 +22,12 @@
     background-color: rgba(205, 255, 251, 0.548)!important;
     z-index: 1000000;
 }
+#navbar *{
+    /* height: var(--navbar-height); */
+}
+#logo{
+   /* width: 10em; */
+}
 
 /* ----------------- END NAVBAR ----------------------- */
 
@@ -258,16 +264,19 @@
     background-color: rgba(255, 228, 196, 0.466);
     display: flex;
 }
-#hd-pictures div#big-img, #hd-pictures div#little-img{
+
+/* S'il y a au moins 5 images */
+#hd-pictures div#big-img, #hd-pictures div#container-little-img{
     width: 50%;
     height: 100%;
 }
 #hd-pictures div#big-img img {
     height: 100%;
+    width: 100%;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
-#little-img{
+#container-little-img{
     display: flex;
     flex-direction: column;
 }
@@ -283,7 +292,28 @@
 }
 .third-div-img img {
     height: 100%;
+    width: 100%;
 }
+/*  S'il y a 1 seule image */
+.only-one-img, .only-one-img img{
+    width: 100%;
+    height: 100%;
+}
+/*  S'il y a 2 images */
+.two-img{
+    width: 50%;
+    height: 100%;
+}
+.two-img img{
+    width: 100%;
+    height: 100%;
+}
+/*  S'il y a 3 images */
+.second-div-img > img{
+    width: 100%;
+    height: 100%;
+}
+
 .radius-top-right{
     border-top-right-radius: 10px;
 }

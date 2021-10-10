@@ -26,8 +26,8 @@ if(empty($_SESSION) && ($url != "/PPE/vues/index.php" && $url != "/PPE/vues/conn
 <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light z-index">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="index.php"><img src="../src/img/locallacol.png" alt="Logo du site locallacol"></a>
+            <div class="navbar-nav align-items-center">
+                <a class="nav-link active" aria-current="page" href="index.php"><img id="logo" src="../src/img/locallacol.png" alt="Logo du site locallacol"></a>
                 <?=(!empty($_SESSION["idRole"]) && $_SESSION["idRole"] == 2 ? "<a href='../admin' class='nav-link'>Accès admin</a>" : "");?>
             </div>
         </div>

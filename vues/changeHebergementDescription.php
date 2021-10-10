@@ -34,6 +34,7 @@ if (is_numeric($_GET['idHebergement'])){
             // On inréinitialise la variable session pour que le bouton favoris fonctionne (il fonctionne avec cette variable session)
             $_SESSION['idHebergement'] = $_GET['idHebergement'];
             $Favoris = new Favoris($_SESSION['idHebergement'], $_SESSION['idUtilisateur']);
+            $Images = new Images($Hebergement->getUuid());
 
                 ?>
 
@@ -45,7 +46,7 @@ if (is_numeric($_GET['idHebergement'])){
                         <div id="hd-heart"><?=$Favoris->getIdHebergement() == null ? "<i class='far fa-heart'></i>" : "<i class='fas fa-heart'></i>"?></div>
                     </div>
                 </div>
-                <div id="hd-pictures"></div>
+                <?=$Images->getImageDescriptionHebergementCode()?>
                 <div id="hd-description-container">
                     <div id="hd-description" class="card">
                         <div class="card-header"><h6>Description</h6></div>

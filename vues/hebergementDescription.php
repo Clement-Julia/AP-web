@@ -45,6 +45,8 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
             $bookingDates = $Hebergement->getWhenHebergementIsBooking($Hebergement->getIdHebergement(), $dateDebut->format('y-m-d'));
 
             $Favoris = new Favoris($_SESSION['idHebergement'], $_SESSION['idUtilisateur']);
+
+            $Images = new Images($Hebergement->getUuid());
             ?>
 
             <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
@@ -55,29 +57,7 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
                         <div id="hd-heart"><?=$Favoris->getIdHebergement() == null ? "<i class='far fa-heart'></i>" : "<i class='fas fa-heart'></i>"?></div>
                     </div>
                 </div>
-                <div id="hd-pictures">
-                    <div id="big-img">
-                        <img src="../src/img/default-hotel.jpg" alt="" class="img-fluid">
-                    </div>
-                    <div id="little-img">
-                        <div class="second-div-img">
-                            <div class="third-div-img">
-                                <img src="../src/img/default-hotel.jpg" alt="" class="img-fluid">   
-                            </div>
-                            <div class="third-div-img">
-                                <img src="../src/img/default-hotel.jpg" alt="" class="img-fluid radius-top-right">
-                            </div>
-                        </div>
-                        <div class="second-div-img">
-                            <div class="third-div-img">
-                                <img src="../src/img/default-hotel.jpg" alt="" class="img-fluid">
-                            </div>
-                            <div class="third-div-img">
-                                <img src="../src/img/default-hotel.jpg" alt="" class="img-fluid radius-bottom-right">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?=$Images->getImageDescriptionHebergementCode()?>
                 <div id="hd-description-container">
                     <div id="hd-description" class="card">
                         <div class="card-header"><h6>Description</h6></div>

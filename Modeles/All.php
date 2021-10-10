@@ -18,3 +18,4 @@ require_once "Option.php";
 require_once "OptionsByHebergement.php";
 require_once "Api.php";
 require_once "Favoris.php";
+require_once "Images.php";
