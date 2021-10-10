@@ -12,7 +12,7 @@ Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
   lines.push([item.dataset.lat, item.dataset.lng]);
 
   var myIcon = L.icon({
-    iconUrl: '../src/img/ville.png',
+    iconUrl: '../src/logos/ville.png',
     iconSize: [25,25],
     iconAnchor: [12.5,28]
   })
@@ -52,7 +52,7 @@ if (document.getElementById('ligne-points') != undefined){
   points.forEach(item => {
     pointsList.push([item.dataset.lat, item.dataset.lng]);
   });
-  console.log(pointsList);
+
   if(pointsList.length >= 2){
     var firstpolyline = new L.Polyline(pointsList, {
       color: 'red',

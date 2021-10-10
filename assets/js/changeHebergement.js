@@ -46,3 +46,35 @@ Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
       },300)
     })
 })
+
+async function getActivitesAndAddMarker(){
+  var response = await fetch("../API/apiway.php?demande=activites");
+  var activites = await response.json().then((response) => {
+    
+      if(Object.entries(response).length != 0){
+
+          response.forEach((item) => {
+
+            Object.entries(item).forEach(([key, value]) => {
+              var myIcon = L.icon({
+                iconUrl: '../src/logos/' + item.icon,
+                iconSize: [30,30],
+                iconAnchor: [15,33]
+              })
+              var marker = L.marker([item.latitude, item.longitude], {icon: myIcon})
+              marker.bindPopup(
+                  `<div class='popup-container'>
+                      <div>` + item.description + `</div>
+                  </div>`)
+              marker.addTo(map);
+
+          });
+
+        })
+
+      }
+
+  });
+
+}
+getActivitesAndAddMarker()
