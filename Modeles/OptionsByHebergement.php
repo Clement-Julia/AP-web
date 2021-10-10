@@ -4,7 +4,6 @@ class OptionsByHebergement extends Modele {
 
     private $idOption;
     private $idHebergement;
-    private $actif; // boolean
 
     public function __construct($idOption = null, $idHebergement = null){
 
@@ -16,16 +15,14 @@ class OptionsByHebergement extends Modele {
 
             $this->idOption = $infosForHebergement["idOption"];
             $this->idHebergement = $infosForHebergement["idHebergement"];
-            $this->actif = $infosForHebergement["actif"];
 
         }
         
     }
 
-    public function initialiserOption($idOption, $idHebergement, $actif){
+    public function initialiserOption($idOption, $idHebergement){
         $this->idOption = $idOption;
         $this->idHebergement = $idHebergement;
-        $this->actif = $actif;
     }
 
     public function getIdOption(){
@@ -34,10 +31,6 @@ class OptionsByHebergement extends Modele {
 
     public function getIdHebergement(){
         return $this->idHebergement;
-    }
-
-    public function getActif(){
-        return $this->actif;
     }
 
 }

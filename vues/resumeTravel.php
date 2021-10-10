@@ -1,15 +1,34 @@
 <?php
 require_once "header.php";
 $ReservationVoyage = new ReservationVoyage();
-$BuildingTravelId = $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']);
+$buildingTravelId = $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']);
 
-if($BuildingTravelId != null){
+if($buildingTravelId != null){
 
-    $ReservationVoyage = new ReservationVoyage($BuildingTravelId);
-
+    $ReservationVoyage = new ReservationVoyage($buildingTravelId);
+    $_SESSION['idReservationVoyage'] = $buildingTravelId;
 ?>
 
     <div id="resume-main-container">
+        <?php
+        if(isset($_SESSION['resultats']) && count($_SESSION['resultats']) > 0){
+            ?>
+            <div class="alert alert-warning my-3">
+                Il semblerait que durant la création de votre voyage, <?=count($_SESSION['resultats']) > 1 ? "ces hébergements ont été réservés et validés par un autre utilisateur" : "cet hébergement a été réservé et validé par un autre utilisateur" ?> sur les dates de votre choix : <br>
+                <?php
+                foreach($_SESSION['resultats'] as $reservation){
+                    $Reservation = new ReservationHebergement($reservation);
+                    $Hebergement = new Hebergement($Reservation->getIdHebergement());
+                    ?>
+                    _ <?= $Hebergement->getLibelle() ?><br>
+                    <?php
+                }
+                ?>
+                Votre voyage ne peut donc pas être finalisé.
+            </div>
+            <?php
+        }
+        ?>
         <div>
             <?php if (!empty($_GET['building'])){ ?>
                 <div class="card my-3">
@@ -21,7 +40,7 @@ if($BuildingTravelId != null){
                 </div>
             <?php } ?>
             <?php 
-                if($BuildingTravelId != null){
+                if($buildingTravelId != null){
                     $index = 1;
                     foreach ($ReservationVoyage->getReservationHebergement() as $reservationHebergement){
                         $infos = $reservationHebergement->getHebergementById($reservationHebergement->getIdHebergement());
