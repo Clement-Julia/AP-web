@@ -37,7 +37,7 @@ class Favoris extends Modele {
 
     public function getAllFavorisForUser($idUtilisateur){
         $requete = $this->getBdd()->prepare("SELECT * FROM favoris WHERE idUtilisateur = ?");
-        $requete->execute([$idUtilisateur, $idUtilisateur]);
+        $requete->execute([$idUtilisateur]);
         return  $requete->fetchAll(PDO::FETCH_ASSOC);
     }
 

@@ -1,6 +1,8 @@
 <?php
 require_once "header.php";
 
+if(!empty($_SESSION['idUtilisateur'])){
+
 $Region = new Region();
 $regions = $Region->getAllRegions();
 ?>
@@ -54,6 +56,10 @@ $regions = $Region->getAllRegions();
 
 
 <script src="../assets/js/choixRegion.js"></script>
+
+<?php } else { ?>
+    <div class="alert alert-warning">Vous devez être connecté pour accéder à ce contenu</div>
+<?php } ?>
 
 <?php
 require_once "footer.php";

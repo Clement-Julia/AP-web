@@ -247,15 +247,14 @@
     justify-content: space-between;
     padding: 0 5px;
 }
-#hd-infos .far.fa-heart, #hd-infos .fas.fa-heart{
+.far.fa-heart, .fas.fa-heart{
     transition: 0.1s;
     cursor: pointer;
     transition-timing-function: ease-in-out;
 }
 
-#hd-infos .fas.fa-heart{
+.fas.fa-heart{
     color: red;
-    background: radial-gradient();
 }
 #hd-pictures{
     height: 30em;
@@ -692,4 +691,16 @@
     width:100%;
     text-align:center;
     margin: 0 2px;
+}
+
+/* ---------- Favoris ----------------- */
+#favoris-container{
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.heart-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

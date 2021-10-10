@@ -42,7 +42,7 @@ if(empty($_SESSION) && ($url != "/PPE/vues/index.php" && $url != "/PPE/vues/conn
             
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" href="avis.php">Avis</a></li>
-                        <li><a class="dropdown-item" href="#">Favoris</a></li>
+                        <li><a class="dropdown-item" href="favoris.php">Favoris</a></li>
                         <li><a class="dropdown-item" href="#">Paramètres</a></li>
                         <li><a class="dropdown-item li" href="../controleurs/deconnexion.php">Déconnexion</a></li>
                     </ul>

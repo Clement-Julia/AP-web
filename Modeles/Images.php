@@ -31,6 +31,17 @@ class Images extends Modele {
         return $filenames;
     }
 
+    public function getBanniere(){
+        $path = "../src/uuid/" . $this->uuid . "/" . "banniere.*";
+        $filename = glob($path);
+
+        if(count($filename) == 0){
+            $filename = "../src/img/default-hotel.jpg";
+        }
+
+        return $filename;
+    }
+
     public function getImageDescriptionHebergementCode(){
 
         $path = "../src/uuid/" . $this->uuid . "/" . "*.*";

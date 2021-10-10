@@ -52,8 +52,8 @@ Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
 async function getActivitesAndAddMarker(){
   var response = await fetch("../API/apiway.php?demande=activites");
   var activites = await response.json().then((response) => {
-    
-      if(Object.entries(response).length != 0){
+
+      if(Object.entries(response).length != 0 && response.code != 401){
 
           response.forEach((item) => {
 

@@ -42,9 +42,13 @@ try{
                 }
                 break;
             case "favoris":
-                if(!empty($_SESSION['idHebergement']) && is_numeric($_SESSION['idHebergement']) && !empty($_SESSION['idUtilisateur']) && is_numeric($_SESSION['idUtilisateur'])){
+                if(!empty($_SESSION['idHebergement']) && is_numeric($_SESSION['idHebergement']) && !empty($_SESSION['idUtilisateur']) && is_numeric($_SESSION['idUtilisateur']) && empty($_GET['idHebergement'])){
                     $Api = new Api();
                     $Api->insertOrDeleteLikeHebergement($_SESSION['idHebergement'], $_SESSION['idUtilisateur']);
+                }
+                if((!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement']))){
+                    $Api = new Api();
+                    $Api->insertOrDeleteLikeHebergement($_GET['idHebergement'], $_SESSION['idUtilisateur']);
                 }
                 break;
             case "activites":
