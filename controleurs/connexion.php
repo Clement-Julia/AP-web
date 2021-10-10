@@ -2,10 +2,8 @@
 require_once "traitement.php";
 $connexion = new Utilisateur();
 
-
 if(!empty($_POST["email"]) && !empty($_POST["mdp"])){
     $exist = $connexion->emailExiste($_POST["email"]);
-
     if(!empty($exist)){
         $return = $connexion->connexion($_POST["email"], $_POST["mdp"]);
         if($return["success"] === false){

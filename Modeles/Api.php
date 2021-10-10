@@ -10,8 +10,8 @@ class Api extends Modele {
     }
 
     public function getReservBetweenDate($date, $idHebergement){
-        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage WHERE (? BETWEEN dateDebut AND dateFin) AND idHebergement = ? AND is_building = ?");
-        $requete->execute([$date, $idHebergement, 0]);
+        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage WHERE (? BETWEEN dateDebut AND dateFin) AND idHebergement = ? AND is_building = ? AND ? != dateFin");
+        $requete->execute([$date, $idHebergement, 0, $date]);
         return $requete->fetch(PDO::FETCH_ASSOC);
     }
 

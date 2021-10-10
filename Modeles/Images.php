@@ -26,14 +26,14 @@ class Images extends Modele {
     }
 
     public function getAllPathImages(){
-        $path = "../src/" . $this->uuid . "/" . "*.*";
+        $path = "../src/uuid/" . $this->uuid . "/" . "*.*";
         $filenames = glob($path);
         return $filenames;
     }
 
     public function getImageDescriptionHebergementCode(){
 
-        $path = "../src/" . $this->uuid . "/" . "*.*";
+        $path = "../src/uuid/" . $this->uuid . "/" . "*.*";
         $filenames = glob($path);
 
         if(count($filenames) == 0){

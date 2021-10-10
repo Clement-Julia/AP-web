@@ -1,6 +1,5 @@
 <?php
 require_once "header.php";
-
 ?>
 
 <div id="index-container">

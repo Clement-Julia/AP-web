@@ -1,10 +1,6 @@
 <?php
 require_once "traitement.php";
 $ville = new Ville();
-print_r($_POST) ;exit;
-echo $_POST["latitude"];
-echo $_POST["longitude"];
-echo $_POST["link"];exit;
 
 if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["link"])){
     try{

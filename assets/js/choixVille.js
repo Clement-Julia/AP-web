@@ -12,7 +12,7 @@ Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
   lines.push([item.dataset.lat, item.dataset.lng]);
 
   var myIcon = L.icon({
-    iconUrl: '../src/ville.png',
+    iconUrl: '../src/img/ville.png',
     iconSize: [25,25],
     iconAnchor: [12.5,28]
   })
