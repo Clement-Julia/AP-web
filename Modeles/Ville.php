@@ -169,6 +169,7 @@ class Ville extends Modele {
 
                     if(count($array) == 0){
                         $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 nuits";
+                        $response[$Hebergement->getIdHebergement()][2] = 999;
                     } else {
                         $origin = new DateTime($date->format('Y-m-d'));
                         $target = new DateTime($array[key($array)]);
