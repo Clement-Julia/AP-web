@@ -42,8 +42,16 @@ try{
                 }
                 break;
             case "favoris":
+                if(!empty($_SESSION['idHebergement']) && is_numeric($_SESSION['idHebergement']) && !empty($_SESSION['idUtilisateur']) && is_numeric($_SESSION['idUtilisateur'])){
                     $Api = new Api();
                     $Api->insertOrDeleteLikeHebergement($_SESSION['idHebergement'], $_SESSION['idUtilisateur']);
+                }
+                break;
+            case "activites":
+                if(!empty($_SESSION['idVille']) && is_numeric($_SESSION['idVille'])){
+                    $Api = new Api();
+                    $Api->getAllActivitesByIdVille($_SESSION['idVille']);
+                }
                 break;
             default : throw new Exception ("La demande n'est pas valide, vérifiez l'url");
         }

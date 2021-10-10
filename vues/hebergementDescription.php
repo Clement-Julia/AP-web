@@ -70,7 +70,7 @@ if (!empty($_GET['idHebergement']) && is_numeric($_GET['idHebergement'])){
                         <?php
                         foreach ($Hebergement->getOptions() as $item){
                             ?>
-                                <div class="hd-tools-item"><?=$item->getIcon()?><span><?=$item->getLibelle()?></span></div>
+                                <div class="hd-tools-item"><i class="<?=$item->getIcon()?>"></i><span><?=$item->getLibelle()?></span></div>
                             <?php
                         }
                         ?>

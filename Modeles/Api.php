@@ -156,4 +156,16 @@ class Api extends Modele {
         }
     }
 
+    public function getAllActivitesByIdVille($idVille){
+        $requete = $this->getBdd()->prepare("SELECT * FROM activites_by_ville INNER JOIN activites USING(idActivite) WHERE idVille = ?");
+        $requete->execute([$idVille]);
+        $resultat = $requete->fetchAll(PDO::FETCH_ASSOC);
+        if(count($resultat) > 0){
+            $this->sendJSON($resultat);
+        } else {
+            return $this->sendJSON(["code" => 401]);
+        }
+        
+    }
+
 }
