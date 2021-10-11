@@ -1,6 +1,9 @@
 <?php
 require_once "../controleurs/traitement.php";
-$url = $_SERVER['REQUEST_URI'];
+
+if (!empty($_SESSION['idUtilisateur'])){
+    $ReservationVoyage = new ReservationVoyage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,9 +26,10 @@ $url = $_SERVER['REQUEST_URI'];
 <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light z-index">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
+            <div class="navbar-nav align-items-center">
+                <a class="nav-link active" aria-current="page" href="index.php"><img id="logo" src="../src/img/locallacol.png" alt="Logo du site locallacol"></a>
                 <?=(!empty($_SESSION["idRole"]) && $_SESSION["idRole"] == 2 ? "<a href='../admin' class='nav-link'>Accès admin</a>" : "");?>
+                <?= !empty($_SESSION['idUtilisateur']) && $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']) != null ? "<a href='resumeTravel.php?building=1' class='nav-link'>Continuer ?</a>" : "" ;?>
             </div>
         </div>
 
@@ -39,7 +43,7 @@ $url = $_SERVER['REQUEST_URI'];
             
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" href="avis.php">Avis</a></li>
-                        <li><a class="dropdown-item" href="#">Favoris</a></li>
+                        <li><a class="dropdown-item" href="favoris.php">Favoris</a></li>
                         <li><a class="dropdown-item" href="#">Paramètres</a></li>
                         <li><a class="dropdown-item li" href="../controleurs/deconnexion.php">Déconnexion</a></li>
                     </ul>

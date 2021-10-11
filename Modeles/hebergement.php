@@ -9,6 +9,7 @@ class Hebergement extends Modele {
     private $latitude;
     private $longitude;
     private $prix;
+    private $uuid;
     private $options = [];
 
     public function __construct($idHebergement = null){
@@ -26,6 +27,7 @@ class Hebergement extends Modele {
             $this->latitude = $infoHotel["latitude"];
             $this->longitude = $infoHotel["longitude"];
             $this->prix = $infoHotel["prix"];
+            $this->uuid = $infoHotel["uuid"];
             
             $requete = $this->getBdd()->prepare("SELECT * FROM options_by_hebergement INNER JOIN options USING(idOption) WHERE idHebergement = ?");
             $requete->execute([$idHebergement]);
@@ -41,7 +43,7 @@ class Hebergement extends Modele {
         
     }
 
-    public function initialiserHebergement($idHebergement, $libelle, $description, $idVille, $latitude, $longitude, $prix){
+    public function initialiserHebergement($idHebergement, $libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid){
 
         $this->idHebergement = $idHebergement;
         $this->libelle = $libelle;
@@ -50,6 +52,7 @@ class Hebergement extends Modele {
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->prix = $prix;
+        $this->uuid = $uuid;
 
     }
 
@@ -79,6 +82,10 @@ class Hebergement extends Modele {
     
     public function getPrix(){
         return $this->prix;
+    }
+
+    public function getUuid(){
+        return $this->uuid;
     }
 
     public function getOptions(){
@@ -145,10 +152,8 @@ class Hebergement extends Modele {
         $array = [];
         foreach ($requete->fetchAll(PDO::FETCH_ASSOC) as $reservation){
             
-            // $begin = new DateTime( $reservation['dateDebut'] . "+1 days" );
             $begin = new DateTime( $reservation['dateDebut']);
             $end = new DateTime( $reservation['dateDebut'] );
-            // $end = $end->modify( '+' . $reservation['nbJours'] . ' day' );
             $end = $end->modify( '+' . $reservation['nbJours'] . ' day' );
 
             $interval = new DateInterval('P1D');

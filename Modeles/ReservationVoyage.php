@@ -118,7 +118,7 @@ class ReservationVoyage extends Modele {
         INNER JOIN hebergement USING(idHebergement)
         INNER JOIN villes USING(idVille)
         WHERE reservations_voyages.idUtilisateur = ?
-        AND reservations_voyages.is_building = ?");
+        AND is_building = ? ORDER BY dateDebut");
         $requete->execute([$idUtilisateur, true]);
         return $requete->fetchAll(PDO::FETCH_ASSOC);
     }

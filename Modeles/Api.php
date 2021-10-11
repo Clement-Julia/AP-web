@@ -10,8 +10,8 @@ class Api extends Modele {
     }
 
     public function getReservBetweenDate($date, $idHebergement){
-        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage WHERE (? BETWEEN dateDebut AND dateFin) AND idHebergement = ? AND is_building = ?");
-        $requete->execute([$date, $idHebergement, 0]);
+        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage WHERE (? BETWEEN dateDebut AND dateFin) AND idHebergement = ? AND is_building = ? AND ? != dateFin");
+        $requete->execute([$date, $idHebergement, 0, $date]);
         return $requete->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -154,6 +154,18 @@ class Api extends Modele {
             $requete->execute([$idHebergement, $idUtilisateur]);
             $this->sendJSON(['status' => 'deleted']);
         }
+    }
+
+    public function getAllActivitesByIdVille($idVille){
+        $requete = $this->getBdd()->prepare("SELECT * FROM activites_by_ville INNER JOIN activites USING(idActivite) WHERE idVille = ?");
+        $requete->execute([$idVille]);
+        $resultat = $requete->fetchAll(PDO::FETCH_ASSOC);
+        if(count($resultat) > 0){
+            $this->sendJSON($resultat);
+        } else {
+            return $this->sendJSON(["code" => 401]);
+        }
+        
     }
 
 }

@@ -9,7 +9,8 @@ class Ville extends Modele {
     private $idRegion;
     private $description;
     private $uuid;
-    private $hebergements = []; //tableau d'objet hebergement
+    private $hebergements = []; // tableau d'objet hebergement
+    private $activites = []; // tableau d'objet d'activite
 
     public function __construct($idVille = null){
 
@@ -34,9 +35,21 @@ class Ville extends Modele {
             foreach ($infosHebergement as $item){
 
                 $hebergement = new Hebergement();
-                $hebergement->initialiserHebergement($item["idHebergement"], $item["libelle"], $item["description"], $item["idVille"], $item["latitude"], $item["longitude"], $item["prix"]);
+                $hebergement->initialiserHebergement($item["idHebergement"], $item["libelle"], $item["description"], $item["idVille"], $item["latitude"], $item["longitude"], $item["prix"], $item["uuid"]);
                 $this->hebergements[] = $hebergement;
 
+            }
+
+            $requete = $this->getBdd()->prepare("SELECT * FROM activites_by_ville INNER JOIN activites USING(idActivite) WHERE idVille = ?");
+            $requete->execute([$idVille]);
+            $infosActivites = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($infosActivites as $item){
+
+                $Activite = new Activite();
+                $Activite->initialiserActiviteByVille($item["idActivite"], $item["libelle"], $item["icon"], $item["latitude"], $item["longitude"], $item["description"]);
+                $this->activites[] = $Activite;
+                
             }
 
         }
@@ -156,6 +169,7 @@ class Ville extends Modele {
 
                     if(count($array) == 0){
                         $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 nuits";
+                        $response[$Hebergement->getIdHebergement()][2] = 999;
                     } else {
                         $origin = new DateTime($date->format('Y-m-d'));
                         $target = new DateTime($array[key($array)]);
