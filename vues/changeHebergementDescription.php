@@ -61,7 +61,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                             <?php
                             foreach ($Hebergement->getOptions() as $item){
                                 ?>
-                                    <div class="hd-tools-item"><?=$item->getIcon()?><span><?=$item->getLibelle()?></span></div>
+                                    <div class="hd-tools-item"><i class="<?=$item->getIcon()?>"></i><span><?=$item->getLibelle()?></span></div>
                                 <?php
                             }
                             ?>
@@ -78,6 +78,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                     <?php if($Reservation->getPrix() <= $Hebergement->getPrix() * $Reservation->getNbJours()){ ?>
                                     <div>Réserver cet hébergement à la place de "<?=$OldHebergement->getLibelle()?>" vous coûtera <?=($Hebergement->getPrix() * $Reservation->getNbJours() - $Reservation->getPrix())?>€ de plus</div>
                                     <?php } else { ?>
+                                        <br>
                                         <div>Réserver cet hébergement à la place de "<?=$OldHebergement->getLibelle()?>" vous fera économiser <?=$Reservation->getPrix() - ($Hebergement->getPrix() * $Reservation->getNbJours())?>€</div>
                                     <?php } ?>
                                 </div>

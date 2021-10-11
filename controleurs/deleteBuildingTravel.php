@@ -15,7 +15,9 @@ if (!empty($_POST['cancel']) && is_numeric($_POST['cancel'])){
 
 
         // On récupère le voyage et on va vérifier si chacune des réservations est encore disponible.
-        $Voyage = new ReservationVoyage($_SESSION['idReservationVoyage']);
+        $ReservationVoyage = new ReservationVoyage();
+        $idReservationVoyage = $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']);
+        $Voyage = new ReservationVoyage($idReservationVoyage);
 
         if($_SESSION['idUtilisateur'] == $Voyage->getIdUtilisateur()){
 

@@ -67,28 +67,12 @@ if(!empty($_SESSION['idUtilisateur'])){
                 ?>
             </div>
             <div class="card my-3">
-                <div class="card-header text-center"><h5>Prix total : <?=$ReservationVoyage->getPrix();?></h5></div>
+                <div class="card-header text-center"><h5>Prix total : <?=$ReservationVoyage->getPrix();?> €</h5></div>
             </div>
-            <div class="card my-3">
-                <div class="card-header text-center"><h6>Moyen de paiement</h6></div>
-                <div class="card-body">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="paiement" id="radio-1">
-                        <label class="form-check-label" for="radio-1">
-                        Carte de paiement
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="paiement" id="radio-2">
-                        <label class="form-check-label" for="radio-2">
-                        Paypal
-                        </label>
-                    </div>
-                </div>
-            </div>
+            
             <?php if (!empty($_GET['building'])){ ?>
                     <form action="../controleurs/deleteBuildingTravel.php" method="POST">
-                        <div class="card">
+                        <div class="card mb-3">
                             <div class="card-body d-flex justify-content-center">
                                 <button class="mx-2 btn btn-success btn-sm">Continuer ce voyage</button>
                                 <button name="cancel" value="1" class="mx-2 btn btn-secondary btn-sm">Supprimer ce voyage</button>
@@ -96,8 +80,26 @@ if(!empty($_SESSION['idUtilisateur'])){
                         </div>
                     </form>
             <?php } else { ?>
+
+                    <div class="card mb-3">
+                        <div class="card-header text-center"><h6>Moyen de paiement</h6></div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paiement" id="radio-1">
+                                <label class="form-check-label" for="radio-1">
+                                Carte de paiement
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paiement" id="radio-2">
+                                <label class="form-check-label" for="radio-2">
+                                Paypal
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <form action="../controleurs/deleteBuildingTravel.php" method="POST">
-                        <div class="card">
+                        <div class="card my-3">
                             <div class="card-body d-flex justify-content-center">
                                 <button name="validate" value="1" class="mx-2 btn btn-success btn-sm">Valider et Payer</button>
                                 <button name="cancel" value="1" class="mx-2 btn btn-secondary btn-sm">Supprimer ce voyage</button>

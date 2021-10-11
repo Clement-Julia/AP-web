@@ -194,6 +194,7 @@
 #choose-hebergement{
     width: 60%;
     display: flex;
+    align-items: stretch;
     flex-wrap: wrap;
     overflow-y: scroll;
 }
@@ -202,7 +203,18 @@
 }
 
 .hv-text-hebergement{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     font-size: 0.9em;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+#choose-hebergement .row {
+    max-height: 20em;
 }
 
 
@@ -684,6 +696,8 @@
 .mouse-enter{
     box-shadow: 0 0 10px rgba(0, 0, 255, 0.787);
     border: 1px solid rgba(0, 0, 255, 0.787);
+    background-color: #ffffff;
+    z-index: 3000!important;
 }
 
 /* ---------- Changement hebergement ----------------- */

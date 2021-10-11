@@ -46,18 +46,23 @@ if(!empty($_SESSION['idUtilisateur'])){
                         <a href="createTravel.php?idRegion=<?=$Ville->getIdRegion()?>" class="btn btn-sm btn-secondary back-button"><</a>
                     </div>
                     <div id="choose-hebergement">
+                        <div class="row d-flex">
                         <?php
                         foreach ($Hebergs as $item)
                         { 
                             if($item[0] != "indisponible"){?>
 
-                            <div class="col-xs-12 col-sm-12 col-md-6 mb-3 col-xl-4">
+                            <!-- <div class="col-xs-12 col-sm-12 col-md-6 mb-3 col-xl-4"> -->
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-xl-6 col-xxl-4 d-flex align-items-stretch flex-wrap">
                                 <div id="<?= $item[1]->getIdHebergement()?>" data-hebergement="1" data-id="<?= $item[1]->getIdHebergement()?>" data-name="<?= $item[1]->getLibelle()?>" data-lat="<?= $item[1]->getLatitude()?>" data-lng="<?= $item[1]->getLongitude()?>" data-zoom="12" data-price="<?=$item[1]->getPrix()?>" class="card ct-a js-marker">
                                     <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1530735606451-8f5f13955328?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80">
                                     <div class="card-body hv-text-hebergement">
                                         <h6 class="card-title"><?= $item[1]->getLibelle()?></h6>
-                                        <p><?= $item[1]->getDescription()?></p>
-                                        <span>Prix : <?= $item[1]->getPrix()?> €</span>
+                                        <p><?= coupe_phrase($item[1]->getDescription())?></p>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Prix : <?= $item[1]->getPrix()?> €</span>
+                                            <span></span>
+                                        </div>
                                     </div>
                                     <div class="card-footer text-muted"><?=$item[0]?></div>
                                 </div>
@@ -66,6 +71,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                         <?php }
                         }
                         ?>
+                        </div>
                     </div>
                     <div data-lat="<?= $Ville->getLatitude()?>" data-lng="<?= $Ville->getLongitude()?>" data-zoom="12" class="map-hebergement" id="map"></div>
                 </div>

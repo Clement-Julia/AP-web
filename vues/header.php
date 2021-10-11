@@ -1,8 +1,8 @@
 <?php
 require_once "../controleurs/traitement.php";
-$url = $_SERVER['REQUEST_URI'];
-if(empty($_SESSION) && ($url != "/PPE/vues/index.php" && $url != "/PPE/vues/connexion.php" && $url != "/PPE/vues/inscription.php")){
-    header("location:../");
+
+if (!empty($_SESSION['idUtilisateur'])){
+    $ReservationVoyage = new ReservationVoyage();
 }
 ?>
 
@@ -29,6 +29,7 @@ if(empty($_SESSION) && ($url != "/PPE/vues/index.php" && $url != "/PPE/vues/conn
             <div class="navbar-nav align-items-center">
                 <a class="nav-link active" aria-current="page" href="index.php"><img id="logo" src="../src/img/locallacol.png" alt="Logo du site locallacol"></a>
                 <?=(!empty($_SESSION["idRole"]) && $_SESSION["idRole"] == 2 ? "<a href='../admin' class='nav-link'>Accès admin</a>" : "");?>
+                <?= !empty($_SESSION['idUtilisateur']) && $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']) != null ? "<a href='resumeTravel.php?building=1' class='nav-link'>Continuer ?</a>" : "" ;?>
             </div>
         </div>
 
