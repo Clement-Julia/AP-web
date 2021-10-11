@@ -1,13 +1,33 @@
 <?php
 require_once "headerAdmin.php";
-$hebergement = new Hebergement();
-$hotels = $hebergement->getAllHotel();
 
 $villes = new Ville();
 $infos_v = $villes->getAllville();
 
 $options = new Option();
 $infos_o = $options->getAllOption();
+?>
+
+<?php
+    if(!empty($_GET["error"]) && $_GET["error"] == "crash"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                La fonctionnalité est actuellement indisponible <br>
+                Pour plus d'information contacter le développeur
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["error"]) && $_GET["error"] == "all"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                Vous devez définir une seule manière de position pour l'hebergement et il doit avoir au minimum une image
+            </p>
+        </div>
+        <?php
+    }
 ?>
 
 <div class="container">
@@ -61,12 +81,12 @@ $infos_o = $options->getAllOption();
 
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-link text-muted" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Via coordonnées</a>
+                <a class="nav-link text-muted active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Via coordonnées</a>
                 <a class="nav-link text-muted" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Via lien google map</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="form-group mt-4">
                     <label for="latitude">Latitude : </label>
                     <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Entrez une latitude" autocomplete="off">
@@ -88,6 +108,9 @@ $infos_o = $options->getAllOption();
         <div class="form-group mt-4">
             <input type="file" name="file[]" id="file" class="inputfile inputfile-1 d-none" data-multiple-caption="{count} fichiers" multiple />
             <label for="file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choisissez une image&hellip;</span></label>
+
+            <input type="file" name="banniere" id="banniere" class="inputfile inputfile-1 d-none">
+            <label for="banniere"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choisissez une bannière&hellip;</span></label>
         </div>
 
         <div class="form-group text-center mt-4">

@@ -489,8 +489,8 @@
     opacity: 0
 }
 
-.rating>label:hover:before,
-.rating>label:hover~label:before {
+.modal-body .rating>label:hover:before,
+.modal-body .rating>label:hover~label:before {
     opacity: 1 !important
 }
 
@@ -498,7 +498,7 @@
     opacity: 1
 }
 
-.rating:hover>input:checked~label:before {
+.modal-body .rating:hover>input:checked~label:before {
     opacity: 0.4
 }
 /* --------------------------------------------------------------------------------- TEST CSS MAP CARTE FRANCE ------------------------------------------------------------------- */

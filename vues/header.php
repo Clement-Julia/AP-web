@@ -1,9 +1,6 @@
 <?php
 require_once "../controleurs/traitement.php";
 $url = $_SERVER['REQUEST_URI'];
-if(empty($_SESSION) && ($url != "/Projet/PPE/main/vues/index.php" && $url != "/Projet/PPE/main/vues/connexion.php" && $url != "/Projet/PPE/main/vues/inscription.php")){
-    header("location:../");
-}
 ?>
 
 <!DOCTYPE html>

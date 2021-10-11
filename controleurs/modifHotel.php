@@ -2,20 +2,21 @@
 require_once "traitement.php";
 $hotel = new Hebergement();
 
-$tab = ["television", "lave_linge", "seche_linge", "cuisine", "réfrigirateur", "four", "parking", "linge_de_maison", "vaisselle", "cafetiere", "climatisation"];
-
-for($i = 0; $i < count($tab); $i++){
-    if(empty($_POST[$tab[$i]])){
-        $_POST[$tab[$i]] = 0;
-    }else{
-        $_POST[$tab[$i]] = 1;
-    }
-}
-
 if(!empty($_POST["latitude"]) && !empty($_POST["longitude"])){
     try{
 
-        $hotel->updateHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["prix"], $_POST["television"], $_POST["lave_linge"], $_POST["seche_linge"], $_POST["cuisine"], $_POST["réfrigirateur"], $_POST["four"], $_POST["parking"], $_POST["linge_de_maison"], $_POST["vaisselle"], $_POST["cafetiere"], $_POST["climatisation"], $_GET["id"]);
+        if(!empty($_FILES["file"])){
+            for($i=0; $i < count($_FILES["file"]["name"]); $i++){
+                $newName = $_POST["libelle"].$i;
+                $target_dir = "../src/uuid/".$_GET["uuid"]."/";
+                $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
+                $target_file = $target_dir . $newName . "." . "png";
+                $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
+                move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
+            }
+        }
+
+        $hotel->updateHotel($_POST["options"], $_GET["id"]);
 
         header("location:../admin/modifHotel.php");
     }catch(exception $e){

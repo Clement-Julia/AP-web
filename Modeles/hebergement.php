@@ -106,11 +106,11 @@ class Hebergement extends Modele {
         return $infoHotel;
     }
 
-    public function addHotel($libelle, $description, $idVille, $latitude, $longitude, $prix){
+    public function addHotel($libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid){
 
-        $requete = $this->getBdd()->prepare("INSERT into hebergement(libelle, description, idVille, latitude, longitude, prix) values(?,?,?,?,?,?)");
+        $requete = $this->getBdd()->prepare("INSERT into hebergement(libelle, description, idVille, latitude, longitude, prix, uuid) values(?,?,?,?,?,?,?)");
 
-        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix]);
+        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid]);
     }
 
     public function updatehotel($libelle, $description, $idVille, $latitude, $longitude, $prix, $television, $lave_linge, $seche_linge, $cuisine, $refrigirateur, $four, $parking_gratuit, $linge_de_maison, $vaiselle, $cafetiere, $climatisation, $id){

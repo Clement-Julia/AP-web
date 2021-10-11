@@ -38,7 +38,7 @@ $infos = $region->getAllregion();
         $villes = new Ville();
         $info_ville = $villes->getVillebyName($_GET["libelle"]);
         ?>
-        <form method="POST" action="../controleurs/modifVille.php?id=<?= $info_ville["idVille"] ?>">
+        <form method="POST" action="../controleurs/modifVille.php?id=<?= $info_ville["idVille"] ?>&uuid=<?=$info_ville["uuid"]?>">
             <div class="form-group">
                 <label for="libelle">Nom : </label>
                 <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'une ville" required autocomplete="off" value="<?= $info_ville["libelle"] ?>">
@@ -72,12 +72,17 @@ $infos = $region->getAllregion();
                 <label for="longitude">Longitude : </label>
                 <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Entrez une longitude" autocomplete="off" value="<?= $info_ville["longitude"] ?>">
             </div>
+
+            <div class="form-group mt-4">
+                <input type="file" name="file[]" id="file" class="inputfile inputfile-1 d-none" data-multiple-caption="{count} fichiers" multiple />
+                <label for="file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Ajouter une image&hellip;</span></label>
+            </div>
             
             <div class="form-group">
                 <label>Images :</label>
                 <div id="image">
                     <?php
-                        lister_images("../src/uuid/test/");
+                        lister_images("../src/uuid/".$info_ville["uuid"]);
                     ?>
                 </div>
             </div>
