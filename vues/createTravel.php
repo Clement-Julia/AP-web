@@ -91,12 +91,15 @@ if(!empty($_SESSION['idUtilisateur'])){
 
                     
                 <div id="choose-town-bot">
+                    <div class="row">
                     <?php
-                    foreach ($Lodgings as $item)
-                    { ?>
-                        <div class="col-md-4 mb-3 col-lg-3">
+                    foreach ($Lodgings as $item){
+                    $VilleTemp = new Ville($item->getIdVille());
+                    $Image = new Images($VilleTemp->getUuid());
+                    ?>
+                        <div class="col-xs-12 mb-3 col-lg-3 d-flex align-items-stretch flex-wrap">
                             <div id="<?= $item->getIdVille()?>" data-id="<?= $item->getIdVille()?>" data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" data-zoom="9" class="card ct-a js-marker">
-                                <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1530735606451-8f5f13955328?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80">
+                                <img class="img-fluid banniere-ville" alt="100%x280" src="<?=$Image->getBanniere()?>">
                                 <div class="card-body ct-text-ville">
                                     <h6 class="card-title"><?= $item->getLibelle()?></h6>
                                 </div>
@@ -104,6 +107,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                         </div>
                     <?php }
                     ?>
+                    </div>
                 </div>
             </div>
             <div data-lat="<?=$Lodging->getLatitude();?>" data-lng="<?=$Lodging->getLongitude();?>" data-zoom="8" class="map" id="map"></div>

@@ -36,15 +36,15 @@ class Images extends Modele {
         $filename = glob($path);
 
         if(count($filename) == 0){
-            $filename = "../src/img/default-hotel.jpg";
+            return "../src/img/default-hotel.jpg";
+        } else {
+            return $filename[0];
         }
-
-        return $filename;
     }
 
     public function getImageDescriptionHebergementCode(){
 
-        $path = "../src/uuid/" . $this->uuid . "/" . "*.*";
+        $path = "../src/uuid/" . $this->uuid . "/" . $this->libelle ."*.*";
         $filenames = glob($path);
 
         if(count($filenames) == 0){
