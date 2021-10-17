@@ -25,7 +25,7 @@ try{
                 }
                 break;
             case "checkBooking":
-                if(!empty($_GET['da']) && isValidDate($_GET['da']) && !empty($_GET['nbj']) && is_numeric($_GET['nbj']) && !empty($_SESSION['idHebergement']) && is_numeric($_SESSION['idHebergement'])
+                if(!empty($_GET['da']) && isValidDate($_GET['da']) && is_numeric($_GET['nbj']) && !empty($_SESSION['idHebergement']) && is_numeric($_SESSION['idHebergement'])
                 ){
                     $Api = new Api();
                     $Api->getHebergementBooking($_GET['da'], $_GET['nbj'], $_SESSION['idHebergement']);

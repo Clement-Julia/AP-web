@@ -8,6 +8,7 @@ if (!empty($_SESSION['idUtilisateur'])){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,10 +19,11 @@ if (!empty($_SESSION['idUtilisateur'])){
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <script src="https://kit.fontawesome.com/f3f16a7b72.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/png" href="../src/img/logo.png">
-    <title>OwnTravel</title>
+    <title>locallacol</title>
 </head>
 <body>
     <!-- on refait toutes la navbar -->
+
 
 <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light z-index">
     <div class="container-fluid">

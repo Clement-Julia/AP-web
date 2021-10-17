@@ -69,7 +69,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                             <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $PreviousCalendar->withinMonth($date) ? 'date-debut' : '';?> 
                                             <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $PreviousCalendar->withinMonth($date) ? 'date-fin' : '';?> 
                                             <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
-                                            <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $today->format("Y-m-d")) ? 'selectable' : '';?>
+                                            <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $today->format("Y-m-d")) && $PreviousCalendar->withinMonth($date) ? 'selectable' : '';?>
                                             "><?= $date->format('d');?></div>
                                         </td>
                                     <?php } ?>
@@ -103,7 +103,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                             <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $Calendar->withinMonth($date) ? 'date-debut' : '';?> 
                                             <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $Calendar->withinMonth($date) ? 'date-fin' : '';?> 
                                             <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
-                                            <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $today->format("Y-m-d")) ? 'selectable' : '';?>
+                                            <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $today->format("Y-m-d")) && $Calendar->withinMonth($date) ? 'selectable' : '';?>
                                             "><?= $date->format('d');?></div>
                                         </td>
                                     <?php } ?>
@@ -140,7 +140,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                             <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $NextCalendar->withinMonth($date) ? 'date-debut' : '';?> 
                                             <?=$date->format("Y-m-d") == $dateFin->format("Y-m-d") && $NextCalendar->withinMonth($date) ? 'date-fin' : '';?> 
                                             <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
-                                            <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $today->format("Y-m-d")) ? 'selectable' : '';?>
+                                            <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $today->format("Y-m-d")) && $NextCalendar->withinMonth($date) ? 'selectable' : '';?>
                                             "><?= $date->format('d');?></div>
                                         </td>
                                     <?php } ?>

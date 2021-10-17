@@ -30,26 +30,31 @@ class Api extends Modele {
 
     public function getHebergementBooking($dateArrivee, $nbJours, $idHebergement){
 
-        $boolean = false;
-        $Hebergement = new Hebergement($idHebergement);
-        $bookingDates = $Hebergement->getWhenHebergementIsBooking($Hebergement->getIdHebergement());
+        if($nbJours != 0){
+            $boolean = false;
+            $Hebergement = new Hebergement($idHebergement);
+            $bookingDates = $Hebergement->getWhenHebergementIsBooking($Hebergement->getIdHebergement());
 
-        for($i = 0; $i < $nbJours; $i++){
+            for($i = 0; $i < $nbJours; $i++){
 
-            $date = new DateTime($dateArrivee . '+' . $i . 'days');
+                $date = new DateTime($dateArrivee . '+' . $i . 'days');
 
-            if(in_array($date->format("Y-m-d"), $bookingDates)){
-                $boolean = true;
+                if(in_array($date->format("Y-m-d"), $bookingDates)){
+                    $boolean = true;
+                }
             }
-        }
 
-        if($boolean){
-            $return['message'] = "La réservation n'est pas disponible, un autre utilisateur ayant déjà réservé une partie des dates que vous souhaitiez";
-            $return['code'] = 402;
+            if($boolean){
+                $return['message'] = "La réservation n'est pas disponible, un autre utilisateur ayant déjà réservé une partie des dates que vous souhaitiez";
+                $return['code'] = 402;
+            } else {
+                $return['code'] = 200;
+            }
         } else {
-            $return['code'] = 200;
+            $return['message'] = "Le séjour doit être au minimum d'une nuit";
+            $return['code'] = 402;
         }
-
+        
         $this->sendJSON($return);
     }
 

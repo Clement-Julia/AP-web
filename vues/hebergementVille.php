@@ -52,7 +52,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                         { 
                             $HebergementTemp = new Hebergement($item[1]->getIdHebergement());
                             $Image = new Images($HebergementTemp->getUuid());
-                            if($item[0] != "indisponible"){?>
+                            if($item[0] != "indisponible" && $item[0] != "disponible 0 nuit"){?>
 
                             <!-- <div class="col-xs-12 col-sm-12 col-md-6 mb-3 col-xl-4"> -->
                             <div class="col-xs-12 col-sm-12 col-md-6 col-xl-6 col-xxl-4 d-flex align-items-stretch flex-wrap">

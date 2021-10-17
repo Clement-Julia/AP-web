@@ -9,7 +9,7 @@ if(!empty($_POST["email"]) && !empty($_POST["mdp"])){
         if($return["success"] === false){
             header("location:../vues/connexion.php?erreur=mdp");
         }else{
-            header("location:../vues/");
+            header("location:../vues/index.php");
         }
     }else{
         header("location:../vues/connexion.php?erreur=email");

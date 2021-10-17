@@ -80,7 +80,6 @@ if(!empty($_SESSION['idUtilisateur'])){
                                 </div>
                             </div>
                     </div>
-
                     <div id="hd-date-price-container">
                         <div id="hd-date" class="card">
                             <div class="card-header"><h6>Calendrier</h6></div>
@@ -104,7 +103,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                     <?=$Calendar->withinMonth($date) ? '' : 'calendar__overmonth';?> 
                                                     <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $Calendar->withinMonth($date) ? 'date-debut' : '';?> 
                                                     <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
-                                                    <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $today->format("Y-m-d")) ? 'selectable' : '';?>
+                                                    <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $dateDebut->format("Y-m-d")) && $Calendar->withinMonth($date) ? 'selectable' : '';?>
                                                     "><?= $date->format('d');?></div>
                                                 </td>
                                             <?php } ?>
@@ -132,7 +131,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                     <?=$NextCalendar->withinMonth($date) ? '' : 'calendar__overmonth';?>
                                                     <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $NextCalendar->withinMonth($date) ? 'date-debut' : '';?> 
                                                     <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
-                                                    <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $today->format("Y-m-d")) ? 'selectable' : '';?>
+                                                    <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $dateDebut->format("Y-m-d")) && $NextCalendar->withinMonth($date) ? 'selectable' : '';?>
                                                     "><?= $date->format('d');?></div>
                                                 </td>
                                             <?php } ?>
