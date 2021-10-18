@@ -161,12 +161,13 @@ class Utilisateur extends Modele {
     }
 
     public function getPastVoyage($IdUtilisateur){
-        $requete = $this->getBdd()->prepare("SELECT villes.libelle as ville, hebergement.libelle as hebergement, hebergement.description as description, reservations_hebergement.code_reservation as code, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours FROM `reservations_voyages`
+        $requete = $this->getBdd()->prepare("SELECT reservations_voyages.idReservationVoyage as id, villes.libelle as ville, hebergement.libelle as hebergement, hebergement.description as description, reservations_hebergement.code_reservation as code, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours
+        FROM `reservations_voyages`
         inner join reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage
         INNER join hebergement USING(idHebergement)
         INNER join villes USING(idVille)
-        where reservations_hebergement.idUtilisateur = ? and dateDebut < now()
-        GROUP BY reservations_hebergement.idReservationHebergement");
+        where reservations_hebergement.idUtilisateur = ? and (SELECT MIN(dateDebut) FROM reservations_hebergement WHERE reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage) < now() and (SELECT MAX(dateFin) FROM reservations_hebergement WHERE reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage) < now()
+        GROUP BY reservations_voyages.idReservationVoyage");
 
         $requete->execute([$IdUtilisateur]);
         $info = $requete->fetchALL(PDO::FETCH_ASSOC);
@@ -174,16 +175,30 @@ class Utilisateur extends Modele {
     }
 
     public function getFuturVoyage($IdUtilisateur){
-        $requete = $this->getBdd()->prepare("SELECT villes.libelle as ville, hebergement.libelle as hebergement, hebergement.description as description, reservations_hebergement.code_reservation as code, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours FROM `reservations_voyages`
+        $requete = $this->getBdd()->prepare("SELECT reservations_voyages.idReservationVoyage as id, villes.libelle as ville, hebergement.libelle as hebergement, hebergement.description as description, reservations_hebergement.code_reservation as code, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours
+        FROM `reservations_voyages`
         inner join reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage
         INNER join hebergement USING(idHebergement)
         INNER join villes USING(idVille)
-        where reservations_hebergement.idUtilisateur = ? and dateDebut > now()
-        GROUP BY reservations_hebergement.idReservationHebergement");
+        where reservations_hebergement.idUtilisateur = ? and (SELECT MIN(dateDebut) FROM reservations_hebergement WHERE reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage) > now() and (SELECT MAX(dateFin) FROM reservations_hebergement WHERE reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage) > now()
+        GROUP BY reservations_voyages.idReservationVoyage");
 
         $requete->execute([$IdUtilisateur]);
         $info = $requete->fetchALL(PDO::FETCH_ASSOC);
         return $info;
     }
 
+    public function getCurrentVoyage($IdUtilisateur){
+        $requete = $this->getBdd()->prepare("SELECT reservations_voyages.idReservationVoyage as id, villes.libelle as ville, hebergement.libelle as hebergement, hebergement.description as description, reservations_hebergement.code_reservation as code, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours
+        FROM `reservations_voyages`
+        inner join reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage
+        INNER join hebergement USING(idHebergement)
+        INNER join villes USING(idVille)
+        where reservations_hebergement.idUtilisateur = ? and (SELECT MIN(dateDebut) FROM reservations_hebergement WHERE reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage) > now() and (SELECT MAX(dateFin) FROM reservations_hebergement WHERE reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage) > now()
+        GROUP BY reservations_voyages.idReservationVoyage");
+
+        $requete->execute([$IdUtilisateur]);
+        $info = $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $info;
+    }
 }
