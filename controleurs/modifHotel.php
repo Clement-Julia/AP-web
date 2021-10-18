@@ -64,7 +64,7 @@ if(
         }
 
         if(!empty($_FILES["file"])){
-            for($i=0; $i < (count($_FILES["file"]["name"])+$i); $i++){
+            for($i=0; $i < (count($_FILES["file"]["name"])); $i++){
                 $newName = $_POST["libelle"].$pos;
                 $target_dir = "../src/uuid/". $Hotel->getUuid() ."/";
                 $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
