@@ -191,6 +191,7 @@ class ReservationVoyage extends Modele {
 
             $tab[$i][$x]["ville"] = $test["ville"];
             $tab[$i][$x]["hebergement"] = $test["hebergement"];
+            $tab[$i][$x]["description"] = $test["description"];
             $tab[$i][$x]["code"] = $test["code"];
             $tab[$i][$x]["is_building"] = $test["is_building"];
             $tab[$i][$x]["prix"] = $test["prix"];
