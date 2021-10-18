@@ -88,6 +88,10 @@ class Hebergement extends Modele {
         return $this->uuid;
     }
 
+    public function setUuid($uuid){
+        $this->uuid = $uuid;
+    }
+
     public function getOptions(){
         return $this->options;
     }
@@ -120,11 +124,11 @@ class Hebergement extends Modele {
         $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid]);
     }
 
-    public function updatehotel($libelle, $description, $idVille, $latitude, $longitude, $prix, $id){
+    public function updateHotel($libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid, $id){
 
-        $requete = $this->getBdd()->prepare("UPDATE hebergement set libelle = ?, description = ?, idVille = ?, latitude = ?, longitude = ?, prix = ? where idHebergement = ?");
+        $requete = $this->getBdd()->prepare("UPDATE hebergement set libelle = ?, description = ?, idVille = ?, latitude = ?, longitude = ?, prix = ?, uuid = ? where idHebergement = ?");
 
-        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $id]);
+        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid, $id]);
     }
 
     public function supHotel($libelle){
