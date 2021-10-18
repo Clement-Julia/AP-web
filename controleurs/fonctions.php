@@ -22,21 +22,22 @@ function lister_images($repertoire){
                     $fichier_info = finfo_open(FILEINFO_MIME_TYPE);
                     $mime_type = finfo_file($fichier_info, $repertoire."/".$fichier);
                     if(strpos($mime_type, 'image/') === 0){
-                        echo
-                        '<img src="'.$repertoire."/".$fichier.'"id="img'.$i.'" name="'.$repertoire."/".$fichier.'" class="img-fluid rounded float-start badgetest" style="max-width: 300px">' . 
-                        '<button type="button" id="'.$i.'" style="visibility: hidden" onclick="supImage(this.id)">
-                            <span class="badge badge-danger rounded position-badge" style="visibility: visible"><i class="fas fa-times fa-lg" aria-hidden=true></i></span>
-                        </button>';
-                        $i++;
-                        if($fichier == "banniere"){
+                        if($fichier == "banniere.png"){
                             $bool = 1;
+                        }else{
+                            echo
+                            '<img src="'.$repertoire."/".$fichier.'"id="img'.$i.'" name="'.$repertoire."/".$fichier.'" class="img-fluid rounded float-start badgetest" style="max-width: 300px">' . 
+                            '<button type="button" id="'.$i.'" style="visibility: hidden" onclick="supImage(this.id)">
+                                <span class="badge badge-danger rounded position-badge" style="visibility: visible"><i class="fas fa-times fa-lg" aria-hidden=true></i></span>
+                            </button>';
+                            $i++;
                         }
                     }
                 }  
             }  
             closedir($iteration);  
         }  
-    }  
+    }
 }
 
 function coupe_phrase($string, $limit = 100, $fin= '...')

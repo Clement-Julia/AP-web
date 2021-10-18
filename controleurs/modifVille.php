@@ -14,35 +14,18 @@ if(
             $description = null;
         }
 
-        // on vérifie que chaque fichier est bien une image
-        foreach($_FILES["file"]["tmp_name"] as $image){
-            if(!exif_imagetype($image)){
-                header("location:../admin/modifVille.php");
+        // on vérifie que chaque fichier est bien une image;
+        if(count($_FILES["file"]["tmp_name"]) > 1){
+            foreach($_FILES["file"]["tmp_name"] as $image){
+                if(!exif_imagetype($image)){
+                    header("location:../admin/modifVille.php");
+                }
             }
         }
 
         $Ville = new Ville($_GET["id"]);
 
     try{
-        $repertoire = "../src/uuid/".$Ville->getUuid();
-        if(is_dir($repertoire)){  
-            if($iteration = opendir($repertoire)){  
-                while(($fichier = readdir($iteration)) !== false){  
-                    if($fichier != "." && $fichier != ".."){
-                        $fichier_info = finfo_open(FILEINFO_MIME_TYPE);
-                        $mime_type = finfo_file($fichier_info, $repertoire."/".$fichier);
-                        if(strpos($mime_type, 'image/') === 0){
-                            $test = substr($fichier, strlen($_POST["libelle"]), strlen($_POST["libelle"]));
-                            $pos = substr($test, 0, strrpos($test, ".")) + 1;
-                        }
-                    }  
-                }  
-                closedir($iteration);  
-            }  
-        }
-        if(empty($pos)){
-            $pos=0;
-        }
 
         if($Ville->getUuid() == null){
             $nom_doss = bin2hex(random_bytes(32));
@@ -53,13 +36,43 @@ if(
             $Ville->setUuid($nom_doss);
         }
 
-        if(!empty($_FILES["file"])){
+        if(!empty($_FILES["banniere"])){
+            $nameBan = "banniere";
+            $target_dir = "../src/uuid/".$Ville->getUuid()."/";
+            $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
+            $target_file = $target_dir . $nameBan . "." . "png";
+            // $check = getimagesize($_FILES["banniere"]["tmp_name"]);
+            move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
+        }
+
+        if(count($_FILES["file"]["tmp_name"]) > 1){
+
+            $repertoire = "../src/uuid/".$Ville->getUuid();
+            if(is_dir($repertoire)){  
+                if($iteration = opendir($repertoire)){  
+                    while(($fichier = readdir($iteration)) !== false){  
+                        if($fichier != "." && $fichier != ".."){
+                            $fichier_info = finfo_open(FILEINFO_MIME_TYPE);
+                            $mime_type = finfo_file($fichier_info, $repertoire."/".$fichier);
+                            if(strpos($mime_type, 'image/') === 0){
+                                $test = substr($fichier, strlen($_POST["libelle"]), strlen($_POST["libelle"]));
+                                $pos = substr($test, 0, strrpos($test, ".")) + 1;
+                            }
+                        }  
+                    }  
+                    closedir($iteration);  
+                }  
+            }
+            if(empty($pos)){
+                $pos=0;
+            }
+
             for($i=0; $i < count($_FILES["file"]["name"]); $i++){
                 $newName = $_POST["libelle"].$pos;
                 $target_dir = "../src/uuid/". $Ville->getUuid() ."/";
                 $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
                 $target_file = $target_dir . $newName . "." . "png";
-                $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
+                // $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
                 move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
                 $pos++;
             }

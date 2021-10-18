@@ -55,7 +55,7 @@ if(
         }
 
         if(!empty($_FILES["banniere"])){
-            $nameBan = "bannière";
+            $nameBan = "banniere";
             $target_dir = "../src/uuid/".$Hotel->getUuid()."/";
             $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
             $target_file = $target_dir . $nameBan . "." . "png";
