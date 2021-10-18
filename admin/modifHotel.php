@@ -38,14 +38,30 @@ $infos_o = $options->getAllOption();
         
         <?php
     }else{
+        if(!empty($_GET["error"]) && $_GET["error"] == "crash"){
+            ?>
+            <div class="container alert alert-danger">
+                <p>
+                    La fonctionnalité est actuellement indisponible <br>
+                    Pour plus d'information contacter le développeur
+                </p>
+            </div>
+            <?php
+        }
+        if(!empty($_GET["error"]) && $_GET["error"] == "all"){
+            ?>
+            <div class="container alert alert-danger">
+                <p>
+                    Tous les champs sont obligatoires
+                </p>
+            </div>
+            <?php
+        }
+
         $hotels = new Hebergement();
         $info_hotel = $hotels->getHotelbyName($_GET["libelle"]);
         ?>
-<<<<<<< HEAD
-        <form method="POST" action="../controleurs/modifHotel.php?id=<?= $info_hotel["idHebergement"]?>&uuid=<?=$info_ville["uuid"]?>">
-=======
         <form method="POST" action="../controleurs/modifHotel.php?id=<?= $info_hotel["idHebergement"] ?>" multipart="" enctype="multipart/form-data">
->>>>>>> 32f276b82f098c3a7a3cab5151677576d02bb32d
 
             <div class="form-group">
                 <label for="libelle">Nom : </label>
