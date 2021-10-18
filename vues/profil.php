@@ -1,7 +1,8 @@
 <?php
 require_once "header.php";
 $user = new Utilisateur($_SESSION["idUtilisateur"]);
-$ReservationVoyage = new ReservationVoyage();
+$past = $user->getPastVoyage($_SESSION["idUtilisateur"]);
+$futur = $user->getFuturVoyage($_SESSION["idUtilisateur"]);
 ?>
 
 <?php
@@ -114,43 +115,40 @@ $ReservationVoyage = new ReservationVoyage();
                     </div>
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                            <?php
-                                $i = 0;
-                                foreach ($ReservationVoyage->getReservationHebergement() as $reservationHebergement){
-                                    $infos = $reservationHebergement->getHebergementById($reservationHebergement->getIdHebergement());
-                                    ?>
-                                    <div class="mx-3 my-3 card">
-                                        <div class="card-header"><h6>Etape : <?=$index?></h6></div>
-                                        <div class="card-body">
-                                            <div>Ville : <?=$infos['villeNom']?></div>
-                                            <div>Hébergement : <?=$infos['nomHebergement']?></div>
-                                            <div>Description hébergement : <?=$infos['description']?></div>
-                                            <div>Date d'arrivée : <?=$reservationHebergement->getDateDebut()?></div>
-                                            <div>Date de départ : <?=$reservationHebergement->getDateFin()?></div>
-                                            <div>Code réservation : <?=$reservationHebergement->getCodeReservation()?></div>
-                                            <div>Prix : <?=$reservationHebergement->getPrix()?></div>
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Voyage 1
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            <?php
+                                                $i = 0;
+                                                $index = 1;
+                                                foreach ($past as $voyage){
+                                                    ?>
+                                                    <div class="mx-3 my-3 card">
+                                                        <div class="card-header"><h6>Etape : <?=$index?></h6></div>
+                                                        <div class="card-body">
+                                                            <div>Ville : <?=$voyage['ville']?></div>
+                                                            <div>Hébergement : <?=$voyage['hebergement']?></div>
+                                                            <div>Description hébergement : <?=$voyage['description']?></div>
+                                                            <div>Date d'arrivée : <?=$voyage["dateDebut"]?></div>
+                                                            <div>Date de départ : <?=$voyage["dateFin"]?></div>
+                                                            <div>Code réservation : <?=$voyage["code"]?></div>
+                                                            <div>Prix : <?=$voyage["prix"]?></div>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                    $index++;
+                                                }
+                                            ?>
                                         </div>
                                     </div>
-                                    <?php
-                                    $index++;
-                                }
-                                foreach($past as $voyage){
-                                    ?>
-                                    <div class="accordion accordion-flush" id="accordionFlushExample">
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="flush-headingOne">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                Voyage <?= $i ?>
-                                            </button>
-                                            </h2>
-                                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
-                            ?>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                             <div class="accordion accordion-flush" id="accordionFlushExample">

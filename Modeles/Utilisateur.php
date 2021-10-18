@@ -161,13 +161,29 @@ class Utilisateur extends Modele {
     }
 
     public function getPastVoyage($IdUtilisateur){
-        $requete = $this->getBdd()->prepare("SELECT hebergement.libelle, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours FROM `reservations_voyages`
+        $requete = $this->getBdd()->prepare("SELECT villes.libelle as ville, hebergement.libelle as hebergement, hebergement.description as description, reservations_hebergement.code_reservation as code, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours FROM `reservations_voyages`
         inner join reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage
         INNER join hebergement USING(idHebergement)
-        where reservations_hebergement.idUtilisateur = ?");
-        $requete->execute();
-        $info_nbr = $requete->fetch(PDO::FETCH_ASSOC);
-        return $info_nbr;
+        INNER join villes USING(idVille)
+        where reservations_hebergement.idUtilisateur = ? and dateDebut < now()
+        GROUP BY reservations_hebergement.idReservationHebergement");
+
+        $requete->execute([$IdUtilisateur]);
+        $info = $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $info;
+    }
+
+    public function getFuturVoyage($IdUtilisateur){
+        $requete = $this->getBdd()->prepare("SELECT villes.libelle as ville, hebergement.libelle as hebergement, hebergement.description as description, reservations_hebergement.code_reservation as code, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours FROM `reservations_voyages`
+        inner join reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage
+        INNER join hebergement USING(idHebergement)
+        INNER join villes USING(idVille)
+        where reservations_hebergement.idUtilisateur = ? and dateDebut > now()
+        GROUP BY reservations_hebergement.idReservationHebergement");
+
+        $requete->execute([$IdUtilisateur]);
+        $info = $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $info;
     }
 
 }
