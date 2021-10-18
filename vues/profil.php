@@ -37,9 +37,27 @@ foreach($test as $key => $voyage){
         $todayArray[] = $test[$key];
     }
 
-    $id = 0;
-    error($_GET);
 }
+
+if(count($pastArray) > 0){
+    foreach($pastArray as $key => $value){
+        usort($pastArray[$key], "sortFunctionDate");
+    }
+}
+if(count($todayArray) > 0){
+    foreach($todayArray as $key => $value){
+        usort($todayArray[$key], "sortFunctionDate");
+    }
+}
+if(count($nextArray) > 0){
+    foreach($nextArray as $key => $value){
+        usort($nextArray[$key], "sortFunctionDate");
+    }
+}
+
+$id = 0;
+error($_GET);
+
 ?>
 
 <div class="container rounded bg-white mb-5">
