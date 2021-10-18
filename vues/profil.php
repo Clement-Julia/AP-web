@@ -3,9 +3,6 @@ require_once "header.php";
 $user = new Utilisateur($_SESSION["idUtilisateur"]);
 $test = new ReservationVoyage();
 $test = $test->getVoyageByUser($_SESSION["idUtilisateur"]);
-echo "<pre>";
-print_r($test);
-echo "</pre>";
 ?>
 
 <?php

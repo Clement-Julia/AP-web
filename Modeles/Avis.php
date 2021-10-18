@@ -71,6 +71,13 @@ class Avis extends Modele {
         return $infoAvis;
     }
 
+    public function getAllAvisByHebergement($libelle){
+        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement inner join avis using(idHebergement) inner join utilisateurs using(idUtilisateur) where hebergement.libelle = ?");
+        $requete->execute([$libelle]);
+        $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $infoAvis;
+    }
+
     public function getHebergementbynonAvis($idUtilisateur){
         $requete = $this->getBdd()->prepare("SELECT DISTINCT hebergement.* FROM hebergement inner join reservations_hebergement using(idHebergement) inner join utilisateurs using(idUtilisateur) LEFT join avis using(idHebergement) where utilisateurs.idUtilisateur = ? and (avis.idUtilisateur is null or avis.idUtilisateur != utilisateurs.idUtilisateur)");
         $requete->execute([$idUtilisateur]);

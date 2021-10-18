@@ -66,7 +66,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                         <div class="d-flex justify-content-between">
                                             <span>Prix : <?= $item[1]->getPrix()?> €</span>
                                             <span>
-                                                <?= $average ?><i class="fas fa-star" style="color: #f2f200;"></i>
+                                                <?= ($average != 0) ? $average.'<i class="fas fa-star" style="color: #f2f200;"></i>' : "<span class='text-muted fst-italic'>Aucun avis n'a été publié...</span> "?>
                                             </span>
                                         </div>
                                     </div>

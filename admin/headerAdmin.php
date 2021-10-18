@@ -94,21 +94,7 @@ if($_SESSION["idRole"] != 2){
                 </a>
                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Gestion</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
-                    aria-expanded="true" aria-controls="collapseFive">
-                    <i class="fas fa-university"></i>
-                    <span>Forum</span>
-                </a>
-                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Gestion</a>
-                        <a class="collapse-item" href="#">Sujet</a>
+                        <a class="collapse-item" href="gestionAvis.php">Gestion</a>
                     </div>
                 </div>
             </li>

@@ -54,7 +54,9 @@ if(!empty($_SESSION['idUtilisateur'])){
                     <div id="hd-title-container">
                         <div id="hd-title"><a href="hebergementVille.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
                         <div id="hd-infos">
-                            <div id="hd-rate"><?= $average ?><i class="fas fa-star" style="color: #f2f200;"></i></div>
+                            <div id="hd-rate">
+                                <?= ($average != 0) ? $average.'<i class="fas fa-star" style="color: #f2f200;"></i>' : "<span class='text-muted fst-italic'>Aucun avis n'a été publié...</span> "?>
+                            </div>
                             <div id="hd-heart"><?=$Favoris->getIdHebergement() == null ? "<i class='far fa-heart'></i>" : "<i class='fas fa-heart'></i>"?></div>
                         </div>
                     </div>
