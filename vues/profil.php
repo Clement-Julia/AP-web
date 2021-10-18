@@ -3,8 +3,55 @@ require_once "header.php";
 $user = new Utilisateur($_SESSION["idUtilisateur"]);
 $test = new ReservationVoyage();
 $test = $test->getVoyageByUser($_SESSION["idUtilisateur"]);
+// echo "<pre>";
+// print_r($test);
+// echo "</pre>";
+
+$pastArray = [];
+$todayArray = [];
+$nextArray = [];
+$today = new DateTime();
+$today = $today->format('Y-m-d');
+
+foreach($test as $key => $voyage){
+
+    $dateDebut = "";
+    $dateFin = "";
+
+    foreach($voyage as $hebergement){
+        if($dateDebut == "" || $dateDebut > $hebergement['dateDebut']){
+            $dateDebut = $hebergement['dateDebut'];
+        }
+        if($dateFin == "" || $dateFin < $hebergement['dateFin']){
+            $dateFin = $hebergement['dateFin'];
+        }
+    }
+
+    $dateDebut = new DateTime($dateDebut);
+    $dateDebut = $dateDebut->format('Y-m-d');
+    $dateFin = new DateTime($dateFin);
+    $dateFin = $dateFin->format('Y-m-d');
+
+    if($today > $dateFin){
+        $pastArray[] = $test[$key];
+    } else if($today < $dateDebut){
+        $nextArray[] = $test[$key];
+    } else {
+        $todayArray[] = $test[$key];
+    }
+
+}
 echo "<pre>";
-print_r($test);
+echo "past array : ";
+print_r($pastArray);
+echo "</pre>";
+echo "<pre>";
+echo "today array : ";
+print_r($todayArray);
+echo "</pre>";
+echo "<pre>";
+echo "next array : ";
+print_r($nextArray);
 echo "</pre>";
 ?>
 
