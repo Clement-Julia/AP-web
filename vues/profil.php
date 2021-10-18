@@ -36,10 +36,10 @@ foreach($test as $key => $voyage){
     } else {
         $todayArray[] = $test[$key];
     }
-
-    $id = 0;
-    error($_GET);
 }
+
+$id = 0;
+error($_GET);
 ?>
 
 <div class="container rounded bg-white mb-5">

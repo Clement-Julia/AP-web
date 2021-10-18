@@ -20,9 +20,13 @@ function lister_images($repertoire){
                     if(strpos($mime_type, 'image/') === 0){
                         echo
                         '<img src="'.$repertoire."/".$fichier.'"id="img'.$i.'" name="'.$repertoire."/".$fichier.'" class="img-fluid rounded float-start badgetest" style="max-width: 300px">' . 
-                        '<button type="button" id="btn'.$i.'" style="visibility: hidden" onclick="supImage()">
+                        '<button type="button" id="'.$i.'" style="visibility: hidden" onclick="supImage(this.id)">
                             <span class="badge badge-danger rounded position-badge" style="visibility: visible"><i class="fas fa-times fa-lg" aria-hidden=true></i></span>
                         </button>';
+                        $i++;
+                        if($fichier == "banniere"){
+                            $bool = 1;
+                        }
                     }
                 }  
             }  

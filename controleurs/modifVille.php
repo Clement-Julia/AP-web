@@ -24,9 +24,25 @@ if(
         $Ville = new Ville($_GET["id"]);
 
     try{
-        $doss = opendir("../src/uuid/".$Ville->getUuid()."/");
-        $fichier = readdir($doss);
-        echo "test : " . $fichier;exit;
+        $repertoire = "../src/uuid/".$Ville->getUuid();
+        if(is_dir($repertoire)){  
+            if($iteration = opendir($repertoire)){  
+                while(($fichier = readdir($iteration)) !== false){  
+                    if($fichier != "." && $fichier != ".."){
+                        $fichier_info = finfo_open(FILEINFO_MIME_TYPE);
+                        $mime_type = finfo_file($fichier_info, $repertoire."/".$fichier);
+                        if(strpos($mime_type, 'image/') === 0){
+                            $test = substr($fichier, strlen($_POST["libelle"]), strlen($_POST["libelle"]));
+                            $pos = substr($test, 0, strrpos($test, ".")) + 1;
+                        }
+                    }  
+                }  
+                closedir($iteration);  
+            }  
+        }
+        if(empty($pos)){
+            $pos=0;
+        }
 
         if($Ville->getUuid() == null){
             $nom_doss = bin2hex(random_bytes(32));
@@ -39,12 +55,13 @@ if(
 
         if(!empty($_FILES["file"])){
             for($i=0; $i < count($_FILES["file"]["name"]); $i++){
-                $newName = $_POST["libelle"].$i;
+                $newName = $_POST["libelle"].$pos;
                 $target_dir = "../src/uuid/". $Ville->getUuid() ."/";
                 $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
                 $target_file = $target_dir . $newName . "." . "png";
                 $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
                 move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
+                $pos++;
             }
         }
 

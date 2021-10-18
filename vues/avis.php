@@ -18,7 +18,7 @@ $alls = $avis->getAllAvis();
     </div>
 
     <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade mb-3" id="pills-0" role="tabpanel" aria-labelledby="pills-0-tab">
+        <div class="tab-pane fade show active mb-3" id="pills-0" role="tabpanel" aria-labelledby="pills-0-tab">
             <div class="row">
             <?php
                 $i = 0;

@@ -59,10 +59,10 @@
 	});
 })
 
-async function supImage(){
+async function supImage(id){
 	var div = document.getElementById("image");
-	var idImg = document.getElementById("img1");
-	var idBtn = document.getElementById("btn1");
+	var idImg = document.getElementById("img" + id);
+	var idBtn = document.getElementById(id);
 	var fichier = $(idImg).attr("name");
 
 	var response = await fetch("../API/apiway.php?demande=image&name=" + fichier);
