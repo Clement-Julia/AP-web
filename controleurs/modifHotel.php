@@ -25,25 +25,21 @@ if(
         $Hotel = new Hebergement($_GET["id"]);
 
     try{
-        if(is_dir($repertoire)){  
-            if($iteration = opendir($repertoire)){  
-                while(($fichier = readdir($iteration)) !== false){  
-                    if($fichier != "." && $fichier != ".."){
-                        $fichier_info = finfo_open(FILEINFO_MIME_TYPE);
-                        $mime_type = finfo_file($fichier_info, $repertoire."/".$fichier);
-                        if(strpos($mime_type, 'image/') === 0){
-                            echo
-                            '<img src="'.$repertoire."/".$fichier.'"id="img'.$i.'" name="'.$repertoire."/".$fichier.'" class="img-fluid rounded float-start badgetest" style="max-width: 300px">' . 
-                            '<button type="button" id="btn'.$i.'" style="visibility: hidden" onclick="supImage()">
-                                <span class="badge badge-danger rounded position-badge" style="visibility: visible"><i class="fas fa-times fa-lg" aria-hidden=true></i></span>
-                            </button>';
-                        }
-                    }  
-                }  
-                closedir($iteration);  
-            }  
-        } 
-        echo $fichier;exit;
+        // if(is_dir($repertoire)){  
+        //     if($iteration = opendir($repertoire)){  
+        //         while(($fichier = readdir($iteration)) !== false){  
+        //             if($fichier != "." && $fichier != ".."){
+        //                 $fichier_info = finfo_open(FILEINFO_MIME_TYPE);
+        //                 $mime_type = finfo_file($fichier_info, $repertoire."/".$fichier);
+        //                 if(strpos($mime_type, 'image/') === 0){
+        //                     echo $fichier;
+        //                 }
+        //             }  
+        //         }  
+        //         closedir($iteration);  
+        //     }  
+        // } 
+        // echo $fichier;exit;
 
         if($Hotel->getUuid() == null){
             $nom_doss = bin2hex(random_bytes(32));
