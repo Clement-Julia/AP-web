@@ -1,5 +1,5 @@
 <?php
-require_once "../traitement.php";
+require_once "traitement.php";
 $user = new Utilisateur();
 $admin = new Admin();
 
