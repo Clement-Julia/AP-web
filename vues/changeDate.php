@@ -40,6 +40,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                 <div class="card">
                     <div class="card-header text-center"><h6>Modification des dates du séjour</h6></div>
                 </div>
+                <p class="text-center mt-3">Astuce de l'équipe : <span class="text-muted">"Pour modifier une date, cliquer une première fois sur la date à modifier puis une deuxième fois sur la date choisie"</span></p>
                 <div id="cd-calendar-container" class="card">
                     <!-- Les 3 calendriers -->
 
