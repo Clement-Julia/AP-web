@@ -38,3 +38,70 @@ function coupe_phrase($string, $limit = 100, $fin= '...')
     }
     return rtrim(mb_substr($string, 0, $limit, 'UTF-8')) . $fin;
 }
+
+function error($type){
+    if(!empty($_GET["error"]) && $_GET["error"] == "crash"){
+        ?>
+        <div class="container alert alert-danger mt-3">
+            <p>
+                La fonctionnalité est actuellement indisponible <br>
+                Pour plus d'information contacter le développeur
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["error"]) && $_GET["error"] == "all"){
+        ?>
+        <div class="container alert alert-warning mt-3">
+            <p>
+                Tous les champs doivent être remplis
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["error"]) && $_GET["error"] == "email"){
+        ?>
+        <div class="container alert alert-warning mt-3">
+            <p>
+                Cet email est déjà afilié à un autre compte
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["error"]) && $_GET["error"] == "mdp"){
+        ?>
+        <div class="container alert alert-warning mt-3">
+            <p>
+                Les mots-de-passe ne sont pas identiques
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["success"]) && $_GET["success"] == "info"){
+        ?>
+        <div class="container alert alert-success mt-3">
+            <p>
+                Les informations ont bien été modifiées
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["success"]) && $_GET["success"] == "email"){
+        ?>
+        <div class="container alert alert-success mt-3">
+            <p>
+                L'email a bien été modifié
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["success"]) && $_GET["success"] == "mdp"){
+        ?>
+        <div class="container alert alert-success mt-3">
+            <p>
+                Le mot-de-passe a bien été modifié
+            </p>
+        </div>
+        <?php
+    }
+}

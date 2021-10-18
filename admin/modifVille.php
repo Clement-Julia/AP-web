@@ -1,15 +1,38 @@
 <?php
 require_once "headerAdmin.php";
+
 $region = new Region();
-$infos = $region->getAllregion();
+$infos_region = $region->getAllregion();
+
+$villes = new Ville();
+$infos = $villes->getAllville();
+
+if(!empty($_GET["libelle"])){
+    $verif = 0;
+    foreach($infos as $info){
+        if($info["libelle"] == $_GET["libelle"]){
+            $verif = 1;
+        }
+    }
+    if($verif == 0){
+        $_GET["libelle"] = "error";
+    }
+    if($_GET["libelle"] == "error"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                La ville n'existe pas
+            </p>
+        </div>
+        <?php
+    }   
+}
 ?>
 
 <div class="container">
     <h1 class="mb-3">Modification d'une ville :</h1>
     <?php
-    if(empty($_GET)){
-        $villes = new Ville();
-        $infos = $villes->getAllville();
+    if(empty($_GET) || $_GET["libelle"] == "error"){
         ?>
             <form method="GET" action="modifVille.php">
 
@@ -35,7 +58,6 @@ $infos = $region->getAllregion();
         
         <?php
     }else{
-        $villes = new Ville();
         $info_ville = $villes->getVillebyName($_GET["libelle"]);
         ?>
         <form method="POST" action="../controleurs/modifVille.php?id=<?= $info_ville["idVille"] ?>"  multipart="" enctype="multipart/form-data">

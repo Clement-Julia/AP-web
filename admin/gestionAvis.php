@@ -2,14 +2,35 @@
 require_once "headerAdmin.php";
 
 $avis = new Avis();
-// print_r($alls)
+$hotels = new Hebergement();
+$infos = $hotels->getAllhotel();
+
+if(!empty($_GET["libelle"])){
+    $verif = 0;
+    foreach($infos as $info){
+        if($info["libelle"] == $_GET["libelle"]){
+            $verif = 1;
+        }
+    }
+    if($verif == 0){
+        $_GET["libelle"] = "error";
+    }
+    if($_GET["libelle"] == "error"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                L'hebergement n'existe pas
+            </p>
+        </div>
+        <?php
+    }   
+}
+
 ?>
 
 <div class="container">
     <?php
-    if(empty($_GET)){
-        $hotels = new Hebergement();
-        $infos = $hotels->getAllhotel();
+    if(empty($_GET) || $_GET["libelle"] == "error"){
         ?>
         <h1 class="mb-3">Modification des avis :</h1>        
             <form method="GET" action="gestionAvis.php">

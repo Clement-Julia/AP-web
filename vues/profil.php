@@ -38,11 +38,8 @@ foreach($test as $key => $voyage){
     }
 
     $id = 0;
+    error($_GET);
 }
-?>
-
-<?php
-    // error($_GET);
 ?>
 
 <div class="container rounded bg-white mb-5">
