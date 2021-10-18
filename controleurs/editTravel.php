@@ -26,7 +26,15 @@ if (!empty($_POST['options'])){
                         break;
                     case 4:
                         $Reservation->deleteReservationHebergement($key);
-                        header('location: ../vues/createTravel.php');
+                        $ReservationVoyage = new ReservationVoyage();
+                        $BuildingTravelId = $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']);
+                        $ReservationVoyage = new ReservationVoyage($BuildingTravelId);
+                        if(count($ReservationVoyage->getReservationHebergement()) == 0){
+                            $ReservationVoyage->deleteBuildingWithIdReservationVoyage($BuildingTravelId);
+                            header('location: ../vues/index.php');
+                        } else {
+                            header('location: ../vues/createTravel.php');
+                        }
                         break;
                     default:
                         break;

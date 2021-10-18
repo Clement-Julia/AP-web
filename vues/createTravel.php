@@ -18,6 +18,7 @@ if(!empty($_SESSION['idUtilisateur'])){
         if($BuildingTravelId != null){
             $ReservationVoyage = new ReservationVoyage($BuildingTravelId);
         }
+        
 
         // On récupère l'idRegion soit par le GET si l'utilisateur est en train de renseigner le début de son voyage (pas encore inscrit en BDD) ou bien alors par la BDD
         $idRegion = isset($_GET['idRegion']) ? $_GET['idRegion'] : $ReservationVoyage->getIdRegionForBuildingTravelByUserId($_SESSION['idUtilisateur']);

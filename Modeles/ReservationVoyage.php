@@ -144,6 +144,11 @@ class ReservationVoyage extends Modele {
         $requete->execute([$idUtilisateur, $idUtilisateur, true]);
     }
 
+    public function deleteBuildingWithIdReservationVoyage($idReservationVoyage){
+        $requete = $this->getBdd()->prepare("DELETE FROM reservations_voyages WHERE idReservationVoyage = ? AND is_building = ?");
+        $requete->execute([$idReservationVoyage, true]);
+    }
+
     public function updatePrix($idVoyage){
         $requete = $this->getBdd()->prepare("SELECT SUM(prix) as prix FROM `reservations_hebergement` WHERE idVoyage = ?");
         $requete->execute([$idVoyage]);
