@@ -5,8 +5,8 @@ $avis = new Avis();
 if(!empty($_POST["rating"])){
     
     $avis->addAvis($_POST["rating"], $_POST["commentaire"], $_SESSION["idUtilisateur"], $_GET["id"]);
-    header("location:../vues/");
+    header("location:../vues/avis.php");
 
 }else {
-    header("location:../vues/inscription.php");
+    header("location:../vues/avis.php");
 }
