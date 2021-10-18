@@ -233,6 +233,7 @@ error($_GET);
                                     </div>
                                     <?php
                                     $id++;
+                                    $i++;
                                 }
                                 ?>
                             </div>
@@ -298,12 +299,13 @@ error($_GET);
                                     </div>
                                     <?php
                                     $id++;
+                                    $i++;
                                 }
                                 ?>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
                                 <?php
                                 $i = 1;
                                 $index = 1;
@@ -363,6 +365,7 @@ error($_GET);
                                     </div>
                                     <?php
                                     $id++;
+                                    $i++;
                                 }
                                 ?>
                             </div>
