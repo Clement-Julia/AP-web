@@ -103,6 +103,10 @@ class Ville extends Modele {
         return $this->uuid;
     }
 
+    public function setUuid($uuid){
+        $this->uuid = $uuid;
+    }
+
     public function getRegion($idVille){
         $requete = $this->getBdd()->prepare("SELECT regions.* FROM regions inner join villes using(idRegion) where idVille = ?");
         $requete->execute([$idVille]);
@@ -136,9 +140,9 @@ class Ville extends Modele {
         return $infoVille;
     }
 
-    public function updateVille($libelle, $latitude, $longitude, $idRegion, $description, $id){
-        $requete = $this->getBdd()->prepare("UPDATE villes set libelle = ?, latitude = ?, longitude = ?, idRegion = ?, description = ? where idVille = ?");
-        $requete->execute([$libelle, $latitude, $longitude, $idRegion, $description, $id]);
+    public function updateVille($libelle, $latitude, $longitude, $idRegion, $description, $uuid, $id){
+        $requete = $this->getBdd()->prepare("UPDATE villes set libelle = ?, latitude = ?, longitude = ?, idRegion = ?, description = ?, uuid = ? where idVille = ?");
+        $requete->execute([$libelle, $latitude, $longitude, $idRegion, $description, $uuid, $id]);
     }
 
     public function supVille($libelle){

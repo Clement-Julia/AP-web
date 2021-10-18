@@ -72,7 +72,7 @@ class Option extends Modele {
     }
 
     public function supOptions($idHebergement){
-        $requete = $this->getBdd()->prepare("DELETE FROM options where idHebergement = ?");
+        $requete = $this->getBdd()->prepare("DELETE FROM options_by_hebergement where idHebergement = ?");
         $requete->execute([$idHebergement]);
     }
 

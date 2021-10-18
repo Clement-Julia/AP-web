@@ -38,7 +38,7 @@ $infos = $region->getAllregion();
         $villes = new Ville();
         $info_ville = $villes->getVillebyName($_GET["libelle"]);
         ?>
-        <form method="POST" action="../controleurs/modifVille.php?id=<?= $info_ville["idVille"] ?>&uuid=<?=$info_ville["uuid"]?>">
+        <form method="POST" action="../controleurs/modifVille.php?id=<?= $info_ville["idVille"] ?>"  multipart="" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="libelle">Nom : </label>
                 <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'une ville" required autocomplete="off" value="<?= $info_ville["libelle"] ?>">
