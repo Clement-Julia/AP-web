@@ -44,6 +44,7 @@ if (!empty($_SESSION['idUtilisateur'])){
                     </a>
             
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="historique.php">Historique</a></li>
                         <li><a class="dropdown-item" href="avis.php">Avis</a></li>
                         <li><a class="dropdown-item" href="favoris.php">Favoris</a></li>
                         <li><a class="dropdown-item" href="profil.php">Paramètres</a></li>
