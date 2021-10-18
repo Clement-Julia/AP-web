@@ -98,7 +98,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                     $VilleTemp = new Ville($item->getIdVille());
                     $Image = new Images($VilleTemp->getUuid());
                     ?>
-                        <div class="col-xs-12 col-md-4 mb-3 col-lg-3 d-flex align-items-stretch flex-wrap">
+                        <div class="col-xs-3 col-md-4 mb-3 col-lg-3 d-flex align-items-stretch flex-wrap">
                             <div id="<?= $item->getIdVille()?>" data-id="<?= $item->getIdVille()?>" data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" data-zoom="9" class="card ct-a js-marker">
                                 <img class="img-fluid banniere-ville" alt="100%x280" src="<?=$Image->getBanniere()?>">
                                 <div class="card-body ct-text-ville">
