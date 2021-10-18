@@ -7,7 +7,7 @@ class Avis extends Modele {
     private $note;
     private $commentaire;
     private $idUtilisateur;
-    private $idHotel;
+    private $idHebergement;
 
     public function __construct($idAvis = null){
 
@@ -22,20 +22,20 @@ class Avis extends Modele {
             $this->note = $infoAvis["note"];
             $this->commentaire = $infoAvis["commentaire"];
             $this->idUtilisateur = $infoAvis["idUtilisateur"];
-            $this->idHotel = $infoAvis["idHotel"];
+            $this->idHebergement = $infoAvis["idHebergement"];
 
         }
         
     }
 
-    public function initialiserAvis($idAvis, $date, $note, $commentaire, $idUtilisateur, $idHotel){
+    public function initialiserAvis($idAvis, $date, $note, $commentaire, $idUtilisateur, $idHebergement){
 
         $this->idAvis = $idAvis;
         $this->date = $date;
         $this->note = $note;
         $this->commentaire = $commentaire;
         $this->idUtilisateur = $idUtilisateur;
-        $this->idHotel = $idHotel;
+        $this->idHebergement = $idHebergement;
 
     }
 
@@ -59,8 +59,8 @@ class Avis extends Modele {
         return $this->idUtilisateur;
     }
 
-    public function getIdHotel(){
-        return $this->idHotel;
+    public function getidHebergement(){
+        return $this->idHebergement;
     }
 
     
@@ -112,5 +112,12 @@ class Avis extends Modele {
         $requete->execute([$idHebergement]);
         $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);
         return $infoAvis;
+    }
+
+    public function getAverageAvis($idHebergement){
+        $requete = $this->getBdd()->prepare("SELECT AVG(note) as average FROM `avis` WHERE idHebergement = ?");
+        $requete->execute([$idHebergement]);
+        $infoAvis =  $requete->fetch(PDO::FETCH_ASSOC);
+        return round($infoAvis["average"], 1);
     }
 }

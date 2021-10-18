@@ -32,6 +32,7 @@ if(!empty($_SESSION['idUtilisateur'])){
             $Ville = new Ville($_GET["idVille"]);
             $idRegion = $Ville->getIdRegion();
             $Hebergs = $Ville->getFreeHebergement($dateDebut, $Ville->getIdVille());
+            $avis = new Avis();
 
             // Lorsqu'on modifie manuellement l'idVille dans l'url, si la ville choisi ne correspond pas à la région -> erreur
             if ($BuildingRegionId == $idRegion){
@@ -49,9 +50,10 @@ if(!empty($_SESSION['idUtilisateur'])){
                         <div class="row d-flex">
                         <?php
                         foreach ($Hebergs as $item)
-                        { 
+                        {
                             $HebergementTemp = new Hebergement($item[1]->getIdHebergement());
                             $Image = new Images($HebergementTemp->getUuid());
+                            $average = $avis->getAverageAvis($item[1]->getIdHebergement());
                             if($item[0] != "indisponible" && $item[0] != "disponible 0 nuit"){?>
 
                             <!-- <div class="col-xs-12 col-sm-12 col-md-6 mb-3 col-xl-4"> -->
@@ -63,7 +65,9 @@ if(!empty($_SESSION['idUtilisateur'])){
                                         <p><?= coupe_phrase($item[1]->getDescription())?></p>
                                         <div class="d-flex justify-content-between">
                                             <span>Prix : <?= $item[1]->getPrix()?> €</span>
-                                            <span></span>
+                                            <span>
+                                                <?= $average ?><i class="fas fa-star" style="color: #f2f200;"></i>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="card-footer text-muted"><?=$item[0]?></div>

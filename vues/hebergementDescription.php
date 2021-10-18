@@ -46,13 +46,15 @@ if(!empty($_SESSION['idUtilisateur'])){
                 $Favoris = new Favoris($_SESSION['idHebergement'], $_SESSION['idUtilisateur']);
 
                 $Images = new Images($Hebergement->getUuid());
+
+                $average = $avis->getAverageAvis($_GET["idHebergement"]);
                 ?>
 
                 <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
                     <div id="hd-title-container">
                         <div id="hd-title"><a href="hebergementVille.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
                         <div id="hd-infos">
-                            <div id="hd-rate"></div>
+                            <div id="hd-rate"><?= $average ?><i class="fas fa-star" style="color: #f2f200;"></i></div>
                             <div id="hd-heart"><?=$Favoris->getIdHebergement() == null ? "<i class='far fa-heart'></i>" : "<i class='fas fa-heart'></i>"?></div>
                         </div>
                     </div>

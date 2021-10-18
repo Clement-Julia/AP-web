@@ -1,6 +1,7 @@
 <?php
 require_once "header.php";
 $user = new Utilisateur($_SESSION["idUtilisateur"]);
+$ReservationVoyage = new ReservationVoyage();
 ?>
 
 <?php
@@ -37,7 +38,7 @@ $user = new Utilisateur($_SESSION["idUtilisateur"]);
             </div>
         </div>
 
-        <div class="col-md-5 border-right">
+        <div class="col-md-8 mt-5 border-right">
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                     <div class="p-3 py-5">
@@ -100,20 +101,129 @@ $user = new Utilisateur($_SESSION["idUtilisateur"]);
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                    ...
+                <div class="tab-pane fade mt-3" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <div class="d-flex justify-content-center">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="background text-muted fs-5 nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Réalisé</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="background text-muted fs-5 nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">À venir</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <?php
+                                $i = 0;
+                                foreach ($ReservationVoyage->getReservationHebergement() as $reservationHebergement){
+                                    $infos = $reservationHebergement->getHebergementById($reservationHebergement->getIdHebergement());
+                                    ?>
+                                    <div class="mx-3 my-3 card">
+                                        <div class="card-header"><h6>Etape : <?=$index?></h6></div>
+                                        <div class="card-body">
+                                            <div>Ville : <?=$infos['villeNom']?></div>
+                                            <div>Hébergement : <?=$infos['nomHebergement']?></div>
+                                            <div>Description hébergement : <?=$infos['description']?></div>
+                                            <div>Date d'arrivée : <?=$reservationHebergement->getDateDebut()?></div>
+                                            <div>Date de départ : <?=$reservationHebergement->getDateFin()?></div>
+                                            <div>Code réservation : <?=$reservationHebergement->getCodeReservation()?></div>
+                                            <div>Prix : <?=$reservationHebergement->getPrix()?></div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    $index++;
+                                }
+                                foreach($past as $voyage){
+                                    ?>
+                                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-headingOne">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                Voyage <?= $i ?>
+                                            </button>
+                                            </h2>
+                                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                            ?>
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Accordion Item #1
+                                    </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                    ...
+                <div class="tab-pane fade mt-5" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <?php
+                        $Favoris = new Favoris();
+                        $allFavoris = $Favoris->getAllFavorisForUser($_SESSION['idUtilisateur']);
+                    ?>
+                    <div id="favoris-container" class="my-3">
+                        <?php
+                        if(count($allFavoris) > 0){
+
+                            foreach($allFavoris as $favoris){
+                                $Hebergement = new Hebergement($favoris['idHebergement']);
+                                $Images = new Images($Hebergement->getUuid());
+                                $banniere = $Images->getBanniere();
+                                ?>
+                                <div data-idhebergement="<?=$Hebergement->getIdHebergement()?>" class="card mb-3">
+                                    <div class="row g-0 d-flex align-items-center">
+                                        <div class="col-md-3">
+                                            <img src="<?=$banniere?>" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><?=$Hebergement->getLibelle()?></h5>
+                                                <p class="card-text"><?=$Hebergement->getDescription()?></p>
+                                                <div class="text-muted"><?=$Hebergement->getVilleLibelle($Hebergement->getIdVille())?></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 heart-container my-2">
+                                            <i id="<?=$Hebergement->getIdHebergement()?>" class='fas fa-heart fa-2x'></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                        
+                        <script src="../assets/js/favoris.js"></script>
+                    
+                        <?php
+                        } else {
+                            ?>
+                            <div class="alert alert-warning">Il semblerait que vous n'ayez pas encore trouvé d'hôtel favoris...</div>
+                            <?php
+                        } 
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
             <div class="p-3 py-5">
-                <p>Dernier voyage enregistrer ? Ou fait ? Ou les deux ?</p>
+                <a href="#" class='btn btn-outline-danger'>Désactiver le compte</a>
+                <a href="#" class='btn btn-outline-danger'>Supprimer le compte</a>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 </div>
