@@ -78,7 +78,15 @@ class ReservationVoyage extends Modele {
         return $this->isBuilding;
     }
 
-    public function insertBaseTravel($prix, $codeReservation, $idUtilisateur, $boolean){
+    public function insertBaseTravel($prix, $idUtilisateur, $boolean){
+
+        $code = "qqch";
+        while($code != null){
+            $codeReservation = "VOY" . rand(10000, 99999);
+            $requete = $this->getBdd()->prepare("SELECT code_reservation FROM reservations_hebergement WHERE code_reservation = ?");
+            $requete->execute([$codeReservation]);
+            $code = $requete->fetch(PDO::FETCH_ASSOC);
+        }
 
         $requete = $this->getBdd()->prepare("INSERT INTO reservations_voyages (prix, code_reservation, idUtilisateur, is_building) VALUE (?, ?, ?, ?)");
         $requete->execute([$prix, $codeReservation, $idUtilisateur, $boolean]);
@@ -142,6 +150,11 @@ class ReservationVoyage extends Modele {
     public function deleteBuildingTravelByUserId($idUtilisateur){
         $requete = $this->getBdd()->prepare("DELETE reservations_voyages, reservations_hebergement FROM reservations_voyages INNER JOIN reservations_hebergement ON reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage WHERE (reservations_voyages.idUtilisateur = ? OR reservations_hebergement.idUtilisateur = ?) AND is_building = ?");
         $requete->execute([$idUtilisateur, $idUtilisateur, true]);
+    }
+
+    public function deleteBuildingWithIdReservationVoyage($idReservationVoyage){
+        $requete = $this->getBdd()->prepare("DELETE FROM reservations_voyages WHERE idReservationVoyage = ? AND is_building = ?");
+        $requete->execute([$idReservationVoyage, true]);
     }
 
     public function updatePrix($idVoyage){

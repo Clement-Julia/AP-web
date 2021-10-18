@@ -100,10 +100,18 @@ class ReservationHebergement extends Modele {
         return $this->idHebergement;
     }
 
-    public function insertReservationHebergement(int $idUtilisateur, int $idVoyage, string $code_reservation, $prix, $dateDebut, $dateFin, int $nbJours, int $idHebergement){
+    public function insertReservationHebergement(int $idUtilisateur, int $idVoyage, $prix, $dateDebut, $dateFin, int $nbJours, int $idHebergement){
+
+        $code = "qqch";
+        while($code != null){
+            $codeReservation = "HEB" . rand(10000, 99999);
+            $requete = $this->getBdd()->prepare("SELECT code_reservation FROM reservations_hebergement WHERE code_reservation = ?");
+            $requete->execute([$codeReservation]);
+            $code = $requete->fetch(PDO::FETCH_ASSOC);
+        }
 
         $requete = $this->getBdd()->prepare("INSERT INTO reservations_hebergement (idUtilisateur, idVoyage, code_reservation, prix, dateDebut, dateFin, nbJours, idHebergement) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $requete->execute([$idUtilisateur, $idVoyage, $code_reservation, $prix, $dateDebut, $dateFin, $nbJours, $idHebergement]);
+        $requete->execute([$idUtilisateur, $idVoyage, $codeReservation, $prix, $dateDebut, $dateFin, $nbJours, $idHebergement]);
 
     }
 

@@ -46,13 +46,13 @@ if (!empty($_GET['idHebergement']) &&
                 $idVoyage = $isBuilding['idReservationVoyage'];
                 $Voyage = new ReservationVoyage($idVoyage);
             } else {
-                $idVoyage = $Voyage->insertBaseTravel($prixNuitsHebergement, 'azerty', $_SESSION['idUtilisateur'], true);
+                $idVoyage = $Voyage->insertBaseTravel($prixNuitsHebergement, $_SESSION['idUtilisateur'], true);
             }
             
             $newTravelPrice = $Voyage->getPrix() + $prixNuitsHebergement;
             $Voyage->updateTravelPrice($newTravelPrice, $Voyage->getIdReservationVoyage());
 
-            $Reservation->insertReservationHebergement($_SESSION['idUtilisateur'], $idVoyage, 'azerty', $prixNuitsHebergement, $dateDebut->format('Y-m-d'), $dateFin->format('Y-m-d'), $_GET['nbNuit'], $Hebergement->getIdHebergement());
+            $Reservation->insertReservationHebergement($_SESSION['idUtilisateur'], $idVoyage, $prixNuitsHebergement, $dateDebut->format('Y-m-d'), $dateFin->format('Y-m-d'), $_GET['nbNuit'], $Hebergement->getIdHebergement());
 
             if ($_GET['continue'] == 1){
                 header('location: ../vues/createTravel.php');
