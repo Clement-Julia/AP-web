@@ -41,7 +41,11 @@ $infos_o = $options->getAllOption();
         $hotels = new Hebergement();
         $info_hotel = $hotels->getHotelbyName($_GET["libelle"]);
         ?>
+<<<<<<< HEAD
+        <form method="POST" action="../controleurs/modifHotel.php?id=<?= $info_hotel["idHebergement"]?>&uuid=<?=$info_ville["uuid"]?>">
+=======
         <form method="POST" action="../controleurs/modifHotel.php?id=<?= $info_hotel["idHebergement"] ?>" multipart="" enctype="multipart/form-data">
+>>>>>>> 32f276b82f098c3a7a3cab5151677576d02bb32d
 
             <div class="form-group">
                 <label for="libelle">Nom : </label>
