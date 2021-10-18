@@ -36,10 +36,28 @@ foreach($test as $key => $voyage){
     } else {
         $todayArray[] = $test[$key];
     }
+
+}
+
+if(count($pastArray) > 0){
+    foreach($pastArray as $key => $value){
+        usort($pastArray[$key], "sortFunctionDate");
+    }
+}
+if(count($todayArray) > 0){
+    foreach($todayArray as $key => $value){
+        usort($todayArray[$key], "sortFunctionDate");
+    }
+}
+if(count($nextArray) > 0){
+    foreach($nextArray as $key => $value){
+        usort($nextArray[$key], "sortFunctionDate");
+    }
 }
 
 $id = 0;
 error($_GET);
+
 ?>
 
 <div class="container rounded bg-white">
@@ -83,7 +101,11 @@ error($_GET);
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="text-right">Informations personnelles</h4>
                         </div>
+<<<<<<< HEAD
                         <form method="post" action="../controleurs/updateUser.php?update=info">
+=======
+                        <form method="post" action="../../controleurs/updateUser.php?update=info">
+>>>>>>> cc3027e8afe0c686a95b5a8af35cfc32da6aeb12
                             <div class="row mt-2">
                                 <div class="col-md-6">
                                     <label class="labels">Nom</label>
@@ -112,7 +134,11 @@ error($_GET);
                             <h4 class="text-right">Connexion & Sécurité</h4>
                         </div>
                         <div class="row mt-3">
+<<<<<<< HEAD
                             <form method="post" action="../controleurs/updateUser.php?update=co">
+=======
+                            <form method="post" action="../../controleurs/updateUser.php?update=co">
+>>>>>>> cc3027e8afe0c686a95b5a8af35cfc32da6aeb12
                                 <div class="col-md-12">
                                     <label class="labels">Email</label>
                                     <input type="text" name="email" class="form-control" placeholder="Entrez votre email" value="<?= $user->getEmail() ?>">
