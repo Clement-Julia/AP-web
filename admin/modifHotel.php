@@ -42,6 +42,7 @@ $infos_o = $options->getAllOption();
         $info_hotel = $hotels->getHotelbyName($_GET["libelle"]);
         ?>
         <form method="POST" action="../controleurs/modifHotel.php?id=<?= $info_hotel["idHebergement"] ?>">
+
             <div class="form-group">
                 <label for="libelle">Nom : </label>
                 <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'une ville" required autocomplete="off" value="<?= $info_hotel["libelle"] ?>">
@@ -60,7 +61,7 @@ $infos_o = $options->getAllOption();
                     ?>
                 </select>
             </div>
-
+            
             <div class="form-group">
                 <label for="description">Description : </label>
                 <textarea class="form-control" name="description" id="description" cols="30" rows="10" placeholder="Entrez la description de la ville"><?= $info_hotel["description"] ?></textarea>
