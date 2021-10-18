@@ -74,7 +74,7 @@ if(!empty($_GET["libelle"])){
                         <div class="card-body">
                             <p class="card-text"><?=$all["note"]?><i class="fas fa-star" style="color: #f2f200;"></i></p>
                             <p class="card-text"><?=$all["commentaire"]?></p>
-                            <a href="../controleurs/modifAvis.php?status=delete&admin=true&id=<?= $all["idHebergement"] ?>" class="btn btn-danger">Delete</a>
+                            <a href="../controleurs/modifAvis.php?status=delete&admin=true&id=<?= $all["idAvis"] ?>" class="btn btn-danger">Delete</a>
                         </div>
                     </div>
                     <?php

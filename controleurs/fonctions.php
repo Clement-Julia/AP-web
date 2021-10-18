@@ -22,7 +22,7 @@ function lister_images($repertoire){
                     $fichier_info = finfo_open(FILEINFO_MIME_TYPE);
                     $mime_type = finfo_file($fichier_info, $repertoire."/".$fichier);
                     if(strpos($mime_type, 'image/') === 0){
-                        if($fichier == "banniere.png"){
+                        if($fichier == "banniere.png" || $fichier == "banniere.jpg"){
                             $bool = 1;
                         }else{
                             echo
