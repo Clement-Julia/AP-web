@@ -108,9 +108,9 @@ $bool = 0;
             <div class="form-group">
                 <label>Bannière :</label>
                 <div id="banniere">
-                    <img src="../src/uuid/<?=$info_ville["uuid"]?>/banniere.png" name="banniere" class="img-fluid rounded float-start badgetest <?= (http_response_code(404)) ? "d-none" : "" ?>" style="max-width: 300px">
+                    <img src="../src/uuid/<?=$info_ville["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (http_response_code() == 404) ? "d-none" : "" ?>" style="max-width: 300px">
                     <?php
-                    if(http_response_code(404)){
+                    if(http_response_code() == 404){
                         ?>
                             <span class="text-muted font-italic">L'hebergement n'a pas de bannière...</span>
                         <?php
