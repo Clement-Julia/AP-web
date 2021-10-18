@@ -233,6 +233,7 @@ error($_GET);
                                     </div>
                                     <?php
                                     $id++;
+                                    $index = 1;
                                     $i++;
                                 }
                                 ?>
@@ -300,6 +301,7 @@ error($_GET);
                                     <?php
                                     $id++;
                                     $i++;
+                                    $index = 1;
                                 }
                                 ?>
                             </div>
@@ -366,6 +368,7 @@ error($_GET);
                                     <?php
                                     $id++;
                                     $i++;
+                                    $index = 1;
                                 }
                                 ?>
                             </div>
