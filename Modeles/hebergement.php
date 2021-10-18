@@ -120,11 +120,11 @@ class Hebergement extends Modele {
         $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid]);
     }
 
-    public function updatehotel($libelle, $description, $idVille, $latitude, $longitude, $prix, $television, $lave_linge, $seche_linge, $cuisine, $refrigirateur, $four, $parking_gratuit, $linge_de_maison, $vaiselle, $cafetiere, $climatisation, $id){
+    public function updatehotel($libelle, $description, $idVille, $latitude, $longitude, $prix, $id){
 
-        $requete = $this->getBdd()->prepare("UPDATE hebergement set libelle = ?, description = ?, idVille = ?, latitude = ?, longitude = ?, prix = ?, television = ?, lave_linge = ?, seche_linge = ?, cuisine = ?, refrigirateur = ?, four = ?, parking_gratuit = ?, linge_de_maison = ?, vaiselle = ?, cafetiere = ?, climatisation = ? where idHebergement = ?");
+        $requete = $this->getBdd()->prepare("UPDATE hebergement set libelle = ?, description = ?, idVille = ?, latitude = ?, longitude = ?, prix = ? where idHebergement = ?");
 
-        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $television, $lave_linge, $seche_linge, $cuisine, $refrigirateur, $four, $parking_gratuit, $linge_de_maison, $vaiselle, $cafetiere, $climatisation, $id]);
+        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $id]);
     }
 
     public function supHotel($libelle){
