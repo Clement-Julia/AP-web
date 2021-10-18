@@ -747,3 +747,12 @@
         flex-direction: column;
     }
 }
+
+.border-profile {
+    background-color: transparent !important;
+}
+
+.border-profile.active{
+    border-radius: 0px;
+    border-left: 3px solid #00dcff !important;
+}
