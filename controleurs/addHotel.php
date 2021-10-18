@@ -24,7 +24,7 @@ if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["li
         mkdir("../src/uuid/".$nom_doss, 0700);
 
         if(!empty($_FILES["banniere"])){
-            $nameBan = "bannière";
+            $nameBan = "banniere";
             $target_dir = "../src/uuid/".$nom_doss."/";
             $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
             $target_file = $target_dir . $nameBan . "." . "png";

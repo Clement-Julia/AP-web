@@ -165,12 +165,44 @@ class ReservationVoyage extends Modele {
         $requete = $this->getBdd()->prepare("UPDATE reservations_voyages SET prix = ? WHERE idReservationVoyage = ?");
         $requete->execute([$prixTotal, $idVoyage]);
     }
-
+    
     // Permet lors du paiement d'un voyage en construction, de le valider.
     public function updateIsBuilding(int $idReservationVoyage, bool $boolean){
         if($boolean){ $boolean = 1; } else { $boolean = 0;}
         $requete = $this->getBdd()->prepare("UPDATE reservations_voyages SET is_building = ? WHERE idReservationVoyage = ?");
         $requete->execute([$boolean, $idReservationVoyage]);
+    }
+    
+    public function getVoyageByUser($idUtilisateur){
+        $requete = $this->getBdd()->prepare("SELECT reservations_voyages.idReservationVoyage, villes.libelle as ville, hebergement.libelle as hebergement, hebergement.description as description, reservations_hebergement.code_reservation as code, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours FROM `reservations_voyages` inner join reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage INNER join hebergement USING(idHebergement) INNER join villes USING(idVille) where reservations_hebergement.idUtilisateur = ?");
+        $requete->execute([$idUtilisateur]);
+        $result = $requete->fetchALL(PDO::FETCH_ASSOC);
+
+        $tab = [];
+        $id = $result[0]["idReservationVoyage"];
+        $i = 0;
+        $x = 0;
+        foreach($result as $test){
+
+            if($test["idReservationVoyage"] != $id){
+                $id = $test["idReservationVoyage"];
+                $i++;
+            }
+
+            $tab[$i][$x]["ville"] = $test["ville"];
+            $tab[$i][$x]["hebergement"] = $test["hebergement"];
+            $tab[$i][$x]["code"] = $test["code"];
+            $tab[$i][$x]["is_building"] = $test["is_building"];
+            $tab[$i][$x]["prix"] = $test["prix"];
+            $tab[$i][$x]["dateDebut"] = $test["dateDebut"];
+            $tab[$i][$x]["dateFin"] = $test["dateFin"];
+            $tab[$i][$x]["nbjours"] = $test["nbjours"];
+
+            $x++;
+            
+        }
+
+        return $tab;
     }
 
 }
