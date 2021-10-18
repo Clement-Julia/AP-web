@@ -3,9 +3,6 @@ require_once "header.php";
 $user = new Utilisateur($_SESSION["idUtilisateur"]);
 $test = new ReservationVoyage();
 $test = $test->getVoyageByUser($_SESSION["idUtilisateur"]);
-// echo "<pre>";
-// print_r($test);
-// echo "</pre>";
 
 $pastArray = [];
 $todayArray = [];
@@ -41,18 +38,6 @@ foreach($test as $key => $voyage){
     }
 
 }
-echo "<pre>";
-echo "past array : ";
-print_r($pastArray);
-echo "</pre>";
-echo "<pre>";
-echo "today array : ";
-print_r($todayArray);
-echo "</pre>";
-echo "<pre>";
-echo "next array : ";
-print_r($nextArray);
-echo "</pre>";
 ?>
 
 <?php
