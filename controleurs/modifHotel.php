@@ -25,6 +25,25 @@ if(
         $Hotel = new Hebergement($_GET["id"]);
 
     try{
+        if(is_dir($repertoire)){  
+            if($iteration = opendir($repertoire)){  
+                while(($fichier = readdir($iteration)) !== false){  
+                    if($fichier != "." && $fichier != ".."){
+                        $fichier_info = finfo_open(FILEINFO_MIME_TYPE);
+                        $mime_type = finfo_file($fichier_info, $repertoire."/".$fichier);
+                        if(strpos($mime_type, 'image/') === 0){
+                            echo
+                            '<img src="'.$repertoire."/".$fichier.'"id="img'.$i.'" name="'.$repertoire."/".$fichier.'" class="img-fluid rounded float-start badgetest" style="max-width: 300px">' . 
+                            '<button type="button" id="btn'.$i.'" style="visibility: hidden" onclick="supImage()">
+                                <span class="badge badge-danger rounded position-badge" style="visibility: visible"><i class="fas fa-times fa-lg" aria-hidden=true></i></span>
+                            </button>';
+                        }
+                    }  
+                }  
+                closedir($iteration);  
+            }  
+        } 
+        echo $fichier;exit;
 
         if($Hotel->getUuid() == null){
             $nom_doss = bin2hex(random_bytes(32));
@@ -34,9 +53,11 @@ if(
             mkdir("../src/uuid/".$nom_doss, 0700);
             $Hotel->setUuid($nom_doss);
         }
+
         
+
         if(!empty($_FILES["file"])){
-            for($i=0; $i < count($_FILES["file"]["name"]); $i++){
+            for($i=0; $i < (count($_FILES["file"]["name"])+$i); $i++){
                 $newName = $_POST["libelle"].$i;
                 $target_dir = "../src/uuid/". $Hotel->getUuid() ."/";
                 $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
@@ -53,8 +74,8 @@ if(
 
         header("location:../admin/modifHotel.php");
     }catch(exception $e){
-        header("location:../admin/index.php");
+        header("location:../admin/modifHotel.php?error=crash");
     }
 }else{
-    header("location:../vues/index.php");
+    header("location:../admin/modifHotel.php?error=all");
 }

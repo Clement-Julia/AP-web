@@ -58,7 +58,7 @@ require_once "header.php";
         <div class="form-check">
             <input class="form-check-input <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" type="checkbox" value="" id="invalidCheck" required>
             <label class="form-check-label <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" for="invalidCheck">
-                J'accepte les <a class="alert-link" data-bs-toggle="modal" data-bs-target="#exampleModal">conditions générales</a> d'utilisation
+                J'accepte les <a class="alert-link text-decoration-none" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">conditions générales</a> d'utilisation
             </label>
             <div class="invalid-feedback">
                 Vous devez accepter les conditions générales pour vous inscrire

@@ -17,13 +17,16 @@ if(
         // on vérifie que chaque fichier est bien une image
         foreach($_FILES["file"]["tmp_name"] as $image){
             if(!exif_imagetype($image)){
-                header("location:../admin/modifHotel.php");
+                header("location:../admin/modifVille.php");
             }
         }
 
         $Ville = new Ville($_GET["id"]);
 
     try{
+        $doss = opendir("../src/uuid/".$Ville->getUuid()."/");
+        $fichier = readdir($doss);
+        echo "test : " . $fichier;exit;
 
         if($Ville->getUuid() == null){
             $nom_doss = bin2hex(random_bytes(32));
@@ -48,8 +51,8 @@ if(
         $Ville->updateVille($_POST["libelle"], $_POST["latitude"], $_POST["longitude"], $_POST["region"], $description, $Ville->getUuid(), $_GET["id"]);
         header("location:../admin/modifVille.php");
     }catch(exception $e){
-        header("location:../admin/index.php");
+        header("location:../admin/modifVille.php?error=crash");
     }
 }else{
-    header("location:../vues/index.php");
+    header("location:../admin/modifVille.php?error=all");
 }
