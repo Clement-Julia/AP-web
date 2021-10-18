@@ -722,6 +722,26 @@
     align-items: center;
 }
 
+#hv-container .img-fluid {
+    max-height: 200px;
+}
+#choose-town-bot .img-fluid {
+    max-height: 100px;
+}
+
+
+.border-profile {
+    background-color: transparent !important;
+}
+
+.border-profile.active{
+    border-radius: 0px;
+    border-left: 3px solid #00dcff !important;
+}
+
+
+
+
 
 @media screen and (max-width: 1080px) {
     #create-travel-container{
@@ -740,19 +760,29 @@
         height: auto;
         overflow-y: hidden;
     }
+    #choose-town-bot .row > * {
+        width: 25%;
+    }
   }
 
 @media screen and (max-width: 640px) {
     .ct-resume .d-flex {
         flex-direction: column;
     }
+    #choose-town-bot .row > * {
+        width: 33%;
+    }
 }
 
-.border-profile {
-    background-color: transparent !important;
-}
-
-.border-profile.active{
-    border-radius: 0px;
-    border-left: 3px solid #00dcff !important;
+@media screen and (max-width: 400px) {
+    .ct-resume .d-flex {
+        flex-direction: column;
+    }
+    #choose-town-bot .row{
+        display: flex;
+        justify-content: center;
+    }
+    #choose-town-bot .row > * {
+        width: 50%;
+    }
 }
