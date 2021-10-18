@@ -6,9 +6,9 @@ if(!empty($_POST["nom"]) && !empty($_POST["prenom"]) && !empty($_POST["age"]) &&
     $erreur = $inscription->check_mdp_format($_POST["mdp"]);
     $exist = $inscription->emailExiste($_POST["email"]);
     if(empty($exist)){
-        if(len($erreur) == 0 || $_POST["mdp"] != $_POST["mdpVerif"]){
-            $inscription->inscription($_POST["email"], $_POST["mdp"], $_POST["nom"], $_POST["prenom"], $_POST["age"], 1);
-            header("location:../vues/");
+        if(count($erreur) == 0 || $_POST["mdp"] != $_POST["mdpVerif"]){
+            $inscription->inscription($_POST["email"], $_POST["mdp"], $_POST["nom"], $_POST["prenom"], $_POST["age"], 1, 1);
+            header("location:../admin/addUser");
         }else{
             header("location:../admin/addUser.php?erreur=mdp");
         }
