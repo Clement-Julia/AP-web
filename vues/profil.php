@@ -69,7 +69,7 @@ error($_GET);
                 <span class="font-weight-bold"><?= $user->getPrenom() . " " . $user->getNom() ?></span>
                 <span class="text-black-50"><?= $user->getEmail(); ?></span>
                 <span class="mt-3">
-                    <a href="../controleurs/deconnexion.php" class='btn btn-outline-danger'>Désactiver le compte</a>
+                    <!-- <a href="../controleurs/deconnexion.php" class='btn btn-outline-danger'>Désactiver le compte</a> -->
                     <a href="../controleurs/supUser.php?id=<?= $_SESSION["idUtilisateur"]?>" class='btn btn-outline-danger mt-1'>Supprimer le compte</a>
                 </span>
             </div>
@@ -303,7 +303,7 @@ error($_GET);
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
                                 <?php
                                 $i = 1;
                                 $index = 1;
