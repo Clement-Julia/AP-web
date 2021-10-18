@@ -10,7 +10,7 @@ if(empty($_GET)){
     <div class="container">
         <h1>Liste des utilisateurs :</h1>
         <table class="table table-hover mt-3 align-td">
-        <thead class="bg-primary text-dark">
+        <thead class="bg-primary text-light">
             <tr>
             <th scope="col">Id</th>
             <th scope="col">Email</th>
