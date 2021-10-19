@@ -65,8 +65,8 @@ class Avis extends Modele {
 
     
     public function getAllAvis(){
-        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement inner join avis using(idHebergement)");
-        $requete->execute();
+        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement inner join avis using(idHebergement) where idUtilisateur = ?");
+        $requete->execute([$_SESSION['idUtilisateur']]);
         $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);
         return $infoAvis;
     }
@@ -93,7 +93,8 @@ class Avis extends Modele {
 
     public function updateAvis($note, $commentaire, $idUtilisateur, $idHebergement){
         $requete = $this->getBdd()->prepare("UPDATE avis set date = ?, note = ?, commentaire = ? where idUtilisateur = ? and idHebergement = ?");
-        $requete->execute([$note, $commentaire, $idUtilisateur, $idHebergement]);
+        $date = new DateTime();
+        $requete->execute([$date->format('Y-m-d'), $note, $commentaire, $idUtilisateur, $idHebergement]);
     }
 
     public function supAvis($idAvis){
