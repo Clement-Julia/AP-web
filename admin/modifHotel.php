@@ -156,13 +156,21 @@ if(!empty($_GET["libelle"])){
             <div class="form-group">
                 <label>Bannière :</label>
                 <div id="banniere">
-                    <img src="../src/uuid/<?=$info_hotel["uuid"]?>/banniere.png" name="banniere" class="img-fluid rounded float-start badgetest <?= (http_response_code() == 404) ? "d-none" : "" ?>" style="max-width: 300px">
-                    <?php
-                    if(http_response_code() == 404){
-                        ?>
-                            <span class="text-muted font-italic">L'hebergement n'a pas de bannière...</span>
-                        <?php
-                    }
+                    <?php 
+                        if(!empty($info_hotel["uuid"])){
+                            ?>
+                            <img src="../src/uuid/<?=$info_hotel["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (http_response_code() == 404) ? "d-none" : "" ?>" style="max-width: 300px">
+                            <?php
+                            if(http_response_code() == 404){
+                                ?>
+                                    <span class="text-muted font-italic">L'hebergement n'a pas de bannière...</span>
+                                <?php
+                            }
+                        }else{
+                            ?>
+                                <span class="text-muted font-italic">L'hebergement' n'a pas de bannière...</span>
+                            <?php
+                        }
                     ?>
                 </div>
             </div>
@@ -170,8 +178,14 @@ if(!empty($_GET["libelle"])){
             <div class="form-group">
                 <label>Images :</label>
                 <div id="image">
-                    <?php
+                <?php
+                    if(!empty($info_ville["uuid"])){
                         lister_images("../src/uuid/".$info_hotel["uuid"]);
+                    }else{
+                        ?>
+                            <span class="text-muted font-italic">L'hebergement' n'a pas d'images...</span>
+                        <?php
+                    }
                     ?>
                 </div>
             </div>
