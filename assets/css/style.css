@@ -744,6 +744,7 @@
 
 
 @media screen and (max-width: 1080px) {
+
     #create-travel-container{
         flex-direction: column;
         height: auto;
@@ -763,6 +764,54 @@
     #choose-town-bot .row > * {
         width: 25%;
     }
+
+
+    #hv-container{
+        flex-direction: column;
+        height: auto;
+    }
+    #choose-hebergement, #hv-container #map.map-hebergement{
+        width: 100%!important;
+    }
+    #choose-hebergement .row{
+        max-height: 100%;
+    }
+    #choose-hebergement{
+        height: auto!important;
+        overflow-y: hidden;
+    }
+
+
+    #change-create-travel-container{
+        flex-direction: column;
+        height: auto;
+    }
+    #change-choose-town-bot, #change-create-travel-container #map{
+        width: 100%!important;
+    }
+    #change-choose-town-bot{
+        height: auto!important;
+        overflow-y: hidden;
+    }
+
+
+
+
+    #cd-resume-container{
+        flex-direction: column;
+    }
+    #cd-resume-container div{
+        width: 100%;
+    }
+
+
+    #hd-pictures #container-little-img {
+        display: none;
+    }
+    #hd-pictures #big-img, #hd-pictures #big-img img {
+        width: 100%!important;
+    }
+
   }
 
 @media screen and (max-width: 640px) {

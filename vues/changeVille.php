@@ -45,7 +45,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                 <?php
                 foreach ($Lodgings as $item)
                 { ?>
-                    <div class="col-md-6 mb-3 col-lg-3">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-xl-6 col-xxl-4 d-flex align-items-stretch flex-wrap">
                         <div data-id="<?= $item->getIdVille()?>" data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" data-zoom="9" class="card ct-a js-marker">
                             <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1530735606451-8f5f13955328?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80">
                             <div class="card-body ct-text-ville">

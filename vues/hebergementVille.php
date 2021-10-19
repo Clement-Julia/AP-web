@@ -47,7 +47,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                         <a href="createTravel.php?idRegion=<?=$Ville->getIdRegion()?>" class="btn btn-sm btn-secondary back-button"><</a>
                     </div>
                     <div id="choose-hebergement">
-                        <div class="row d-flex">
+                        <div class="row">
                         <?php
                         foreach ($Hebergs as $item)
                         {
@@ -57,7 +57,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                             if($item[0] != "indisponible" && $item[0] != "disponible 0 nuit"){?>
 
                             <!-- <div class="col-xs-12 col-sm-12 col-md-6 mb-3 col-xl-4"> -->
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-xl-6 col-xxl-4 d-flex align-items-stretch flex-wrap">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-xl-6 col-xxl-4 d-flex align-items-stretch flex-wrap">
                                 <div id="<?= $item[1]->getIdHebergement()?>" data-hebergement="1" data-id="<?= $item[1]->getIdHebergement()?>" data-name="<?= $item[1]->getLibelle()?>" data-lat="<?= $item[1]->getLatitude()?>" data-lng="<?= $item[1]->getLongitude()?>" data-zoom="12" data-price="<?=$item[1]->getPrix()?>" class="card ct-a js-marker">
                                     <img class="img-fluid" alt="100%x280" src="<?=$Image->getBanniere()?>">
                                     <div class="card-body hv-text-hebergement">
