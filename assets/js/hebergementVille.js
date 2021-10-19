@@ -59,7 +59,7 @@ async function getActivitesAndAddMarker(){
 
             Object.entries(item).forEach(([key, value]) => {
               var myIcon = L.icon({
-                iconUrl: '../src/logos/' + item.icon,
+                iconUrl: '../assets/src/logos/' + item.icon,
                 iconSize: [30,30],
                 iconAnchor: [15,33]
               })

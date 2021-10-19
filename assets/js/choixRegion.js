@@ -48,16 +48,16 @@ async function regionDescription(idregion){
 
     switch (idregion){
         case "1":
-            containerDescription.style.backgroundImage = "url('../src/img/bretagne.jpg')";
+            containerDescription.style.backgroundImage = "url('../assets/src/img/bretagne.jpg')";
             break;
         case "2":
-            containerDescription.style.backgroundImage = "url('../src/img/nantes.jpg')";
+            containerDescription.style.backgroundImage = "url('../assets/src/img/nantes.jpg')";
             break;
         case "3":
-            containerDescription.style.backgroundImage = "url('../src/img/centre-val-de-loire.jpg')";
+            containerDescription.style.backgroundImage = "url('../assets/src/img/centre-val-de-loire.jpg')";
             break;
         case "22":
-            containerDescription.style.backgroundImage = "url('../src/img/aquitaine.jpg')";
+            containerDescription.style.backgroundImage = "url('../assets/src/img/aquitaine.jpg')";
             break;
     }
 }

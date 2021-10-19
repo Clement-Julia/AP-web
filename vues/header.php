@@ -18,7 +18,7 @@ if (!empty($_SESSION['idUtilisateur'])){
    crossorigin=""/>
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <script src="https://kit.fontawesome.com/f3f16a7b72.js" crossorigin="anonymous"></script>
-    <link rel="icon" type="image/png" href="../src/img/logo.png">
+    <link rel="icon" type="image/png" href="../assets/src/img/logo.png">
     <title>locallacol</title>
 </head>
 <body>
@@ -29,7 +29,7 @@ if (!empty($_SESSION['idUtilisateur'])){
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav align-items-center">
-                <a class="nav-link active" aria-current="page" href="index.php"><img id="logo" src="../src/img/locallacol.png" alt="Logo du site locallacol"></a>
+                <a class="nav-link active" aria-current="page" href="index.php"><img id="logo" src="../assets/src/img/locallacol.png" alt="Logo du site locallacol"></a>
                 <?=(!empty($_SESSION["idRole"]) && $_SESSION["idRole"] == 2 ? "<a href='../admin' class='nav-link'>Accès admin</a>" : "");?>
                 <?= !empty($_SESSION['idUtilisateur']) && $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']) != null ? "<a href='resumeTravel.php?building=1' class='nav-link'>Continuer ?</a>" : "" ;?>
             </div>
