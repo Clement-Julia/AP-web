@@ -60,6 +60,7 @@ $bool = 0;
         <?php
     }else{
         $info_ville = $villes->getVillebyName($_GET["libelle"]);
+        $_SESSION["supVille"] = $info_ville["idVille"];
         ?>
         <form method="POST" action="../controleurs/modifVille.php?id=<?= $info_ville["idVille"] ?>"  multipart="" enctype="multipart/form-data">
             <div class="form-group">
@@ -157,7 +158,7 @@ $bool = 0;
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
-                                <a href="../controleurs/supVille.php?libelle=<?=$_GET["libelle"]?>"><button type="button" class="btn btn-danger">Oui</button></a>
+                                <a href="../controleurs/supVille.php"><button type="button" class="btn btn-danger">Oui</button></a>
                             </div>
                         </div>
                     </div>
