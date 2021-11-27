@@ -6,7 +6,7 @@ $option = new Option();
 
 
 if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["link"]) && !empty($_FILES["file"]) || empty($_POST["latitude"]) && empty($_POST["longitude"]) && !empty($_POST["link"]) && !empty($_FILES["file"])){
-    try{
+    // try{
 
         if(!empty($_POST["link"])){
             $_POST["latitude"] = substr($_POST["link"], strpos($_POST["link"], "3d") + 2);
@@ -18,14 +18,14 @@ if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["li
 
         //Création du dossier
         $nom_doss = bin2hex(random_bytes(32));
-        while(file_exists("../src/uuid/".$nom_doss) != false){
+        while(file_exists("../assets/src/uuid/".$nom_doss) != false){
             $nom_doss = bin2hex(random_bytes(32));
         }
-        mkdir("../src/uuid/".$nom_doss, 0700);
+        mkdir("../assets/src/uuid/".$nom_doss, 0700);
 
         if(!empty($_FILES["banniere"])){
             $nameBan = "banniere";
-            $target_dir = "../src/uuid/".$nom_doss."/";
+            $target_dir = "../assets/src/uuid/".$nom_doss."/";
             $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
             $target_file = $target_dir . $nameBan . "." . "png";
             $check = getimagesize($_FILES["banniere"]["tmp_name"]);
@@ -35,7 +35,7 @@ if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["li
         //Création du(es) fichier(s)
         for($i=0; $i < count($_FILES["file"]["name"]); $i++){
             $newName = $_POST["libelle"].$i;
-            $target_dir = "../src/uuid/".$nom_doss."/";
+            $target_dir = "../assets/src/uuid/".$nom_doss."/";
             $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
             $target_file = $target_dir . $newName . "." . "png";
             $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
@@ -43,15 +43,15 @@ if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["li
         }
 
 
-        $hotel->addHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["prix"], $nom_doss);
+        $hotel->addHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["prix"], $nom_doss, $_SESSION['idUtilisateur']);
         $info = $hotel->getHotelbyName($_POST["libelle"]);
         $option->addOptions($info["idHebergement"], $_POST["options"]);
     
         header("location:../admin/addHotel.php");
 
-    }catch(exception $e){
-        header("location:../admin/addVille.php?error=crash");
-    }
+    // }catch(exception $e){
+    //     header("location:../admin/addVille.php?error=crash");
+    // }
     
 }else{
     header("location:../admin/addHotel.php?error=all");

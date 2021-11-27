@@ -159,7 +159,7 @@ if(!empty($_GET["libelle"])){
                     <?php 
                         if(!empty($info_hotel["uuid"])){
                             ?>
-                            <img src="../src/uuid/<?=$info_hotel["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (http_response_code() == 404) ? "d-none" : "" ?>" style="max-width: 300px">
+                            <img src="../assets/src/uuid/<?=$info_hotel["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (http_response_code() == 404) ? "d-none" : "" ?>" style="max-width: 300px">
                             <?php
                             if(http_response_code() == 404){
                                 ?>
@@ -180,7 +180,7 @@ if(!empty($_GET["libelle"])){
                 <div id="image">
                 <?php
                     if(!empty($info_ville["uuid"])){
-                        lister_images("../src/uuid/".$info_hotel["uuid"]);
+                        lister_images("../assets/src/uuid/".$info_hotel["uuid"]);
                     }else{
                         ?>
                             <span class="text-muted font-italic">L'hebergement' n'a pas d'images...</span>
