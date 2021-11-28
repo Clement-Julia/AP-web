@@ -1,5 +1,8 @@
 <?php
 require_once "../controleurs/traitement.php";
+$_SESSION["supVille"] = null;
+$_SESSION["supHotel"] = null;
+$_SESSION["supAvis"] = null;
 if($_SESSION["idRole"] != 2){
     header("location:../");
 }
@@ -62,6 +65,19 @@ if($_SESSION["idRole"] != 2){
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="addHotel.php">Ajout</a>
                         <a class="collapse-item" href="modifHotel.php">Modification</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSpe"
+                    aria-expanded="true" aria-controls="collapseSpe">
+                    <i class="far fa-building"></i>
+                    <span>Voyage</span>
+                </a>
+                <div id="collapseSpe" class="collapse" aria-labelledby="headingSpe" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="gestionVoyage.php">Gestion</a>
                     </div>
                 </div>
             </li>

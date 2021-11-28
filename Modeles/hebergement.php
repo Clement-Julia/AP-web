@@ -131,9 +131,9 @@ class Hebergement extends Modele {
         $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid, $id]);
     }
 
-    public function supHotel($libelle){
-        $requete = $this->getBdd()->prepare("DELETE from hebergement where libelle = ?");
-        $requete->execute([$libelle]);
+    public function supHotel($idHebergement){
+        $requete = $this->getBdd()->prepare("DELETE from hebergement where idHebergement = ?");
+        $requete->execute([$idHebergement]);
     }
     
     public function getIdRegionByIdHebergement(int $idHebergement){

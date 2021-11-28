@@ -82,6 +82,8 @@ if(!empty($_GET["libelle"])){
         $infos = $villes->getAllville();
         $hotels = new Hebergement();
         $info_hotel = $hotels->getHotelbyName($_GET["libelle"]);
+
+        $_SESSION["supHotel"] = $info_hotel["idHebergement"];
         ?>
         <form method="POST" action="../controleurs/modifHotel.php?id=<?= $info_hotel["idHebergement"] ?>" multipart="" enctype="multipart/form-data">
 
@@ -205,7 +207,7 @@ if(!empty($_GET["libelle"])){
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
-                                <a href="../controleurs/supHotel.php?libelle=<?=$_GET["libelle"]?>"><button type="button" class="btn btn-danger">Oui</button></a>
+                                <a href="../controleurs/supHotel.php"><button type="button" class="btn btn-danger">Oui</button></a>
                             </div>
                         </div>
                     </div>

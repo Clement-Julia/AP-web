@@ -206,4 +206,16 @@ class ReservationVoyage extends Modele {
         return $tab;
     }
 
+    public function getCountReservationVoyage(){
+        $requete = $this->getBdd()->prepare("SELECT count(distinct idReservationVoyage) as count from reservations_voyages");
+        $requete->execute();
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllReservationVoyage(){
+        $requete = $this->getBdd()->prepare("SELECT * from reservations_voyages");
+        $requete->execute();
+        return $requete->fetchALL(PDO::FETCH_ASSOC);
+    }
+
 }

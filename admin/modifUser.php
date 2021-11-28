@@ -42,7 +42,8 @@ if(empty($_GET)){
     </div>
     <?php
 }else{
-    $user = new Utilisateur($_GET["id"])
+    $user = new Utilisateur($_GET["id"]);
+    $_SESSION["supUser"] = $user->getIdUtilisateur();
     ?>
     <div class="container">
         <h1>Modification d'un utilisateur :</h1>
@@ -83,7 +84,7 @@ if(empty($_GET)){
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
-                                <a href="../controleurs/supUser.php?id=<?=$user->getIdUtilisateur()?>"><button type="button" class="btn btn-danger">Oui</button></a>
+                                <a href="../controleurs/supUser.php"><button type="button" class="btn btn-danger">Oui</button></a>
                             </div>
                         </div>
                     </div>
