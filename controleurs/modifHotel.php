@@ -25,7 +25,7 @@ if(
         $Hotel = new Hebergement($_GET["id"]);
 
     try{
-        $repertoire = "../src/uuid/".$Hotel->getUuid();
+        $repertoire = "../assets/src/uuid/".$Hotel->getUuid();
         if(is_dir($repertoire)){  
             if($iteration = opendir($repertoire)){  
                 while(($fichier = readdir($iteration)) !== false){  
@@ -47,16 +47,16 @@ if(
 
         if($Hotel->getUuid() == null){
             $nom_doss = bin2hex(random_bytes(32));
-            while(file_exists("../src/uuid/".$nom_doss) != false){
+            while(file_exists("../assets/src/uuid/".$nom_doss) != false){
                 $nom_doss = bin2hex(random_bytes(32));
             }
-            mkdir("../src/uuid/".$nom_doss, 0700);
+            mkdir("../assets/src/uuid/".$nom_doss, 0700);
             $Hotel->setUuid($nom_doss);
         }
 
         if(!empty($_FILES["banniere"])){
             $nameBan = "banniere";
-            $target_dir = "../src/uuid/".$Hotel->getUuid()."/";
+            $target_dir = "../assets/src/uuid/".$Hotel->getUuid()."/";
             $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
             $target_file = $target_dir . $nameBan . "." . "png";
             $check = getimagesize($_FILES["banniere"]["tmp_name"]);
@@ -66,7 +66,7 @@ if(
         if(!empty($_FILES["file"])){
             for($i=0; $i < (count($_FILES["file"]["name"])); $i++){
                 $newName = $_POST["libelle"].$pos;
-                $target_dir = "../src/uuid/". $Hotel->getUuid() ."/";
+                $target_dir = "../assets/src/uuid/". $Hotel->getUuid() ."/";
                 $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
                 $target_file = $target_dir . $newName . "." . "png";
                 // $check = getimagesize($_FILES["file"]["tmp_name"][$i]);

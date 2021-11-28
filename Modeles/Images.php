@@ -26,17 +26,17 @@ class Images extends Modele {
     }
 
     public function getAllPathImages(){
-        $path = "../src/uuid/" . $this->uuid . "/" . "*.*";
+        $path = "../assets/src/uuid/" . $this->uuid . "/" . "*.*";
         $filenames = glob($path);
         return $filenames;
     }
 
     public function getBanniere(){
-        $path = "../src/uuid/" . $this->uuid . "/" . "banniere.*";
+        $path = "../assets/src/uuid/" . $this->uuid . "/" . "banniere.*";
         $filename = glob($path);
 
         if(count($filename) == 0){
-            return "../src/img/default-hotel.jpg";
+            return "../assets/src/img/default-hotel.jpg";
         } else {
             return $filename[0];
         }
@@ -51,7 +51,7 @@ class Images extends Modele {
             ob_start(); ?>
             <div id="hd-pictures">
                 <div class="only-one-img">
-                    <img src="../src/img/default-hotel.jpg" alt="photo de l'hébergement" class="img-fluid">
+                    <img src="../assets/src/img/default-hotel.jpg" alt="photo de l'hébergement" class="img-fluid">
                 </div>
             </div>
             <?php

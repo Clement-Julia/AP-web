@@ -39,7 +39,7 @@
     align-items: center;
     height: calc(100vh - var(--navbar-height));
     width: 100vw;
-    background: center / cover no-repeat url("../../src/img/index-background.jpg");
+    background: center / cover no-repeat url("../../assets/src/img/index-background.jpg");
 }
 
 /* ----------------- END INDEX ----------------------- */
@@ -459,7 +459,7 @@
     justify-content: flex-end;
     height: 100%;
     width: 50%;
-    background-image: url("../../src/img/description.jpg");
+    background-image: url("../../assets/src/img/description.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
