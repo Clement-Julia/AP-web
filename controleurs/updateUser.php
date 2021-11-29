@@ -4,15 +4,15 @@ $user = new Utilisateur();
 $admin = new Admin();
 
 if($_GET["update"] == "info"){
-    if(!empty($_POST["nom"]) && !empty($_POST["prenom"]) && !empty($_POST["age"])){
+    if(!empty($_POST["nom"]) && !empty($_POST["prenom"])){
         try{
-            $admin->updateUser_info($_POST["nom"], $_POST["prenom"], $_POST["age"], $_SESSION["idUtilisateur"]);
-            header("location:../../vues/profil.php?success=info");
+            $admin->updateUser_info($_POST["nom"], $_POST["prenom"], $_SESSION["idUtilisateur"]);
+            header("location:../vues/profil.php?success=info");
         }catch(exception $e){
-            header("location:../../vues/profil.php?error=crash");
+            header("location:../vues/profil.php?error=crash");
         }
     }else{
-        header("location:../../vues/profil.php?error=all");
+        header("location:../vues/profil.php?error=all");
     }
 }elseif($_GET["update"] == "co"){
     if(!empty($_POST["email"]) || !empty($_POST["current_mdp"]) && !empty($_POST["new_mdp"]) && !empty($_POST["new_verif"])){
@@ -21,12 +21,12 @@ if($_GET["update"] == "info"){
             if(empty($exist)){
                 try{
                     $admin->updateUser_email($_POST["email"], $_SESSION["idUtilisateur"]);
-                    header("location:../../vues/profil.php?success=email");
+                    header("location:../vues/profil.php?success=email");
                 }catch(exception $e){
-                    header("location:../../vues/profil.php?error=crash");
+                    header("location:../vues/profil.php?error=crash");
                 }
             }else{
-                header("location:../../vues/profil.php?error=email");
+                header("location:../vues/profil.php?error=email");
             }
         }
 
@@ -34,15 +34,15 @@ if($_GET["update"] == "info"){
             if($_POST["new_mdp"] == $_POST["new_verif"]){
                 try{
                     $admin->updateUser_mdp($_POST["new_mdp"], $_SESSION["idUtilisateur"]);
-                    header("location:../../vues/profil.php?success=mdp");
+                    header("location:../vues/profil.php?success=mdp");
                 }catch(exception $e){
-                    header("location:../../vues/profil.php?error=crash");
+                    header("location:../vues/profil.php?error=crash");
                 }
             }else{
-                header("location:../../vues/profil.php?error=mdp");
+                header("location:../vues/profil.php?error=mdp");
             }
         }        
     }else{
-        header("location:../../vues/profil.php?error=all");
+        header("location:../vues/profil.php?error=all");
     }
 }

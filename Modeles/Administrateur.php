@@ -14,9 +14,9 @@ class Admin extends Utilisateur {
         $requete->execute([$email, $nom, $prenom, $age, $id]);
     }
 
-    public function updateUser_info($nom, $prenom, $age, $id){
-        $requete = $this->getBdd()->prepare("UPDATE utilisateurs set nom = ?, prenom = ?, age = ? where idUtilisateur = ?");
-        $requete->execute([$nom, $prenom, $age, $id]);
+    public function updateUser_info($nom, $prenom, $id){
+        $requete = $this->getBdd()->prepare("UPDATE utilisateurs set nom = ?, prenom = ? where idUtilisateur = ?");
+        $requete->execute([$nom, $prenom, $id]);
     }
 
     public function updateUser_email($email, $id){

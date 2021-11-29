@@ -179,43 +179,33 @@ class ReservationVoyage extends Modele {
         $result = $requete->fetchALL(PDO::FETCH_ASSOC);
 
         $tab = [];
-        $id = $result[0]["idReservationVoyage"];
-        $i = 0;
-        $x = 0;
-        foreach($result as $test){
+        if (count($result) > 0){
+            $id = $result[0]["idReservationVoyage"];
+            $i = 0;
+            $x = 0;
+            foreach($result as $test){
 
-            if($test["idReservationVoyage"] != $id){
-                $id = $test["idReservationVoyage"];
-                $i++;
+                if($test["idReservationVoyage"] != $id){
+                    $id = $test["idReservationVoyage"];
+                    $i++;
+                }
+
+                $tab[$i][$x]["ville"] = $test["ville"];
+                $tab[$i][$x]["hebergement"] = $test["hebergement"];
+                $tab[$i][$x]["description"] = $test["description"];
+                $tab[$i][$x]["code"] = $test["code"];
+                $tab[$i][$x]["is_building"] = $test["is_building"];
+                $tab[$i][$x]["prix"] = $test["prix"];
+                $tab[$i][$x]["dateDebut"] = $test["dateDebut"];
+                $tab[$i][$x]["dateFin"] = $test["dateFin"];
+                $tab[$i][$x]["nbjours"] = $test["nbjours"];
+
+                $x++;
+                
             }
-
-            $tab[$i][$x]["ville"] = $test["ville"];
-            $tab[$i][$x]["hebergement"] = $test["hebergement"];
-            $tab[$i][$x]["description"] = $test["description"];
-            $tab[$i][$x]["code"] = $test["code"];
-            $tab[$i][$x]["is_building"] = $test["is_building"];
-            $tab[$i][$x]["prix"] = $test["prix"];
-            $tab[$i][$x]["dateDebut"] = $test["dateDebut"];
-            $tab[$i][$x]["dateFin"] = $test["dateFin"];
-            $tab[$i][$x]["nbjours"] = $test["nbjours"];
-
-            $x++;
-            
         }
 
         return $tab;
-    }
-
-    public function getCountReservationVoyage(){
-        $requete = $this->getBdd()->prepare("SELECT count(distinct idReservationVoyage) as count from reservations_voyages");
-        $requete->execute();
-        return $requete->fetch(PDO::FETCH_ASSOC);
-    }
-
-    public function getAllReservationVoyage(){
-        $requete = $this->getBdd()->prepare("SELECT * from reservations_voyages");
-        $requete->execute();
-        return $requete->fetchALL(PDO::FETCH_ASSOC);
     }
 
 }

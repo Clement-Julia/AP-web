@@ -40,8 +40,8 @@ require_once "headerAdmin.php";
         </div>
 
         <div class="form-group my-3">
-            <label for="age" class="mb-1">Âge : </label>
-            <input type="number" class="form-control <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" name="age" id="age" min=0 placeholder="Entrez votre âge" required>
+            <label for="age" class="mb-1">Date de naissance : </label>
+            <input type="date" class="form-control <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" name="age" id="age" min=0 placeholder="Entrez votre âge" max="<?= $date->format('Y-m-d') ?>" required>
 
             <div class="valid-feedback">Ok !</div>
             <div class="invalid-feedback">Âge incorrect</div>

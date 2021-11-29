@@ -2,7 +2,7 @@
 require_once "header.php";
 $user = new Utilisateur($_SESSION["idUtilisateur"]);
 $test = new ReservationVoyage();
-$test = $test->getVoyageByUser($_SESSION["idUtilisateur"]);
+$test = $test->getVoyageByUser($_SESSION["idUtilisateur"]) ;
 
 $pastArray = [];
 $todayArray = [];
@@ -115,7 +115,7 @@ error($_GET);
                             <div class="row mt-3">
                                 <div class="col-md-12 mt-3">
                                     <label class="labels">Âge</label>
-                                    <input type="number" name="age" class="form-control" placeholder="Entrez votre âge" value="<?= $user->getAge() ?>">
+                                    <input type="number" name="age" class="form-control" placeholder="Entrez votre âge" value="<?= $user->getAgeByDate() ?>" disabled>
                                 </div>
                             </div>
                             <div class="mt-5 text-center">

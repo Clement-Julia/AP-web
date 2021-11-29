@@ -112,9 +112,9 @@ $bool = 0;
                     <?php 
                         if(!empty($info_ville["uuid"])){
                             ?>
-                            <img src="../src/uuid/<?=$info_ville["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (http_response_code() == 404) ? "d-none" : "" ?>" style="max-width: 300px">
+                            <img src="../src/uuid/<?=$info_ville["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (file_exists('../assets/src/uuid/<?=$info_ville["uuid"]?>/banniere')) ? "" : "d-none" ?>" style="max-width: 300px">
                             <?php
-                            if(http_response_code() == 404){
+                            if(!file_exists('../assets/src/uuid/<?=$info_ville["uuid"]?>/banniere')){
                                 ?>
                                     <span class="text-muted font-italic">La ville n'a pas de bannière...</span>
                                 <?php

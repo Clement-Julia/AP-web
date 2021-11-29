@@ -35,6 +35,10 @@ $infos_o = $options->getAllOption();
     <form method="POST" action="../controleurs/addHotel.php" enctype="multipart/form-data">
 
         <div class="form-group">
+            <label for="proprio">Propriétaire : </label>
+            <input type="text" class="form-control" name="proprio" id="proprio" placeholder="Entrez le nom du propriétaire de l'hébergement" required>
+        </div>
+        <div class="form-group">
             <label for="libelle">Nom : </label>
             <input type="text" class="form-control" name="libelle" id="name" placeholder="Entrez le nom d'un hébergement" required>
         </div>

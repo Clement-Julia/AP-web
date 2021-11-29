@@ -8,6 +8,7 @@ class Utilisateur extends Modele {
     private $nom;
     private $prenom;
     private $age;
+    private $birth;
     protected $idRole;
     private $messages = [];
     private $avis = [];
@@ -27,6 +28,7 @@ class Utilisateur extends Modele {
             $this->prenom = $infoUser["prenom"];
             $this->age = $infoUser["age"];
             $this->idRole = $infoUser["idRole"];
+            $this->birth = $infoUser["DoB"];
             
             $requete = $this->getBdd()->prepare("SELECT * FROM messages WHERE expediteur = ? OR destinataire = ? ORDER BY date");
             $requete->execute([$idUtilisateur, $idUtilisateur]);
@@ -45,7 +47,7 @@ class Utilisateur extends Modele {
     public function inscription($email, $mdp, $nom, $prenom, $age, $idRole, $rgpd){
 
         $mdp = password_hash($mdp, PASSWORD_BCRYPT);
-        $requete = $this->getBdd()->prepare("INSERT INTO utilisateurs(email, mdp, nom, prenom, age, idRole, acceptRGPD, dateAcceptRGPD) VALUES (?, ?, ?, ?, ?, ?, ?, now())");
+        $requete = $this->getBdd()->prepare("INSERT INTO utilisateurs(email, mdp, nom, prenom, DoB, idRole, acceptRGPD, dateAcceptRGPD) VALUES (?, ?, ?, ?, ?, ?, ?, now())");
         $requete->execute([$email, $mdp, $nom, $prenom, $age, $idRole, $rgpd]);
 
     }
@@ -145,6 +147,17 @@ class Utilisateur extends Modele {
         return $this->age;
     }
 
+    public function getBirth(){
+        return $this->birth;
+    }
+
+    public function getAgeByDate(){
+        $birth = $this->birth;
+        $now = date("Y-m-d");
+        $diff = date_diff(date_create($birth), date_create($now));
+        return $diff->format('%y');
+    }
+
     public function getIdRole(){
         return $this->idRole;
     }
@@ -158,5 +171,13 @@ class Utilisateur extends Modele {
         $requete->execute();
         $info_nbr = $requete->fetch(PDO::FETCH_ASSOC);
         return $info_nbr;
+    }
+
+    public function get_proprio_by_name($name)
+    {
+        $requete = $this->getBdd()->prepare("SELECT idUtilisateur from utilisateurs where name like '%?%'");
+        $requete->execute([$name]);
+        $info = $requete->fetch(PDO::FETCH_ASSOC);
+        return $info;
     }
 }
