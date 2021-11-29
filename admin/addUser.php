@@ -1,5 +1,7 @@
 <?php
 require_once "headerAdmin.php";
+
+$date = new DateTime();
 ?>
 
 <div class="container mt-3">

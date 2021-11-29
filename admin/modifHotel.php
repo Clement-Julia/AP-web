@@ -160,10 +160,11 @@ if(!empty($_GET["libelle"])){
                 <div id="banniere">
                     <?php 
                         if(!empty($info_hotel["uuid"])){
+                            $filename = "../assets/src/uuid/" . $info_hotel["uuid"] . "/banniere.*";
                             ?>
-                            <img src="../assets/src/uuid/<?=$info_hotel["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (file_exists('../assets/src/uuid/<?=$info_hotel["uuid"]?>/banniere')) ? "" : "d-none" ?>" style="max-width: 300px">
+                            <img src="../assets/src/uuid/<?=$info_hotel["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
                             <?php
-                            if(!file_exists('../assets/src/uuid/<?=$info_hotel["uuid"]?>/banniere')){
+                            if(empty(glob($filename))){
                                 ?>
                                     <span class="text-muted font-italic">L'hebergement n'a pas de bannière...</span>
                                 <?php

@@ -6,6 +6,9 @@ $infos_v = $villes->getAllville();
 
 $options = new Option();
 $infos_o = $options->getAllOption();
+
+$users = new Utilisateur();
+$info_u = $users->getAllUsers();
 ?>
 
 <?php
@@ -36,8 +39,19 @@ $infos_o = $options->getAllOption();
 
         <div class="form-group">
             <label for="proprio">Propriétaire : </label>
-            <input type="text" class="form-control" name="proprio" id="proprio" placeholder="Entrez le nom du propriétaire de l'hébergement" required>
+            <input class="form-control" list="datalistOptions" name="proprio" id="exampleDataList" placeholder="Entrez le nom du propriétaire de l'hébergement" required autocomplete="off" required>
+            <datalist id="datalistOptions">
+                <?php
+                    foreach($info_u as $info){
+                        ?>
+                            <option value="<?= $info["idUtilisateur"] ?>"><?= $info["nom"] . " " . $info["prenom"] ?></option>
+                        <?php
+                    }
+                ?>
+            </datalist>
         </div>
+
+
         <div class="form-group">
             <label for="libelle">Nom : </label>
             <input type="text" class="form-control" name="libelle" id="name" placeholder="Entrez le nom d'un hébergement" required>

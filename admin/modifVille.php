@@ -111,10 +111,11 @@ $bool = 0;
                 <div id="banniere">
                     <?php 
                         if(!empty($info_ville["uuid"])){
+                            $filename = "../assets/src/uuid/" . $info_ville["uuid"] . "/banniere.*";
                             ?>
-                            <img src="../src/uuid/<?=$info_ville["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (file_exists('../assets/src/uuid/<?=$info_ville["uuid"]?>/banniere')) ? "" : "d-none" ?>" style="max-width: 300px">
+                            <img src="../src/uuid/<?=$info_ville["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
                             <?php
-                            if(!file_exists('../assets/src/uuid/<?=$info_ville["uuid"]?>/banniere')){
+                            if((empty(glob($filename)))){
                                 ?>
                                     <span class="text-muted font-italic">La ville n'a pas de bannière...</span>
                                 <?php

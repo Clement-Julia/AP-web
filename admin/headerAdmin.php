@@ -69,7 +69,7 @@ if($_SESSION["idRole"] != 2){
                 </div>
             </li>
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSpe"
                     aria-expanded="true" aria-controls="collapseSpe">
                     <i class="far fa-building"></i>
@@ -80,7 +80,7 @@ if($_SESSION["idRole"] != 2){
                         <a class="collapse-item" href="gestionVoyage.php">Gestion</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <hr class="sidebar-divider">
 

@@ -43,15 +43,14 @@ if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["li
             move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
         }
 
-        $proprio = $user->get_proprio_by_name($_POST['proprio']);
-        $hotel->addHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["prix"], $nom_doss, $proprio);
+        $hotel->addHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["prix"], $nom_doss, $_POST["proprio"]);
         $info = $hotel->getHotelbyName($_POST["libelle"]);
         $option->addOptions($info["idHebergement"], $_POST["options"]);
     
         header("location:../admin/addHotel.php");
 
     }catch(exception $e){
-        header("location:../admin/addVille.php?error=crash");
+        header("location:../admin/addHotel.php?error=crash");
     }
     
 }else{

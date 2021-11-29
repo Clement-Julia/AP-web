@@ -65,21 +65,21 @@ class Avis extends Modele {
 
     
     public function getAllAvis(){
-        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement inner join avis using(idHebergement) where idUtilisateur = ?");
+        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement inner join avis using(idHebergement) where avis.idUtilisateur = ?");
         $requete->execute([$_SESSION['idUtilisateur']]);
         $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);
         return $infoAvis;
     }
 
     public function getAllAvisByHebergement($libelle){
-        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement inner join avis using(idHebergement) inner join utilisateurs using(idUtilisateur) where hebergement.libelle = ?");
+        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement inner join avis using(idHebergement) inner join utilisateurs on utilisateurs.idUtilisateur = avis.idUtilisateur where hebergement.libelle = ?");
         $requete->execute([$libelle]);
         $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);
         return $infoAvis;
     }
 
     public function getHebergementbynonAvis($idUtilisateur){
-        $requete = $this->getBdd()->prepare("SELECT DISTINCT hebergement.* FROM hebergement inner join reservations_hebergement using(idHebergement) inner join utilisateurs using(idUtilisateur) LEFT join avis using(idHebergement) where utilisateurs.idUtilisateur = ? and avis.idUtilisateur is null and dateFin < ? ");
+        $requete = $this->getBdd()->prepare("SELECT DISTINCT hebergement.* FROM hebergement inner join reservations_hebergement using(idHebergement) inner join utilisateurs on utilisateurs.idUtilisateur = reservations_hebergement.idUtilisateur LEFT join avis using(idHebergement) where utilisateurs.idUtilisateur = ? and avis.idUtilisateur is null and dateFin < ? ");
         $date = new DateTime();
         $requete->execute([$idUtilisateur, $date->format(('Y-m-d'))]);
         $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);

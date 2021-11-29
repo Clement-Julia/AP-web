@@ -173,11 +173,10 @@ class Utilisateur extends Modele {
         return $info_nbr;
     }
 
-    public function get_proprio_by_name($name)
-    {
-        $requete = $this->getBdd()->prepare("SELECT idUtilisateur from utilisateurs where name like '%?%'");
-        $requete->execute([$name]);
-        $info = $requete->fetch(PDO::FETCH_ASSOC);
+    public function getAllUsers(){
+        $requete = $this->getBdd()->prepare("SELECT * from utilisateurs");
+        $requete->execute();
+        $info = $requete->fetchALL(PDO::FETCH_ASSOC);
         return $info;
     }
 }
