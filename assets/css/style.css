@@ -22,12 +22,12 @@
     background-color: rgba(205, 255, 251, 0.548)!important;
     z-index: 1000000;
 }
-#navbar *{
-    /* height: var(--navbar-height); */
-}
-#logo{
-   /* width: 10em; */
-}
+/* #navbar *{
+    height: var(--navbar-height);
+} */
+/* #logo{
+   width: 10em;
+} */
 
 /* ----------------- END NAVBAR ----------------------- */
 
