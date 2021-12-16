@@ -114,3 +114,9 @@ function error($type){
         <?php
     }
 }
+
+function timestampAddDay($nbJours = 1){
+    $plusUnJour = new DateTime();
+    $plusUnJour->add(new DateInterval('P'. $nbJours .'D'));
+    return $plusUnJour->getTimestamp();
+}

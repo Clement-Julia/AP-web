@@ -179,4 +179,39 @@ class Utilisateur extends Modele {
         $info = $requete->fetchALL(PDO::FETCH_ASSOC);
         return $info;
     }
+
+    public function acceptCookies(){
+        setcookie("accept_cookies", 1, timestampAddDay(1), "/");
+    }
+
+    public function setConnectionCookies(){
+        $codeCookies = "qqch";
+        while($codeCookies != null){
+            $codeCookies = $this->idUtilisateur . "-" . bin2hex(random_bytes(50));
+            $requete = $this->getBdd()->prepare("SELECT token FROM utilisateurs WHERE token = ?");
+            $requete->execute([$codeCookies]);
+            $codeCookies = $requete->fetch(PDO::FETCH_ASSOC);
+        }
+        try{
+            $requete = $this->getBdd()->prepare("INSERT INTO utilisateurs (token) VALUES(?) WHERE idUtilisateurs = ?");
+            $requete->execute([$codeCookies, $this->idUtilisateur]);
+        } catch (Exception $e){
+            return false;
+        }
+        setcookie("conection_cookies", 1, timestampAddDay(30), "/");
+        return true;
+    }
+
+    public function getUserByConnectionCookies($COOKIES){
+
+        $cookiesExploded = explode('-', $COOKIES);
+        $idUser = $cookiesExploded[0];
+        $token = $cookiesExploded[1];
+
+        $requete = $this->getBdd()->prepare("SELECT * FROM utilisateurs WHERE idUtilisateur = ? AND token = ?");
+        $requete->execute([$idUser, $token]);
+        return $requete->fetch(PDO::FETCH_ASSOC);
+
+    }
+
 }

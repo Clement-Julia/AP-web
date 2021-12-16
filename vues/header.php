@@ -22,6 +22,20 @@ if (!empty($_SESSION['idUtilisateur'])){
     <title>locallacol</title>
 </head>
 <body>
+
+<?php
+if(empty($_COOKIE["accept_cookies"])){
+    require_once "modalsCookies.php";
+}
+if(!empty($_COOKIE["conection_cookies"])){
+    $Utilisateur = new Utilisateur();
+    $user = $Utilisateur->getUserByConnectionCookies($_COOKIE["conection_cookies"]);
+    if($user["idUtilisateur"] != null){
+        $connexion->connexion($user["email"], $user["mdp"]);
+    }
+}
+?>
+
     <!-- on refait toutes la navbar -->
 
 
