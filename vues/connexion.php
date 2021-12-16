@@ -23,7 +23,7 @@ require_once "header.php";
         </div>
 
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <input class="form-check-input" type="checkbox" value="" name="connection_cookies" id="invalidCheck" required>
             <label class="form-check-label" for="invalidCheck">
                 Rester connecter
             </label>
