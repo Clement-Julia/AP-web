@@ -835,3 +835,25 @@
         width: 50%;
     }
 }
+
+
+/* Modal cookie */
+
+.background-cookie{
+    background-image: url(../src/cookie/feu.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    border-bottom: none;
+}
+
+.border-b-none{
+    border-bottom: none;
+    border-top: none;
+}
+
+.border-cookie{
+    border-color: rgb(188 202 215) !important;
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+}

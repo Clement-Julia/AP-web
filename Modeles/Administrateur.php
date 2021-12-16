@@ -31,7 +31,7 @@ class Admin extends Utilisateur {
     }
 
     public function supUser($id){
-        $requete = $this->getBdd()->prepare("DELETE from utilisateurs where idUtilisateur = ?");
+        $requete = $this->getBdd()->prepare("call sup_user(?)");
         $requete->execute([$id]);
     }
 }

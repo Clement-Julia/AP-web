@@ -155,7 +155,7 @@ class Api extends Modele {
             $requete->execute([$idHebergement, $idUtilisateur]);
             $this->sendJSON(['status' => 'added']);
         } else {
-            $requete = $this->getBdd()->prepare("DELETE FROM favoris WHERE idHebergement = ? AND idUtilisateur = ?");
+            $requete = $this->getBdd()->prepare("call sup_favoris(?,?)");
             $requete->execute([$idHebergement, $idUtilisateur]);
             $this->sendJSON(['status' => 'deleted']);
         }

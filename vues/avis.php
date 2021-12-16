@@ -35,7 +35,7 @@ $alls = $avis->getAllAvis();
                                 </div>
                             </button>
                         </div>
-                        <form method="post" action="../controleurs/addAvis.php?id=<?=$lua["idHebergement"]?>">
+                        <form method="post" action="../controleurs/addAvis.php?id=<?=$lua["idAvis"]?>">
                             <div class="modal fade" id="exampleModal<?=$i?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
@@ -98,7 +98,7 @@ $alls = $avis->getAllAvis();
                                 </div>
                             </button>
                         </div>
-                        <form method="post" action="../controleurs/modifAvis.php?id=<?=$all["idHebergement"]?>">
+                        <form method="post" action="../controleurs/modifAvis.php?id=<?=$all["idAvis"]?>">
                             <div class="modal fade" id="exampleModal<?=$i?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">

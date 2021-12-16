@@ -22,6 +22,14 @@ require_once "header.php";
             <div class="invalid-feedback">Mot-de-passe invalide</div>
         </div>
 
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-check-label" for="invalidCheck">
+                Rester connecter
+            </label>
+
+        </div>
+
         <div class="form-group text-center mt-3">
             <button type="submit" class="btn btn-primary return" name="submit" value="ON">Connexion</button>
             <a href="index.php" class="btn btn-warning return">Retour</a>

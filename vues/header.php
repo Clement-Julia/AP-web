@@ -56,3 +56,7 @@ if (!empty($_SESSION['idUtilisateur'])){
         ?>
     </div>
 </nav>
+
+<?php 
+require_once("modalsCookies.php");
+?>

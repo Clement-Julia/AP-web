@@ -145,9 +145,9 @@ class Ville extends Modele {
         $requete->execute([$libelle, $latitude, $longitude, $idRegion, $description, $uuid, $id]);
     }
 
-    public function supVille($libelle, $uuid){
-        $requete = $this->getBdd()->prepare("DELETE from villes where libelle = ?");
-        $requete->execute([$libelle]);
+    public function supVille($id, $uuid){
+        $requete = $this->getBdd()->prepare("call sup_ville(?)");
+        $requete->execute([$id]);
         unlink("../src/uuid/".$uuid);
     }
     

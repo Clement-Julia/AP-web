@@ -98,7 +98,7 @@ class Avis extends Modele {
     }
 
     public function supAvis($idAvis){
-        $requete = $this->getBdd()->prepare("DELETE FROM avis where idAvis = ?");
+        $requete = $this->getBdd()->prepare("CALL sup_avis(?)");
         $requete->execute([$idAvis]);
     }
 

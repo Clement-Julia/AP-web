@@ -132,7 +132,7 @@ class Hebergement extends Modele {
     }
 
     public function supHotel($idHebergement){
-        $requete = $this->getBdd()->prepare("DELETE from hebergement where idHebergement = ?");
+        $requete = $this->getBdd()->prepare("call sup_hebergement(?)");
         $requete->execute([$idHebergement]);
     }
     
