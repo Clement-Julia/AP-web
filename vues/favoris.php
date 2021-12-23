@@ -6,6 +6,7 @@ if(!empty($_SESSION['idUtilisateur'])){
     $Favoris = new Favoris();
     $allFavoris = $Favoris->getAllFavorisForUser($_SESSION['idUtilisateur']);
     ?>
+<div id="main-favoris-container">
     <div id="favoris-container" class="my-3">
 
     <?php
@@ -51,6 +52,8 @@ if(!empty($_SESSION['idUtilisateur'])){
 } else { ?>
     <div class="alert alert-warning">Vous devez être connecté pour accéder à ce contenu</div>
 <?php } ?>
+
+</div>
 
 <?php
 require_once "footer.php";

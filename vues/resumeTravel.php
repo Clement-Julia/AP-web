@@ -74,8 +74,8 @@ if(!empty($_SESSION['idUtilisateur'])){
                     <form action="../controleurs/deleteBuildingTravel.php" method="POST">
                         <div class="card mb-3">
                             <div class="card-body d-flex justify-content-center">
-                                <button class="mx-2 btn btn-success btn-sm">Continuer ce voyage</button>
-                                <button name="cancel" value="1" class="mx-2 btn btn-secondary btn-sm">Supprimer ce voyage</button>
+                                <button class="mx-2 raise">Continuer ce voyage</button>
+                                <button name="cancel" value="1" class="mx-2 close2">Supprimer ce voyage</button>
                             </div>
                         </div>
                     </form>
@@ -102,7 +102,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                         <div class="card my-3">
                             <div class="card-body d-flex justify-content-center">
                                 <button name="validate" value="1" class="mx-2 btn btn-success btn-sm">Valider et Payer</button>
-                                <button name="cancel" value="1" class="mx-2 btn btn-secondary btn-sm">Supprimer ce voyage</button>
+                                <button name="cancel" value="1" class="mx-2 btn btn-danger btn-sm">Supprimer ce voyage</button>
                                 <button class="mx-2 btn btn-primary btn-sm">Retour</button>
                             </div>
                         </div>

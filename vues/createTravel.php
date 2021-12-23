@@ -86,8 +86,9 @@ if(!empty($_SESSION['idUtilisateur'])){
                     </div>
 
     <!-- ------------------------------------------- -->
-                    <div id="total-prix-container"><?= $BuildingTravelId != null ? "Le prix total de votre voyage est de : " . $ReservationVoyage->getPrix() . " €" : "" ?></div>
-                    <a href="resumeTravel.php" class="btn btn-sm btn-success">Valider voyage</a>
+                    <div id="total-prix-container"><?= $BuildingTravelId != null ? "Le prix total de votre voyage est de : " . $ReservationVoyage->getPrix() . " €" : "" ?>
+                        <a href="resumeTravel.php" class="btn btn-sm btn-success ms-5">Valider voyage</a>
+                    </div>
     <!-- ------------------------------------------- -->
 
                     
@@ -110,6 +111,8 @@ if(!empty($_SESSION['idUtilisateur'])){
                     ?>
                     </div>
                 </div>
+
+
             </div>
             <div data-lat="<?=$Lodging->getLatitude();?>" data-lng="<?=$Lodging->getLongitude();?>" data-zoom="8" class="map" id="map"></div>
         </div>

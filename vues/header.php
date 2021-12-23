@@ -48,25 +48,25 @@ if(!empty($_COOKIE["connection_cookies"])){
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav align-items-center">
                 <a class="nav-link active" aria-current="page" href="index.php"><img id="logo" src="../assets/src/img/locallacol.png" alt="Logo du site locallacol"></a>
-                <?=(!empty($_SESSION["idRole"]) && $_SESSION["idRole"] == 2 ? "<a href='../admin' class='nav-link'>Accès admin</a>" : "");?>
-                <?= !empty($_SESSION['idUtilisateur']) && $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']) != null ? "<a href='resumeTravel.php?building=1' class='nav-link'>Continuer ?</a>" : "" ;?>
+                <?=(!empty($_SESSION["idRole"]) && $_SESSION["idRole"] == 2 ? "<a href='../admin' class='nav-link white'>Accès admin</a>" : "");?>
+                <?= !empty($_SESSION['idUtilisateur']) && $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']) != null ? "<a href='resumeTravel.php?building=1' class='nav-link white'>Continuer ?</a>" : "" ;?>
             </div>
         </div>
 
-        <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' class='btn-group btn btn-outline-primary btn-sm align-self-center ml-auto'>Inscription</a><a href='connexion.php' class='btn btn-outline-success btn-sm align-self-center'>Connexion</a>");?>
+        <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' class='btn-group btn btn-primary btn-sm align-self-center ml-auto'>Inscription</a><a href='connexion.php' class='btn btn-success btn-sm align-self-center'>Connexion</a>");?>
         <?php if(!empty($_SESSION["idUtilisateur"])){
                 ?>
                 <div class="dropdown me-3">
-                    <a class="btn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="btn dropdown-toggle white" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <?= $_SESSION["prenom"] ." " . $_SESSION["nom"]?>
                     </a>
             
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <!-- <li><a class="dropdown-item" href="historique.php">Historique</a></li> -->
-                        <li><a class="dropdown-item" href="avis.php">Avis</a></li>
-                        <li><a class="dropdown-item" href="favoris.php">Favoris</a></li>
-                        <li><a class="dropdown-item" href="profil.php">Paramètres</a></li>
-                        <li><a class="dropdown-item li" href="../controleurs/deconnexion.php">Déconnexion</a></li>
+                        <li><a class="headerli dropdown-item" href="avis.php">Avis</a></li>
+                        <li><a class="headerli dropdown-item" href="favoris.php">Favoris</a></li>
+                        <li><a class="headerli dropdown-item" href="profil.php">Paramètres</a></li>
+                        <li><a class="headerli dropdown-item li" href="../controleurs/deconnexion.php">Déconnexion</a></li>
                     </ul>
                 </div>
                 <?php
