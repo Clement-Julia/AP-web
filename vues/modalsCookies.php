@@ -16,7 +16,10 @@
         <div class="modal-footer border-b-none p-0">
             <div class="btn-group m-0" role="group" aria-label="Basic example" style="width: 100%">
                 <button type="button" class="btn btn-outline-secondary btn-lg border-cookie" data-bs-target="#information" data-bs-toggle="modal" data-bs-dismiss="modal">Plus d'infos</button>
-                <button type="button" class="btn btn-outline-warning btn-lg border-cookie">Accepter</button>
+                <form action="../controleurs/connectionCookies.php" method="post">
+                    <input type="hidden" value="1" name="accept-cookies-modal">
+                    <button type="submit" class="btn btn-outline-warning btn-lg border-cookie">Accepter</button>
+                </form>
             </div>
         </div>
         </div>
@@ -35,7 +38,10 @@
         <div class="modal-footer border-b-none p-0">
             <div class="btn-group m-0" role="group" aria-label="Basic example" style="width: 100%">
                 <button type="button" class="btn btn-outline-secondary btn-lg border-cookie" data-bs-dismiss="modal">Refuser</button>
-                <button type="button" class="btn btn-outline-warning btn-lg border-cookie">Accepter</button>
+                <form action="../controleurs/connectionCookies.php" method="post">
+                    <input type="hidden" value="1" name="accept-cookies-modal">
+                    <button type="submit" class="btn btn-outline-warning btn-lg border-cookie">Accepter</button>
+                </form>
             </div>
         </div>
         </div>

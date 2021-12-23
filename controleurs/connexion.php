@@ -9,6 +9,9 @@ if(!empty($_POST["email"]) && !empty($_POST["mdp"])){
         if($return["success"] === false){
             header("location:../vues/connexion.php?erreur=mdp");
         }else{
+            if(!empty($_POST["connection_cookies"]) && $_POST["connection_cookies"] == 1){
+                $connexion->setConnectionCookies();
+            }
             header("location:../vues/index.php");
         }
     }else{

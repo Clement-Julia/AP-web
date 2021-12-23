@@ -27,11 +27,15 @@ if (!empty($_SESSION['idUtilisateur'])){
 if(empty($_COOKIE["accept_cookies"])){
     require_once "modalsCookies.php";
 }
-if(!empty($_COOKIE["conection_cookies"])){
+if(!empty($_COOKIE["connection_cookies"])){
     $Utilisateur = new Utilisateur();
     $user = $Utilisateur->getUserByConnectionCookies($_COOKIE["conection_cookies"]);
     if($user["idUtilisateur"] != null){
-        $connexion->connexion($user["email"], $user["mdp"]);
+        $_SESSION["idUtilisateur"] = $user["idUtilisateur"];
+        $_SESSION["nom"] = $user["nom"];
+        $_SESSION["prenom"] = $user["prenom"];
+        $_SESSION["idRole"] = $user["idRole"];
+        $_SESSION["email"] = $user["email"];
     }
 }
 ?>
@@ -70,7 +74,3 @@ if(!empty($_COOKIE["conection_cookies"])){
         ?>
     </div>
 </nav>
-
-<?php 
-require_once("modalsCookies.php");
-?>

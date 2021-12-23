@@ -10,6 +10,7 @@ class Utilisateur extends Modele {
     private $age;
     private $birth;
     protected $idRole;
+    private $token;
     private $messages = [];
     private $avis = [];
 
@@ -29,6 +30,7 @@ class Utilisateur extends Modele {
             $this->age = $infoUser["age"];
             $this->idRole = $infoUser["idRole"];
             $this->birth = $infoUser["DoB"];
+            $this->token = $infoUser["token"];
             
             $requete = $this->getBdd()->prepare("SELECT * FROM messages WHERE expediteur = ? OR destinataire = ? ORDER BY date");
             $requete->execute([$idUtilisateur, $idUtilisateur]);
