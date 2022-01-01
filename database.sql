@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 23 déc. 2021 à 18:29
--- Version du serveur :  5.7.31
+-- Hôte : localhost
+-- Généré le : sam. 01 jan. 2022 à 21:00
+-- Version du serveur : 5.7.31
 -- Version de PHP : 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -25,74 +25,63 @@ DELIMITER $$
 --
 -- Procédures
 --
-DROP PROCEDURE IF EXISTS `get_infos_about_to_all`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_infos_about_to_all` (IN `p_id_hebergement` INT)  BEGIN
-	SELECT SUM(nbJours) as nuitees, hebergement.dateEnregistrement, COUNT(*) as nbReservation FROM reservations_hebergement 
-                INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage 
-                INNER JOIN hebergement USING(idHebergement) 
-                WHERE idHebergement = p_id_hebergement  
-                AND is_building = 0 
-                AND dateFin BETWEEN (SELECT dateEnregistrement FROM hebergement WHERE idHebergement = p_id_hebergement) AND NOW();
-  END$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `est_reserver` (`p_idHebergement` INT, OUT `nbr` INT)  BEGIN
+	SELECT COUNT(*) into nbr
+    FROM reservations_voyages
+    INNER JOIN reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage
+    where reservations_voyages.is_building = 1 and reservations_hebergement.idHebergement = p_idHebergement;
+    
+    IF nbr > 1 THEN
+    	set nbr = 1;
+    END IF;
+END$$
 
-DROP PROCEDURE IF EXISTS `get_infos_about_to_year`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_infos_about_to_year` (IN `p_id_hebergement` INT, IN `p_date` DATETIME)  BEGIN
-	SELECT SUM(nbJours) as nuitees, hebergement.dateEnregistrement, COUNT(*) as nbReservation FROM reservations_hebergement 
-                INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage 
-                INNER JOIN hebergement USING(idHebergement) 
-                where idHebergement = p_id_hebergement  
-                AND is_building = 0 
-                AND dateFin BETWEEN 
-                (CASE 
-                WHEN (SELECT dateEnregistrement FROM hebergement WHERE idHebergement = p_id_hebergement) < p_date THEN p_date 
-                ELSE (SELECT dateEnregistrement FROM hebergement WHERE idHebergement = p_id_hebergement) 
-                END)
-                AND NOW();
-       END$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_avis` (IN `p_idAvis` INT)  BEGIN
+	DELETE
+    FROM avis
+    where idAvis = p_idAvis;
+END$$
 
-DROP PROCEDURE IF EXISTS `obtenir_infos_gains`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenir_infos_gains` (IN `p_id_hebergement` INT, IN `p_1_mois` DATETIME, IN `p_3_mois` DATETIME, IN `p_6_mois` DATETIME, IN `p_1_an` DATETIME)  BEGIN
-	SELECT 
-    	( 
-         SELECT SUM(reservations_hebergement.prix) FROM reservations_hebergement
-         INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage 
-         WHERE reservations_hebergement.idHebergement = hebergement.idHebergement 
-         AND is_building = 0 
-         AND dateDebut > p_1_mois 
-         AND dateFin < NOW() 
-        ) as gainsDuMois,
-        ( 
-         SELECT SUM(reservations_hebergement.prix) FROM reservations_hebergement
-         INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage 
-         WHERE reservations_hebergement.idHebergement = hebergement.idHebergement 
-         AND is_building = 0 
-         AND dateDebut > p_3_mois 
-         AND dateFin < NOW() 
-        ) as gainsDuTrimestre,
-        ( 
-         SELECT SUM(reservations_hebergement.prix) FROM reservations_hebergement
-         INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage 
-         WHERE reservations_hebergement.idHebergement = hebergement.idHebergement 
-         AND is_building = 0 
-         AND dateDebut > p_6_mois 
-         AND dateFin < NOW() 
-        ) as gainsDuSemestre,
-        ( 
-         SELECT SUM(reservations_hebergement.prix) FROM reservations_hebergement
-         INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage 
-         WHERE reservations_hebergement.idHebergement = hebergement.idHebergement 
-         AND is_building = 0 
-         AND dateDebut > p_1_an 
-         AND dateFin < NOW() 
-        ) as gainsAnnee,
-        ( 
-         SELECT SUM(reservations_hebergement.prix) FROM reservations_hebergement
-         INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage 
-         WHERE reservations_hebergement.idHebergement = hebergement.idHebergement 
-         AND is_building = 0 
-         AND dateFin < NOW() 
-        ) as gainsALL
-    FROM hebergement WHERE idHebergement = p_id_hebergement;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_favoris` (`p_idHebergement` INT, `p_idUtilisateur` INT)  BEGIN
+	DELETE
+    from favoris
+    where idHebergement = p_idHebergement and idUtilisateur = p_idUtilisateur;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_hebergement` (IN `p_idHebergement` INT)  BEGIN
+	DELETE
+    from hebergement
+    where idHebergement = p_idHebergement;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_option_by_herbergement` (IN `p_idHebergement` INT)  BEGIN
+	DELETE
+    from options_by_hebergement
+    where idHebergement = p_idHebergement;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_reservations_hebergement` (IN `p_idReservationHebergement` INT)  BEGIN
+	DELETE
+    from reservations_hebergement
+    where idReservationHebergement = p_idReservationHebergement;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_reservation_voyage` (`p_idReservationVoyage` INT, `p_is_building` INT)  BEGIN
+	DELETE
+    FROM reservations_voyages
+    WHERE idReservationVoyage = p_idReservationVoyage and is_building = p_is_building;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_user` (IN `p_idUser` INT)  BEGIN
+	DELETE
+    from utilisateurs
+    where idUtilisateur = p_idUser;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_villes` (`p_idVille` INT)  BEGIN
+	DELETE
+    FROM reservations_voyages
+    WHERE idVilles = p_idVille;
 END$$
 
 DELIMITER ;
@@ -103,13 +92,11 @@ DELIMITER ;
 -- Structure de la table `activites`
 --
 
-DROP TABLE IF EXISTS `activites`;
-CREATE TABLE IF NOT EXISTS `activites` (
-  `idActivite` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `activites` (
+  `idActivite` int(11) NOT NULL,
   `libelle` varchar(100) NOT NULL,
-  `icon` varchar(100) NOT NULL,
-  PRIMARY KEY (`idActivite`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+  `icon` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `activites`
@@ -152,8 +139,7 @@ INSERT INTO `activites` (`idActivite`, `libelle`, `icon`) VALUES
 -- Structure de la table `activites_by_ville`
 --
 
-DROP TABLE IF EXISTS `activites_by_ville`;
-CREATE TABLE IF NOT EXISTS `activites_by_ville` (
+CREATE TABLE `activites_by_ville` (
   `idActivite` int(11) NOT NULL,
   `idVille` int(11) NOT NULL,
   `latitude` float NOT NULL,
@@ -250,47 +236,16 @@ INSERT INTO `activites_by_ville` (`idActivite`, `idVille`, `latitude`, `longitud
 -- --------------------------------------------------------
 
 --
--- Structure de la table `admin_valid_hebergements`
---
-
-DROP TABLE IF EXISTS `admin_valid_hebergements`;
-CREATE TABLE IF NOT EXISTS `admin_valid_hebergements` (
-  `id_admin_valid_hebergement` int(11) NOT NULL AUTO_INCREMENT,
-  `libelle` varchar(150) NOT NULL,
-  `description` text NOT NULL,
-  `nomVille` varchar(100) NOT NULL,
-  `latitude` float NOT NULL,
-  `longitude` float NOT NULL,
-  `prix` decimal(7,2) NOT NULL,
-  `idUtilisateur` int(11) NOT NULL,
-  `dateEnregistrement` date NOT NULL,
-  `is_actif` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id_admin_valid_hebergement`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `admin_valid_hebergements`
---
-
-INSERT INTO `admin_valid_hebergements` (`id_admin_valid_hebergement`, `libelle`, `description`, `nomVille`, `latitude`, `longitude`, `prix`, `idUtilisateur`, `dateEnregistrement`, `is_actif`) VALUES
-(1, 'maison de luxe', 'azerty', 'Saint-Lumine-de-Coutais', -1.72637, 47.0541, '45.36', 1, '2021-12-13', 1),
-(2, 'aze', 'azer', 'Nantes', -1.51623, 47.2423, '10.00', 1, '2021-12-13', 1);
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `agences`
 --
 
-DROP TABLE IF EXISTS `agences`;
-CREATE TABLE IF NOT EXISTS `agences` (
-  `idAgence` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `agences` (
+  `idAgence` int(11) NOT NULL,
   `adresse` varchar(255) NOT NULL,
   `code_postal` int(5) NOT NULL,
   `idVille` int(11) DEFAULT NULL,
-  `idRegion` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idAgence`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `idRegion` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `agences`
@@ -308,23 +263,20 @@ INSERT INTO `agences` (`idAgence`, `adresse`, `code_postal`, `idVille`, `idRegio
 -- Structure de la table `avis`
 --
 
-DROP TABLE IF EXISTS `avis`;
-CREATE TABLE IF NOT EXISTS `avis` (
-  `idAvis` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `avis` (
+  `idAvis` int(11) NOT NULL,
   `date` date NOT NULL,
   `note` int(2) NOT NULL,
   `commentaire` text,
   `idUtilisateur` int(11) NOT NULL,
-  `idHebergement` int(11) NOT NULL,
-  PRIMARY KEY (`idAvis`)
-) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
+  `idHebergement` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `avis`
 --
 
 INSERT INTO `avis` (`idAvis`, `date`, `note`, `commentaire`, `idUtilisateur`, `idHebergement`) VALUES
-(1, '2021-10-19', 5, 'C\'était vraiment magnifique !!!', 1, 1),
 (52, '2021-10-14', 5, 'C\'était vraiment magnifique !', 4, 2),
 (4, '2021-10-13', 3, 'Pas mal', 2, 3),
 (5, '2021-10-13', 4, 'Pas mal du tout', 2, 4),
@@ -378,14 +330,33 @@ INSERT INTO `avis` (`idAvis`, `date`, `note`, `commentaire`, `idUtilisateur`, `i
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `avis_response`
+--
+
+CREATE TABLE `avis_response` (
+  `idResponse` int(11) NOT NULL,
+  `idAvis` int(11) NOT NULL,
+  `idUtilisateur` int(11) NOT NULL,
+  `reponse` text NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `avis_response`
+--
+
+INSERT INTO `avis_response` (`idResponse`, `idAvis`, `idUtilisateur`, `reponse`, `date`) VALUES
+(1, 26, 1, 'Test', '2021-11-18 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `consulter_messages`
 --
 
-DROP TABLE IF EXISTS `consulter_messages`;
-CREATE TABLE IF NOT EXISTS `consulter_messages` (
+CREATE TABLE `consulter_messages` (
   `idUtilisateur` int(11) NOT NULL,
-  `idMessage` int(11) NOT NULL,
-  PRIMARY KEY (`idUtilisateur`,`idMessage`)
+  `idMessage` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -438,11 +409,9 @@ INSERT INTO `consulter_messages` (`idUtilisateur`, `idMessage`) VALUES
 -- Structure de la table `favoris`
 --
 
-DROP TABLE IF EXISTS `favoris`;
-CREATE TABLE IF NOT EXISTS `favoris` (
+CREATE TABLE `favoris` (
   `idHebergement` int(11) NOT NULL,
-  `idUtilisateur` int(11) NOT NULL,
-  PRIMARY KEY (`idHebergement`,`idUtilisateur`)
+  `idUtilisateur` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -461,9 +430,8 @@ INSERT INTO `favoris` (`idHebergement`, `idUtilisateur`) VALUES
 -- Structure de la table `hebergement`
 --
 
-DROP TABLE IF EXISTS `hebergement`;
-CREATE TABLE IF NOT EXISTS `hebergement` (
-  `idHebergement` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `hebergement` (
+  `idHebergement` int(11) NOT NULL,
   `libelle` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `idVille` int(11) NOT NULL,
@@ -472,9 +440,8 @@ CREATE TABLE IF NOT EXISTS `hebergement` (
   `prix` decimal(10,0) DEFAULT NULL,
   `uuid` text NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
-  `dateEnregistrement` date DEFAULT NULL,
-  PRIMARY KEY (`idHebergement`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+  `dateEnregistrement` date DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `hebergement`
@@ -506,7 +473,8 @@ INSERT INTO `hebergement` (`idHebergement`, `libelle`, `description`, `idVille`,
 (24, 'Appart cool', 'Un smiley est caché dans le frigo, ça donne la pêche.', 22, 47.6999, -0.0724185, '43', '46e04703fa5948b033336330e5ddd3582e81c0194dc9ac16bf168df2e842dc32', 0, '2021-08-15'),
 (25, 'La maison fermée', 'Une maison aux allures sympathiques et chaleureuses.', 22, 47.6931, -0.0781164, '69', 'da972073c123397ea9390fd42e315a83ebe83e5e5d65e7a6b93d48540b4436c3', 0, '2021-08-15'),
 (26, 'La cabanette des beaux bois', 'Une bien belle cabanette. Mais qui peut y vivre ?', 17, 47.0564, -0.912572, '88', 'a31d42130b2a0dc4119d45ddab4862f04c5d0926e0aa71e27206b07c7a593d53', 0, '2021-08-15'),
-(28, 'azerty', 'azerty', 1, 47, -0.5, '666', '8d17e6a5a33f1224dbae8dfbf9ecf4e041f66e431f50b0ac3a9867ba064fb308', 1, '2021-11-10');
+(28, 'azerty', 'azerty', 1, 47, -0.5, '666', '8d17e6a5a33f1224dbae8dfbf9ecf4e041f66e431f50b0ac3a9867ba064fb308', 1, '2021-11-10'),
+(29, 'Test-Paris', 'test proprio', 1, 2.76, 0.5, '250', '89a83a11e78643b972b84c7ae0af3b1bb95adf43d155dde03687ac98ca98371d', 18, '2021-11-29');
 
 -- --------------------------------------------------------
 
@@ -514,16 +482,14 @@ INSERT INTO `hebergement` (`idHebergement`, `libelle`, `description`, `idVille`,
 -- Structure de la table `messages`
 --
 
-DROP TABLE IF EXISTS `messages`;
-CREATE TABLE IF NOT EXISTS `messages` (
-  `idMessage` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `messages` (
+  `idMessage` int(11) NOT NULL,
   `date` date NOT NULL,
   `contenu` text NOT NULL,
   `expediteur` int(11) NOT NULL,
   `destinataire` int(11) DEFAULT NULL,
-  `idRole` int(11) NOT NULL,
-  PRIMARY KEY (`idMessage`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
+  `idRole` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `messages`
@@ -569,13 +535,11 @@ INSERT INTO `messages` (`idMessage`, `date`, `contenu`, `expediteur`, `destinata
 -- Structure de la table `options`
 --
 
-DROP TABLE IF EXISTS `options`;
-CREATE TABLE IF NOT EXISTS `options` (
-  `idOption` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `options` (
+  `idOption` int(11) NOT NULL,
   `libelle` varchar(100) NOT NULL,
-  `icon` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`idOption`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+  `icon` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `options`
@@ -600,11 +564,9 @@ INSERT INTO `options` (`idOption`, `libelle`, `icon`) VALUES
 -- Structure de la table `options_by_hebergement`
 --
 
-DROP TABLE IF EXISTS `options_by_hebergement`;
-CREATE TABLE IF NOT EXISTS `options_by_hebergement` (
+CREATE TABLE `options_by_hebergement` (
   `idHebergement` int(11) NOT NULL,
-  `idOption` int(11) NOT NULL,
-  PRIMARY KEY (`idHebergement`,`idOption`)
+  `idOption` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -836,7 +798,11 @@ INSERT INTO `options_by_hebergement` (`idHebergement`, `idOption`) VALUES
 (25, 11),
 (26, 9),
 (27, 1),
-(28, 6);
+(28, 6),
+(29, 1),
+(29, 2),
+(29, 3),
+(29, 4);
 
 -- --------------------------------------------------------
 
@@ -844,16 +810,14 @@ INSERT INTO `options_by_hebergement` (`idHebergement`, `idOption`) VALUES
 -- Structure de la table `regions`
 --
 
-DROP TABLE IF EXISTS `regions`;
-CREATE TABLE IF NOT EXISTS `regions` (
-  `idRegion` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `regions` (
+  `idRegion` int(11) NOT NULL,
   `libelle` varchar(255) NOT NULL,
   `latitude` float DEFAULT NULL,
   `longitude` float DEFAULT NULL,
   `lv_zoom` int(11) DEFAULT NULL,
-  `description` text,
-  PRIMARY KEY (`idRegion`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+  `description` text
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `regions`
@@ -871,9 +835,8 @@ INSERT INTO `regions` (`idRegion`, `libelle`, `latitude`, `longitude`, `lv_zoom`
 -- Structure de la table `reservations_hebergement`
 --
 
-DROP TABLE IF EXISTS `reservations_hebergement`;
-CREATE TABLE IF NOT EXISTS `reservations_hebergement` (
-  `idReservationHebergement` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `reservations_hebergement` (
+  `idReservationHebergement` int(11) NOT NULL,
   `code_reservation` varchar(100) NOT NULL,
   `prix` decimal(7,2) NOT NULL,
   `dateDebut` date DEFAULT NULL,
@@ -881,9 +844,8 @@ CREATE TABLE IF NOT EXISTS `reservations_hebergement` (
   `nbJours` int(11) DEFAULT NULL,
   `idVoyage` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
-  `idHebergement` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idReservationHebergement`)
-) ENGINE=MyISAM AUTO_INCREMENT=171 DEFAULT CHARSET=latin1;
+  `idHebergement` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `reservations_hebergement`
@@ -932,11 +894,7 @@ INSERT INTO `reservations_hebergement` (`idReservationHebergement`, `code_reserv
 (162, 'HEB56234', '600.00', '2020-08-05', '2020-08-18', 13, 72, 2, 1),
 (163, 'HEB56234', '350.00', '2021-08-17', '2021-08-23', 6, 72, 2, 1),
 (164, 'HEB90191', '801.00', '2021-12-01', '2021-12-10', 9, 71, 1, 2),
-(166, 'HEB38936', '490.00', '2021-11-30', '2021-12-07', 7, 74, 1, 1),
-(167, 'HEB93994', '464.00', '2021-12-06', '2021-12-14', 8, 75, 1, 5),
-(168, 'HEB31888', '792.00', '2021-12-14', '2021-12-26', 12, 75, 1, 11),
-(169, 'HEB52897', '264.00', '2021-12-26', '2021-12-29', 3, 75, 1, 26),
-(170, 'HEB31487', '445.00', '2021-12-29', '2022-01-03', 5, 75, 1, 2);
+(165, 'HEB96770', '280.00', '2021-12-14', '2021-12-18', 4, 73, 19, 1);
 
 -- --------------------------------------------------------
 
@@ -944,15 +902,13 @@ INSERT INTO `reservations_hebergement` (`idReservationHebergement`, `code_reserv
 -- Structure de la table `reservations_voyages`
 --
 
-DROP TABLE IF EXISTS `reservations_voyages`;
-CREATE TABLE IF NOT EXISTS `reservations_voyages` (
-  `idReservationVoyage` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `reservations_voyages` (
+  `idReservationVoyage` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
   `prix` decimal(7,2) NOT NULL,
   `code_reservation` char(255) DEFAULT NULL,
-  `is_building` tinyint(1) NOT NULL,
-  PRIMARY KEY (`idReservationVoyage`)
-) ENGINE=MyISAM AUTO_INCREMENT=76 DEFAULT CHARSET=latin1;
+  `is_building` tinyint(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `reservations_voyages`
@@ -971,8 +927,7 @@ INSERT INTO `reservations_voyages` (`idReservationVoyage`, `idUtilisateur`, `pri
 (70, 1, '225.00', 'VOY15634', 0),
 (71, 1, '1975.00', 'VOY47837', 0),
 (72, 2, '2250.00', 'VOY15659', 0),
-(74, 1, '490.00', 'VOY95622', 0),
-(75, 1, '1965.00', 'VOY69747', 1);
+(73, 19, '280.00', 'VOY67806', 1);
 
 -- --------------------------------------------------------
 
@@ -980,12 +935,10 @@ INSERT INTO `reservations_voyages` (`idReservationVoyage`, `idUtilisateur`, `pri
 -- Structure de la table `roles`
 --
 
-DROP TABLE IF EXISTS `roles`;
-CREATE TABLE IF NOT EXISTS `roles` (
-  `idRole` int(11) NOT NULL AUTO_INCREMENT,
-  `libelle` varchar(100) NOT NULL,
-  PRIMARY KEY (`idRole`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+CREATE TABLE `roles` (
+  `idRole` int(11) NOT NULL,
+  `libelle` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `roles`
@@ -1002,9 +955,8 @@ INSERT INTO `roles` (`idRole`, `libelle`) VALUES
 -- Structure de la table `utilisateurs`
 --
 
-DROP TABLE IF EXISTS `utilisateurs`;
-CREATE TABLE IF NOT EXISTS `utilisateurs` (
-  `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `utilisateurs` (
+  `idUtilisateur` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `mdp` varchar(100) NOT NULL,
   `nom` varchar(100) NOT NULL,
@@ -1013,27 +965,26 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `acceptRGPD` tinyint(1) NOT NULL,
   `dateAcceptRGPD` date DEFAULT NULL,
   `DoB` date DEFAULT NULL,
-  `age` int(3) NOT NULL,
-  `token` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`idUtilisateur`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+  `age` int(3) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `utilisateurs`
 --
 
-INSERT INTO `utilisateurs` (`idUtilisateur`, `email`, `mdp`, `nom`, `prenom`, `idRole`, `acceptRGPD`, `dateAcceptRGPD`, `DoB`, `age`, `token`) VALUES
-(14, 'mrtreflestremy@outlook.yopmail', '$2y$10$ouClRgiNZfKfDgUjekRhoeirM0GGYHgxZdGrVkvPrT2V6zMo6vHhG', 'test', 'test', 1, 1, '2021-10-19', '1991-06-18', 23, NULL),
-(4, 'jacobLoubi@hotmail.fr', '001e8d5e7f1d00929d3f5944cabdd66f', 'Jacob', 'Lacroix', 1, 1, '2021-10-19', '1991-06-18', 54, NULL),
-(2, 'keitaro-negi@hotmail.fr', '$2y$10$IsucYi.732Pu4drRmKpegupo4SoPvPUaJgGsiD7TuUIb/lsZI6aXy', 'Le Tavernier', 'Roger', 1, 1, '2021-10-18', '1991-06-18', 29, NULL),
-(3, 'mrtreflestremy@outlook.fr', '$2y$10$TfWFjpwFg2PCvQda1lL1quZadA7I9EjxpXEukd2r02nX5.Z9IsptW', ' Lacroix', 'Bertrand', 1, 1, '2021-10-09', '1991-06-18', 30, NULL),
-(1, 'mrtreflestremy@outlook.com', '$2y$10$TfWFjpwFg2PCvQda1lL1quZadA7I9EjxpXEukd2r02nX5.Z9IsptW', 'Treflest', 'Rémy', 2, 1, '2021-10-09', '1991-06-18', 30, NULL),
-(15, 'yopmail@yopmail.com', 'azerty', 'Balkani', 'Eric', 1, 1, '2021-10-02', '1991-06-18', 55, NULL),
-(16, 'test@test.fr', '$2a$11$tBUvC3yEuFzqTv/uHVtlA.8.lUGSLrF3QtmKW06bxj9H6pZVgXF/S', 'tiesto', 'tiesta', 3, 1, '2021-11-01', '1991-06-18', 23, NULL),
-(17, 'clémentCheckSesFormulaire@validation.fr', '$2a$11$Gj/Zy52sQdduelJfUFgwCubsOha8F0rw4JSCRgwITb56eTDkNFrWK', 'Julia', 'Clément', 3, 1, '2021-11-02', '1991-06-18', 19, NULL),
-(18, 'juliaTest@denouveau.fr', '$2a$11$a7./HMiH9CbF016os8Rdl.GuNCcJ9MnuHiT2wYzpmWFmKwUa2Q4ny', 'JuliaTest', 'ClementTest', 3, 1, '2021-11-02', '2002-07-17', 19, NULL),
-(19, 'nouveau@outlook.com', '$2y$10$Cv.wwF5N9XTnGxtZSnQK2OVHcCv99Ftdlu2x6gRjptND6Jpz7YMey', 'nouveau', 'utilisateur', 1, 1, '2021-11-29', NULL, 23, NULL);
+INSERT INTO `utilisateurs` (`idUtilisateur`, `email`, `mdp`, `nom`, `prenom`, `idRole`, `acceptRGPD`, `dateAcceptRGPD`, `DoB`, `age`) VALUES
+(14, 'mrtreflestremy@outlook.yopmail', '$2y$10$ouClRgiNZfKfDgUjekRhoeirM0GGYHgxZdGrVkvPrT2V6zMo6vHhG', 'test', 'test', 1, 1, '2021-10-19', '1991-06-18', 23),
+(4, 'jacobLoubi@hotmail.fr', '001e8d5e7f1d00929d3f5944cabdd66f', 'Jacob', 'Lacroix', 1, 1, '2021-10-19', '1991-06-18', 54),
+(2, 'keitaro-negi@hotmail.fr', '$2y$10$IsucYi.732Pu4drRmKpegupo4SoPvPUaJgGsiD7TuUIb/lsZI6aXy', 'Le Tavernier', 'Roger', 1, 1, '2021-10-18', '1991-06-18', 29),
+(3, 'mrtreflestremy@outlook.fr', '$2y$10$TfWFjpwFg2PCvQda1lL1quZadA7I9EjxpXEukd2r02nX5.Z9IsptW', ' Lacroix', 'Bertrand', 1, 1, '2021-10-09', '1991-06-18', 30),
+(1, 'mrtreflestremy@outlook.com', '$2y$10$TfWFjpwFg2PCvQda1lL1quZadA7I9EjxpXEukd2r02nX5.Z9IsptW', 'Treflest', 'Rémy', 2, 1, '2021-10-09', '1991-06-18', 30),
+(15, 'yopmail@yopmail.com', 'azerty', 'Balkani', 'Eric', 1, 1, '2021-10-02', '1991-06-18', 55),
+(16, 'test@test.fr', '$2a$11$tBUvC3yEuFzqTv/uHVtlA.8.lUGSLrF3QtmKW06bxj9H6pZVgXF/S', 'tiesto', 'tiesta', 3, 1, '2021-11-01', '1991-06-18', 23),
+(17, 'clémentCheckSesFormulaire@validation.fr', '$2a$11$Gj/Zy52sQdduelJfUFgwCubsOha8F0rw4JSCRgwITb56eTDkNFrWK', 'Julia', 'Clément', 3, 1, '2021-11-02', '1991-06-18', 19),
+(18, 'juliaTest@denouveau.fr', '$2a$11$a7./HMiH9CbF016os8Rdl.GuNCcJ9MnuHiT2wYzpmWFmKwUa2Q4ny', 'JuliaTest', 'ClementTest', 3, 1, '2021-11-02', '2002-07-17', 19),
+(19, 'clement.test@gmail.com', '$2y$10$c6FY5qmNEV1Hh5Ki33otY.WMhWshY7wxpfxEqGWyfsdOa.02wLGH6', 'Julia', 'Clément', 2, 1, '2021-11-29', '2002-07-17', 19),
+(20, 'test2@test.fr', '$2y$10$HX.UvoZQEO7Nkzj5wpJtieVG6p9PMD0X6u4eHl5KS11A/xwUmxFSC', 'ryrey', 'dqd', 1, 1, '2021-11-29', '2012-06-14', NULL),
+(21, 'test@gmail.com', '$2a$11$DCrfMD8q8b49PiO7S.si4ePVME3Juf1ETXRjd36mWeqOQDTSnaxUm', 'Moi', 'Toujoursmoi', 3, 1, '2021-12-01', '2002-07-10', 19);
 
 -- --------------------------------------------------------
 
@@ -1041,17 +992,15 @@ INSERT INTO `utilisateurs` (`idUtilisateur`, `email`, `mdp`, `nom`, `prenom`, `i
 -- Structure de la table `villes`
 --
 
-DROP TABLE IF EXISTS `villes`;
-CREATE TABLE IF NOT EXISTS `villes` (
-  `idVille` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `villes` (
+  `idVille` int(11) NOT NULL,
   `libelle` varchar(150) DEFAULT NULL,
   `latitude` float DEFAULT NULL,
   `longitude` float DEFAULT NULL,
   `idRegion` int(11) DEFAULT NULL,
   `description` text,
-  `uuid` text,
-  PRIMARY KEY (`idVille`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+  `uuid` text
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `villes`
@@ -1079,6 +1028,190 @@ INSERT INTO `villes` (`idVille`, `libelle`, `latitude`, `longitude`, `idRegion`,
 (20, 'Saumur', 47.2596, -0.0785177, 2, NULL, 'fd40cce8c261f9db2fb7c0fac9403adf29baea97106d2900a73da2fe0eae7b15'),
 (21, 'Pornic', 47.1153, -2.10401, 2, NULL, '2cb6bcb101e86f3ad4b88e2750d4dc191e77bd169bf4b079fa8bf67b0ddd901a'),
 (22, 'La Flèche', 47.6968, -0.0746149, 2, NULL, '49aabb5dfc7ddedcf980566f1f28da2c40a16acc73d48a8c177c0195cfe31545');
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `activites`
+--
+ALTER TABLE `activites`
+  ADD PRIMARY KEY (`idActivite`);
+
+--
+-- Index pour la table `agences`
+--
+ALTER TABLE `agences`
+  ADD PRIMARY KEY (`idAgence`);
+
+--
+-- Index pour la table `avis`
+--
+ALTER TABLE `avis`
+  ADD PRIMARY KEY (`idAvis`);
+
+--
+-- Index pour la table `avis_response`
+--
+ALTER TABLE `avis_response`
+  ADD PRIMARY KEY (`idResponse`),
+  ADD UNIQUE KEY `idAvis` (`idAvis`);
+
+--
+-- Index pour la table `consulter_messages`
+--
+ALTER TABLE `consulter_messages`
+  ADD PRIMARY KEY (`idUtilisateur`,`idMessage`);
+
+--
+-- Index pour la table `favoris`
+--
+ALTER TABLE `favoris`
+  ADD PRIMARY KEY (`idHebergement`,`idUtilisateur`);
+
+--
+-- Index pour la table `hebergement`
+--
+ALTER TABLE `hebergement`
+  ADD PRIMARY KEY (`idHebergement`);
+
+--
+-- Index pour la table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`idMessage`);
+
+--
+-- Index pour la table `options`
+--
+ALTER TABLE `options`
+  ADD PRIMARY KEY (`idOption`);
+
+--
+-- Index pour la table `options_by_hebergement`
+--
+ALTER TABLE `options_by_hebergement`
+  ADD PRIMARY KEY (`idHebergement`,`idOption`);
+
+--
+-- Index pour la table `regions`
+--
+ALTER TABLE `regions`
+  ADD PRIMARY KEY (`idRegion`);
+
+--
+-- Index pour la table `reservations_hebergement`
+--
+ALTER TABLE `reservations_hebergement`
+  ADD PRIMARY KEY (`idReservationHebergement`);
+
+--
+-- Index pour la table `reservations_voyages`
+--
+ALTER TABLE `reservations_voyages`
+  ADD PRIMARY KEY (`idReservationVoyage`);
+
+--
+-- Index pour la table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`idRole`);
+
+--
+-- Index pour la table `utilisateurs`
+--
+ALTER TABLE `utilisateurs`
+  ADD PRIMARY KEY (`idUtilisateur`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Index pour la table `villes`
+--
+ALTER TABLE `villes`
+  ADD PRIMARY KEY (`idVille`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `activites`
+--
+ALTER TABLE `activites`
+  MODIFY `idActivite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT pour la table `agences`
+--
+ALTER TABLE `agences`
+  MODIFY `idAgence` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `avis`
+--
+ALTER TABLE `avis`
+  MODIFY `idAvis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
+--
+-- AUTO_INCREMENT pour la table `avis_response`
+--
+ALTER TABLE `avis_response`
+  MODIFY `idResponse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT pour la table `hebergement`
+--
+ALTER TABLE `hebergement`
+  MODIFY `idHebergement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT pour la table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `idMessage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT pour la table `options`
+--
+ALTER TABLE `options`
+  MODIFY `idOption` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT pour la table `regions`
+--
+ALTER TABLE `regions`
+  MODIFY `idRegion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT pour la table `reservations_hebergement`
+--
+ALTER TABLE `reservations_hebergement`
+  MODIFY `idReservationHebergement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+
+--
+-- AUTO_INCREMENT pour la table `reservations_voyages`
+--
+ALTER TABLE `reservations_voyages`
+  MODIFY `idReservationVoyage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
+--
+-- AUTO_INCREMENT pour la table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `idRole` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `utilisateurs`
+--
+ALTER TABLE `utilisateurs`
+  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT pour la table `villes`
+--
+ALTER TABLE `villes`
+  MODIFY `idVille` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
