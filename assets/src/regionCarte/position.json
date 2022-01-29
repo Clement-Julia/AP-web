@@ -1,0 +1,92 @@
+[
+    {
+        "region" : "Centre-Val de Loire",
+        "coordinateX" : "47.7515686",
+        "coordinateY" : "1.6750631"
+    },
+    {
+        "region" : "Guadeloupe",
+        "coordinateX" : "16.265",
+        "coordinateY" : "-61.551"
+    },
+    {
+        "region" : "Martinique",
+        "coordinateX" : "14.641528",
+        "coordinateY" : "-61.024174"
+    },
+    {
+        "region" : "Guyane",
+        "coordinateX" : "3.933889",
+        "coordinateY" : "-53.125782"
+    },
+    {
+        "region" : "La Réunion",
+        "coordinateX" : "-21.115141",
+        "coordinateY" : "55.536384"
+    },
+    {
+        "region" : "Mayotte",
+        "coordinateX" : "-12.8275",
+        "coordinateY" : "45.166244"
+    },
+    {
+        "region" : "Île-de-France",
+        "coordinateX" : "48.8499198",
+        "coordinateY" : "2.6370411"
+    },
+    {
+        "region" : "Bourgogne-Franche-Comté",
+        "coordinateX" : "47.0232157",
+        "coordinateY" : "5.0922632"
+    },
+    {
+        "region" : "Normandie",
+        "coordinateX" : "48.8798704",
+        "coordinateY" : "0.1712529"
+    },
+    {
+        "region" : "Hauts-de-France",
+        "coordinateX" : "49.6636127",
+        "coordinateY" : "2.5280732"
+    },
+    {
+        "region" : "Grand Est",
+        "coordinateX" : "48.9131152",
+        "coordinateY" : "5.4425501"
+    },
+    {
+        "region" : "Pays de La Loire",
+        "coordinateX" : "47.7632836",
+        "coordinateY" : "-0.3299687"
+    },
+    {
+        "region" : "Bretagne",
+        "coordinateX" : "48.2020471",
+        "coordinateY" : "-2.9326435"
+    },
+    {
+        "region" : "Nouvelle-Aquitaine",
+        "coordinateX" : "45.5990651",
+        "coordinateY" : "0.6142169"
+    },
+    {
+        "region" : "Occitanie",
+        "coordinateX" : "43.4636856",
+        "coordinateY" : "2.1450245"
+    },
+    {
+        "region" : "Auvergne-Rhône-Alpes",
+        "coordinateX" : "45.5126545",
+        "coordinateY" : "4.4904519"
+    },
+    {
+        "region" : "Provence-Alpes-Côte d'Azur",
+        "coordinateX" : "43.9351691",
+        "coordinateY" : "6.0679194"
+    },
+    {
+        "region" : "Corse",
+        "coordinateX" : "42.0396042",
+        "coordinateY" : "9.0128926"
+    }
+]

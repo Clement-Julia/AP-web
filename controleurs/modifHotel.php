@@ -7,7 +7,8 @@ if(
     !empty($_POST["description"]) && is_string($_POST["description"]) &&
     !empty($_POST["prix"]) && is_numeric($_POST["prix"]) && 
     !empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && 
-    !empty($_POST["longitude"]) && is_numeric($_POST["longitude"])
+    !empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && 
+    !empty($_POST["adresse"]) && is_string($_POST["adresse"])
     ){
         // on vérifie que chaque option est bien un nombre
         foreach($_POST["options"] as $key => $value){
@@ -78,7 +79,7 @@ if(
         $option = new Option();
         $option->supOptions($_GET["id"]);
         $option->addOptions($_GET["id"], $_POST["options"]);
-        $Hotel->updateHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["prix"], $Hotel->getUuid(), $_GET["id"]);
+        $Hotel->updateHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["adresse"], $_POST["longitude"], $_POST["prix"], $Hotel->getUuid(), $_GET["id"]);
 
         header("location:../admin/modifHotel.php");
     }catch(exception $e){

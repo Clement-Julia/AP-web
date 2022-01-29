@@ -5,7 +5,8 @@ if(
     !empty($_POST["libelle"]) && is_string($_POST["libelle"]) &&
     !empty($_POST["region"]) && is_numeric($_POST["region"]) && 
     !empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && 
-    !empty($_POST["longitude"]) && is_numeric($_POST["longitude"])
+    !empty($_POST["longitude"]) && is_numeric($_POST["longitude"])&& 
+    !empty($_POST["cp"]) && is_numeric($_POST["cp"])
     ){
 
         if(!empty($_POST["description"]) && is_string($_POST["description"]) ){
@@ -78,7 +79,7 @@ if(
             }
         }
 
-        $Ville->updateVille($_POST["libelle"], $_POST["latitude"], $_POST["longitude"], $_POST["region"], $description, $Ville->getUuid(), $_GET["id"]);
+        $Ville->updateVille($_POST["libelle"], $_POST["latitude"], $_POST["longitude"], $_POST["cp"], $_POST["region"], $description, $Ville->getUuid(), $_GET["id"]);
         header("location:../admin/modifVille.php");
     }catch(exception $e){
         header("location:../admin/modifVille.php?error=crash");

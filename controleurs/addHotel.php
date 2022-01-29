@@ -6,7 +6,7 @@ $option = new Option();
 $user = new Utilisateur();
 
 
-if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["link"]) && !empty($_FILES["file"]) || empty($_POST["latitude"]) && empty($_POST["longitude"]) && !empty($_POST["link"]) && !empty($_FILES["file"])){
+if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["link"]) && !empty($_POST["adresse"]) && !empty($_FILES["file"]) || empty($_POST["latitude"]) && empty($_POST["longitude"]) && !empty($_POST["link"]) && !empty($_POST["adresse"]) && !empty($_FILES["file"])){
     try{
 
         if(!empty($_POST["link"])){
@@ -43,11 +43,11 @@ if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["li
             move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
         }
 
-        $hotel->addHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["prix"], $nom_doss, $_POST["proprio"]);
+        $hotel->addHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["adresse"], $_POST["prix"], $nom_doss, $_POST["proprio"]);
         $info = $hotel->getHotelbyName($_POST["libelle"]);
         $option->addOptions($info["idHebergement"], $_POST["options"]);
     
-        header("location:../admin/addHotel.php");
+        header("location:../admin/addHotel.php?success");
 
     }catch(exception $e){
         header("location:../admin/addHotel.php?error=crash");

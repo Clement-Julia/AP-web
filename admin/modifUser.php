@@ -92,6 +92,7 @@ if(empty($_GET)){
             </div>
 
         </form>
+        <a href="modifUser.php" class="btn btn-secondary mt-5"><i class="fas fa-arrow-left"></i></a>
     </div>
     <?php
 }

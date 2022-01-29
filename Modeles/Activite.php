@@ -56,4 +56,23 @@ class Activite extends Modele {
         return $this->icon;
     }
 
+    public function getAllActivite(){
+        $requete = $this->getBdd()->prepare("SELECT * FROM activites");
+        $requete->execute();
+        $infos = $requete->fetchALL(PDO::FETCH_ASSOC);
+        return $infos;
+    }
+
+    public function getActiviteByName($name){
+        $requete = $this->getBdd()->prepare("SELECT * FROM activites where libelle = ?");
+        $requete->execute([$name]);
+        $info = $requete->fetch(PDO::FETCH_ASSOC);
+        return $info;
+    }
+
+    public function addActiviteForCity($idActivite, $idVille, $latitude, $longitude, $description){
+        $requete = $this->getBdd()->prepare("INSERT into activites_by_ville(idActivite, idVille, latitude, longitude, description) values(?,?,?,?,?)");
+        $requete->execute([$idActivite, $idVille, $latitude, $longitude, $description]);
+    }
+
 }

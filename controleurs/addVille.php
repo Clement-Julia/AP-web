@@ -2,7 +2,7 @@
 require_once "traitement.php";
 $ville = new Ville();
 
-if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["link"]) && count($_FILES["file"]) > 0 || empty($_POST["latitude"]) && empty($_POST["longitude"]) && !empty($_POST["link"]) && count($_FILES["file"]) > 0){
+if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["link"]) && !empty($_POST["cp"]) && count($_FILES["file"]) > 0 || empty($_POST["latitude"]) && empty($_POST["longitude"]) && !empty($_POST["link"]) && !empty($_POST["cp"]) && count($_FILES["file"]) > 0){
     try{
 
         if(!empty($_POST["link"])){
@@ -18,7 +18,7 @@ if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["li
         while(file_exists("../src/uuid/".$nom_doss) != false){
             $nom_doss = bin2hex(random_bytes(32));
         }
-        mkdir("../src/uuid/".$nom_doss, 0700);
+        mkdir("../assets/src/uuid/".$nom_doss, 0700);
 
         if(!empty($_FILES["banniere"])){
             $nameBan = "bannière";
@@ -39,8 +39,8 @@ if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["li
             move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
         }
         
-        $ville->addVille($_POST["libelle"], $_POST["latitude"], $_POST["longitude"], $_POST["region"], $_POST["description"], $nom_doss);
-        header("location:../admin/addVille.php");
+        $ville->addVille($_POST["libelle"], $_POST["latitude"], $_POST["longitude"], $_POST["cp"], $_POST["region"], $_POST["description"], $nom_doss);
+        header("location:../admin/addVille.php?success");
     }catch(exception $e){
         header("location:../admin/addVille.php?error=crash");
     }

@@ -6,6 +6,7 @@ class Ville extends Modele {
     private $libelle;
     private $latitude;
     private $longitude;
+    private $code_postal;
     private $idRegion;
     private $description;
     private $uuid;
@@ -24,6 +25,7 @@ class Ville extends Modele {
             $this->libelle = $infoVille["libelle"];
             $this->latitude = $infoVille["latitude"];
             $this->longitude = $infoVille["longitude"];
+            $this->$code_postal = $infoVille["code_postal"];
             $this->description = $infoVille["description"];
             $this->idRegion = $infoVille["idRegion"];
             $this->uuid = $infoVille["uuid"];
@@ -56,12 +58,13 @@ class Ville extends Modele {
         
     }
 
-    public function initialiserVille($idVille, $libelle, $latitude, $longitude, $idRegion, $description, $uuid){
+    public function initialiserVille($idVille, $libelle, $latitude, $longitude, $code_postal, $idRegion, $description, $uuid){
 
         $this->idVille = $idVille;
         $this->libelle = $libelle;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
+        $this->code_postal = $code_postal;
         $this->description = $description;
         $this->idRegion = $idRegion;
         $this->description = $description;
@@ -85,6 +88,10 @@ class Ville extends Modele {
 
     public function getLongitude(){
         return $this->longitude;
+    }
+
+    public function getCode_postal(){
+        return $this->code_postal;
     }
 
     public function getIdRegion(){
@@ -114,9 +121,9 @@ class Ville extends Modele {
         return $infoRegion_Ville;
     }
 
-    public function addVille($libelle, $latitude, $longitude, $region, $description, $uuid){
-        $requete = $this->getBdd()->prepare("INSERT into villes(libelle, latitude, longitude, idRegion, description, uuid) values(?,?,?,?,?,?)");
-        $requete->execute([$libelle, $latitude, $longitude, $region, $description, $uuid]);
+    public function addVille($libelle, $latitude, $longitude, $code_postal, $region, $description, $uuid){
+        $requete = $this->getBdd()->prepare("INSERT into villes(libelle, latitude, longitude, code_postal, idRegion, description, uuid) values(?,?,?,?,?,?,?)");
+        $requete->execute([$libelle, $latitude, $longitude, $code_postal, $region, $description, $uuid]);
     }
 
     public function countVille(){
@@ -140,9 +147,9 @@ class Ville extends Modele {
         return $infoVille;
     }
 
-    public function updateVille($libelle, $latitude, $longitude, $idRegion, $description, $uuid, $id){
-        $requete = $this->getBdd()->prepare("UPDATE villes set libelle = ?, latitude = ?, longitude = ?, idRegion = ?, description = ?, uuid = ? where idVille = ?");
-        $requete->execute([$libelle, $latitude, $longitude, $idRegion, $description, $uuid, $id]);
+    public function updateVille($libelle, $latitude, $longitude, $code_postal, $idRegion, $description, $uuid, $id){
+        $requete = $this->getBdd()->prepare("UPDATE villes set libelle = ?, latitude = ?, longitude = ?, code_postal = ?, idRegion = ?, description = ?, uuid = ? where idVille = ?");
+        $requete->execute([$libelle, $latitude, $longitude, $code_postal, $idRegion, $description, $uuid, $id]);
     }
 
     public function supVille($id, $uuid){

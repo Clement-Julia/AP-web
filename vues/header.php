@@ -53,7 +53,7 @@ if(!empty($_COOKIE["connection_cookies"])){
             </div>
         </div>
 
-        <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' class='btn-group btn btn-primary btn-sm align-self-center ml-auto'>Inscription</a><a href='connexion.php' class='btn btn-success btn-sm align-self-center'>Connexion</a>");?>
+        <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' class='text-decoration-none text-dark align-self-center'>Inscription</a><a href='connexion.php' class='text-decoration-none text-dark align-self-center ms-3'>Connexion</a>");?>
         <?php if(!empty($_SESSION["idUtilisateur"])){
                 ?>
                 <div class="dropdown me-3">

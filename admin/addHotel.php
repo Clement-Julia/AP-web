@@ -31,6 +31,15 @@ $info_u = $users->getAllUsers();
         </div>
         <?php
     }
+    if(isset($_GET["success"])){
+        ?>
+        <div class="container alert alert-success">
+            <p>
+                L'hébergement a bien été créé !
+            </p>
+        </div>
+        <?php
+    }
 ?>
 
 <div class="container">
@@ -54,7 +63,7 @@ $info_u = $users->getAllUsers();
 
         <div class="form-group">
             <label for="libelle">Nom : </label>
-            <input type="text" class="form-control" name="libelle" id="name" placeholder="Entrez le nom d'un hébergement" required>
+            <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'un hébergement" required>
         </div>
 
         <div class="form-group">
@@ -121,6 +130,11 @@ $info_u = $users->getAllUsers();
                     <input type="text" class="form-control" name="link" id="link" placeholder="Entrez le lien">
                 </div>
             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="adresse">Adresse : </label>
+            <input type="text" class="form-control" name="adresse" id="adresse" placeholder="Entrez l'adresse de l'hébergement" required>
         </div>
 
         <div class="form-group mt-4">
