@@ -1,7 +1,16 @@
 <?php
 require_once "header.php";
-
 ?>
+
+<style>
+    #navbar{
+        background-color: rgba(105, 75, 27, 0.938)!important;
+    }
+
+    #navbar a.headerli:hover {
+        background-color: rgba(105, 75, 27, 0.726);
+    }
+</style>
 
 <div id="index-container">
 

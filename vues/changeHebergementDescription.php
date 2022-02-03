@@ -2,7 +2,10 @@
 require_once "header.php";
 
 if(!empty($_SESSION['idUtilisateur'])){
-
+    $avis = new Avis();
+    $avis_by_date = $avis->getAvisByDate($_GET["idHebergement"]);
+    $avis_asc = $avis->getAvisAsc($_GET["idHebergement"]);
+    $avis_desc = $avis->getAvisDesc($_GET["idHebergement"]);
     // (SECURITE) On vérifie que le paramètre récupéré est bien du type INT attendu
     if (is_numeric($_GET['idHebergement'])){
 
@@ -37,14 +40,31 @@ if(!empty($_SESSION['idUtilisateur'])){
                 $_SESSION['idHebergement'] = $_GET['idHebergement'];
                 $Favoris = new Favoris($_SESSION['idHebergement'], $_SESSION['idUtilisateur']);
                 $Images = new Images($Hebergement->getUuid());
+                $average = $avis->getAverageAvis($_GET["idHebergement"]);
 
-                    ?>
+                ?>
 
+                <style>
+                    body{
+                        background-image: url('../assets/src/img/background/HebergementDes.jpg');
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                    }
+                    .card-header{
+                        color: black;
+                    }
+                    #navbar{
+                        background-color: #27272773 !important;
+                        backdrop-filter: blur(12px);
+                    }
+                </style>
                 <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
                     <div id="hd-title-container">
                         <div id="hd-title"><a href="changeHebergement.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
                         <div id="hd-infos">
-                            <div id="hd-rate"></div>
+                            <div id="hd-rate">
+                                <?= ($average != 0) ? $average.'<i class="fas fa-star" style="color: #f2f200;"></i>' : "<span class='text-muted fst-italic'>Aucun avis n'a été publié...</span> "?>
+                            </div>
                             <div id="hd-heart"><?=$Favoris->getIdHebergement() == null ? "<i class='far fa-heart'></i>" : "<i class='fas fa-heart'></i>"?></div>
                         </div>
                     </div>
@@ -73,7 +93,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                         <div id="hd-price" class="card">
                             <div class="card-header"><h6>Détail du prix</h6></div>
                             <div class="card-body">
-                                <span id="nuits"><?=$Reservation->getNbJours()?> <?=$Reservation->getNbJours() > 1 ? 'nuits' : 'nuit'?></span> x <span data-prix="<?=$Hebergement->getPrix()?>" id="prix"><?=$Hebergement->getPrix()?> €</span> = <span id="total"><?=$Hebergement->getPrix() * $Reservation->getNbJours()?> €</span>
+                                <span id="nuits"><?=$Reservation->getNbJours()?> <?=$Reservation->getNbJours() > 1 ? 'nuits' : 'nuit'?></span> à <span data-prix="<?=$Hebergement->getPrix()?>" id="prix"><?=$Hebergement->getPrix()?> €</span> <br> Montant total : <span id="total"><?=$Hebergement->getPrix() * $Reservation->getNbJours()?> €</span>
                                 <div class="card-text">
                                     <?php if($Reservation->getPrix() <= $Hebergement->getPrix() * $Reservation->getNbJours()){ ?>
                                     <div>Réserver cet hébergement à la place de "<?=$OldHebergement->getLibelle()?>" vous coûtera <?=($Hebergement->getPrix() * $Reservation->getNbJours() - $Reservation->getPrix())?>€ de plus</div>

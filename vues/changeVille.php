@@ -28,6 +28,20 @@ if(!empty($_SESSION['idUtilisateur'])){
         }
 
         ?>
+        <style>
+            body{
+                background-image: url('../assets/src/img/background/HebergementDes.jpg');
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            .card-header{
+                color: black;
+            }
+            #navbar{
+                background-color: #27272773 !important;
+                backdrop-filter: blur(12px);
+            }
+        </style>
         <div id="ligne-points">
         <?php
         // On récupère les lat et lng des reservations hébergement fait par l'utilisateur sur un voyage en cours de construction

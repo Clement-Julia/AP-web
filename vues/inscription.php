@@ -1,66 +1,227 @@
 <?php
 require_once "header.php";
+// require_once "../assets/css/style_inscription.php";
 
 $date = new DateTime();
 ?>
 
-<div class="container mt-3">
-    <h1>Formulaire d'inscription :</h1>
+<style>
+
+    html{
+        height: 100%;
+    }
+
+    body{
+        background-image: url('../assets/src/img/background/inscription.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 100%;
+        font-family: 'Numans', sans-serif;
+        color: white;
+    }
+
+    body:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: '';
+        background: #000;
+        opacity: .3;
+        z-index: -1;
+        height: 100%;
+    }
+
+    @media (max-height: 700px) {
+        body, body:after {
+            background-size: auto;
+            height: 700px;
+        }
+    }
+
+    form{
+        min-width: 30%;
+    }
+
+    .form-input{
+        width: 100%;
+        background: rgb(0 0 0 / 0%);
+        border: none;
+        height: 50px;
+        color: rgb(255 255 255) !important;
+        border: 1px solid rgb(0 0 0 / 0%);
+        background: rgb(255 255 255 / 8%);
+        border-radius: 40px;
+        padding-left: 20px;
+        padding-right: 20px;
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+    }
+
+    .form-input:hover, .form-input:focus {
+        background: transparent;
+        outline: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .form-input:focus {
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .form-input::placeholder {
+        color: rgba(255, 255, 255, 0.8) !important;
+        opacity: 1;
+    }
+
+    .form-label{
+        color: rgb(251 206 181);
+    }
+
+    .form-checkbox input:checked ~ .form-checkbox:after{
+        color: rgb(251 206 181);
+    }
+
+    .checkbox-wrap {
+        display: block;
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .checkbox-wrap input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .checkmark:after {
+        content: "\f0c8";
+        font-family: "FontAwesome";
+        position: absolute;
+        color: rgba(255, 255, 255, 0.1);
+        font-size: 20px;
+        margin-top: -4px;
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s; }
+        @media (prefers-reduced-motion: reduce) {
+            .checkmark:after {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none;
+        }
+    }
+
+    .checkbox-wrap input:checked ~ .checkmark:after {
+        display: block;
+        content: "\f14a";
+        font-family: "FontAwesome";
+        color: rgba(0, 0, 0, 0.2);
+    }
+
+    .form-checkbox {
+        color: #fbceb5;
+    }
+
+    .form-checkbox input:checked ~ .checkmark:after {
+        color: #fbceb5;
+    }
+
+    .form-btn{
+        min-height: 40px;
+        background: rgb(251 206 181) !important;
+        border: 1px solid rgb(251 206 181) !important;
+        color: rgb(0 0 0) !important;
+        border-radius: 40px;
+        box-shadow: none !important;
+        font-size: 15px;
+        text-transform: uppercase;
+    }
+
+    .invalid-feedback {
+        color: rgb(245 73 89);
+    }
+
+    .valid-feedback {
+        color: rgb(52 235 150);
+    }
+
+    #connexion, #inscription{
+        color: white !important;
+    }
+</style>
+
+<div class="container mt-3 d-flex flex-column align-items-center">
+    <h1>Inscription :</h1>
     <form method="POST" action = "../controleurs/inscription.php" class="needs-validation" novalidate>
 
         <div class="form-group my-3">
-            <label for="nom" class="mb-1">Nom : </label>
-            <input type="text" class="form-control <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" name="nom" id="nom" placeholder="Entrez votre nom" value="<?=(!empty($_POST)) ? $_POST["nom"] : ""?>" required>
+            <input type="text" class="form-input <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" name="nom" id="nom" placeholder="Nom" value="<?=(!empty($_POST)) ? $_POST["nom"] : ""?>" required>
 
             <div class="valid-feedback">Ok !</div>
             <div class="invalid-feedback">Nom incorrect</div>
         </div>
 
         <div class="form-group my-3">
-            <label for="prenom" class="mb-1">Prénom : </label>
-            <input type="text" class="form-control <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" name="prenom" id="prenom" placeholder="Entrez votre prénom" required>
+            <input type="text" class="form-input <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" name="prenom" id="prenom" placeholder="Prénom" required>
 
             <div class="valid-feedback">Ok !</div>
             <div class="invalid-feedback">Prénom incorrect</div>
         </div>
 
         <div class="form-group my-3">
-            <label for="mdp" class="mb-1">Mot de passe : </label>
-            <input type="password" class="form-control <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all" || $_GET["erreur"] == "mdp")) ? "is-invalid" : ""?>" name="mdp" id="mpd" placeholder="Entrez votre mot de passe" required>
-            <small id="aideUserName" class="form-text">Le mot de passe doit contenir : au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial</small>
+            <input type="password" class="form-input <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all" || $_GET["erreur"] == "mdp")) ? "is-invalid" : ""?>" name="mdp" id="mpd" placeholder="Mot de passe" required>
+            <!-- <small id="aideUserName" class="form-text">Le mot de passe doit contenir : au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial</small> -->
 
             <div class="valid-feedback">Ok !</div>
             <div class="invalid-feedback">Votre mot-de-passe ne remplit pas les conditions</div>
         </div>
 
         <div class="form-group my-3">
-            <label for="mdpVerif" class="mb-1">Vérification du mot de passe : </label>
-            <input type="password" class="form-control <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" name="mdpVerif" id="mdpVerif" placeholder="Vérifier votre mot de passe" required>
+            <input type="password" class="form-input <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" name="mdpVerif" id="mdpVerif" placeholder="Vérification du mot de passe" required>
 
             <div class="valid-feedback">Ok !</div>
             <div class="invalid-feedback">Les mots-de-passe ne sont pas similaire</div>
         </div>
 
         <div class="form-group my-3">
-            <label for="age" class="mb-1">Date de naissance : </label>
-            <input type="date" class="form-control <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" name="age" id="age" min=0 placeholder="Entrez votre âge" max="<?= $date->format('Y-m-d') ?>" required>
+            <input type="date" class="form-input <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" name="age" id="age" min=0 placeholder="Date de naissance" max="<?= $date->format('Y-m-d') ?>" required>
 
             <div class="valid-feedback">Ok !</div>
             <div class="invalid-feedback">Date incorrect</div>
         </div>
 
         <div class="form-group my-3">
-            <label for="email" class="mb-1">Email : </label>
-            <input type="email" class="form-control <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all" || $_GET["erreur"] == "email")) ? "is-invalid" : ""?>" name="email" id="email" placeholder="Entrez votre email" required>
+            <input type="email" class="form-input <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all" || $_GET["erreur"] == "email")) ? "is-invalid" : ""?>" name="email" id="email" placeholder="Email" required>
 
             <div class="valid-feedback">Ok !</div>
             <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "email") ? "<div class='invalid-feedback'>Cet email existe déjà</div>" : "<div class='invalid-feedback'>Email incorrect</div>"?>
         </div>
 
         <div class="form-check">
-            <input class="form-check-input <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" type="checkbox" value="" id="invalidCheck" required>
-            <label class="form-check-label <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" for="invalidCheck">
-                J'accepte les <a class="alert-link text-decoration-none" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">conditions générales</a> d'utilisation
+            <label class="checkbox-wrap form-checkbox <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>">J'accepte les <a class="form-label text-decoration-underline" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">conditions générales</a> d'utilisation
+                <input type="checkbox" id="invalidCheck" class="<?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" checked required>
+                <span class="checkmark"></span>
             </label>
             <div class="invalid-feedback">
                 Vous devez accepter les conditions générales pour vous inscrire
@@ -161,16 +322,15 @@ $date = new DateTime();
                             </p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="approuved" class="btn btn-primary" data-bs-dismiss="modal">Lu et approuvé</button>
+                            <button type="button" id="approuved" class="btn btni" data-bs-dismiss="modal">Lu et approuvé</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group text-center my-3">
-            <button type="submit" class="btn btn-primary return" name="submit" value="ON">Inscription</button>
-            <a href="../vues/" class="btn btn-warning return">Retour</a>
+        <div class="form-group mt-4 row justify-content-center">
+            <button type="submit" class="btn form-btn return col-8" name="submit" value="ON">Inscription</button>
         </div>
 
     </form>
@@ -186,8 +346,9 @@ $date = new DateTime();
         .forEach(function (form) {
         form.addEventListener('submit', function (event) {
             if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
+                event.preventDefault();
+                event.stopPropagation();
+
             }
 
             form.classList.add('was-validated')

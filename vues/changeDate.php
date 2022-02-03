@@ -36,11 +36,25 @@ if(!empty($_SESSION['idUtilisateur'])){
 
             ?>
 
+            <style>
+                body{
+                    background-image: url('../assets/src/img/background/HebergementDes.jpg');
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                }
+                .card-header{
+                    color: black;
+                }
+                #navbar{
+                    background-color: #27272773 !important;
+                    backdrop-filter: blur(12px);
+                }
+            </style>
             <div id="change-date-container">
                 <div class="card">
                     <div class="card-header text-center"><h6>Modification des dates du séjour</h6></div>
                 </div>
-                <p class="text-center mt-3">Astuce de l'équipe : <span class="text-muted">"Pour modifier une date, cliquer une première fois sur la date à modifier puis une deuxième fois sur la date choisie"</span></p>
+                <p class="text-center mt-3 text-light">Astuce de l'équipe : <span class="text-light">"Pour modifier une date, cliquer une première fois sur la date à modifier puis une deuxième fois sur la date choisie"</span></p>
                 <div id="cd-calendar-container" class="card">
                     <!-- Les 3 calendriers -->
 

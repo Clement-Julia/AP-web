@@ -42,9 +42,22 @@ if(!empty($_SESSION['idUtilisateur'])){
 
                 ?>
 
+                <style>
+                    body{
+                        background-image: url('../assets/src/img/background/choixHotel.jpg');
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                    }
+
+                    #navbar{
+                        background-color: #27272773 !important;
+                        backdrop-filter: blur(12px);
+                    }
+                </style>
+                
                 <div id="hv-container">
                     <div id="hv-back-button-container">
-                        <a href="createTravel.php?idRegion=<?=$Ville->getIdRegion()?>" class="btn btn-sm btn-secondary back-button"></a>
+                        <a href="createTravel.php?idRegion=<?=$Ville->getIdRegion()?>" class="btn btn-sm btn-secondary back-button"><</a>
                     </div>
                     <div id="choose-hebergement">
                         <div class="row">

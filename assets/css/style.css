@@ -39,7 +39,7 @@
     position: sticky;
     top: 0;
     height: var(--navbar-height);
-    background-color: rgba(105, 75, 27, 0.938)!important;
+    background-color: transparent !important;
     z-index: 1000000;
 }
 #navbar a.white {
@@ -56,22 +56,14 @@
     transition: .3s;
 }
 #navbar a.headerli:hover {
-    background-color: rgba(105, 75, 27, 0.726);
     transition: .3s;
 }
 
 body{
-    background: center / cover no-repeat url("../../assets/src/img/man.jpg");
+    /* background-color: rgb(151, 146, 146) !important; */
+    background-color: rgb(231, 230, 230);
+    /* background: center / cover no-repeat url("../../assets/src/img/man.jpg"); */
     background-attachment: fixed;
-}
-
-.color-btn{
-    background-color: rgba(80, 57, 21, 0.726) !important;
-    border-color: rgba(80, 57, 21, 0.726) !important;
-}
-
-.color-btn:focus{
-    box-shadow :0 0 0 .25rem rgba(153, 110, 40, 0.726) !important;
 }
 
 /* ----------------- END NAVBAR ----------------------- */
@@ -194,16 +186,19 @@ body{
 #ct-choose-town, #create-travel-container .map{
     width: 50%;
 }
-#create-travel-container #map {
-    border-left: 2px solid #823a22;
-}
 
 #total-prix-container{
     text-align: center;
     padding: 8px 0;
-    border: 4px double #823a22;
-    background-color: rgba(105, 75, 27, 0.999);
+    background-color: #27272773 !important;
+    backdrop-filter: blur(12px);
     color: white;
+}
+
+#separation{
+    background-color: #27272773 !important;
+    backdrop-filter: blur(12px);
+    min-height: 15px;
 }
 
 #ct-choose-town {
@@ -213,7 +208,6 @@ body{
 #choose-town-top {
     height: 50%;
     overflow-y: scroll;
-    background: center / cover no-repeat url("../../assets/src/img/man.jpg")!important;
     background-attachment: fixed;
 }
 #choose-town-bot {
@@ -222,7 +216,6 @@ body{
     flex-direction: row;
     flex-wrap: wrap;
     overflow-y: scroll;
-    background-color: #e3b88e;
 }
 .ct-a {
     margin: 5px;
@@ -325,10 +318,6 @@ body{
 
 
 
-
-
-
-
 /* --------------------- hebergementVille.php -------------------- */
 
 #hv-container {
@@ -396,6 +385,7 @@ body{
     height: 30px;
     color: black;
     background-color: transparent;
+    backdrop-filter: blur(12px);
     border: none;
     border-radius:50%;
     box-shadow: 0 0 2px #979797;

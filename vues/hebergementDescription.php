@@ -50,6 +50,21 @@ if(!empty($_SESSION['idUtilisateur'])){
                 $average = $avis->getAverageAvis($_GET["idHebergement"]);
                 ?>
 
+                <style>
+                    body{
+                        background-image: url('../assets/src/img/background/HebergementDes.jpg');
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                    }
+                    .card-header{
+                        color: black;
+                    }
+                    #navbar{
+                        background-color: #27272773 !important;
+                        backdrop-filter: blur(12px);
+                    }
+                </style>
+
                 <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
                     <div id="hd-title-container">
                         <div id="hd-title"><a href="hebergementVille.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
@@ -147,7 +162,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                             <div class="card-header"><h6>Détail du prix</h6></div>
                             <div class="card-body">
                                 <span>Vous allez réserver : </span>
-                                <span id="nbJours">0 nuit</span> x <span id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>"><?=$Hebergement->getPrix()?> €</span> = <span id="prix">0 €</span>
+                                <span id="nbJours">0 nuit</span> à <span id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>"><?=$Hebergement->getPrix()?> €</span> <br> Montant total : <span id="prix">0 €</span>
                             </div>
                         </div>
                         <div>

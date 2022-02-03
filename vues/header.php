@@ -7,7 +7,7 @@ if (!empty($_SESSION['idUtilisateur'])){
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -53,15 +53,15 @@ if(!empty($_COOKIE["connection_cookies"])){
             </div>
         </div>
 
-        <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' class='text-decoration-none text-dark align-self-center'>Inscription</a><a href='connexion.php' class='text-decoration-none text-dark align-self-center ms-3'>Connexion</a>");?>
+        <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' id='inscription' class='text-decoration-none text-white align-self-center'>Inscription</a><a href='connexion.php' id='connexion' class='text-decoration-none text-white align-self-center ms-3'>Connexion</a>");?>
         <?php if(!empty($_SESSION["idUtilisateur"])){
                 ?>
                 <div class="dropdown me-3">
-                    <a class="btn dropdown-toggle white" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="btn dropdown-toggle white me-3" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <?= $_SESSION["prenom"] ." " . $_SESSION["nom"]?>
                     </a>
             
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <ul class="dropdown-menu me-5" aria-labelledby="dropdownMenuLink" style="left: -25px;">
                         <!-- <li><a class="dropdown-item" href="historique.php">Historique</a></li> -->
                         <li><a class="headerli dropdown-item" href="avis.php">Avis</a></li>
                         <li><a class="headerli dropdown-item" href="favoris.php">Favoris</a></li>

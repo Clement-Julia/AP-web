@@ -27,16 +27,32 @@ if(!empty($_SESSION['idUtilisateur'])){
         $Lodgings = $Lodging->getVilles();
 
         ?>
+        <style>
+            body{
+                background-image: url('../assets/src/img/background/createTravel.jpg');
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            #navbar{
+                background-color: #27272773 !important;
+                backdrop-filter: blur(12px);
+            }
+        </style>
+
         <div id="ligne-points">
-        <?php
-        // On récupère les lat et lng des reservations hébergement fait par l'utilisateur sur un voyage en cours de construction
-        foreach ($ReservationVoyage->getVilleLatLngByUserId($_SESSION['idUtilisateur']) as $latLngVille){ ?>
-            <div data-lat="<?=$latLngVille['latitude']?>" data-lng="<?=$latLngVille['longitude']?>"></div>
-        <?php } ?>
+            <?php
+            // On récupère les lat et lng des reservations hébergement fait par l'utilisateur sur un voyage en cours de construction
+            foreach ($ReservationVoyage->getVilleLatLngByUserId($_SESSION['idUtilisateur']) as $latLngVille){ ?>
+                <div data-lat="<?=$latLngVille['latitude']?>" data-lng="<?=$latLngVille['longitude']?>"></div>
+            <?php } ?>
         </div>
+
+        
 
         <div id="create-travel-container">
             <div id="ct-choose-town">
+
                 <div id="choose-town-top">
                     <?php 
                     if($BuildingTravelId != null){
@@ -46,7 +62,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                             ?>
                             <div class="mx-3 my-3 ct-resume-container">
                                 <div class="card ct-resume">
-                                        <div class="card-header"><span class="bold">Etape : </span><?=$index?></div>
+                                    <div class="card-header text-dark"><span class="bold">Etape : </span><?=$index?></div>
                                         <div class="d-flex">
                                             <div class="card-body ct-p-container">
                                                 <p class="card-text"><span class="bold">Ville : </span><?=$infos['villeNom']?></p>
@@ -72,25 +88,20 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                 </form>
                                             </div>
                                         </div>
-                                        
-                                    
-                                    
-
+                                    </div>
                                 </div>
-                            </div>
                             <?php
                             $index++;
                         }
                     }
                     ?>
-                    </div>
+                </div>
 
-    <!-- ------------------------------------------- -->
-                    <div id="total-prix-container"><?= $BuildingTravelId != null ? "Le prix total de votre voyage est de : " . $ReservationVoyage->getPrix() . " €" : "" ?>
-                        <a href="resumeTravel.php" class="btn btn-sm btn-success ms-5">Valider voyage</a>
-                    </div>
-    <!-- ------------------------------------------- -->
-
+                <!----------------------------------------------->
+                    
+                <div id="separation">
+                </div>
+                <!----------------------------------------------->
                     
                 <div id="choose-town-bot">
                     <div class="row">
@@ -112,6 +123,10 @@ if(!empty($_SESSION['idUtilisateur'])){
                     </div>
                 </div>
 
+                <!----------------------------------------------->
+                <div id="total-prix-container"><?= $BuildingTravelId != null ? "Le prix total de votre voyage est de : " . $ReservationVoyage->getPrix() . " €" : "" ?>
+                    <a href="resumeTravel.php" class="btn btn-sm btn-success ms-5">Valider voyage</a>
+                </div>
 
             </div>
             <div data-lat="<?=$Lodging->getLatitude();?>" data-lng="<?=$Lodging->getLongitude();?>" data-zoom="8" class="map" id="map"></div>

@@ -25,7 +25,7 @@ class Ville extends Modele {
             $this->libelle = $infoVille["libelle"];
             $this->latitude = $infoVille["latitude"];
             $this->longitude = $infoVille["longitude"];
-            $this->$code_postal = $infoVille["code_postal"];
+            $this->code_postal = $infoVille["code_postal"];
             $this->description = $infoVille["description"];
             $this->idRegion = $infoVille["idRegion"];
             $this->uuid = $infoVille["uuid"];
@@ -37,7 +37,7 @@ class Ville extends Modele {
             foreach ($infosHebergement as $item){
 
                 $hebergement = new Hebergement();
-                $hebergement->initialiserHebergement($item["idHebergement"], $item["libelle"], $item["description"], $item["idVille"], $item["latitude"], $item["longitude"], $item["prix"], $item["uuid"]);
+                $hebergement->initialiserHebergement($item["idHebergement"], $item["libelle"], $item["description"], $item["idVille"], $item["latitude"], $item["longitude"], $item["adresse"], $item["prix"], $item["uuid"]);
                 $this->hebergements[] = $hebergement;
 
             }
