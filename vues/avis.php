@@ -135,13 +135,12 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                     <?php $x++ ?>
                                                 </div>
 
-                                                <!-- Commentaire -->
-                                                <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."><?=$all["commentaire"]?></textarea>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-warning" name="status" value="update">Modifier</button>
-                                                <button type="submit" class="btn btn-danger" name="status" value="delete">Supprimer</button>
-                                            </div>
+                                            <!-- Commentaire -->
+                                            <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."><?= htmlspecialchars($all["commentaire"], ENT_QUOTES) ?></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-warning" name="status" value="update">Modifier</button>
+                                            <button type="submit" class="btn btn-danger" name="status" value="delete">Supprimer</button>
                                         </div>
                                     </div>
                                 </div>

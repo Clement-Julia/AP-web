@@ -44,7 +44,7 @@ $bool = 0;
                         <?php
                             foreach($infos as $info){
                                 ?>
-                                    <option value="<?= $info["libelle"] ?>"></option>
+                                    <option value="<?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?>"></option>
                                 <?php
                             }
                         ?>
@@ -65,7 +65,7 @@ $bool = 0;
         <form method="POST" action="../controleurs/modifVille.php?id=<?= $info_ville["idVille"] ?>"  multipart="" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="libelle">Nom : </label>
-                <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'une ville" required autocomplete="off" value="<?= $info_ville["libelle"] ?>">
+                <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'une ville" required autocomplete="off" value="<?= htmlspecialchars($info_ville["libelle"], ENT_QUOTES) ?>">
             </div>
 
             <div class="form-group">
@@ -75,7 +75,7 @@ $bool = 0;
                     <?php
                         foreach($infos as $info){
                             ?>
-                                <option value="<?= $info["idRegion"] ?>" <?= ($info["idRegion"] == $info_ville["idRegion"]) ? "selected" : "" ?>><?= $info["libelle"] ?></option>
+                                <option value="<?= $info["idRegion"] ?>" <?= ($info["idRegion"] == $info_ville["idRegion"]) ? "selected" : "" ?>><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></option>
                             <?php
                         }
                     ?>
@@ -84,7 +84,7 @@ $bool = 0;
 
             <div class="form-group">
                 <label for="description">Description : </label>
-                <textarea class="form-control" name="description" id="description" cols="30" rows="10" placeholder="Entrez la description de la ville"><?= $info_ville["description"] ?></textarea>
+                <textarea class="form-control" name="description" id="description" cols="30" rows="10" placeholder="Entrez la description de la ville"><?= htmlspecialchars($info_ville["description"], ENT_QUOTES) ?></textarea>
             </div>
 
             <div class="form-group mt-4">

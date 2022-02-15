@@ -27,20 +27,9 @@ class Utilisateur extends Modele {
             $this->mdp = $infoUser["mdp"];
             $this->nom = $infoUser["nom"];
             $this->prenom = $infoUser["prenom"];
-            $this->age = $infoUser["age"];
             $this->idRole = $infoUser["idRole"];
             $this->birth = $infoUser["DoB"];
             $this->token = $infoUser["token"];
-            
-            $requete = $this->getBdd()->prepare("SELECT * FROM messages WHERE expediteur = ? OR destinataire = ? ORDER BY date");
-            $requete->execute([$idUtilisateur, $idUtilisateur]);
-            $infosMessages = $requete->fetchAll(PDO::FETCH_ASSOC);
-
-            foreach ( $infosMessages as $infoMessage ){
-                $objetMessage = new Message();
-                $objetMessage->initialiserMessages($infoMessage["idMessage"], $infoMessage["date"], $infoMessage["contenu"], $infoMessage["expediteur"], $infoMessage["destinataire"], $infoMessage["idRole"]);
-                $this->messages[] = $objetMessage;
-            }
 
         }
         
@@ -79,6 +68,9 @@ class Utilisateur extends Modele {
                 $_SESSION["idRole"] = $this->getIdRole();
                 $_SESSION["email"] = $this->getEmail();
                 $_SESSION["mdp"] = $mdp;
+
+                $return["success"] = true;
+                $return["error"] = 0;
             }
 
 
@@ -187,20 +179,24 @@ class Utilisateur extends Modele {
     }
 
     public function setConnectionCookies(){
-        $codeCookies = "qqch";
-        while($codeCookies != null){
-            $codeCookies = $this->idUtilisateur . "-" . bin2hex(random_bytes(50));
-            $requete = $this->getBdd()->prepare("SELECT token FROM utilisateurs WHERE token = ?");
+        $codeCookies = bin2hex(random_bytes(50));
+        $nbLigneRequete = 1;
+        while($nbLigneRequete != 0){
+            $requete = $this->getBdd()->prepare("SELECT COUNT(*) as result FROM utilisateurs WHERE token = ?");
             $requete->execute([$codeCookies]);
-            $codeCookies = $requete->fetch(PDO::FETCH_ASSOC);
+            $nbLigneRequete = $requete->fetch(PDO::FETCH_ASSOC)['result'];
+            if($nbLigneRequete == 1){
+                $codeCookies = bin2hex(random_bytes(50));
+            }
         }
+
         try{
-            $requete = $this->getBdd()->prepare("INSERT INTO utilisateurs (token) VALUES(?) WHERE idUtilisateurs = ?");
+            $requete = $this->getBdd()->prepare("UPDATE utilisateurs SET token = ? WHERE idUtilisateur = ?");
             $requete->execute([$codeCookies, $this->idUtilisateur]);
         } catch (Exception $e){
             return false;
         }
-        setcookie("conection_cookies", 1, timestampAddDay(30), "/");
+        setcookie("connection_cookies", $this->idUtilisateur . "-" .$codeCookies, timestampAddDay(30), "/");
         return true;
     }
 
@@ -214,6 +210,12 @@ class Utilisateur extends Modele {
         $requete->execute([$idUser, $token]);
         return $requete->fetch(PDO::FETCH_ASSOC);
 
+    }
+
+    public function getUserByEmail($email){
+        $requete = $this->getBdd()->prepare("SELECT * FROM utilisateurs WHERE email = ?");
+        $requete->execute([$email]);
+        return $requete->fetch(PDO::FETCH_ASSOC);
     }
 
 }

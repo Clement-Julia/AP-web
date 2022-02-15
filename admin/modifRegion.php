@@ -69,7 +69,7 @@ $bool = 0;
                         <?php
                             foreach($infos as $info){
                                 ?>
-                                    <option value="<?= $info["idRegion"] ?>"><?= $info["libelle"] ?></option>
+                                    <option value="<?= $info["idRegion"] ?>"><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></option>
                                 <?php
                             }
                         ?>
@@ -89,12 +89,12 @@ $bool = 0;
         <form method="POST" action="../controleurs/modifRegion.php?id=<?= $info_region->getIdRegion() ?>">
             <div class="form-group">
                 <label for="libelle">Region : </label>
-                <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'une ville" required autocomplete="off" value="<?= $info_region->getLibelle() ?>" disabled>
+                <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'une ville" required autocomplete="off" value="<?= htmlspecialchars($info_region->getLibelle(), ENT_QUOTES) ?>" disabled>
             </div>
 
             <div class="form-group">
                 <label for="description">Description : </label>
-                <textarea class="form-control" name="description" id="description" cols="30" rows="10" placeholder="Entrez la description de la région"><?= $info_region->getDescription() ?></textarea>
+                <textarea class="form-control" name="description" id="description" cols="30" rows="10" placeholder="Entrez la description de la région"><?= htmlspecialchars($info_region->getDescription(), ENT_QUOTES) ?></textarea>
             </div>
 
             <div class="form-group text-center mt-4">

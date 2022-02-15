@@ -74,8 +74,8 @@ if(!empty($_SESSION['idUtilisateur'])){
                                 <div id="<?= $item[1]->getIdHebergement()?>" data-hebergement="1" data-id="<?= $item[1]->getIdHebergement()?>" data-name="<?= $item[1]->getLibelle()?>" data-lat="<?= $item[1]->getLatitude()?>" data-lng="<?= $item[1]->getLongitude()?>" data-zoom="12" data-price="<?=$item[1]->getPrix()?>" class="card ct-a js-marker">
                                     <img class="img-fluid" alt="100%x280" src="<?=$Image->getBanniere()?>">
                                     <div class="card-body hv-text-hebergement">
-                                        <h6 class="card-title"><?= $item[1]->getLibelle()?></h6>
-                                        <p><?= coupe_phrase($item[1]->getDescription())?></p>
+                                        <h6 class="card-title"><?= htmlspecialchars($item[1]->getLibelle(), ENT_QUOTES)?></h6>
+                                        <p><?= coupe_phrase(htmlspecialchars($item[1]->getDescription(), ENT_QUOTES))?></p>
                                         <div class="d-flex justify-content-between">
                                             <span>Prix : <?= $item[1]->getPrix()?> €</span>
                                             <span>

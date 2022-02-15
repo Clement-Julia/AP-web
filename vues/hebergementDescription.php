@@ -67,7 +67,7 @@ if(!empty($_SESSION['idUtilisateur'])){
 
                 <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
                     <div id="hd-title-container">
-                        <div id="hd-title"><a href="hebergementVille.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
+                        <div id="hd-title"><a href="hebergementVille.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= htmlspecialchars($Hebergement->getLibelle(), ENT_QUOTES) ?></div>
                         <div id="hd-infos">
                             <div id="hd-rate">
                                 <?= ($average != 0) ? $average.'<i class="fas fa-star" style="color: #f2f200;"></i>' : "<span class='text-muted fst-italic'>Aucun avis n'a été publié...</span> "?>
@@ -79,7 +79,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                     <div id="hd-description-container">
                         <div id="hd-description" class="card">
                             <div class="card-header"><h6>Description</h6></div>
-                            <div class="card-body"><?= $Hebergement->getDescription() ?></div>
+                            <div class="card-body"><?= htmlspecialchars($Hebergement->getDescription(), ENT_QUOTES) ?></div>
                             
                         </div>
                             <div class="card">
@@ -288,7 +288,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="heading<?=$i?>">
                                                 <button class="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapse<?=$i?>">
-                                                    <?= $avis["nom"] . " " . $avis["prenom"] ?>
+                                                    <?= htmlspecialchars($avis["nom"], ENT_QUOTES) . " " . htmlspecialchars($avis["prenom"], ENT_QUOTES) ?>
                                                     <div class="rating ms-5">
                                                         <input type="radio" name="<?=$name?>" value="5" id="<?=$x?>" <?= (5 == $avis["note"]) ? "checked" : "" ?> disabled>
                                                         <label class="rating_size" for="<?=$x?>">☆</label>
@@ -315,7 +315,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                             </h2>
                                             <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#accordionExample">
                                                 <div class="accordion-body">
-                                                    <?= $avis["commentaire"] ?>
+                                                    <?= htmlspecialchars($avis["commentaire"], ENT_QUOTES) ?>
                                                 </div>
                                             </div>
                                         </div>

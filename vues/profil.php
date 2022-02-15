@@ -105,11 +105,11 @@ error($_GET);
                             <div class="row mt-2">
                                 <div class="col-md-6">
                                     <label class="labels">Nom</label>
-                                    <input type="text" name="nom" class="form-control" placeholder="Nom" value="<?= $user->getNom() ?>">
+                                    <input type="text" name="nom" class="form-control" placeholder="Nom" value="<?= htmlspecialchars($user->getNom(), ENT_QUOTES) ?>">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="labels">Prénom</label>
-                                    <input type="text" name="prenom" class="form-control" value="<?= $user->getPrenom() ?>" placeholder="Prénom">
+                                    <input type="text" name="prenom" class="form-control" value="<?= htmlspecialchars($user->getPrenom(), ENT_QUOTES) ?>" placeholder="Prénom">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -133,7 +133,7 @@ error($_GET);
                             <form method="post" action="../controleurs/updateUser.php?update=co">
                                 <div class="col-md-12">
                                     <label class="labels">Email</label>
-                                    <input type="text" name="email" class="form-control" placeholder="Entrez votre email" value="<?= $user->getEmail() ?>">
+                                    <input type="text" name="email" class="form-control" placeholder="Entrez votre email" value="<?= htmlspecialchars($user->getEmail(), ENT_QUOTES) ?>">
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mt-5">
                                     <h4 class="text-right">Changer son mot-de-passe</h4>

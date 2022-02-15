@@ -37,10 +37,10 @@ elseif(isset($_GET["error"])){?>
                             $_SESSION["demande".$demande["idHebergement"]] = $demande;
                             ?>
                             <tr>
-                                <td><?=$demande["nom"] . " " . $demande["prenom"]?></td>
-                                <td><?=$demande["libelle"]?></td>
-                                <td><?=$demande["libelleVille"]?></td>
-                                <td><?=$demande["libelleRegion"]?></td>
+                                <td><?= htmlspecialchars($demande["nom"], ENT_QUOTES) . " " . htmlspecialchars($demande["prenom"], ENT_QUOTES)?></td>
+                                <td><?= htmlspecialchars($demande["libelle"], ENT_QUOTES)?></td>
+                                <td><?= htmlspecialchars($demande["libelleVille"], ENT_QUOTES)?></td>
+                                <td><?= htmlspecialchars($demande["libelleRegion"], ENT_QUOTES)?></td>
                                 <td><?=$demande["dateEnregistrement"]?></td>
                                 <td class="btn-group d-flex" >
                                     <a href="../controleurs/demandePicture.php?id=<?=$demande["idHebergement"]?>&command=acc" class="btn btn-success">Accepter</a>

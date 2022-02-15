@@ -5,7 +5,7 @@ $hotel = new Hebergement($_GET["id"]);
 ?>
 
 <div class="container">
-    <h1 class="mb-5">Demande d'ajout de photos pour l'hébergement <?= $hotel->getLibelle() ?> :</h1>
+    <h1 class="mb-5">Demande d'ajout de photos pour l'hébergement <?= htmlspecialchars($hotel->getLibelle(), ENT_QUOTES) ?> :</h1>
     <div class="form-group">
         <label>Bannière :</label>
         <div id="banniere">
