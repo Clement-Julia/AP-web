@@ -12,7 +12,7 @@ require_once "header.php";
     </div>
     
     <?php
-    if(!empty($_SESSION)){
+    if(!empty($_SESSION["idUtilisateur"])){
         ?>
         <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <form action="../controleurs/startTravelTime.php" method="POST">

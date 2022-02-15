@@ -14,11 +14,11 @@
             <p>C'est ok pour vous ?</p>
         </div>
         <div class="modal-footer border-b-none p-0">
-            <div class="btn-group m-0" role="group" aria-label="Basic example" style="width: 100%">
-                <button type="button" class="btn btn-outline-secondary btn-lg border-cookie" data-bs-target="#information" data-bs-toggle="modal" data-bs-dismiss="modal">Plus d'infos</button>
-                <form action="../controleurs/connectionCookies.php" method="post">
+            <div class="row m-0" style="width: 100%">
+                <button type="button" class="btn btn-outline-secondary btn-lg border-cookie col-6" data-bs-target="#information" data-bs-toggle="modal" data-bs-dismiss="modal">Plus d'infos</button>
+                <form action="../controleurs/connectionCookies.php" method="post" class="col-6 p-0">
                     <input type="hidden" value="1" name="accept-cookies-modal">
-                    <button type="submit" class="btn btn-outline-warning btn-lg border-cookie">Accepter</button>
+                    <button type="submit" class="btn btn-outline-warning btn-lg border-cookie" style="width:100%">Accepter</button>
                 </form>
             </div>
         </div>
@@ -36,11 +36,11 @@
             <p>Ce site utilise des cookies pour améliorer votre expérience de navigation. Parmi ces cookies, les cookies classés comme nécessaires sont stockés dans votre navigateur car ils sont aussi essentiels au fonctionnement des fonctionnalités de base du site. Nous utilisons également des cookies tiers qui nous aident à analyser et à comprendre comment vous utilisez ce site et vous maintenir connecté. Ces cookies ne seront stockés dans votre navigateur qu'avec votre consentement. Vous avez également la possibilité de désactiver ces cookies.</p>
         </div>
         <div class="modal-footer border-b-none p-0">
-            <div class="btn-group m-0" role="group" aria-label="Basic example" style="width: 100%">
-                <button type="button" class="btn btn-outline-secondary btn-lg border-cookie" data-bs-dismiss="modal">Refuser</button>
-                <form action="../controleurs/connectionCookies.php" method="post">
+            <div class="row m-0" style="width: 100%">
+                <button type="button" class="btn btn-outline-secondary btn-lg border-cookie col-6" data-bs-dismiss="modal">Refuser</button>
+                <form action="../controleurs/connectionCookies.php" method="post" class="col-6 p-0">
                     <input type="hidden" value="1" name="accept-cookies-modal">
-                    <button type="submit" class="btn btn-outline-warning btn-lg border-cookie">Accepter</button>
+                    <button type="submit" class="btn btn-outline-warning btn-lg border-cookie" style="width:100%">Accepter</button>
                 </form>
             </div>
         </div>

@@ -23,8 +23,8 @@ require_once "header.php";
         </div>
 
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="1" name="connection_cookies" id="invalidCheck">
-            <label class="form-check-label" for="invalidCheck">
+            <input class="form-check-input" type="checkbox" value="" name="connection_cookies" id="stay_connected">
+            <label class="form-check-label" for="stay_connected">
                 Rester connecter
             </label>
 
@@ -43,14 +43,13 @@ require_once "header.php";
 
     var forms = document.querySelectorAll('.needs-validation');
 
-    Array.prototype.slice.call(forms)
-        .forEach(function (form) {
+    Array.prototype.slice.call(forms).forEach(function (form) {
         form.addEventListener('submit', function (event) {
             if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
+                event.preventDefault()
+                event.stopPropagation()
             }
-
+            
             form.classList.add('was-validated')
         }, false)
         })
