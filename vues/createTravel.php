@@ -97,13 +97,6 @@ if(!empty($_SESSION['idUtilisateur'])){
                     ?>
                     </div>
 
-    <!-- ------------------------------------------- -->
-                    <div id="total-prix-container"><?= $BuildingTravelId != null ? "Le prix total de votre voyage est de : " . $ReservationVoyage->getPrix() . " €" : "" ?>
-                        <!-- <a href="resumeTravel.php" class="up ms-5">Valider voyage</a> -->
-                        <a href="resumeTravel.php" class="btn btn-sm btn-success ms-5">Valider voyage</a>
-                    </div>
-    <!-- ------------------------------------------- -->
-
                 <!----------------------------------------------->
                     
                 <div id="separation">
