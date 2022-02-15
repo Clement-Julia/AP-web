@@ -27,20 +27,9 @@ class Utilisateur extends Modele {
             $this->mdp = $infoUser["mdp"];
             $this->nom = $infoUser["nom"];
             $this->prenom = $infoUser["prenom"];
-            $this->age = $infoUser["age"];
             $this->idRole = $infoUser["idRole"];
             $this->birth = $infoUser["DoB"];
             $this->token = $infoUser["token"];
-            
-            $requete = $this->getBdd()->prepare("SELECT * FROM messages WHERE expediteur = ? OR destinataire = ? ORDER BY date");
-            $requete->execute([$idUtilisateur, $idUtilisateur]);
-            $infosMessages = $requete->fetchAll(PDO::FETCH_ASSOC);
-
-            foreach ( $infosMessages as $infoMessage ){
-                $objetMessage = new Message();
-                $objetMessage->initialiserMessages($infoMessage["idMessage"], $infoMessage["date"], $infoMessage["contenu"], $infoMessage["expediteur"], $infoMessage["destinataire"], $infoMessage["idRole"]);
-                $this->messages[] = $objetMessage;
-            }
 
         }
         
