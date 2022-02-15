@@ -78,12 +78,12 @@ $infos_a = $activités->getAllActivite();
             <div class="col-6 d-flex flex-column justify-content-center">
                 <div class="form-group">
                     <label for="latitude">Latitude : </label>
-                    <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Entrez une latitude" autocomplete="off">
+                    <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Clickez sur la map pour la définir" autocomplete="off" disabled>
                 </div>
 
                 <div class="form-group">
                     <label for="longitude">Longitude : </label>
-                    <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Entrez une longitude" autocomplete="off">
+                    <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Clickez sur la map pour la définir" autocomplete="off" disabled>
                 </div>
             </div>
             <div class="col-6" id="map"></div>

@@ -49,9 +49,9 @@ class Admin extends Utilisateur {
         return $return;
     }
 
-    public function acceptHebergementEnAttente($idDemande){
-        $requete = $this->getBdd()->prepare("UPDATE hebergement set actif = 1 where idHebergement = ?");
-        $requete->execute([$idDemande]);
+    public function acceptHebergementEnAttente($idDemande, $uuid){
+        $requete = $this->getBdd()->prepare("UPDATE hebergement set actif = 1, uuid = ? where idHebergement = ?");
+        $requete->execute([$idDemande, $uuid]);
     }
 
     public function supHebergementEnAttente($idDemande){

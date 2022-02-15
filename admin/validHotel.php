@@ -23,13 +23,13 @@ elseif(isset($_GET["error"])){?>
             <table class="table table-hover table-striped mt-3 align-td">
                 <thead class="bg-primary text-light">
                     <tr>
-                    <th scope="col">Propriétaire</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Descritption</th>
-                    <th scope="col">Ville</th>
-                    <th scope="col">Prix</th>
-                    <th scope="col" style ="min-width: 175px !important;">Date de la demande</th>
-                    <th scope="col" class="action text-center">Action</th>
+                        <th scope="col">Propriétaire</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Descritption</th>
+                        <th scope="col">Ville</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col" style ="min-width: 175px !important;">Date de la demande</th>
+                        <th scope="col" class="action text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +41,7 @@ elseif(isset($_GET["error"])){?>
                                 <td><?= htmlspecialchars($demande["nom"], ENT_QUOTES) . " " . htmlspecialchars($demande["prenom"], ENT_QUOTES)?></td>
                                 <td><?= htmlspecialchars($demande["libelle"], ENT_QUOTES)?></td>
                                 <td><?= htmlspecialchars($demande["description"], ENT_QUOTES)?></td>
-                                <td><?=$demande["nomVille"]?></td>
+                                <td><?= htmlspecialchars($demande["nomVille"], ENT_QUOTES)?></td>
                                 <td><?=$demande["prix"]?>€</td>
                                 <td><?=$demande["dateEnregistrement"]?></td>
                                 <td class="btn-group d-flex" >
