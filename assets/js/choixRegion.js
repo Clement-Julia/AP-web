@@ -39,7 +39,7 @@ async function regionDescription(idregion){
     var response = await fetch("../API/apiway.php?demande=region&idRegion=" + idregion);
     var description = await response.json();
     document.getElementById('description').innerHTML = description.description;
-    document.getElementById('link').href = "createTravel?idRegion=" + idregion;
+    document.getElementById('link').href = "createTravel.php?idRegion=" + idregion;
     var containerDescription = document.getElementById('description-region');
     var linkContainer = document.getElementById('link-container');
     if(linkContainer.classList.contains('d-none')){
