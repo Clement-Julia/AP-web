@@ -1,9 +1,5 @@
 <?php
 require_once "../controleurs/traitement.php";
-
-if (!empty($_SESSION['idUtilisateur'])){
-    $ReservationVoyage = new ReservationVoyage();
-}
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +25,7 @@ if(empty($_COOKIE["accept_cookies"])){
 }
 if(!empty($_COOKIE["connection_cookies"])){
     $Utilisateur = new Utilisateur();
-    $user = $Utilisateur->getUserByConnectionCookies($_COOKIE["conection_cookies"]);
+    $user = $Utilisateur->getUserByConnectionCookies($_COOKIE["connection_cookies"]);
     if($user["idUtilisateur"] != null){
         $_SESSION["idUtilisateur"] = $user["idUtilisateur"];
         $_SESSION["nom"] = $user["nom"];
@@ -37,6 +33,9 @@ if(!empty($_COOKIE["connection_cookies"])){
         $_SESSION["idRole"] = $user["idRole"];
         $_SESSION["email"] = $user["email"];
     }
+}
+if (!empty($_SESSION['idUtilisateur'])){
+    $ReservationVoyage = new ReservationVoyage();
 }
 ?>
 

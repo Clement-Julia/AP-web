@@ -387,7 +387,7 @@ body{
     width: 30px;
     height: 30px;
     color: black;
-    background-color: transparent;
+    background-color: #d3d3d3;
     border: none;
     border-radius:50%;
     box-shadow: 0 0 2px #979797;
@@ -889,6 +889,28 @@ body{
 }
 
 
+/* about */
+
+#about {
+    height: calc(100vh - 60px);
+    width: 100vw;
+    background: url('../src/img/index-background.jpg');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+#about .ligne {
+    display: flex;
+    min-height: 25%;
+}
+#about .ligne .card {
+    display: flex;
+    flex-direction: row;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.79), rgba(255,255,255,0.79)), url('../src/img/local.jpg');
+    background-position: center;
+    background-size: cover;
+}
 
 
 

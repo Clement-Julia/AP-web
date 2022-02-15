@@ -98,6 +98,54 @@ if(!empty($_SESSION['idUtilisateur'])){
                             </div>
                         </div>
                     </div>
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Carte bleu</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Paypal</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div id="paiement-cb" class="card">
+                                <div class="card-body d-flex flex-column" style="align-items:center">
+                                    <div class="d-flex flex-column" style="background-color:white;padding:15px;border-radius:5px;border:1px solid black; box-shadow:2px 2px 5px gray;">
+                                        <div style="display:flex; justify-content:center;">
+                                            <img class="img-fluid" src="../assets/src/img/card1.png" alt="" style="width: 50px; background-color:transparent;">
+                                            <img class="img-fluid" src="../assets/src/img/card2.jpg" alt="" style="width: 50px; background-color:transparent;">
+                                            <img class="img-fluid" src="../assets/src/img/card3.png" alt="" style="width: 50px; background-color:transparent;">
+                                            <img class="img-fluid" src="../assets/src/img/card4.jpg" alt="" style="width: 50px; background-color:transparent;">
+                                        </div>
+                                        <div>
+                                            <label for="card-number">Numéro de carte :</label><br>
+                                            <input type="text" id="card-number" name="card-number" style="width: 350px;">
+                                        </div>
+                                        <div style="display:flex;justify-content:space-between;">
+                                            <div>
+                                                <label for="date-peremption">Date péremption :</label><br>
+                                                <input type="text" id="date-peremption" name="date-peremption" style="width: 100px;">
+                                            </div>
+                                            <div style="">
+                                                <label for="cvc">Cryptogramme : </label><br>
+                                                <input type="text" id="cvc" name="cvc" style="width: 100px;">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="fullname">Nom du détenteur de la carte :</label><br>
+                                            <input type="text" id="fullname" name="fullname" style="width: 350px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                        </div>
+                    </div>
+
+
                     <form action="../controleurs/deleteBuildingTravel.php" method="POST">
                         <div class="card my-3">
                             <div class="card-body d-flex justify-content-center">
