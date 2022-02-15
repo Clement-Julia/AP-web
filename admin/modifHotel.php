@@ -43,7 +43,7 @@ if(!empty($_GET["libelle"])){
                         <?php
                             foreach($infos as $info){
                                 ?>
-                                    <option value="<?= $info["libelle"] ?>"></option>
+                                    <option value="<?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?>"></option>
                                 <?php
                             }
                         ?>
@@ -89,7 +89,7 @@ if(!empty($_GET["libelle"])){
 
             <div class="form-group">
                 <label for="libelle">Nom : </label>
-                <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'une ville" required autocomplete="off" value="<?= $info_hotel["libelle"] ?>">
+                <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'une ville" required autocomplete="off" value="<?= htmlspecialchars($info_hotel["libelle"], ENT_QUOTES) ?>">
             </div>
 
             <div class="form-group">
@@ -99,7 +99,7 @@ if(!empty($_GET["libelle"])){
                     <?php
                         foreach($infos as $info){
                             ?>
-                                <option value="<?= $info["idVille"] ?>" <?= ($info["idVille"] == $info_hotel["idVille"]) ? "selected" : "" ?>><?= $info["libelle"] ?></option>
+                                <option value="<?= $info["idVille"] ?>" <?= ($info["idVille"] == $info_hotel["idVille"]) ? "selected" : "" ?>><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></option>
                             <?php
                         }
                     ?>
@@ -124,7 +124,7 @@ if(!empty($_GET["libelle"])){
                     ?>
                     <div class="custom-control custom-switch mx-2">
                         <input type="checkbox" class="custom-control-input" name="options[]" id="customSwitch<?=$i?>" value=<?= $info["idOption"]?> <?= (in_array($info["idOption"], $tab)) ? "checked" : "" ?>>
-                        <label class="custom-control-label mb-1" for="customSwitch<?=$i?>"><?= $info["libelle"] ?></label>
+                        <label class="custom-control-label mb-1" for="customSwitch<?=$i?>"><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></label>
                     </div>
                     <?php
                     $i++;
@@ -147,6 +147,11 @@ if(!empty($_GET["libelle"])){
                 <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Entrez une longitude" autocomplete="off" value="<?= $info_hotel["longitude"] ?>">
             </div>
 
+            <div class="form-group">
+                <label for="adresse">Adresse : </label>
+                <input type="text" class="form-control" name="adresse" id="adresse" placeholder="Entrez l'adresse de l'hébergement" required>
+            </div>
+
             <div class="form-group mt-4">
                 <input type="file" name="file[]" id="file" class="inputfile inputfile-1 d-none" data-multiple-caption="{count} fichiers" multiple />
                 <label for="file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Ajouter une image&hellip;</span></label>
@@ -166,12 +171,12 @@ if(!empty($_GET["libelle"])){
                             <?php
                             if(empty(glob($filename))){
                                 ?>
-                                    <span class="text-muted font-italic">L'hebergement n'a pas de bannière...</span>
+                                    <span class="text-muted font-italic">L'hébergement n'a pas de bannière...</span>
                                 <?php
                             }
                         }else{
                             ?>
-                                <span class="text-muted font-italic">L'hebergement' n'a pas de bannière...</span>
+                                <span class="text-muted font-italic">L'hébergement' n'a pas de bannière...</span>
                             <?php
                         }
                     ?>
@@ -186,18 +191,18 @@ if(!empty($_GET["libelle"])){
                         lister_images("../assets/src/uuid/".$info_hotel["uuid"]);
                     }else{
                         ?>
-                            <span class="text-muted font-italic">L'hebergement n'a pas d'images...</span>
+                            <span class="text-muted font-italic">L'hébergement n'a pas d'images...</span>
                         <?php
                     }
                     ?>
                 </div>
             </div>
-
+ 
             <div class="form-group text-center mt-4">
                 <button type="submit" class="btn btn-warning">Modifier</button>
 
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-                Supprimer
+                    Supprimer
                 </button>
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -214,8 +219,9 @@ if(!empty($_GET["libelle"])){
                     </div>
                 </div>
             </div>
-
+            
         </form>
+        <a href="modifHotel.php" class="btn btn-secondary mt-5"><i class="fas fa-arrow-left"></i></a>
         <?php
     }
     ?>

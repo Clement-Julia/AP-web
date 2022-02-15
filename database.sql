@@ -26,7 +26,11 @@ DELIMITER $$
 -- Procédures
 --
 DROP PROCEDURE IF EXISTS `get_infos_about_to_all`$$
+<<<<<<< HEAD
+CREATE PROCEDURE `get_infos_about_to_all` (IN `p_id_hebergement` INT)  BEGIN
+=======
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_infos_about_to_all` (IN `p_id_hebergement` INT)  BEGIN
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
 	SELECT SUM(nbJours) as nuitees, hebergement.dateEnregistrement, COUNT(*) as nbReservation FROM reservations_hebergement 
                 INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage 
                 INNER JOIN hebergement USING(idHebergement) 
@@ -36,7 +40,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_infos_about_to_all` (IN `p_id_h
   END$$
 
 DROP PROCEDURE IF EXISTS `get_infos_about_to_year`$$
+<<<<<<< HEAD
+CREATE PROCEDURE `get_infos_about_to_year` (IN `p_id_hebergement` INT, IN `p_date` DATETIME)  BEGIN
+=======
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_infos_about_to_year` (IN `p_id_hebergement` INT, IN `p_date` DATETIME)  BEGIN
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
 	SELECT SUM(nbJours) as nuitees, hebergement.dateEnregistrement, COUNT(*) as nbReservation FROM reservations_hebergement 
                 INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage 
                 INNER JOIN hebergement USING(idHebergement) 
@@ -51,7 +59,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_infos_about_to_year` (IN `p_id_
        END$$
 
 DROP PROCEDURE IF EXISTS `obtenir_infos_gains`$$
+<<<<<<< HEAD
+CREATE PROCEDURE `obtenir_infos_gains` (IN `p_id_hebergement` INT, IN `p_1_mois` DATETIME, IN `p_3_mois` DATETIME, IN `p_6_mois` DATETIME, IN `p_1_an` DATETIME)  BEGIN
+=======
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenir_infos_gains` (IN `p_id_hebergement` INT, IN `p_1_mois` DATETIME, IN `p_3_mois` DATETIME, IN `p_6_mois` DATETIME, IN `p_1_an` DATETIME)  BEGIN
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
 	SELECT 
     	( 
          SELECT SUM(reservations_hebergement.prix) FROM reservations_hebergement
@@ -95,9 +107,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenir_infos_gains` (IN `p_id_hebe
     FROM hebergement WHERE idHebergement = p_id_hebergement;
 END$$
 
+<<<<<<< HEAD
+DROP PROCEDURE IF EXISTS `est_reserver`$$
+CREATE PROCEDURE `est_reserver` (`p_idHebergement` INT, OUT `nbr` INT)  BEGIN
+=======
 DELIMITER ;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `est_reserver` (`p_idHebergement` INT, OUT `nbr` INT)  BEGIN
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
 	SELECT COUNT(*) into nbr
     FROM reservations_voyages
     INNER JOIN reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage
@@ -108,49 +125,57 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `est_reserver` (`p_idHebergement` IN
     END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_avis` (IN `p_idAvis` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `sup_avis`$$
+CREATE  PROCEDURE `sup_avis` (IN `p_idAvis` INT)  BEGIN
 	DELETE
     FROM avis
     where idAvis = p_idAvis;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_favoris` (`p_idHebergement` INT, `p_idUtilisateur` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `sup_favoris`$$
+CREATE  PROCEDURE `sup_favoris` (`p_idHebergement` INT, `p_idUtilisateur` INT)  BEGIN
 	DELETE
     from favoris
     where idHebergement = p_idHebergement and idUtilisateur = p_idUtilisateur;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_hebergement` (IN `p_idHebergement` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `sup_hebergement`$$
+CREATE  PROCEDURE `sup_hebergement` (IN `p_idHebergement` INT)  BEGIN
 	DELETE
     from hebergement
     where idHebergement = p_idHebergement;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_option_by_herbergement` (IN `p_idHebergement` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `sup_option_by_herbergement`$$
+CREATE  PROCEDURE `sup_option_by_herbergement` (IN `p_idHebergement` INT)  BEGIN
 	DELETE
     from options_by_hebergement
     where idHebergement = p_idHebergement;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_reservations_hebergement` (IN `p_idReservationHebergement` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `sup_reservations_hebergement`$$
+CREATE  PROCEDURE `sup_reservations_hebergement` (IN `p_idReservationHebergement` INT)  BEGIN
 	DELETE
     from reservations_hebergement
     where idReservationHebergement = p_idReservationHebergement;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_reservation_voyage` (`p_idReservationVoyage` INT, `p_is_building` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `sup_reservation_voyage`$$
+CREATE  PROCEDURE `sup_reservation_voyage` (`p_idReservationVoyage` INT, `p_is_building` INT)  BEGIN
 	DELETE
     FROM reservations_voyages
     WHERE idReservationVoyage = p_idReservationVoyage and is_building = p_is_building;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_user` (IN `p_idUser` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `sup_user`$$
+CREATE  PROCEDURE `sup_user` (IN `p_idUser` INT)  BEGIN
 	DELETE
     from utilisateurs
     where idUtilisateur = p_idUser;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_villes` (`p_idVille` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `sup_villes`$$
+CREATE  PROCEDURE `sup_villes` (`p_idVille` INT)  BEGIN
 	DELETE
     FROM reservations_voyages
     WHERE idVilles = p_idVille;
@@ -163,7 +188,11 @@ END$$
 --
 
 DROP TABLE IF EXISTS `activites`;
+<<<<<<< HEAD
+CREATE TABLE `activites` (
+=======
 CREATE TABLE IF NOT EXISTS `activites` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idActivite` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(100) NOT NULL,
   `icon` varchar(100) NOT NULL,
@@ -212,7 +241,11 @@ INSERT INTO `activites` (`idActivite`, `libelle`, `icon`) VALUES
 --
 
 DROP TABLE IF EXISTS `activites_by_ville`;
+<<<<<<< HEAD
+CREATE TABLE `activites_by_ville` (
+=======
 CREATE TABLE IF NOT EXISTS `activites_by_ville` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idActivite` int(11) NOT NULL,
   `idVille` int(11) NOT NULL,
   `latitude` float NOT NULL,
@@ -313,7 +346,11 @@ INSERT INTO `activites_by_ville` (`idActivite`, `idVille`, `latitude`, `longitud
 --
 
 DROP TABLE IF EXISTS `admin_valid_hebergements`;
+<<<<<<< HEAD
+CREATE TABLE `admin_valid_hebergements` (
+=======
 CREATE TABLE IF NOT EXISTS `admin_valid_hebergements` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `id_admin_valid_hebergement` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(150) NOT NULL,
   `description` text NOT NULL,
@@ -342,7 +379,11 @@ INSERT INTO `admin_valid_hebergements` (`id_admin_valid_hebergement`, `libelle`,
 --
 
 DROP TABLE IF EXISTS `agences`;
+<<<<<<< HEAD
+CREATE TABLE `agences` (
+=======
 CREATE TABLE IF NOT EXISTS `agences` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idAgence` int(11) NOT NULL AUTO_INCREMENT,
   `adresse` varchar(255) NOT NULL,
   `code_postal` int(5) NOT NULL,
@@ -368,7 +409,11 @@ INSERT INTO `agences` (`idAgence`, `adresse`, `code_postal`, `idVille`, `idRegio
 --
 
 DROP TABLE IF EXISTS `avis`;
+<<<<<<< HEAD
+CREATE TABLE `avis` (
+=======
 CREATE TABLE IF NOT EXISTS `avis` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idAvis` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `note` int(2) NOT NULL,
@@ -463,7 +508,11 @@ INSERT INTO `avis_response` (`idResponse`, `idAvis`, `idUtilisateur`, `reponse`,
 --
 
 DROP TABLE IF EXISTS `consulter_messages`;
+<<<<<<< HEAD
+CREATE TABLE`consulter_messages` (
+=======
 CREATE TABLE IF NOT EXISTS `consulter_messages` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idUtilisateur` int(11) NOT NULL,
   `idMessage` int(11) NOT NULL,
   PRIMARY KEY (`idUtilisateur`,`idMessage`)
@@ -520,7 +569,11 @@ INSERT INTO `consulter_messages` (`idUtilisateur`, `idMessage`) VALUES
 --
 
 DROP TABLE IF EXISTS `favoris`;
+<<<<<<< HEAD
+CREATE TABLE `favoris` (
+=======
 CREATE TABLE IF NOT EXISTS `favoris` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idHebergement` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
   PRIMARY KEY (`idHebergement`,`idUtilisateur`)
@@ -543,7 +596,11 @@ INSERT INTO `favoris` (`idHebergement`, `idUtilisateur`) VALUES
 --
 
 DROP TABLE IF EXISTS `hebergement`;
+<<<<<<< HEAD
+CREATE TABLE `hebergement` (
+=======
 CREATE TABLE IF NOT EXISTS `hebergement` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idHebergement` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(100) NOT NULL,
   `description` text NOT NULL,
@@ -596,7 +653,11 @@ INSERT INTO `hebergement` (`idHebergement`, `libelle`, `description`, `idVille`,
 --
 
 DROP TABLE IF EXISTS `messages`;
+<<<<<<< HEAD
+CREATE TABLE `messages` (
+=======
 CREATE TABLE IF NOT EXISTS `messages` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idMessage` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `contenu` text NOT NULL,
@@ -651,7 +712,11 @@ INSERT INTO `messages` (`idMessage`, `date`, `contenu`, `expediteur`, `destinata
 --
 
 DROP TABLE IF EXISTS `options`;
+<<<<<<< HEAD
+CREATE TABLE `options` (
+=======
 CREATE TABLE IF NOT EXISTS `options` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idOption` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(100) NOT NULL,
   `icon` varchar(255) DEFAULT NULL,
@@ -682,7 +747,11 @@ INSERT INTO `options` (`idOption`, `libelle`, `icon`) VALUES
 --
 
 DROP TABLE IF EXISTS `options_by_hebergement`;
+<<<<<<< HEAD
+CREATE TABLE `options_by_hebergement` (
+=======
 CREATE TABLE IF NOT EXISTS `options_by_hebergement` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idHebergement` int(11) NOT NULL,
   `idOption` int(11) NOT NULL,
   PRIMARY KEY (`idHebergement`,`idOption`)
@@ -930,7 +999,11 @@ INSERT INTO `options_by_hebergement` (`idHebergement`, `idOption`) VALUES
 --
 
 DROP TABLE IF EXISTS `regions`;
+<<<<<<< HEAD
+CREATE TABLE`regions` (
+=======
 CREATE TABLE IF NOT EXISTS `regions` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idRegion` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(255) NOT NULL,
   `latitude` float DEFAULT NULL,
@@ -947,7 +1020,7 @@ CREATE TABLE IF NOT EXISTS `regions` (
 INSERT INTO `regions` (`idRegion`, `libelle`, `latitude`, `longitude`, `lv_zoom`, `description`) VALUES
 (2, 'Pays de la Loire', 47.2633, -0.329969, 8, 'La région des Pays de la Loire est située à l\'ouest de la France et bordée par le golfe de Gascogne. Elle comprend une partie de la vallée de la Loire, renommée pour ses vignobles. Parmi les imposants châteaux de la vallée, citons le château de Saumur, un fort médiéval perché sur une colline abritant un musée dédié à la ville, et celui de Brissac, doté de 7 étages et à la décoration d\'époque. Nantes, la préfecture de la région, compte le château à douves des ducs de Bretagne, transformé en musée.'),
 (1, 'Bretagne', 48.2347, -2.87842, 8, 'La Bretagne, une région située à l’extrême ouest de la France, est une péninsule vallonnée qui s’avance dans l’océan Atlantique. Sa côte sauvage s’étend sur des kilomètres : on y trouve des stations balnéaires comme la ville chic de Dinard ou la ville fortifiée de Saint-Malo, construite sur la Manche. La côte de granit rose est un lieu convoité pour les teintes uniques que prennent le sable et les roches. La Bretagne dispose également d’un grand nombre de menhirs (sorte de mégalithe) datant de la préhistoire.'),
-(3, 'Centre Val de Loire', 47.4035, 1.7688, 8, 'La région Centre-Val de Loire est traversée par la vallée de la Loire caractérisée par ses terres agricoles et ses châteaux somptueux. C\'est également une grande région vinicole connue surtout pour ses vins blancs tels que le Sancerre et le Pouilly-Fumé. La vallée de la Loire est relativement plate et sillonnée de pistes cyclables dont l\'itinéraire cyclotouristique de 800 km de long : La Loire à Vélo.'),
+(3, 'Centre-Val de Loire', 47.4035, 1.7688, 8, 'La région Centre-Val de Loire est traversée par la vallée de la Loire caractérisée par ses terres agricoles et ses châteaux somptueux. C\'est également une grande région vinicole connue surtout pour ses vins blancs tels que le Sancerre et le Pouilly-Fumé. La vallée de la Loire est relativement plate et sillonnée de pistes cyclables dont l\'itinéraire cyclotouristique de 800 km de long : La Loire à Vélo.'),
 (22, 'Nouvelle Aquitaine', 44.7002, -0.299578, 8, 'Première région en termes d’emplois touristiques, elle bénéficie de la présence d’une vaste façade océanique allant des îles charentaises à l’embouchure de la Bidassoa, aux portes de l’Espagne, en passant par l’estuaire de la Gironde (plus grand estuaire sauvage d’Europe) et le Bassin d\'Arcachon. Ses plages, exposées à la houle, sont fréquentées chaque été par des millions de vacanciers, et sont également un haut-lieu du surf, dont certains spots, sur la côte basque ou sur l’île de Ré, jouissent d’une solide réputation.');
 
 -- --------------------------------------------------------
@@ -957,7 +1030,11 @@ INSERT INTO `regions` (`idRegion`, `libelle`, `latitude`, `longitude`, `lv_zoom`
 --
 
 DROP TABLE IF EXISTS `reservations_hebergement`;
+<<<<<<< HEAD
+CREATE TABLE`reservations_hebergement` (
+=======
 CREATE TABLE IF NOT EXISTS `reservations_hebergement` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idReservationHebergement` int(11) NOT NULL AUTO_INCREMENT,
   `code_reservation` varchar(100) NOT NULL,
   `prix` decimal(7,2) NOT NULL,
@@ -1030,7 +1107,11 @@ INSERT INTO `reservations_hebergement` (`idReservationHebergement`, `code_reserv
 --
 
 DROP TABLE IF EXISTS `reservations_voyages`;
+<<<<<<< HEAD
+CREATE TABLE`reservations_voyages` (
+=======
 CREATE TABLE IF NOT EXISTS `reservations_voyages` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idReservationVoyage` int(11) NOT NULL AUTO_INCREMENT,
   `idUtilisateur` int(11) NOT NULL,
   `prix` decimal(7,2) NOT NULL,
@@ -1066,7 +1147,11 @@ INSERT INTO `reservations_voyages` (`idReservationVoyage`, `idUtilisateur`, `pri
 --
 
 DROP TABLE IF EXISTS `roles`;
+<<<<<<< HEAD
+CREATE TABLE`roles` (
+=======
 CREATE TABLE IF NOT EXISTS `roles` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idRole` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(100) NOT NULL,
   PRIMARY KEY (`idRole`)
@@ -1088,7 +1173,11 @@ INSERT INTO `roles` (`idRole`, `libelle`) VALUES
 --
 
 DROP TABLE IF EXISTS `utilisateurs`;
+<<<<<<< HEAD
+CREATE TABLE`utilisateurs` (
+=======
 CREATE TABLE IF NOT EXISTS `utilisateurs` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `mdp` varchar(100) NOT NULL,
@@ -1127,7 +1216,11 @@ INSERT INTO `utilisateurs` (`idUtilisateur`, `email`, `mdp`, `nom`, `prenom`, `i
 --
 
 DROP TABLE IF EXISTS `villes`;
+<<<<<<< HEAD
+CREATE TABLE`villes` (
+=======
 CREATE TABLE IF NOT EXISTS `villes` (
+>>>>>>> 6c26834acbd094712734460e796d1a156a74c3b2
   `idVille` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(150) DEFAULT NULL,
   `latitude` float DEFAULT NULL,

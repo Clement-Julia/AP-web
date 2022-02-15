@@ -72,5 +72,15 @@ async function supImage(id){
 		div.removeChild(idImg);
 		div.removeChild(idBtn);
 	// } 
-
 }
+
+$(".custom-select").change(function () {
+	$.get("../assets/src/regionCarte/position.json", function(data){
+		for(var i=0; i < data.length; i++){
+			if($(".custom-select option:selected").text() == data[i]["region"]){
+				$("#longitude").val(data[i]["coordinateX"]);
+				$("#latitude").val(data[i]["coordinateY"]);
+			}
+		}
+	});
+})

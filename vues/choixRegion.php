@@ -29,11 +29,11 @@ $regions = $Region->getAllRegions();
                     <!--{id:"FR-A"},{id:"FR-NAQ"},{id:"FR-ARA"},{id:"FR-BFC"},{id:"FR-BRE"},{id:"FR-CVL"},{id:"FR-COR"},{id:"FR-IDF"},{id:"FR-OCC"},{id:"FR-HDF"},{id:"FR-NOR"},{id:"FR-PDL"},{id:"FR-PAC"}-->
                 </defs>
                     <path class="absent" title="Grand Est" d="<?=file_get_contents("../assets/src/regionCarte/grand-Est.txt");?>"/>
-                    <a data-idregion="<?=$regions['Nouvelle Aquitaine']?>" id="region-B" xlink:title="Nouvelle Aquitaine"><path class="present" d="<?=file_get_contents("../assets/src/regionCarte/nouvelle-Aquitaine.txt");?>"/></a>
+                    <a data-idregion="<?=$regions['Nouvelle-Aquitaine']?>" id="region-B" xlink:title="Nouvelle-Aquitaine"><path class="present" d="<?=file_get_contents("../assets/src/regionCarte/nouvelle-Aquitaine.txt");?>"/></a>
                     <path class="absent" title="Auvergne Rhône Alpes" d="<?=file_get_contents("../assets/src/regionCarte/auvergne-Rhone-Alpes.txt");?>"/>
                     <path class="absent" title="Bourgogne-Franche-Comté" d="<?=file_get_contents("../assets/src/regionCarte/bourgogne-Franche-Comte.txt");?>"/>
                     <a data-idregion="<?=$regions['Bretagne']?>" id="region-E" xlink:title="Bretagne"  ><path class="present" d="<?=file_get_contents("../assets/src/regionCarte/bretagne.txt");?>"/></a>
-                    <a data-idregion="<?=$regions['Centre Val de Loire']?>" id="region-F" xlink:title="Centre Val de Loire"  ><path class="present" d="<?=file_get_contents("../assets/src/regionCarte/centre-Val-De-Loire.txt");?>"/></a>
+                    <a data-idregion="<?=$regions['Centre-Val de Loire']?>" id="region-F" xlink:title="Centre-Val de Loire"  ><path class="present" d="<?=file_get_contents("../assets/src/regionCarte/centre-Val-De-Loire.txt");?>"/></a>
                     <path class="absent" title="Corse" d="<?=file_get_contents("../assets/src/regionCarte/corse.txt");?>"/>
                     <path class="absent" title="Île de France" d="<?=file_get_contents("../assets/src/regionCarte/ile-De-France.txt");?>"/>
                     <path class="absent" title="Occitanie" d="<?=file_get_contents("../assets/src/regionCarte/occitanie.txt");?>"/>

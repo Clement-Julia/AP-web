@@ -25,6 +25,15 @@ $infos = $region->getAllregion();
         </div>
         <?php
     }
+    if(isset($_GET["success"])){
+        ?>
+        <div class="container alert alert-success">
+            <p>
+                La ville a bien été créée !
+            </p>
+        </div>
+        <?php
+    }
 ?>
 
 <div class="container">
@@ -79,6 +88,11 @@ $infos = $region->getAllregion();
                     <input type="text" class="form-control" name="link" id="link" placeholder="Entrez le lien">
                 </div>
             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="cp">Code postal : </label>
+            <input type="text" class="form-control" name="cp" id="cp" placeholder="Entrez le code postal de la ville" required>
         </div>
         
         <div class="form-group mt-4">

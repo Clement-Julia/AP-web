@@ -478,3 +478,8 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
     top: -60px;
 	cursor: pointer;
 }
+
+#map {
+    width: 600px;
+    height: 450px
+}

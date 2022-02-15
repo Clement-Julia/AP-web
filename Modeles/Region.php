@@ -7,6 +7,7 @@ class Region extends Modele {
     private $latitude;
     private $longitude;
     private $lvZoom;
+    private $description;
     private $villes = [];
 
     public function __construct(int $idRegion = null){
@@ -22,6 +23,7 @@ class Region extends Modele {
             $this->latitude = $infoRegion["latitude"];
             $this->longitude = $infoRegion["longitude"];
             $this->lvZoom = $infoRegion["lv_zoom"];
+            $this->description = $infoRegion["description"];
 
             $requete = $this->getBdd()->prepare("SELECT * FROM villes WHERE idRegion = ?");
             $requete->execute([$idRegion]);
@@ -30,7 +32,7 @@ class Region extends Modele {
             foreach ($infosVilles as $item){
 
                 $ville = new Ville();
-                $ville->initialiserVille($item["idVille"], $item["libelle"], $item["latitude"], $item["longitude"], $item["idRegion"], $item["description"], $item["uuid"]);
+                $ville->initialiserVille($item["idVille"], $item["libelle"], $item["latitude"], $item["longitude"], $item["idRegion"], $item["description"], $item["uuid"], $item["code_postal"]);
                 $this->villes[] = $ville;
 
             }
@@ -60,6 +62,9 @@ class Region extends Modele {
     }
     public function getLvZoom(){
         return $this->lvZoom;
+    }
+    public function getDescription(){
+        return $this->description;
     }
     public function getVilles(){
         return $this->villes;
@@ -102,6 +107,18 @@ class Region extends Modele {
         $requete->execute();
         $info_nbr = $requete->fetch(PDO::FETCH_ASSOC);
         return $info_nbr;
+    }
+
+    public function addRegion($libelle, $description, $longitude, $latitude){
+        $requete = $this->getBdd()->prepare("INSERT into regions(libelle, latitude, longitude, description) values(?,?,?,?)");
+
+        $requete->execute([$libelle, $latitude, $longitude, $description]);
+    }
+
+    public function UpdateRegion($idRegion, $description){
+        $requete = $this->getBdd()->prepare("UPDATE regions set description = ? where idRegion = ?");
+
+        $requete->execute([$idRegion, $description]);
     }
 
 }

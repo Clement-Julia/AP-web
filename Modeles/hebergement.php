@@ -8,6 +8,7 @@ class Hebergement extends Modele {
     private $idVille;
     private $latitude;
     private $longitude;
+    private $adresse;
     private $prix;
     private $uuid;
     private $options = [];
@@ -26,6 +27,7 @@ class Hebergement extends Modele {
             $this->idVille = $infoHotel["idVille"];
             $this->latitude = $infoHotel["latitude"];
             $this->longitude = $infoHotel["longitude"];
+            $this->adresse = $infoHotel["adresse"];
             $this->prix = $infoHotel["prix"];
             $this->uuid = $infoHotel["uuid"];
             
@@ -43,7 +45,7 @@ class Hebergement extends Modele {
         
     }
 
-    public function initialiserHebergement($idHebergement, $libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid){
+    public function initialiserHebergement($idHebergement, $libelle, $description, $idVille, $latitude, $longitude, $adresse, $prix, $uuid){
 
         $this->idHebergement = $idHebergement;
         $this->libelle = $libelle;
@@ -51,6 +53,7 @@ class Hebergement extends Modele {
         $this->idVille = $idVille;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
+        $this->adresse = $adresse;
         $this->prix = $prix;
         $this->uuid = $uuid;
 
@@ -78,6 +81,10 @@ class Hebergement extends Modele {
 
     public function getLongitude(){
         return $this->longitude;
+    }
+
+    public function getAdresse(){
+        return $this->adresse;
     }
     
     public function getPrix(){
@@ -117,18 +124,18 @@ class Hebergement extends Modele {
         return $infoHotel;
     }
 
-    public function addHotel($libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid, $idUtilisateur){
+    public function addHotel($libelle, $description, $idVille, $latitude, $longitude, $adresse, $prix, $uuid, $idUtilisateur){
 
-        $requete = $this->getBdd()->prepare("INSERT into hebergement(libelle, description, idVille, latitude, longitude, prix, uuid, idUtilisateur, dateEnregistrement) values(?,?,?,?,?,?,?,?, NOW())");
+        $requete = $this->getBdd()->prepare("INSERT into hebergement(libelle, description, idVille, latitude, longitude, adresse, prix, uuid, idUtilisateur, dateEnregistrement) values(?,?,?,?,?,?,?,?,?, NOW())");
 
-        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid, $idUtilisateur]);
+        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $adresse, $prix, $uuid, $idUtilisateur]);
     }
 
-    public function updateHotel($libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid, $id){
+    public function updateHotel($libelle, $description, $idVille, $latitude, $longitude, $adresse, $prix, $uuid, $id){
 
-        $requete = $this->getBdd()->prepare("UPDATE hebergement set libelle = ?, description = ?, idVille = ?, latitude = ?, longitude = ?, prix = ?, uuid = ? where idHebergement = ?");
+        $requete = $this->getBdd()->prepare("UPDATE hebergement set libelle = ?, description = ?, idVille = ?, latitude = ?, longitude = ?, adresse = ? prix = ?, uuid = ? where idHebergement = ?");
 
-        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $prix, $uuid, $id]);
+        $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $adresse, $prix, $uuid, $id]);
     }
 
     public function supHotel($idHebergement){

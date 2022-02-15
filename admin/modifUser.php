@@ -25,9 +25,9 @@ if(empty($_GET)){
                     ?>
                     <tr>
                         <td><?=$user["idUtilisateur"]?></td>
-                        <td><?=$user["email"]?></td>
-                        <td><?=$user["nom"]?></td>
-                        <td><?=$user["prenom"]?></td>
+                        <td><?=htmlspecialchars($user["email"], ENT_QUOTES)?></td>
+                        <td><?=htmlspecialchars($user["nom"], ENT_QUOTES)?></td>
+                        <td><?=htmlspecialchars($user["prenom"], ENT_QUOTES)?></td>
                         <td>
                             <a href="modifUser.php?id=<?=$user["idUtilisateur"]?>">
                                 <button type="button" class="btn btn-warning">Modifier</button>
@@ -56,12 +56,12 @@ if(empty($_GET)){
 
             <div class="form-group my-3">
                 <label for="nom" class="mb-1">Nom : </label>
-                <input type="text" class="form-control" name="nom" id="nom" placeholder="Entrez votre nom" value="<?=$user->getNom()?>" required>
+                <input type="text" class="form-control" name="nom" id="nom" placeholder="Entrez votre nom" value="<?=htmlspecialchars($user->getNom(), ENT_QUOTES)?>" required>
             </div>
 
             <div class="form-group my-3">
                 <label for="prenom" class="mb-1">Prénom : </label>
-                <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Entrez votre prénom" value="<?=$user->getPrenom()?>" required>
+                <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Entrez votre prénom" value="<?=htmlspecialchars($user->getPrenom(), ENT_QUOTES)?>" required>
             </div>
 
             <div class="form-group my-3">
@@ -92,6 +92,7 @@ if(empty($_GET)){
             </div>
 
         </form>
+        <a href="modifUser.php" class="btn btn-secondary mt-5"><i class="fas fa-arrow-left"></i></a>
     </div>
     <?php
 }

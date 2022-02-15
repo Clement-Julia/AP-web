@@ -120,3 +120,19 @@ function timestampAddDay($nbJours = 1){
     $plusUnJour->add(new DateInterval('P'. $nbJours .'D'));
     return $plusUnJour->getTimestamp();
 }
+
+function Translate($chaine, $langFrom, $langTo)
+{
+	$chaine = urlencode($chaine);
+	$url = 'http://translate.google.com/translate_a/t?client=p&text='.$chaine.'&hl='.$langFrom.'&sl='.$langFrom.'&tl='.$langTo.'&ie=UTF-8&oe=UTF-8&multires=1&otf=1&pc=1&trs=1&ssel=3&tsel=6&sc=1';
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $response = curl_exec($ch);
+    $retour = explode('"', $response);
+    curl_close($ch);
+    
+	return $retour[1];
+}
