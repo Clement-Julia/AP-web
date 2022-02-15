@@ -36,21 +36,26 @@ class Admin extends Utilisateur {
     }
 
     public function getHebergementEnAttente(){
-        $requete = $this->getBdd()->prepare("SELECT avh.*, u.nom, u.prenom, v.idVille FROM admin_valid_hebergements avh inner join utilisateurs u using(IdUtilisateur) left join villes v on avh.nomVille = v.libelle where avh.is_actif = 1 order by id_admin_valid_hebergement");
+        $requete = $this->getBdd()->prepare("SELECT avh.*, u.nom, u.prenom, v.idVille, v.libelle as nomVille FROM hebergement avh inner join utilisateurs u using(IdUtilisateur) left join villes v using(idVille) where avh.actif = 0 order by idHebergement");
         $requete->execute();
         $return = $requete->fetchALL(PDO::FETCH_ASSOC);
         return $return;
     }
 
     public function getHebergementRef(){
-        $requete = $this->getBdd()->prepare("SELECT avh.*, u.nom, u.prenom, v.idVille FROM admin_valid_hebergements avh inner join utilisateurs u using(IdUtilisateur) left join villes v on avh.nomVille = v.libelle where avh.is_actif = 0 order by id_admin_valid_hebergement");
+        $requete = $this->getBdd()->prepare("SELECT avh.*, u.nom, u.prenom, v.idVille, v.libelle as nomVille FROM hebergement avh inner join utilisateurs u using(IdUtilisateur) left join villes v using(idVille) where avh.actif = 0 order by idHebergement");
         $requete->execute();
         $return = $requete->fetchALL(PDO::FETCH_ASSOC);
         return $return;
     }
 
+    public function acceptHebergementEnAttente($idDemande){
+        $requete = $this->getBdd()->prepare("UPDATE hebergement set actif = 1 where idHebergement = ?");
+        $requete->execute([$idDemande]);
+    }
+
     public function supHebergementEnAttente($idDemande){
-        $requete = $this->getBdd()->prepare("DELETE FROM admin_valid_hebergements where id_admin_valid_hebergement = ?");
+        $requete = $this->getBdd()->prepare("DELETE FROM hebergement where idHebergement = ?");
         $requete->execute([$idDemande]);
     }
 

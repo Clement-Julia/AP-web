@@ -19,8 +19,8 @@ if($_GET["command"] == "acc"){
             }
             mkdir("../assets/src/uuid/".$nom_doss, 0700);
 
-            $hotel->addHotel($demande["libelle"], $demande["description"], $demande["idVille"], $demande["latitude"], $demande["longitude"], $demande["adresse"], $demande["prix"], $nom_doss, $demande["idUtilisateur"]);
-            $admin->supHebergementEnAttente($demande["id_admin_valid_hebergement"]);
+            $admin->acceptHebergementEnAttente($demande["idHebergement"]);
+            $admin->supHebergementEnAttente($demande["idHebergement"]);
         }else{
             //Création du dossier uuid ville
             $nom_doss_ville = bin2hex(random_bytes(32));
@@ -36,10 +36,8 @@ if($_GET["command"] == "acc"){
             }
             mkdir("../assets/src/uuid/".$nom_doss_hotel, 0700);
 
-            $ville->addVille($demande["nomVille"], $demande["latitudeVille"], $demande["longitudeVille"], $demande["code_postal"], $demande["idRegion"], null, $nom_doss_ville);
-            $nameVille = $ville->getVillebyName($demande["nomVille"]);
-            $hotel->addHotel($demande["libelle"], $demande["description"], $nameVille["idVille"], $demande["latitude"], $demande["longitude"], $demande["adresse"], $demande["prix"], $nom_doss_hotel, $demande["idUtilisateur"]);
-            $admin->supHebergementEnAttente($demande["id_admin_valid_hebergement"]);
+            $admin->acceptHebergementEnAttente($demande["idHebergement"]);
+            $admin->supHebergementEnAttente($demande["idHebergement"]);
         }
         header("location:../admin/validHotel.php?success=acc");
 
@@ -50,7 +48,7 @@ if($_GET["command"] == "acc"){
 }elseif($_GET["command"] == "ref"){
     try{
 
-        $admin->refDemande($demande["id_admin_valid_hebergement"]);
+        $admin->refDemande($demande["idHebergement"]);
         header("location:../admin/validHotel.php?success=ref");
 
     }catch(exception $e){
@@ -59,7 +57,7 @@ if($_GET["command"] == "acc"){
 }elseif($_GET["command"] == "sup"){
     try{
 
-        $admin->supHebergementEnAttente($demande["id_admin_valid_hebergement"]);
+        $admin->supHebergementEnAttente($demande["idHebergement"]);
         header("location:../admin/validHotel.php?success=sup");
 
     }catch(exception $e){

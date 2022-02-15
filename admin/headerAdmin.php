@@ -151,7 +151,6 @@ if($_SESSION["idRole"] != 2){
                 <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="validHotel.php">En attente</a>
-                        <a class="collapse-item" href="validHotelRef.php">Refusée</a>
                     </div>
                 </div>
             </li>
@@ -197,7 +196,7 @@ if($_SESSION["idRole"] != 2){
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION["prenom"] . " ". $_SESSION["nom"] ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= htmlspecialchars($_SESSION["prenom"], ENT_QUOTES) . " ". htmlspecialchars($_SESSION["nom"], ENT_QUOTES) ?></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">

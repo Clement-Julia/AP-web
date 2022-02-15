@@ -43,7 +43,7 @@ if(!empty($_GET["libelle"])){
                         <?php
                             foreach($infos as $info){
                                 ?>
-                                    <option value="<?= $info["libelle"] ?>"></option>
+                                    <option value="<?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?>"></option>
                                 <?php
                             }
                         ?>
@@ -89,7 +89,7 @@ if(!empty($_GET["libelle"])){
 
             <div class="form-group">
                 <label for="libelle">Nom : </label>
-                <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'une ville" required autocomplete="off" value="<?= $info_hotel["libelle"] ?>">
+                <input type="text" class="form-control" name="libelle" id="libelle" placeholder="Entrez le nom d'une ville" required autocomplete="off" value="<?= htmlspecialchars($info_hotel["libelle"], ENT_QUOTES) ?>">
             </div>
 
             <div class="form-group">
@@ -99,7 +99,7 @@ if(!empty($_GET["libelle"])){
                     <?php
                         foreach($infos as $info){
                             ?>
-                                <option value="<?= $info["idVille"] ?>" <?= ($info["idVille"] == $info_hotel["idVille"]) ? "selected" : "" ?>><?= $info["libelle"] ?></option>
+                                <option value="<?= $info["idVille"] ?>" <?= ($info["idVille"] == $info_hotel["idVille"]) ? "selected" : "" ?>><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></option>
                             <?php
                         }
                     ?>
@@ -124,7 +124,7 @@ if(!empty($_GET["libelle"])){
                     ?>
                     <div class="custom-control custom-switch mx-2">
                         <input type="checkbox" class="custom-control-input" name="options[]" id="customSwitch<?=$i?>" value=<?= $info["idOption"]?> <?= (in_array($info["idOption"], $tab)) ? "checked" : "" ?>>
-                        <label class="custom-control-label mb-1" for="customSwitch<?=$i?>"><?= $info["libelle"] ?></label>
+                        <label class="custom-control-label mb-1" for="customSwitch<?=$i?>"><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></label>
                     </div>
                     <?php
                     $i++;

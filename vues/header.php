@@ -11,7 +11,7 @@ if (!empty($_SESSION['idUtilisateur'])){
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="loocalacool" content="Site de création de voyage par étape, et en toute simplicité !">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -58,7 +58,7 @@ if(!empty($_COOKIE["connection_cookies"])){
                 ?>
                 <div class="dropdown me-3">
                     <a class="btn dropdown-toggle white" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        <?= $_SESSION["prenom"] ." " . $_SESSION["nom"]?>
+                        <?= htmlspecialchars($_SESSION["prenom"], ENT_QUOTES) ." " . htmlspecialchars($_SESSION["nom"], ENT_QUOTES)?>
                     </a>
             
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">

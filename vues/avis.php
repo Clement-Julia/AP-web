@@ -132,7 +132,7 @@ $alls = $avis->getAllAvis();
                                             </div>
 
                                             <!-- Commentaire -->
-                                            <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."><?=$all["commentaire"]?></textarea>
+                                            <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."><?= htmlspecialchars($all["commentaire"], ENT_QUOTES) ?></textarea>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-warning" name="status" value="update">Modifier</button>

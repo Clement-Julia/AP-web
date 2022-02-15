@@ -216,4 +216,10 @@ class Utilisateur extends Modele {
 
     }
 
+    public function getUserByEmail($email){
+        $requete = $this->getBdd()->prepare("SELECT * FROM utilisateurs WHERE email = ?");
+        $requete->execute([$email]);
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
