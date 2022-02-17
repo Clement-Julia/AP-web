@@ -7,6 +7,11 @@
     --navbar-height: 60px;
 }
 
+html, body{
+    width: 100%;
+    height: 100%;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -17,13 +22,14 @@
     z-index: 1000 !important;
 }
 .card {
-    background-color: rgb(255, 255, 255, 0.777);
+    color: black;
 }
 #choose-hebergement .card {
     background-color: white;
 }
 .card-header{
-    color: white;
+    background-color: rgb(39 39 39 / 22%) !important;
+    backdrop-filter: blur(1px);
 }
 .btn-success {
     background-color: rgb(90, 155, 90);
@@ -39,7 +45,7 @@
     position: sticky;
     top: 0;
     height: var(--navbar-height);
-    background-color: rgba(105, 75, 27, 0.938)!important;
+    background-color: transparent !important;
     z-index: 1000000;
 }
 #navbar a.white {
@@ -56,22 +62,14 @@
     transition: .3s;
 }
 #navbar a.headerli:hover {
-    background-color: rgba(105, 75, 27, 0.726);
     transition: .3s;
 }
 
 body{
-    background: center / cover no-repeat url("../../assets/src/img/man.jpg");
+    /* background-color: rgb(151, 146, 146) !important; */
+    background-color: rgb(231, 230, 230);
+    /* background: center / cover no-repeat url("../../assets/src/img/man.jpg"); */
     background-attachment: fixed;
-}
-
-.color-btn{
-    background-color: rgba(80, 57, 21, 0.726) !important;
-    border-color: rgba(80, 57, 21, 0.726) !important;
-}
-
-.color-btn:focus{
-    box-shadow :0 0 0 .25rem rgba(153, 110, 40, 0.726) !important;
 }
 
 /* ----------------- END NAVBAR ----------------------- */
@@ -95,7 +93,7 @@ body{
     transition: .3s;
 }
 
-.offset {  
+.offset {
     box-shadow: 
       0.3em 0.3em 0 0 var(--color-offset-button-from),
       inset 0.3em 0.3em 0 0 var(--color-offset-button-from);
@@ -103,8 +101,10 @@ body{
     color: white;
     font-size: 1.2em;
     padding: 1em 2em;
+    margin: 0;
     transition: .3s;
-    }
+}
+
 .offset:hover {
     background: none;
     box-shadow: 
@@ -117,6 +117,10 @@ body{
     color: black;
     font-size: 1.3em;
     font-weight: 550;
+}
+
+#customBtn{
+    background: rgb(255 255 255 / 30%);
 }
 
 #modal-connecter{
@@ -180,8 +184,6 @@ body{
   transform: translateY(-0.25em);
 }
 
-
-
 /* ----------------- END INDEX ----------------------- */
 
 /* ----------------- CREATE TRAVEL ----------------------- */
@@ -194,16 +196,19 @@ body{
 #ct-choose-town, #create-travel-container .map{
     width: 50%;
 }
-#create-travel-container #map {
-    border-left: 2px solid #823a22;
-}
 
 #total-prix-container{
     text-align: center;
     padding: 8px 0;
-    border: 4px double #823a22;
-    background-color: rgba(105, 75, 27, 0.999);
+    background-color: #27272773 !important;
+    backdrop-filter: blur(12px);
     color: white;
+}
+
+#separation{
+    background-color: #27272773 !important;
+    backdrop-filter: blur(12px);
+    min-height: 15px;
 }
 
 #ct-choose-town {
@@ -213,7 +218,6 @@ body{
 #choose-town-top {
     height: 50%;
     overflow-y: scroll;
-    background: center / cover no-repeat url("../../assets/src/img/man.jpg")!important;
     background-attachment: fixed;
 }
 #choose-town-bot {
@@ -222,7 +226,6 @@ body{
     flex-direction: row;
     flex-wrap: wrap;
     overflow-y: scroll;
-    background-color: #e3b88e;
 }
 .ct-a {
     margin: 5px;
@@ -325,10 +328,6 @@ body{
 
 
 
-
-
-
-
 /* --------------------- hebergementVille.php -------------------- */
 
 #hv-container {
@@ -373,7 +372,6 @@ body{
     max-width: 1080px;
     width: 100%;
     margin: 25px auto;
-    box-shadow: 0px 0px 5px #d3d3d3;
     border-radius: 5px;
     padding: 0 20px;
     background-color: rgb(255, 255, 255,0.900);
@@ -395,7 +393,9 @@ body{
     width: 30px;
     height: 30px;
     color: black;
-    background-color: #d3d3d3;
+    background-color: transparent;
+    
+    backdrop-filter: blur(12px);
     border: none;
     border-radius:50%;
     box-shadow: 0 0 2px #979797;
@@ -514,6 +514,8 @@ body{
     margin-right: 20px;
 }
 .calendar-header{
+    background-color: rgb(39 39 39 / 8%) !important;
+    backdrop-filter: blur(1px);
     text-align: center;
     font-size: 1.1em;
     font-weight: 600;
@@ -591,7 +593,7 @@ body{
 }
 
 
-/* --------------------------------------------------------------------------------- TEST CSS MAP CARTE FRANCE ------------------------------------------------------------------- */
+/* -------------------- TEST CSS MAP CARTE FRANCE ----------------------- */
 #map{
     display: flex;
     height: calc(100vh - var(--navbar-height));
@@ -645,7 +647,7 @@ body{
     fill: var(--color-map-is-active);
 }
 
-  /* --------------------------------------------------------------------------------- TEST CSS MAP CARTE FRANCE ------------------------------------------------------------------- */
+/* ------------------ TEST CSS MAP CARTE FRANCE ---------------------------------- */
 
 #change-date-container{
     max-width: 1080px;
@@ -657,25 +659,25 @@ body{
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
-  }
+}
   
-  .card-agence a, .card-agence div{
+.card-agence a, .card-agence div{
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
   
-  .card-agence a{
+.card-agence a{
     height: 25%;
     background-color:#a4ced2;
-  }
-  .card-agence div{
+}
+.card-agence div{
     height: 75%;
     background-color:#ffffffc9;
     padding: 10px;
-  }
+}
   
-  #agences li{
+#agences li{
     width: calc(50% - 20px);
     min-height: 100px;
     margin: 10px;
@@ -684,7 +686,7 @@ body{
     display: inline-block;
     border-radius: 5px;
     box-shadow: 2px 2px 10px gray;
-  }
+}
 
 
 
@@ -729,7 +731,7 @@ body{
 .modal-body .rating:hover>input:checked~label:before {
     opacity: 0.4
 }
-/* --------------------------------------------------------------------------------- TEST CSS MAP CARTE FRANCE ------------------------------------------------------------------- */
+/* ---------------------- TEST CSS MAP CARTE FRANCE ------------------------- */
 #change-date-container, #cd-header, #cd-calendar-container, #cd-resume-container, #cd-buttons-container {
     padding: 20px;
 }
@@ -767,7 +769,7 @@ body{
     border-radius: 50%;
 }
 
-  /* --------------------------------------------------------------------------------- RESUME TRAVEL ------------------------------------------------------ */
+  /* ------------------ RESUME TRAVEL ----------------- */
 #resume-main-container{
     display: flex;
     flex-direction: column;
@@ -779,7 +781,7 @@ body{
 
 
 
-/* --------------------------------------------------------------------------------- END RESUME TRAVEL------------------------------------------------------------------- */
+/* ---------------- END RESUME TRAVEL ----------------- */
 
 #change-create-travel-container, #change-choose-town-bot{
     display: flex;
@@ -793,12 +795,6 @@ body{
 #change-create-travel-container #map{
     width: 50%;
 }
-
-
-
-
-
-
 
 
 /* test index */
@@ -829,7 +825,7 @@ body{
     align-items: center;
     justify-content: center;
     height: 26px!important;
-    min-width: 50px!important;
+    min-width: 60px!important;
     background-color: rgba(255, 255, 255, 0.733);
     border-radius: 7px!important;
     border: 1px solid rgba(26, 26, 26, 0.63);
@@ -859,11 +855,6 @@ body{
 }
 
 /* ---------- Favoris ----------------- */
-/* #main-favoris-container{
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(to right, #823a22, #eca455);
-} */
 
 #favoris-container{
     max-width: 1080px;
@@ -887,40 +878,14 @@ body{
 }
 
 
-.border-profile {
+.border-profil {
     background-color: transparent !important;
 }
 
-.border-profile.active{
+.border-profil.active{
     border-radius: 0px;
     border-left: 3px solid #00dcff !important;
 }
-
-
-/* about */
-
-#about {
-    height: calc(100vh - 60px);
-    width: 100vw;
-    background: url('../src/img/index-background.jpg');
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-#about .ligne {
-    display: flex;
-    min-height: 25%;
-}
-#about .ligne .card {
-    display: flex;
-    flex-direction: row;
-    background-image: linear-gradient(to bottom, rgba(255,255,255,0.79), rgba(255,255,255,0.79)), url('../src/img/local.jpg');
-    background-position: center;
-    background-size: cover;
-}
-
-
 
 @media screen and (max-width: 1080px) {
 
@@ -947,7 +912,6 @@ body{
         width: 25%;
     }
 
-
     #hv-container{
         flex-direction: column;
         height: auto;
@@ -963,7 +927,6 @@ body{
         overflow-y: hidden;
     }
 
-
     #change-create-travel-container{
         flex-direction: column;
         height: auto;
@@ -975,9 +938,6 @@ body{
         height: auto!important;
         overflow-y: hidden;
     }
-
-
-
 
     #cd-resume-container{
         flex-direction: column;
@@ -994,7 +954,7 @@ body{
         width: 100%!important;
     }
 
-  }
+}
 
 @media screen and (max-width: 640px) {
     .ct-resume .d-flex {
@@ -1038,4 +998,222 @@ body{
     border-color: rgb(188 202 215) !important;
     border-top-left-radius: 0%;
     border-top-right-radius: 0%;
+}
+
+
+/*---------- New design tempo ------------*/ 
+
+#body-connexion{
+    width: 100%;
+    height: 100%;
+    background-image: url('../src/img/background/connexion.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: white;
+}
+
+#body-favoris{
+    width: 100%;
+    height: 100%;
+    background-image: url('../src/img/background/favoris.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: white;
+}
+
+#body-avis{
+    width: 100%;
+    height: 100%;
+    background-image: url('../src/img/background/avis.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: white;
+}
+
+#body-profil{
+    width: 100%;
+    height: 100%;
+    background-image: url('../src/img/background/profil.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: white;
+}
+
+#body-resumeTravel{
+    width: 100%;
+    height: 100%;
+    background-image: url('../src/img/background/resumeTravel.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: white;
+}
+
+#navbar{
+    background-color: #27272773 !important;
+    backdrop-filter: blur(12px);
+}
+
+#form-container{
+    background-color: #27272773 !important;
+    backdrop-filter: blur(1px);
+}
+
+.background-calendar{
+    background-color: rgb(255 255 255);
+    border-radius: 0.25rem;
+}
+
+.form-container{
+    background-color: #27272773 !important;
+    backdrop-filter: blur(1px);
+}
+
+.text-profil{
+    color: rgb(255 255 255 / 85%)
+}
+
+.text-profil:hover, .text-profil:focus{
+    color: #00dcff
+}
+
+.form-input{
+    width: 100%;
+    background: rgb(0 0 0 / 0%);
+    border: none;
+    height: 50px;
+    color: rgb(255 255 255) !important;
+    border: 1px solid rgb(0 0 0 / 0%);
+    background: rgb(255 255 255 / 8%);
+    border-radius: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.form-input:hover, .form-input:focus {
+    background: transparent;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.form-input:focus {
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.8) !important;
+    opacity: 1;
+}
+
+.form-label{
+    color: rgb(251 206 181);
+}
+
+.form-checkbox input:checked ~ .form-checkbox:after{
+    color: #7851a9;
+}
+
+.checkbox-wrap {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.checkbox-wrap input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.checkmark:after {
+    content: "\f0c8";
+    font-family: "FontAwesome";
+    position: absolute;
+    color: #7851a9;
+    font-size: 20px;
+    margin-top: -4px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s; }
+    @media (prefers-reduced-motion: reduce) {
+        .checkmark:after {
+        -webkit-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
+}
+
+.checkbox-wrap input:checked ~ .checkmark:after {
+    display: block;
+    content: "\f14a";
+    font-family: "FontAwesome";
+    color: rgba(0, 0, 0, 0.2);
+}
+
+.form-checkbox {
+    color: #c7c0c0
+}
+
+.form-checkbox input:checked ~ .checkmark:after {
+    color: #c7c0c0
+}
+
+.form-btn{
+    /* background: rgb(251 206 181) !important;
+    border: 1px solid rgb(251 206 181) !important; */
+    /* color: rgb(0 0 0) !important; */
+    min-width: 20%;
+    background: rgb(255 255 255 / 15%);
+    color: rgb(192 188 188);
+    backdrop-filter: blur(12px);
+    border-radius: 40px;
+    font-size: 15px;
+}
+
+.form-btn:hover{
+    background: rgb(255 255 255 / 20%);
+    backdrop-filter: blur(15px);
+    border-color: rgb(255 255 255 / 40%);
+    color: white;
+}
+
+.invalid-feedback {
+    color: rgb(245 73 89);
+}
+
+.valid-feedback {
+    color: rgb(52 235 150);
+}
+
+.container{
+    backdrop-filter: blur(1px);
+}
+
+.no-border{
+    border: none !important;
 }

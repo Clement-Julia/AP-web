@@ -7,6 +7,8 @@ if(!empty($_SESSION['idUtilisateur'])){
     // (SECURITE) On vérifie que le paramètre récupéré est bien du type INT attendu
     if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET['idRegion'])){
 
+        $_SESSION["section"] = 1;
+
         // Si la variable existe (l'utilisateur à pas encore réservé une étape) sinon on peut la supprimer car on récupère l'info à partir de la bdd
         if (!empty($_GET['idRegion'])){
             $_SESSION['idRegion'] = $_GET['idRegion'];
@@ -27,16 +29,32 @@ if(!empty($_SESSION['idUtilisateur'])){
         $Lodgings = $Lodging->getVilles();
 
         ?>
+        <style>
+            body{
+                background-image: url('../assets/src/img/background/createTravel.jpg');
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            #navbar{
+                background-color: #27272773 !important;
+                backdrop-filter: blur(12px);
+            }
+        </style>
+
         <div id="ligne-points">
-        <?php
-        // On récupère les lat et lng des reservations hébergement fait par l'utilisateur sur un voyage en cours de construction
-        foreach ($ReservationVoyage->getVilleLatLngByUserId($_SESSION['idUtilisateur']) as $latLngVille){ ?>
-            <div data-lat="<?=$latLngVille['latitude']?>" data-lng="<?=$latLngVille['longitude']?>"></div>
-        <?php } ?>
+            <?php
+            // On récupère les lat et lng des reservations hébergement fait par l'utilisateur sur un voyage en cours de construction
+            foreach ($ReservationVoyage->getVilleLatLngByUserId($_SESSION['idUtilisateur']) as $latLngVille){ ?>
+                <div data-lat="<?=$latLngVille['latitude']?>" data-lng="<?=$latLngVille['longitude']?>"></div>
+            <?php } ?>
         </div>
+
+        
 
         <div id="create-travel-container">
             <div id="ct-choose-town">
+
                 <div id="choose-town-top">
                     <?php 
                     if($BuildingTravelId != null){
@@ -46,7 +64,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                             ?>
                             <div class="mx-3 my-3 ct-resume-container">
                                 <div class="card ct-resume">
-                                        <div class="card-header"><span class="bold">Etape : </span><?=$index?></div>
+                                    <div class="card-header text-dark"><span class="bold">Etape : </span><?=$index?></div>
                                         <div class="d-flex">
                                             <div class="card-body ct-p-container">
                                                 <p class="card-text"><span class="bold">Ville : </span><?=$infos['villeNom']?></p>
@@ -61,23 +79,19 @@ if(!empty($_SESSION['idUtilisateur'])){
                                             <div class="edit-container">
                                                 <button class="btn btn-sm btn-warning editButton">Modifier</button>
                                                 <form action="../controleurs/editTravel.php" method="POST" class="editForm">
-                                                    <select name="options[<?=$reservationHebergement->getIdReservationHebergement()?>]" class="form-control">
-                                                        <option disabled selected>Modifier ...</option>
+                                                    <select name="options[<?=$reservationHebergement->getIdReservationHebergement()?>]" class="form-select">
+                                                        <option disabled selected class="row">Modification</option>
                                                         <option value="1">La date du voyage</option>
                                                         <option value="2">La ville</option>
-                                                        <option value="3">L'hotel</option>
+                                                        <option value="3">L'hébergement</option>
                                                         <option value="4">Supprimer cette étape</option>
                                                     </select>
                                                     <button type="submit" class="btn btn-sm btn-warning">Modifier</button>
                                                 </form>
                                             </div>
                                         </div>
-                                        
-                                    
-                                    
-
+                                    </div>
                                 </div>
-                            </div>
                             <?php
                             $index++;
                         }
@@ -85,13 +99,11 @@ if(!empty($_SESSION['idUtilisateur'])){
                     ?>
                     </div>
 
-    <!-- ------------------------------------------- -->
-                    <div id="total-prix-container"><?= $BuildingTravelId != null ? "Le prix total de votre voyage est de : " . $ReservationVoyage->getPrix() . " €" : "" ?>
-                        <!-- <a href="resumeTravel.php" class="up ms-5">Valider voyage</a> -->
-                        <a href="resumeTravel.php" class="btn btn-sm btn-success ms-5">Valider voyage</a>
-                    </div>
-    <!-- ------------------------------------------- -->
-
+                <!----------------------------------------------->
+                    
+                <div id="separation">
+                </div>
+                <!----------------------------------------------->
                     
                 <div id="choose-town-bot">
                     <div class="row">
@@ -113,6 +125,10 @@ if(!empty($_SESSION['idUtilisateur'])){
                     </div>
                 </div>
 
+                <!----------------------------------------------->
+                <div id="total-prix-container"><?= $BuildingTravelId != null ? "Le prix total de votre voyage est de : " . $ReservationVoyage->getPrix() . " €" : "" ?>
+                    <a href="resumeTravel.php" class="btn btn-sm btn-success ms-5">Valider voyage</a>
+                </div>
 
             </div>
             <div data-lat="<?=$Lodging->getLatitude();?>" data-lng="<?=$Lodging->getLongitude();?>" data-zoom="8" class="map" id="map"></div>

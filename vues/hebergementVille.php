@@ -42,9 +42,22 @@ if(!empty($_SESSION['idUtilisateur'])){
 
                 ?>
 
+                <style>
+                    body{
+                        background-image: url('../assets/src/img/background/choixHotel.jpg');
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                    }
+
+                    #navbar{
+                        background-color: #27272773 !important;
+                        backdrop-filter: blur(12px);
+                    }
+                </style>
+                
                 <div id="hv-container">
                     <div id="hv-back-button-container">
-                        <a href="createTravel.php?idRegion=<?=$Ville->getIdRegion()?>" class="btn btn-sm btn-secondary back-button"></a>
+                        <a href="createTravel.php?idRegion=<?=$Ville->getIdRegion()?>" class="btn btn-sm btn-secondary back-button"><</a>
                     </div>
                     <div id="choose-hebergement">
                         <div class="row">
@@ -63,11 +76,11 @@ if(!empty($_SESSION['idUtilisateur'])){
                                     <div class="card-body hv-text-hebergement">
                                         <h6 class="card-title"><?= htmlspecialchars($item[1]->getLibelle(), ENT_QUOTES)?></h6>
                                         <p><?= coupe_phrase(htmlspecialchars($item[1]->getDescription(), ENT_QUOTES))?></p>
-                                        <div class="d-flex justify-content-between">
-                                            <span>Prix : <?= $item[1]->getPrix()?> €</span>
-                                            <span>
-                                                <?= ($average != 0) ? $average.'<i class="fas fa-star" style="color: #f2f200;"></i>' : "<span class='text-muted fst-italic'>Aucun avis n'a été publié...</span> "?>
-                                            </span>
+                                        <div class="row">
+                                            <div class="col ps-0">Prix : <?= $item[1]->getPrix()?> €</div>
+                                            <div class="<?= ($average != 0) ? "col-6 d-flex justify-content-end align-items-center" : "col-12 ps-0" ?>">
+                                                <?= ($average != 0) ? $average.'<i class="fas fa-star" style="color: #f2f200;"></i>' : "<span class='text-muted fst-italic d-flex'>Aucun avis n'a été publié...</span> "?>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-footer text-muted"><?=$item[0]?></div>

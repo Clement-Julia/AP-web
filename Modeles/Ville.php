@@ -180,7 +180,7 @@ class Ville extends Modele {
                     }
 
                     if(count($array) == 0){
-                        $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 nuits";
+                        $response[$Hebergement->getIdHebergement()][0] = "Disponible plus de 14 nuits";
                         $response[$Hebergement->getIdHebergement()][2] = 999;
                     } else {
                         $origin = new DateTime($date->format('Y-m-d'));
@@ -188,19 +188,19 @@ class Ville extends Modele {
                         $nbJours = $origin->diff($target)->d - 1;
 
                         if($nbJours > 15){
-                            $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 nuits";
+                            $response[$Hebergement->getIdHebergement()][0] = "Disponible plus de 14 nuits";
                             $response[$Hebergement->getIdHebergement()][2] = $nbJours;
                         } else {
-                            $response[$Hebergement->getIdHebergement()][0] = "disponible " . $nbJours . ($nbJours > 1 ? " nuits" : " nuit");
+                            $response[$Hebergement->getIdHebergement()][0] = "Disponible " . $nbJours . ($nbJours > 1 ? " nuits" : " nuit");
                             $response[$Hebergement->getIdHebergement()][2] = $nbJours;
                         }
                     }
 
                 } else if(count($array) == 0){
-                    $response[$Hebergement->getIdHebergement()][0] = "disponible plus de 14 nuits";
+                    $response[$Hebergement->getIdHebergement()][0] = "Disponible plus de 14 nuits";
                     $response[$Hebergement->getIdHebergement()][2] = 999;
                 } else {
-                    $response[$Hebergement->getIdHebergement()][0] = "indisponible";
+                    $response[$Hebergement->getIdHebergement()][0] = "Indisponible";
                     $response[$Hebergement->getIdHebergement()][2] = 0;
                 }
                 $response[$Hebergement->getIdHebergement()][1] = $Hebergement;

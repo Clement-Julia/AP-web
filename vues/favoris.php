@@ -1,13 +1,11 @@
 <?php
 require_once "header.php";
-
 if(!empty($_SESSION['idUtilisateur'])){
-
     $Favoris = new Favoris();
     $allFavoris = $Favoris->getAllFavorisForUser($_SESSION['idUtilisateur']);
     ?>
-<div id="main-favoris-container">
-    <div id="favoris-container" class="my-3">
+    <div id="main-favoris-container">
+        <div id="favoris-container" class="my-3">
 
     <?php
     if(count($allFavoris) > 0){
@@ -31,7 +29,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                         </div>
                     </div>
                     <div class="col-md-1 heart-container my-2">
-                        <i id="<?=$Hebergement->getIdHebergement()?>" class='fas fa-heart fa-2x'></i>
+                        <i id="<?=$Hebergement->getIdHebergement()?>" class='fas fa-heart fa-2x' title="Retirer des favoris"></i>
                     </div>
                 </div>
             </div>
@@ -46,7 +44,7 @@ if(!empty($_SESSION['idUtilisateur'])){
     
         <?php
     } else { ?>
-        <div class="alert alert-warning">Il semblerait que vous n'ayez pas encore trouvé d'hôtel favoris...</div>
+        <div class="alert alert-warning">Il semblerait que vous n'ayez pas encore ajouté d'hôtel favoris...</div>
     <?php } 
 
 } else { ?>
