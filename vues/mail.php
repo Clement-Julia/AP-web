@@ -1,3 +1,4 @@
+<div id="body-connexion">
 <?php
 require_once "header.php";
 
@@ -15,48 +16,48 @@ if(!empty($_GET["success"]) && $_GET["success"] == "mdp"){
     </div>
     <?php
 }
-if(!isset($_GET["wait"])){
-    ?>
-        <div class="container mt-3">
-            <h1>Formulaire de récupération</h1>
-            <form method="POST" action="../controleurs/mail.php" class="needs-validation" novalidate>
 
-                <div class="form-group my-4">
-                    <label for="email">Envoyé un mail de récupération à : </label>
-                    <input type="email" class="form-control <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all")) ? "is-invalid" : ""?>" name="email" id="email" placeholder="Entrez votre email">
+if(isset($_GET["wait"])){
+    ?>
+        <div class="container mt-5 d-flex flex-column align-items-center">
+            <form method="POST" action="../controleurs/mail.php?status=code" class="needs-validation" novalidate>
+                <h4 class="mt-5">Code reçu :</h4>
+                <div class="form-group my-4 d-flex">
+                    <input type="number" class="form-input" name="code[]" min="0" max ="9" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && this.value == ''">
+                    <input type="number" class="form-input" name="code[]" min="0" max ="9">
+                    <input type="number" class="form-input" name="code[]" min="0" max ="9">
+                    <input type="number" class="form-input" name="code[]" min="0" max ="9">
+                    <input type="number" class="form-input" name="code[]" min="0" max ="9">
 
                     <div class="valid-feedback">Ok !</div>
-                    <div class="invalid-feedback">Email invalide</div>
+                    <div class="invalid-feedback">Code invalide</div>
                 </div>
 
-                <div class="form-group text-center mt-3">
-                    <button type="submit" class="btn btn-primary return" name="submit" value="ON">Envoyé</button>
-                    <a href="connexion.php" class="btn btn-warning return">Retour</a>
+                <div class="form-group text-center mt-5">
+                    <button type="submit" class="btn form-btn return" name="submit" value="ON">Envoyé</button>
+                    <a href="connexion.php" class="btn form-btn return">Retour</a>
                 </div>
             </form>
         </div>
     <?php
-}elseif(!isset($_GET["reset"]) && $_SESSION["code"]){
+}elseif(isset($_GET["reset"]) && $_SESSION["code"]){
     ?>
-        <div class="container mt-3">
-            <h1>Formulaire de récupération</h1>
-            <form method="POST" action="../controleurs/mail.php" class="needs-validation" novalidate>
-
+        <div class="container mt-5 d-flex flex-column align-items-center">
+            <form method="POST" action="../controleurs/mail.php?status=reset" class="needs-validation" novalidate>
+                <h3 class="mt-5">Changement mot-de-passe :</h3>
                 <div class="col-md-12 mt-3">
-                    <label class="labels">Nouveau mot-de-passe :</label>
-                    <input type="text" name="new_mdp" class="form-control <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all")) ? "is-invalid" : ""?>" placeholder="Entrez votre nouveau mot-de-passe" value="">
+                    <input type="text" name="new_mdp" class="form-input <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all")) ? "is-invalid" : ""?>" placeholder="Nouveau mot-de-passe" value="">
                     
                     <div class="invalid-feedback">Mot de passe invalide</div> 
                 </div>
                 <div class="col-md-12 mt-3">
-                    <label class="labels">Vérification nouveau mot-de-passe :</label>
-                    <input type="text" name="new_verif" class="form-control <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all")) ? "is-invalid" : ""?>" placeholder="Entrez à nouveau votre nouveau mot-de-passe" value="">
+                    <input type="text" name="new_verif" class="form-input <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all")) ? "is-invalid" : ""?>" placeholder="Vérification nouveau mot-de-passe" value="">
 
                     <div class="invalid-feedback">Mot de passe invalide</div> 
                 </div>
-                <div class="form-group text-center mt-3">
-                    <button type="submit" class="btn btn-primary return" name="submit" value="ON">Sauvegarder</button>
-                    <a href="connexion.php" class="btn btn-warning return">Retour</a>
+                <div class="form-group text-center mt-5">
+                    <button type="submit" class="btn form-btn return" name="submit" value="ON">Sauvegarder</button>
+                    <a href="connexion.php" class="btn form-btn return">Retour</a>
                 </div>
             </form>
         </div>
@@ -64,21 +65,19 @@ if(!isset($_GET["wait"])){
     <?php
 }else{
     ?>
-        <div class="container mt-3">
-            <h1>Formulaire de récupération</h1>
-            <form method="POST" action="../controleurs/mail.php" class="needs-validation" novalidate>
-
+        <div class="container mt-5 d-flex flex-column align-items-center">
+            <form method="POST" action="../controleurs/mail.php?status=wait" class="needs-validation" novalidate>
+                <h3 class="mt-5">Envoyé un mail de récupération à :</h3>
                 <div class="form-group my-4">
-                    <label for="code">Code reçu : </label>
-                    <input type="number" class="form-control <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all" || !empty($_GET["erreur"]) && $_GET["erreur"] == "mdp" || !empty($_GET["erreur"]) && $_GET["erreur"] == "type")) ? "is-invalid" : ""?>" name="code" id="code" min="0" placeholder="Entrer le code">
+                    <input type="email" class="form-input <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all")) ? "is-invalid" : ""?>" name="email" id="email" placeholder="Email de récupération">
 
                     <div class="valid-feedback">Ok !</div>
-                    <div class="invalid-feedback">Code invalide</div>
+                    <div class="invalid-feedback">Email invalide</div>
                 </div>
 
-                <div class="form-group text-center mt-3">
-                    <button type="submit" class="btn btn-primary return" name="submit" value="ON">Envoyé</button>
-                    <a href="connexion.php" class="btn btn-warning return">Retour</a>
+                <div class="form-group text-center mt-5">
+                    <button type="submit" class="btn form-btn return" name="submit" value="ON">Envoyé</button>
+                    <a href="connexion.php" class="btn form-btn return">Retour</a>
                 </div>
             </form>
         </div>
@@ -87,3 +86,4 @@ if(!isset($_GET["wait"])){
 
 require_once "footer.php";
 ?>
+</div>

@@ -7,6 +7,8 @@ if(!empty($_SESSION['idUtilisateur'])){
     // (SECURITE) On vérifie que le paramètre récupéré est bien du type INT attendu
     if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET['idRegion'])){
 
+        $_SESSION["section"] = 1;
+
         // Si la variable existe (l'utilisateur à pas encore réservé une étape) sinon on peut la supprimer car on récupère l'info à partir de la bdd
         if (!empty($_GET['idRegion'])){
             $_SESSION['idRegion'] = $_GET['idRegion'];
@@ -77,11 +79,11 @@ if(!empty($_SESSION['idUtilisateur'])){
                                             <div class="edit-container">
                                                 <button class="btn btn-sm btn-warning editButton">Modifier</button>
                                                 <form action="../controleurs/editTravel.php" method="POST" class="editForm">
-                                                    <select name="options[<?=$reservationHebergement->getIdReservationHebergement()?>]" class="form-control">
-                                                        <option disabled selected>Modifier ...</option>
+                                                    <select name="options[<?=$reservationHebergement->getIdReservationHebergement()?>]" class="form-select">
+                                                        <option disabled selected class="row">Modification</option>
                                                         <option value="1">La date du voyage</option>
                                                         <option value="2">La ville</option>
-                                                        <option value="3">L'hotel</option>
+                                                        <option value="3">L'hébergement</option>
                                                         <option value="4">Supprimer cette étape</option>
                                                     </select>
                                                     <button type="submit" class="btn btn-sm btn-warning">Modifier</button>

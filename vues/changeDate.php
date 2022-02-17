@@ -51,11 +51,17 @@ if(!empty($_SESSION['idUtilisateur'])){
                 }
             </style>
             <div id="change-date-container">
-                <div class="card">
-                    <div class="card-header text-center"><h6>Modification des dates du séjour</h6></div>
+                <div class="card form-container mb-3">
+                    <div class="card-header">
+                        <h6 class="text-light text-center">Modification des dates du séjour</h6>
+                    </div>
                 </div>
-                <p class="text-center mt-3 text-light">Astuce de l'équipe : <span class="text-light">"Pour modifier une date, cliquer une première fois sur la date à modifier puis une deuxième fois sur la date choisie"</span></p>
-                <div id="cd-calendar-container" class="card">
+                <div class="card-header form-container mt-3">
+                    <p class="text-light mt-3">Astuce de l'équipe :</p>
+                    <p class="text-white-50">Pour modifier une date, cliquer une première fois sur la date à modifier puis une deuxième fois sur la date choisie</p>
+                    <p class="text-white-50">Vous ne pouvez réserver des nuits sur des jours antécédents à la date actuelle</p>
+                </div>
+                <div id="cd-calendar-container" class="card form-container mt-3">
                     <!-- Les 3 calendriers -->
 
 
@@ -166,7 +172,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                     </div>
 
                 </div>
-                <div id="cd-resume-container" class="card">
+                <div id="cd-resume-container" class="card form-container">
                     <!-- Le résumé avant / après  -->
                     <div class="card modification">
                         <div class="card-header">
@@ -192,11 +198,11 @@ if(!empty($_SESSION['idUtilisateur'])){
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="form-container">
                     <div id="alert-warning" class="alert alert-warning d-none"></div>
                     <div id="alert-danger" class="alert alert-danger d-none"></div>
                 </div>
-                <div id="cd-buttons-container" class="card">
+                <div id="cd-buttons-container" class="card form-container">
                     <!-- Les boutons -->
                     <form action="../controleurs/changeDate.php" method="POST">
                         <div class="card-body text-center">

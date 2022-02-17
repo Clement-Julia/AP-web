@@ -106,6 +106,161 @@ if(!empty($_SESSION['idUtilisateur'])){
                         </div>
                     </div>
 
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Notes et avis</h6>
+                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="btn btn-outline-primary btn-radius me-1 active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Les plus récents</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="btn btn-outline-primary btn-radius me-1" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Positif</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="btn btn-outline-primary btn-radius me-1" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Négatif</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                    <?php
+                                    $i = 0;
+                                    $x = 0;
+                                    foreach($avis_by_date as $avis){
+                                        $name = "rating" . $i;
+                                        ?>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="heading<?=$i?>">
+                                                <button class="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapse<?=$i?>">
+                                                    <?= $avis["nom"] . " " . $avis["prenom"] ?>
+                                                    <div class="rating ms-5">
+                                                        <input type="radio" name="<?=$name?>" value="5" id="<?=$x?>" <?= (5 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+
+                                                        <input type="radio" name="<?=$name?>" value="4" id="<?=$x?>" <?= (4 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+
+                                                        <?php $x++ ?>
+                                                        <input type="radio" name="<?=$name?>" value="3" id="<?=$x?>"<?= (3 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+
+                                                        <input type="radio" name="<?=$name?>" value="2" id="<?=$x?>"<?= (2 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+                                                        
+                                                        <input type="radio" name="<?=$name?>" value="1" id="<?=$x?>" <?= (1 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <?= $avis["commentaire"] ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $i++;
+                                    }
+                                    ?>
+                                </div>
+                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                    <?php
+                                    foreach($avis_desc as $avis){
+                                        $name = "rating" . $i;
+                                        ?>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="heading<?=$i?>">
+                                                <button class="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapse<?=$i?>">
+                                                    <?= $avis["nom"] . " " . $avis["prenom"] ?>
+                                                    <div class="rating ms-5">
+                                                        <input type="radio" name="<?=$name?>" value="5" id="<?=$x?>" <?= (5 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+
+                                                        <input type="radio" name="<?=$name?>" value="4" id="<?=$x?>" <?= (4 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+
+                                                        <?php $x++ ?>
+                                                        <input type="radio" name="<?=$name?>" value="3" id="<?=$x?>"<?= (3 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+
+                                                        <input type="radio" name="<?=$name?>" value="2" id="<?=$x?>"<?= (2 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+                                                        
+                                                        <input type="radio" name="<?=$name?>" value="1" id="<?=$x?>" <?= (1 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <?= $avis["commentaire"] ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $i++;
+                                    }
+                                    ?>
+                                </div>
+                                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                                    <?php
+                                    foreach($avis_asc as $avis){
+                                        $name = "rating" . $i;
+                                        ?>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="heading<?=$i?>">
+                                                <button class="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapse<?=$i?>">
+                                                    <?= htmlspecialchars($avis["nom"], ENT_QUOTES) . " " . htmlspecialchars($avis["prenom"], ENT_QUOTES) ?>
+                                                    <div class="rating ms-5">
+                                                        <input type="radio" name="<?=$name?>" value="5" id="<?=$x?>" <?= (5 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+
+                                                        <input type="radio" name="<?=$name?>" value="4" id="<?=$x?>" <?= (4 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+
+                                                        <?php $x++ ?>
+                                                        <input type="radio" name="<?=$name?>" value="3" id="<?=$x?>"<?= (3 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+
+                                                        <input type="radio" name="<?=$name?>" value="2" id="<?=$x?>"<?= (2 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+                                                        
+                                                        <input type="radio" name="<?=$name?>" value="1" id="<?=$x?>" <?= (1 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                        <label class="rating_size" for="<?=$x?>">☆</label>
+                                                        <?php $x++ ?>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <?= htmlspecialchars($avis["commentaire"], ENT_QUOTES) ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $i++;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <form action="../controleurs/changeHebergement.php" method="POST">
                         <div class="card text-center">
                             <div class="card-body">
