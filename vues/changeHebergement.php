@@ -55,7 +55,7 @@ if(!empty($_SESSION['idUtilisateur'])){
 
                 <div id="hv-container">
                     <div id="hv-back-button-container">
-                        <a href="<?= isset($_GET['idVille']) ? "changeVille.php" : "createTravel.php" ?>" class="btn btn-sm btn-secondary back-button"><</a>
+                        <a href="<?= isset($_GET['idVille']) ? "changeVille.php" : "createTravel.php" ?>" class="btn btn-sm btn-secondary back-button text-light"><</a>
                     </div>
                     <div id="choose-hebergement">
                         <div class="row d-flex">

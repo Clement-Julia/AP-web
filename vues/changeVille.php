@@ -52,7 +52,7 @@ if(!empty($_SESSION['idUtilisateur'])){
 
         <div id="change-create-travel-container">
             <div id="hv-back-button-container">
-                <a href="createTravel.php" class="btn btn-sm btn-secondary back-button"><</a>
+                <a href="createTravel.php" class="btn btn-sm btn-secondary back-button text-light"><</a>
             </div>
             
             <div id="change-choose-town-bot">

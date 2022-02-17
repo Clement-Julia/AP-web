@@ -60,7 +60,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                 </style>
                 <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
                     <div id="hd-title-container">
-                        <div id="hd-title"><a href="changeHebergement.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= $Hebergement->getLibelle() ?></div>
+                        <div id="hd-title"><a href="changeHebergement.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button text-light"><</a><?= $Hebergement->getLibelle() ?></div>
                         <div id="hd-infos">
                             <div id="hd-rate">
                                 <?= ($average != 0) ? $average.'<i class="fas fa-star" style="color: #f2f200;"></i>' : "<span class='text-muted fst-italic'>Aucun avis n'a été publié...</span> "?>

@@ -57,7 +57,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                 
                 <div id="hv-container">
                     <div id="hv-back-button-container">
-                        <a href="createTravel.php?idRegion=<?=$Ville->getIdRegion()?>" class="btn btn-sm btn-secondary back-button"><</a>
+                        <a href="createTravel.php?idRegion=<?=$Ville->getIdRegion()?>" class="btn btn-sm btn-secondary back-button text-light"><</a>
                     </div>
                     <div id="choose-hebergement">
                         <div class="row">
