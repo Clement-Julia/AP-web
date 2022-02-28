@@ -25,14 +25,13 @@ if(!empty($_SESSION['idUtilisateur'])){
             <div class="tab-pane fade show active mb-3" id="pills-0" role="tabpanel" aria-labelledby="pills-0-tab">
                 <div class="row">
                 <?php
-                    $i = 0;
                     $x = 1;
                     if(count($luas)){
                         foreach($luas as $lua){
                             ?>
                             <div class ="col-12 col-md-4 mt-3">
                                 <div class="card text-center" style="max-width: 30rem;">
-                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal<?=$i?>">
+                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal<?=$lua["idAvis"]?>">
                                         <img src="https://img2.freepng.fr/20180505/wle/kisspng-w-hotels-starwood-marriott-international-logo-5aed9c54873c61.5086030315255214925539.jpg" class="card-img-top" style= "height: 300px">
                                         <div class="card-body">
                                             <h5 class="card-title"><?=$lua["libelle"]?></h5>
@@ -41,7 +40,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                     </button>
                                 </div>
                                 <form method="post" action="../controleurs/addAvis.php?id=<?=$lua["idAvis"]?>">
-                                    <div class="modal fade" id="exampleModal<?=$i?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="exampleModal<?=$lua["idAvis"]?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -82,7 +81,6 @@ if(!empty($_SESSION['idUtilisateur'])){
                                 </form>
                             </div>
                             <?php
-                            $i++;
                         }
                     }else{
                         ?>
@@ -101,7 +99,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                             ?>
                             <div class ="col-12 col-md-4 mt-3">
                                 <div class="card text-center" style="max-width: 30rem;">
-                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal<?=$i?>">
+                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal<?=$all["idAvis"]?>">
                                         <img src="https://img2.freepng.fr/20180505/wle/kisspng-w-hotels-starwood-marriott-international-logo-5aed9c54873c61.5086030315255214925539.jpg"" class="card-img-top" style= "height: 300px">
                                         <div class="card-body" style="max-height: 85px;">
                                             <h5 class="card-title"><?=$all["libelle"]?></h5>
@@ -109,28 +107,9 @@ if(!empty($_SESSION['idUtilisateur'])){
                                         </div>
                                     </button>
                                 </div>
-                                <form method="post" action="../controleurs/modifAvis.php?id=<?=$all["idAvis"]?>">
-                                    <div class="modal fade" id="exampleModal<?=$i?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Votre avis pour <?=$all["libelle"]?></h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body pt-0">
-                                                    <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."><?= htmlspecialchars($all["commentaire"], ENT_QUOTES) ?></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-warning" name="status" value="update">Modifier</button>
-                                                <button type="submit" class="btn btn-danger" name="status" value="delete">Supprimer</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                
                             </div>
                             <?php
-                            $i++;
                         }
                     }else{
                         ?>
@@ -143,6 +122,29 @@ if(!empty($_SESSION['idUtilisateur'])){
         </div>
     </div>
 <?php
+foreach($alls as $all){
+    ?>
+    <div class="modal fade" id="exampleModal<?=$all["idAvis"]?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+            <form method="post" action="../controleurs/modifAvis.php?id=<?=$all["idAvis"]?>" style="z-index: 1060">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Votre avis pour <?=$all["libelle"]?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."><?= htmlspecialchars($all["commentaire"], ENT_QUOTES) ?></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-warning" name="status" value="update">Modifier</button>
+                <button type="submit" class="btn btn-danger" name="status" value="delete">Supprimer</button>
+            </div>
+        </form>
+        </div>
+    </div>
+    <?php
+}
 } else { ?>
     <div class="alert alert-warning">Vous devez être connecté pour accéder à ce contenu</div>
 <?php } ?>

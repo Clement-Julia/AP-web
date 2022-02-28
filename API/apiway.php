@@ -57,6 +57,12 @@ try{
                     $Api->getAllActivitesByIdVille($_SESSION['idVille']);
                 }
                 break;
+            case "adminActivites":
+                if(!empty($_GET['ville']) && is_string($_GET['ville'])){
+                    $Api = new Api();
+                    $Api->getAllActivitesByNameVille($_GET['ville']);
+                }
+                break;
             default : throw new Exception ("La demande n'est pas valide, vérifiez l'url");
         }
     } else {

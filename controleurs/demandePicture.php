@@ -11,11 +11,13 @@ if($_GET["command"] == "acc"){
         $folder = scandir("../assets/src/tuuid/".$hotel->getUuid());
 
         for($i = 2; $i < count($folder); $i++){
-
             $ext = substr($folder[$i], strrpos($folder[$i], '.'));
-            rename("../assets/src/tuuid/".$hotel->getUuid()."/".$hotel->getLibelle().$i.$ext, "../assets/src/uuid/".$hotel->getUuid()."/".$hotel->getLibelle().$lim.$ext);
+            if(strtok($folder[$i], '.') != "banniere"){
+                rename("../assets/src/tuuid/".$hotel->getUuid()."/".$folder[$i], "../assets/src/uuid/".$hotel->getUuid()."/".$hotel->getLibelle().$lim.$ext);
+            }else{
+                rename("../assets/src/tuuid/".$hotel->getUuid()."/".$folder[$i], "../assets/src/uuid/".$hotel->getUuid()."/banniere".$ext);
+            }
 
-            $first ++;
             $lim ++;
         }
         rmdir("../assets/src/tuuid/".$hotel->getUuid());
@@ -28,7 +30,10 @@ if($_GET["command"] == "acc"){
 
 }elseif($_GET["command"] == "ref"){
     try{
-
+        $folder = scandir("../assets/src/tuuid/".$hotel->getUuid());
+        for($i = 2; $i < count($folder); $i++){
+            unlink("../assets/src/tuuid/".$hotel->getUuid()."/".$folder[$i]);
+        }
         rmdir("../assets/src/tuuid/".$hotel->getUuid());
         header("location:../admin/validPicture.php?success=ref");
 

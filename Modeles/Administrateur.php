@@ -70,13 +70,15 @@ class Admin extends Utilisateur {
             
             $req = "";
             for($i = 2; $i < count($folder); $i++){
-                $req .= $folder[$i] . ",";
+                $req .= "'".$folder[$i]."'" . ",";
             }
             $req = substr($req, 0, -1);
-            $requete = $this->getBdd()->prepare("SELECT h.*, u.nom, u.prenom, v.libelle as libelleVille, r.libelle as libelleRegion FROM hebergement h inner join utilisateurs u using(IdUtilisateur) left join villes v using(idVille) left join regions r using(idRegion) where h.uuid in (?)");
-            $requete->execute([$req]);
-            $return = $requete->fetchALL(PDO::FETCH_ASSOC);
+            $test = "SELECT h.*, u.nom, u.prenom, v.libelle as libelleVille, r.libelle as libelleRegion FROM hebergement h inner join utilisateurs u using(IdUtilisateur) left join villes v using(idVille) left join regions r using(idRegion) where h.uuid in ($req)";
+            $requete = $this->getBdd()->prepare("SELECT h.*, u.nom, u.prenom, v.libelle as libelleVille, r.libelle as libelleRegion FROM hebergement h inner join utilisateurs u using(IdUtilisateur) left join villes v using(idVille) left join regions r using(idRegion) where h.uuid in ($req)");
+            $requete->execute();
+            $return = $requete->fetchAll(PDO::FETCH_ASSOC);
             return $return;
-        } 
+            
+        }
     }
 }

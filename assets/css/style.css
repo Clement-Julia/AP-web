@@ -342,7 +342,6 @@ body{
 
 #choose-hebergement{
     width: 60%;
-    display: flex;
     align-items: stretch;
     flex-wrap: wrap;
     overflow-y: scroll;
