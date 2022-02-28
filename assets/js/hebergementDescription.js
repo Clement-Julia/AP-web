@@ -98,7 +98,7 @@ async function validity(dateDebut, diff_jours){
             nbJours.innerHTML = diff_jours + " nuit";
         }
         nbJoursVoyage = diff_jours;
-        prix.innerHTML = prixHebergement * diff_jours + " €";
+        prix.innerHTML = (prixHebergement * diff_jours).toFixed(2) + " €";
 
         return true;
     }

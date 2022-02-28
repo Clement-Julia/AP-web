@@ -28,6 +28,20 @@ if(!empty($_SESSION['idUtilisateur'])){
         }
 
         ?>
+        <style>
+            body{
+                background-image: url('../assets/src/img/background/HebergementDes.jpg');
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            .card-header{
+                color: black;
+            }
+            #navbar{
+                background-color: #27272773 !important;
+                backdrop-filter: blur(12px);
+            }
+        </style>
         <div id="ligne-points">
         <?php
         // On récupère les lat et lng des reservations hébergement fait par l'utilisateur sur un voyage en cours de construction
@@ -38,16 +52,20 @@ if(!empty($_SESSION['idUtilisateur'])){
 
         <div id="change-create-travel-container">
             <div id="hv-back-button-container">
-                <a href="createTravel.php" class="btn btn-sm btn-secondary back-button"><</a>
+                <a href="createTravel.php" class="btn btn-sm btn-secondary back-button text-light"><</a>
             </div>
             
             <div id="change-choose-town-bot">
                 <?php
                 foreach ($Lodgings as $item)
                 { ?>
+                    <?php   
+                        $VilleTemp = new Ville($item->getIdVille());
+                        $Image = new Images($VilleTemp->getUuid());
+                    ?>
                     <div class="col-xs-12 col-sm-6 col-md-6 col-xl-6 col-xxl-4 d-flex align-items-stretch flex-wrap">
                         <div data-id="<?= $item->getIdVille()?>" data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" data-zoom="9" class="card ct-a js-marker">
-                            <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1530735606451-8f5f13955328?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80">
+                            <img class="img-fluid" alt="100%x280" src="<?=$Image->getBanniere()?>">
                             <div class="card-body ct-text-ville">
                                 <h6 class="card-title"><?= $item->getLibelle()?></h6>
                             </div>

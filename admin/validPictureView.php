@@ -26,13 +26,14 @@ $hotel = new Hebergement($_GET["id"]);
         <label>Images :</label>
         <div id="image">
             <?php
-            $img = lister_images("../assets/src/tuuid/".$hotel->getUuid());
-            if(empty($img)){
+            $img = scandir("../assets/src/tuuid/".$hotel->getUuid());
+            if(count($img) <= 2){
                 ?>
                     <span class="text-muted font-italic">Aucune photo n'a été demandée</span>
                 <?php
+            }else{
+                lister_images("../assets/src/tuuid/".$hotel->getUuid());
             }
-                
             ?>
         </div>
     </div>

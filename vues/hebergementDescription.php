@@ -50,9 +50,24 @@ if(!empty($_SESSION['idUtilisateur'])){
                 $average = $avis->getAverageAvis($_GET["idHebergement"]);
                 ?>
 
-                <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container">
+                <style>
+                    body{
+                        background-image: url('../assets/src/img/background/HebergementDes.jpg');
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                    }
+                    .card-header{
+                        color: black;
+                    }
+                    #navbar{
+                        background-color: #27272773 !important;
+                        backdrop-filter: blur(12px);
+                    }
+                </style>
+
+                <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container" class="form-container text-light mb-2">
                     <div id="hd-title-container">
-                        <div id="hd-title"><a href="hebergementVille.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button"><</a><?= htmlspecialchars($Hebergement->getLibelle(), ENT_QUOTES) ?></div>
+                        <div id="hd-title"><a href="hebergementVille.php?idVille=<?=$Hebergement->getIdVille()?>" class="btn btn-sm btn-secondary back-button text-light"><</a><?= htmlspecialchars($Hebergement->getLibelle(), ENT_QUOTES) ?></div>
                         <div id="hd-infos">
                             <div id="hd-rate">
                                 <?= ($average != 0) ? $average.'<i class="fas fa-star" style="color: #f2f200;"></i>' : "<span class='text-muted fst-italic'>Aucun avis n'a été publié...</span> "?>
@@ -62,13 +77,12 @@ if(!empty($_SESSION['idUtilisateur'])){
                     </div>
                     <?=$Images->getImageDescriptionHebergementCode()?>
                     <div id="hd-description-container">
-                        <div id="hd-description" class="card">
-                            <div class="card-header"><h6>Description</h6></div>
+                        <div id="hd-description" class="card form-container text-light">
+                            <div class="card-header text-light"><h6>Description</h6></div>
                             <div class="card-body"><?= htmlspecialchars($Hebergement->getDescription(), ENT_QUOTES) ?></div>
-                            
                         </div>
-                            <div class="card">
-                                <div class="card-header"><h6>Ce que propose le logement : </h6></div>
+                            <div class="card form-container text-light">
+                                <div class="card-header text-light"><h6>Ce que propose le logement : </h6></div>
                                 <div class="card-body d-flex flex-wrap">
                             <?php
                             foreach ($Hebergement->getOptions() as $item){
@@ -81,10 +95,13 @@ if(!empty($_SESSION['idUtilisateur'])){
                             </div>
                     </div>
                     <div id="hd-date-price-container">
-                        <div id="hd-date" class="card">
-                            <div class="card-header"><h6>Calendrier</h6></div>
+                        <div id="hd-date" class="card form-container">
+                            <div class="card-header text-light">
+                                <h6>Nombre de nuit</h6>
+                            </div>
+                            <p class="text-light ms-2">Astuce de l'équipe : <span class="text-white-50">"Cliquer sur une date pour définir le nombre de nuit"</span></p>
                             <div id="calendar-container" class="card-body">
-                                <div class="calendar">
+                                <div class="calendar background-calendar">
                                     <div class="calendar-header"><?= $Calendar->toString();?></div>
                                     <table id="table1" class="calendar__table calendar__table--<?=$Calendar->getWeeks();?>weeks">
                                         <tr>
@@ -100,7 +117,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                 $date = (clone $lastmonday)->modify("+" . ($k + $i * 7) ." days") ?>
                                                 <td>
                                                     <div id="<?=$date->format("Y-m-d")?>" class="
-                                                    <?=$Calendar->withinMonth($date) ? '' : 'calendar__overmonth';?> 
+                                                    <?=$Calendar->withinMonth($date) ? '' : 'calendar__overmonth';?>
                                                     <?=$date->format("Y-m-d") == $dateDebut->format("Y-m-d") && $Calendar->withinMonth($date) ? 'date-debut' : '';?> 
                                                     <?= in_array($date->format("Y-m-d"), $bookingDates) ? 'booking' : '';?>
                                                     <?= !in_array($date->format("Y-m-d"), $bookingDates) &&  !($date->format("Y-m-d") < $dateDebut->format("Y-m-d")) && $Calendar->withinMonth($date) ? 'selectable' : '';?>
@@ -112,7 +129,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                     </table>
                                 </div>
 
-                                <div class="calendar">
+                                <div class="calendar background-calendar">
                                     <div class="calendar-header"><?= $NextCalendar->toString();?></div>
                                     <table id="table2" class="calendar__table calendar__table--<?=$NextCalendar->getWeeks();?>weeks">
                                         <tr>
@@ -143,11 +160,11 @@ if(!empty($_SESSION['idUtilisateur'])){
                         </div>
 
 
-                        <div id="hd-price" class="card">
-                            <div class="card-header"><h6>Détail du prix</h6></div>
+                        <div id="hd-price" class="card form-container text-light">
+                            <div class="card-header text-light"><h6>Détail du prix</h6></div>
                             <div class="card-body">
                                 <span>Vous allez réserver : </span>
-                                <span id="nbJours">0 nuit</span> x <span id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>"><?=$Hebergement->getPrix()?> €</span> = <span id="prix">0 €</span>
+                                <span id="nbJours">0 nuit</span> à <span id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>"><?=$Hebergement->getPrix()?> €</span> <br> Montant total : <span id="prix">0 €</span>
                             </div>
                         </div>
                         <div>
@@ -158,8 +175,8 @@ if(!empty($_SESSION['idUtilisateur'])){
                         <div class="alert alert-warning">Les dates sélectionnées ne sont pas valide. Veuillez selectionner une plage de date libre.</div>
                     <?php } ?>
 
-                    <div class="card">
-                        <div class="card-header">
+                    <div class="card form-container text-light">
+                        <div class="card-header text-light">
                             <h6>Notes et avis</h6>
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
@@ -173,7 +190,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                 </li>
                             </ul>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body form-container">
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                     <?php
@@ -182,7 +199,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                     foreach($avis_by_date as $avis){
                                         $name = "rating" . $i;
                                         ?>
-                                        <div class="accordion-item">
+                                        <div class="accordion-item form-containers">
                                             <h2 class="accordion-header" id="heading<?=$i?>">
                                                 <button class="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapse<?=$i?>">
                                                     <?= $avis["nom"] . " " . $avis["prenom"] ?>
@@ -210,9 +227,9 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                     </div>
                                                 </button>
                                             </h2>
-                                            <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <?= $avis["commentaire"] ?>
+                                            <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#pills-home">
+                                                <div class="accordion-body text-dark">
+                                                    <?=  htmlspecialchars($avis["commentaire"], ENT_QUOTES) ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -254,9 +271,9 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                     </div>
                                                 </button>
                                             </h2>
-                                            <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <?= $avis["commentaire"] ?>
+                                            <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#pills-profile">
+                                                <div class="accordion-body text-dark">
+                                                    <?=  htmlspecialchars($avis["commentaire"], ENT_QUOTES) ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -298,8 +315,8 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                     </div>
                                                 </button>
                                             </h2>
-                                            <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
+                                            <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#pills-contact">
+                                                <div class="accordion-body text-dark">
                                                     <?= htmlspecialchars($avis["commentaire"], ENT_QUOTES) ?>
                                                 </div>
                                             </div>
@@ -314,7 +331,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                     </div>
 
 
-                    <div class="card">
+                    <div class="card form-container text-light">
                         <div class="card-body d-flex justify-content-center">
                             <button id="submit" class="btn btn-success btn-sm">Valider</button>
                             <div id="hidden" class="d-none">

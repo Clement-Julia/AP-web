@@ -5,9 +5,6 @@
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     
-    <!-- Map JS -->
-    <script src="js/map.js"></script>
-    
     <!-- Custom scripts for all pages-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="js/sb-admin-2.min.js"></script>

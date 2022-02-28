@@ -4,7 +4,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered text-dark">
         <div class="modal-content">
         <div class="modal-header background-cookie">
             <h5 class="modal-title" id="exampleModalLabel">Salut c'est nous...<br><b>Les cookies !</b></h5>

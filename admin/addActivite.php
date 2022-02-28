@@ -23,7 +23,7 @@ $infos_a = $activités->getAllActivite();
         ?>
         <div class="container alert alert-danger">
             <p>
-                Vous devez définir une seule manière de position pour l'hebergement et il doit avoir au minimum une image
+                Tous les champs sont obligatoires
             </p>
         </div>
         <?php
@@ -32,7 +32,7 @@ $infos_a = $activités->getAllActivite();
         ?>
         <div class="container alert alert-success">
             <p>
-                L'hébergement a bien été créé !
+                L'activité a bien été créé !
             </p>
         </div>
         <?php
@@ -45,7 +45,7 @@ $infos_a = $activités->getAllActivite();
 
         <div class="form-group mt-4">
             <label for="libelle">Ville : </label>
-            <input class="form-control" list="datalistVille" name="ville" id="DataListVille" placeholder="Entrez le type d'activité" required autocomplete="off">
+            <input class="form-control" list="datalistVille" name="ville" id="DataListVille" placeholder="Entrez la ville où est pratiquée l'activité" required autocomplete="off">
             <datalist id="datalistVille">
                 <?php
                     foreach($infos_v as $v){
@@ -79,11 +79,13 @@ $infos_a = $activités->getAllActivite();
                 <div class="form-group">
                     <label for="latitude">Latitude : </label>
                     <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Clickez sur la map pour la définir" autocomplete="off" disabled>
+                    <input type="hidden" name="currentLatitude">
                 </div>
 
                 <div class="form-group">
                     <label for="longitude">Longitude : </label>
                     <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Clickez sur la map pour la définir" autocomplete="off" disabled>
+                    <input type="hidden" name="currentLongitude">
                 </div>
             </div>
             <div class="col-6" id="map"></div>
@@ -94,6 +96,9 @@ $infos_a = $activités->getAllActivite();
 
     </form>
 </div>
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/map.js"></script>
 
 <?php
 require_once "footerAdmin.php";

@@ -85,7 +85,7 @@ allTds.forEach(element => {
             // Si indisponible alors ça veut dire qu'une partie des dates sélectionnées sont déjà prise
             if(!indisponible){
                 nbJours.innerHTML = diff_jours;
-                prix.innerHTML = (prixHebergement * diff_jours) + " €";
+                prix.innerHTML = (prixHebergement * diff_jours).toFixed(2) + " €";
             } else {
                 dStart.innerHTML = "Indisponible";
                 dEnd.innerHTML = "Indisponible";

@@ -1,22 +1,31 @@
 <?php
 require_once "header.php";
-
 ?>
+
+<style>
+    #navbar{
+        background-color: rgba(105, 75, 27, 0.938)!important;
+    }
+
+    #navbar a.headerli:hover {
+        background-color: rgba(105, 75, 27, 0.726);
+    }
+</style>
 
 <div id="index-container">
 
-    <div>
+    <div id="customBtn">
         <button type="button" class="offset" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        <span id="offset-span">Créez votre voyage</span>    
+            <span id="offset-span">Créez votre voyage</span>    
         </button>
     </div>
     
     <?php
     if(!empty($_SESSION["idUtilisateur"])){
         ?>
-        <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <form action="../controleurs/startTravelTime.php" method="POST">
-                <div class="modal-dialog modal-dialog-centered">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <form action="../controleurs/startTravelTime.php" method="POST">
                     <div id="modal-connecter" class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Quelle est la date de votre départ ?</h5>
@@ -30,8 +39,8 @@ require_once "header.php";
                             <button id="submit" type="submit" class="raise">Valider</button>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
         <?php
     }else{

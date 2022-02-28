@@ -3,12 +3,12 @@ require_once "../controleurs/traitement.php";
 $activite = new Activite();
 $ville = new Ville();
 
-if(!empty($_POST["activite"])&&!empty($_POST["longitude"])&&!empty($_POST["latitude"])&&!empty($_POST["description"])&&!empty($_POST["ville"])){
+if(!empty($_POST["activite"])&&!empty($_POST["currentLongitude"])&&!empty($_POST["currentLatitude"])&&!empty($_POST["description"])&&!empty($_POST["ville"])){
     
     try{
         $idActivite = $activite->getActiviteByName($_POST["activite"]);
         $ville = $ville->getVillebyName($_POST["ville"]);
-        $activite->addActiviteForCity($idActivite["idActivite"], $ville["idVille"], $_POST["latitude"], $_POST["longitude"], $_POST["description"]);
+        $activite->addActiviteForCity($idActivite["idActivite"], $ville["idVille"], $_POST["currentLatitude"], $_POST["currentLongitude"], $_POST["description"]);
         header("location:../admin/addActivite.php?success");
     }
     catch(exception $e)

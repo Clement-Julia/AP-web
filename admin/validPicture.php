@@ -45,7 +45,7 @@ elseif(isset($_GET["error"])){?>
                                 <td class="btn-group d-flex" >
                                     <a href="../controleurs/demandePicture.php?id=<?=$demande["idHebergement"]?>&command=acc" class="btn btn-success">Accepter</a>
                                     <a href="validPictureView.php?id=<?=$demande["idHebergement"]?>" class="btn btn-warning">Gérer</a>
-                                    <a href="v../controleurs/demandePicture.php?id=<?=$demande["idHebergement"]?>&command=ref" class="btn btn-danger">Refuser</a>
+                                    <a href="../controleurs/demandePicture.php?id=<?=$demande["idHebergement"]?>&command=ref" class="btn btn-danger">Refuser</a>
                                 </td>
                             </tr>
                             <?php

@@ -44,7 +44,7 @@ class Images extends Modele {
 
     public function getImageDescriptionHebergementCode(){
 
-        $path = "../src/uuid/" . $this->uuid . "/" . $this->libelle ."*.*";
+        $path = "../assets/src/uuid/" . $this->uuid . "/" . $this->libelle ."*.*";
         $filenames = glob($path);
 
         if(count($filenames) == 0){

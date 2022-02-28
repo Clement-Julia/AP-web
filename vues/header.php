@@ -3,12 +3,14 @@ require_once "../controleurs/traitement.php";
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="loocalacool" content="Site de création de voyage par étape, et en toute simplicité !">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
@@ -34,13 +36,10 @@ if(!empty($_COOKIE["connection_cookies"])){
         $_SESSION["email"] = $user["email"];
     }
 }
-if (!empty($_SESSION['idUtilisateur'])){
+if(!empty($_SESSION['idUtilisateur'])){
     $ReservationVoyage = new ReservationVoyage();
 }
 ?>
-
-    <!-- on refait toutes la navbar -->
-
 
 <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light z-index">
     <div class="container-fluid">
@@ -52,7 +51,7 @@ if (!empty($_SESSION['idUtilisateur'])){
             </div>
         </div>
 
-        <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' class='text-decoration-none text-dark align-self-center'>Inscription</a><a href='connexion.php' class='text-decoration-none text-dark align-self-center ms-3'>Connexion</a>");?>
+        <?=(!empty($_SESSION["idUtilisateur"]) ? "" : "<a href='inscription.php' id='inscription' class='text-decoration-none text-white align-self-center'>Inscription</a><a href='connexion.php' id='connexion' class='text-decoration-none text-white align-self-center ms-3'>Connexion</a>");?>
         <?php if(!empty($_SESSION["idUtilisateur"])){
                 ?>
                 <div class="dropdown me-3">
@@ -61,7 +60,6 @@ if (!empty($_SESSION['idUtilisateur'])){
                     </a>
             
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <!-- <li><a class="dropdown-item" href="historique.php">Historique</a></li> -->
                         <li><a class="headerli dropdown-item" href="avis.php">Avis</a></li>
                         <li><a class="headerli dropdown-item" href="favoris.php">Favoris</a></li>
                         <li><a class="headerli dropdown-item" href="profil.php">Paramètres</a></li>
