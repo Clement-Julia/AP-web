@@ -116,13 +116,13 @@ $bool = 0;
                 <div id="banniere">
                     <?php 
                         if(!empty($info_ville["uuid"])){
-                            $filename = "../assets/src/tuuid/" . $info_ville->getUuid() . "/banniere.*";
-                            $folder = scandir("../assets/src/tuuid/".$info_ville->getUuid());
+                            $filename = "../assets/src/uuid/" . $info_ville["uuid"] . "/banniere.*";
+                            $folder = scandir("../assets/src/uuid/".$info_ville["uuid"]);
                             for($i = 2; $i < count($folder); $i++){
                                 $ext = substr($folder[$i], strrpos($folder[$i], '.'));
                                 if(strtok($folder[$i], '.') == "banniere"){
                                     ?>
-                                    <img src="../assets/src/tuuid/<?=$info_ville->getUuid()?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
+                                    <img src="../assets/src/tuuid/<?=$info_ville["uuid"]?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
                                     <?php
                                 }
                             }
@@ -146,13 +146,13 @@ $bool = 0;
                 <label>Images :</label>
                 <div id="image">
                     <?php
-                    $img = scandir("../assets/src/tuuid/".$info_ville->getUuid());
+                    $img = scandir("../assets/src/uuid/".$info_ville["uuid"]);
                     if(count($img) <= 2){
                         ?>
                             <span class="text-muted font-italic">Aucune photo n'a été demandée</span>
                         <?php
                     }else{
-                        lister_images("../assets/src/tuuid/".$info_ville->getUuid());
+                        lister_images("../assets/src/uuid/".$info_ville["uuid"]);
                     }
                     ?>
                 </div>

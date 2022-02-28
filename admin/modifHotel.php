@@ -182,13 +182,13 @@ if(isset($_GET["success"])){
                 <label>Bannière :</label>
                 <div id="banniere">
                     <?php 
-                        $filename = "../assets/src/tuuid/" . $info_hotel->getUuid() . "/banniere.*";
-                        $folder = scandir("../assets/src/tuuid/".$info_hotel->getUuid());
+                        $filename = "../assets/src/uuid/" . $info_hotel["uuid"] . "/banniere.*";
+                        $folder = scandir("../assets/src/uuid/".$info_hotel["uuid"]);
                         for($i = 2; $i < count($folder); $i++){
                             $ext = substr($folder[$i], strrpos($folder[$i], '.'));
                             if(strtok($folder[$i], '.') == "banniere"){
                                 ?>
-                                <img src="../assets/src/tuuid/<?=$info_hotel->getUuid()?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
+                                <img src="../assets/src/tuuid/<?=$info_hotel["uuid"]?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
                                 <?php
                             }
                         }
@@ -207,13 +207,13 @@ if(isset($_GET["success"])){
                 <label>Images :</label>
                 <div id="image">
                 <?php
-                    $img = scandir("../assets/src/tuuid/".$info_hotel->getUuid());
+                    $img = scandir("../assets/src/uuid/".$info_hotel["uuid"]);
                     if(count($img) <= 2){
                         ?>
                             <span class="text-muted font-italic">Aucune photo n'a été demandée</span>
                         <?php
                     }else{
-                        lister_images("../assets/src/tuuid/".$info_hotel->getUuid());
+                        lister_images("../assets/src/uuid/".$info_hotel["uuid"]);
                     }
                     ?>
                 </div>
