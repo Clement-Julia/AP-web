@@ -116,11 +116,19 @@ $bool = 0;
                 <div id="banniere">
                     <?php 
                         if(!empty($info_ville["uuid"])){
-                            $filename = "../assets/src/uuid/" . $info_ville["uuid"] . "/banniere.*";
+                            $filename = "../assets/src/tuuid/" . $info_ville->getUuid() . "/banniere.*";
+                            $folder = scandir("../assets/src/tuuid/".$info_ville->getUuid());
+                            for($i = 2; $i < count($folder); $i++){
+                                $ext = substr($folder[$i], strrpos($folder[$i], '.'));
+                                if(strtok($folder[$i], '.') == "banniere"){
+                                    ?>
+                                    <img src="../assets/src/tuuid/<?=$info_ville->getUuid()?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
+                                    <?php
+                                }
+                            }
                             ?>
-                            <img src="../src/uuid/<?=$info_ville["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
                             <?php
-                            if((empty(glob($filename)))){
+                            if(empty(glob($filename))){
                                 ?>
                                     <span class="text-muted font-italic">La ville n'a pas de bannière...</span>
                                 <?php
@@ -138,12 +146,13 @@ $bool = 0;
                 <label>Images :</label>
                 <div id="image">
                     <?php
-                    if(!empty($info_ville["uuid"])){
-                        lister_images("../src/uuid/".$info_ville["uuid"]);
-                    }else{
+                    $img = scandir("../assets/src/tuuid/".$info_ville->getUuid());
+                    if(count($img) <= 2){
                         ?>
-                            <span class="text-muted font-italic">La ville n'a pas d'images...</span>
+                            <span class="text-muted font-italic">Aucune photo n'a été demandée</span>
                         <?php
+                    }else{
+                        lister_images("../assets/src/tuuid/".$info_ville->getUuid());
                     }
                     ?>
                 </div>

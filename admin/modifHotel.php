@@ -25,7 +25,25 @@ if(!empty($_GET["libelle"])){
             </p>
         </div>
         <?php
-    }   
+    }
+}
+if(!empty($_GET["error"]) && $_GET["error"] == "ext"){
+    ?>
+    <div class="container alert alert-danger">
+        <p>
+            Les seules extension autorisée pour les images sont : .png, .jpeg et .jpg
+        </p>
+    </div>
+    <?php
+}
+if(isset($_GET["success"])){
+    ?>
+    <div class="container alert alert-success">
+        <p>
+            L'hébergement a bien été modifié !
+        </p>
+    </div>
+    <?php
 }
 ?>
 
@@ -134,7 +152,7 @@ if(!empty($_GET["libelle"])){
 
             <div class="form-group">
                 <label for="prix">Prix : </label>
-                <input type="number" class="form-control" name="prix" id="prix" placeholder="Entrez le prix d'une nuit" value="<?= $info_hotel["prix"] ?>" required>
+                <input type="number" class="form-control" name="prix" id="prix" step=".01" placeholder="Entrez le prix d'une nuit" value="<?= $info_hotel["prix"] ?>" required>
             </div>
 
             <div class="form-group mt-4">
@@ -153,10 +171,10 @@ if(!empty($_GET["libelle"])){
             </div>
 
             <div class="form-group mt-4">
-                <input type="file" name="file[]" id="file" class="inputfile inputfile-1 d-none" data-multiple-caption="{count} fichiers" multiple />
+                <input type="file" name="file[]" id="file" class="inputfile inputfile-1 d-none" data-multiple-caption="{count} fichiers" accept=".png, .jpeg, .jpg" multiple />
                 <label for="file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Ajouter une image&hellip;</span></label>
 
-                <input type="file" name="banniere" id="banniere" class="inputfile inputfile-1 d-none">
+                <input type="file" name="banniere" id="banniere" accept=".png, .jpeg, .jpg" class="inputfile inputfile-1 d-none">
                 <label for="banniere"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Changez la bannière&hellip;</span></label>
             </div>
 
@@ -164,19 +182,21 @@ if(!empty($_GET["libelle"])){
                 <label>Bannière :</label>
                 <div id="banniere">
                     <?php 
-                        if(!empty($info_hotel["uuid"])){
-                            $filename = "../assets/src/uuid/" . $info_hotel["uuid"] . "/banniere.*";
-                            ?>
-                            <img src="../assets/src/uuid/<?=$info_hotel["uuid"]?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
-                            <?php
-                            if(empty(glob($filename))){
+                        $filename = "../assets/src/tuuid/" . $info_hotel->getUuid() . "/banniere.*";
+                        $folder = scandir("../assets/src/tuuid/".$info_hotel->getUuid());
+                        for($i = 2; $i < count($folder); $i++){
+                            $ext = substr($folder[$i], strrpos($folder[$i], '.'));
+                            if(strtok($folder[$i], '.') == "banniere"){
                                 ?>
-                                    <span class="text-muted font-italic">L'hébergement n'a pas de bannière...</span>
+                                <img src="../assets/src/tuuid/<?=$info_hotel->getUuid()?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
                                 <?php
                             }
-                        }else{
+                        }
+                        ?>
+                        <?php
+                        if(empty(glob($filename))){
                             ?>
-                                <span class="text-muted font-italic">L'hébergement' n'a pas de bannière...</span>
+                                <span class="text-muted font-italic">L'hébergement n'a pas de bannière...</span>
                             <?php
                         }
                     ?>
@@ -187,12 +207,13 @@ if(!empty($_GET["libelle"])){
                 <label>Images :</label>
                 <div id="image">
                 <?php
-                    if(!empty($info_hotel["uuid"])){
-                        lister_images("../assets/src/uuid/".$info_hotel["uuid"]);
-                    }else{
+                    $img = scandir("../assets/src/tuuid/".$info_hotel->getUuid());
+                    if(count($img) <= 2){
                         ?>
-                            <span class="text-muted font-italic">L'hébergement n'a pas d'images...</span>
+                            <span class="text-muted font-italic">Aucune photo n'a été demandée</span>
                         <?php
+                    }else{
+                        lister_images("../assets/src/tuuid/".$info_hotel->getUuid());
                     }
                     ?>
                 </div>

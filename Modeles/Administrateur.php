@@ -10,7 +10,7 @@ class Admin extends Utilisateur {
     }
 
     public function updateUser($email, $nom, $prenom, $age, $id){
-        $requete = $this->getBdd()->prepare("UPDATE utilisateurs set email = ?, nom = ?, prenom = ?, age = ? where idUtilisateur = ?");
+        $requete = $this->getBdd()->prepare("UPDATE utilisateurs set email = ?, nom = ?, prenom = ?, DoB = ? where idUtilisateur = ?");
         $requete->execute([$email, $nom, $prenom, $age, $id]);
     }
 

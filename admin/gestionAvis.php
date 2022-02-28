@@ -25,6 +25,15 @@ if(!empty($_GET["libelle"])){
         <?php
     }   
 }
+if(isset($_GET["success"])){
+    ?>
+    <div class="container alert alert-success">
+        <p>
+            L'avis a bien été supprimé !
+        </p>
+    </div>
+    <?php
+}
 
 ?>
 
@@ -74,7 +83,7 @@ if(!empty($_GET["libelle"])){
                         <div class="card-body">
                             <p class="card-text"><?=$all["note"]?><i class="fas fa-star" style="color: #f2f200;"></i></p>
                             <p class="card-text"><?=$all["commentaire"]?></p>
-                            <a href="../controleurs/modifAvis.php?status=delete&admin=true&id=<?= $all["idAvis"] ?>" class="btn btn-danger">Supprimer</a>
+                            <a href="../controleurs/modifAvis.php?status=delete&admin=true&id=<?= $all["idAvis"] ?>&libelle=<?= $_GET["libelle"] ?>" class="btn btn-danger">Supprimer</a>
                         </div>
                     </div>
                     <?php

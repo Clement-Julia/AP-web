@@ -11,8 +11,16 @@ $hotel = new Hebergement($_GET["id"]);
         <div id="banniere">
             <?php 
                 $filename = "../assets/src/tuuid/" . $hotel->getUuid() . "/banniere.*";
+                $folder = scandir("../assets/src/tuuid/".$hotel->getUuid());
+                for($i = 2; $i < count($folder); $i++){
+                    $ext = substr($folder[$i], strrpos($folder[$i], '.'));
+                    if(strtok($folder[$i], '.') == "banniere"){
+                        ?>
+                        <img src="../assets/src/tuuid/<?=$hotel->getUuid()?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
+                        <?php
+                    }
+                }
                 ?>
-                <img src="../assets/src/tuuid/<?=$hotel->getUuid()?>/banniere" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
                 <?php
                 if(empty(glob($filename))){
                     ?>

@@ -7,7 +7,6 @@ class Utilisateur extends Modele {
     private $mdp;
     private $nom;
     private $prenom;
-    private $age;
     private $birth;
     protected $idRole;
     private $token;
@@ -136,11 +135,7 @@ class Utilisateur extends Modele {
     public function getPrenom(){
         return $this->prenom;
     }
-
-    public function getAge(){
-        return $this->age;
-    }
-
+    
     public function getBirth(){
         return $this->birth;
     }

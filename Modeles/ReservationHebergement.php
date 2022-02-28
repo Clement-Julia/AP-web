@@ -125,7 +125,7 @@ class ReservationHebergement extends Modele {
             $dates[] = $Date->format('Y-m-d');
         }
         
-        $str = "SELECT * FROM reservations_Hebergement WHERE 1 ";
+        $str = "SELECT * FROM reservations_hebergement WHERE 1 ";
         
         foreach($dates as $date){
             $str .= " AND ? BETWEEN dateDebut AND dateFin ";

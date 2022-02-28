@@ -2,6 +2,8 @@
 require_once "headerAdmin.php";
 $admin = new Admin();
 $users = $admin->getAllUsers();
+
+$date = new DateTime();
 ?>
 
 <?php
@@ -65,8 +67,7 @@ if(empty($_GET)){
             </div>
 
             <div class="form-group my-3">
-                <label for="age" class="mb-1">Âge : </label>
-                <input type="number" class="form-control" name="age" id="age" min=0 placeholder="Entrez votre âge" value="<?=$user->getAge()?>" required>
+                <input type="date" class="form-control" name="age" id="age" min=0 placeholder="Date de naissance" max="<?= $date->format('Y-m-d') ?>" value="<?= $user->getBirth() ?>" required>
             </div>
 
             <div class="form-group text-center mt-4">

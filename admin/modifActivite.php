@@ -44,7 +44,7 @@ if(isset($_GET["success"])){
 <div class="container">
     <h1 class="mb-3">Modification d'une activité:</h1>
     <?php
-    if(!empty($_GET["activite"]) && $_GET["activite"] == "error"){
+    if(empty($_GET) || $_GET["activite"] == "error"){
         ?>
             <form method="GET" action="modifActivite.php">
 

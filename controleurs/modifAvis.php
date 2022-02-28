@@ -11,14 +11,11 @@ if(!empty($_POST["rating"])){
     }elseif($_POST["status"] == "delete" && empty($_GET["admin"])){
         $avis->supAvis($_GET["id"]);
         header("location:../vues/avis.php");
-    }elseif($_POST["status"] == "delete" && !empty($_GET["admin"])){
-        $avis->supAvis($_GET["id"]);
-        header("location:../admin/gestionAvis.php");
     }
 
 }elseif(!empty($_GET["status"]) && $_GET["status"] == "delete" && !empty($_GET["admin"])){
     $avis->supAvis($_GET["id"]);
-    header("location:../admin/gestionAvis.php");
+    header("location:../admin/gestionAvis.php?libelle=".$_GET["libelle"]."&success");
 }else {
     header("location:../vues/avis.php");
 }
