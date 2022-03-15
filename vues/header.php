@@ -18,6 +18,15 @@ require_once "../controleurs/traitement.php";
     <script src="https://kit.fontawesome.com/f3f16a7b72.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/png" href="../assets/src/img/logo.png">
     <title>locallacol</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLY92BCHQC"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-BLY92BCHQC');
+    </script>
 </head>
 <body>
 
