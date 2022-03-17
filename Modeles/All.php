@@ -8,7 +8,7 @@ require_once "Role.php";
 require_once "Message.php";
 require_once "Region.php";
 require_once "Ville.php";
-require_once "Hebergement.php";
+require_once "hebergement.php";
 require_once "Agence.php";
 require_once "../Modeles/Avis.php";
 // require_once "Avis.php";
