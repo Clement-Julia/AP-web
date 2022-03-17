@@ -17,7 +17,7 @@ if(!empty($_GET["erreur"]) && $_GET["erreur"] == "login"){
 if(!empty($_GET["erreur"]) && $_GET["erreur"] == "unauthorize"){
     ?>
     <div class="container alert alert-warning mt-2">
-        L'adresse IP de ce compte admin n'est pas connue, veuillez contacter un administrateur de la base de données.
+        L'adresse IP de ce compte n'est pas connue, veuillez contacter un administrateur de la base de données.
     </div>
     <?php
 }
