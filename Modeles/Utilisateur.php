@@ -75,11 +75,28 @@ class Utilisateur extends Modele {
 
                 $return["success"] = true;
                 $return["error"] = 0;
+
+                $boolean = $this->insertLogForConnection();
+
             }
 
 
         }
         return $return;
+    }
+
+    function insertLogForConnection(){
+
+        $now = new DateTime();
+
+        try {
+            $requete = $this->getBdd()->prepare("INSERT INTO access_logs (date, ip, idUtilisateur) VALUES(?,?,?)");
+            $requete->execute([$now->format('Y-m-d H:i:s'), $_SERVER['REMOTE_ADDR'], $_SESSION['idUtilisateur']]);
+        } catch (Exception $e){
+            return false;
+        }
+        return true;
+
     }
     
     function check_mdp_format($mdp){
