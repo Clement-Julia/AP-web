@@ -38,7 +38,12 @@ class Utilisateur extends Modele {
 
         $mdp = password_hash($mdp, PASSWORD_BCRYPT);
         $requete = $this->getBdd()->prepare("INSERT INTO utilisateurs(email, mdp, nom, prenom, DoB, idRole, acceptRGPD, dateAcceptRGPD) VALUES (?, ?, ?, ?, ?, ?, ?, now())");
-        $requete->execute([$email, $mdp, $nom, $prenom, $age, $idRole, $rgpd]);
+        try {
+            $requete->execute([$email, $mdp, $nom, $prenom, $age, $idRole, $rgpd]);
+        } catch (Exception $e) {
+            return false;
+        }
+        return true;
 
     }
 
@@ -132,12 +137,20 @@ class Utilisateur extends Modele {
         return $this->nom;
     }
 
+    public function setNom($nom){
+        $this->nom = $nom;
+    }
+
     public function getPrenom(){
         return $this->prenom;
     }
     
     public function getBirth(){
         return $this->birth;
+    }
+
+    public function setBirth($birth){
+        $this->birth = $birth;
     }
 
     public function getAgeByDate(){
@@ -156,6 +169,7 @@ class Utilisateur extends Modele {
     }
 
     public function countUser(){
+
         $requete = $this->getBdd()->prepare("SELECT count(idUtilisateur) as nbr from utilisateurs");
         $requete->execute();
         $info_nbr = $requete->fetch(PDO::FETCH_ASSOC);
@@ -211,6 +225,26 @@ class Utilisateur extends Modele {
         $requete = $this->getBdd()->prepare("SELECT * FROM utilisateurs WHERE email = ?");
         $requete->execute([$email]);
         return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteUser($idUtilisateur = null){
+
+        try {
+
+            if($idUtilisateur == null){
+                $requete = $this->getBdd()->prepare("call sup_user(?)");
+                $requete->execute([$this->idUtilisateur]);
+            } else {
+                $requete = $this->getBdd()->prepare("call sup_user(?)");
+                $requete->execute([$idUtilisateur]);
+            }
+
+        } catch (Exception $e){
+            return false;
+        }
+
+        return true;
+        
     }
 
 }

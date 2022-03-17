@@ -82,13 +82,33 @@ class Activite extends Modele {
     }
 
     public function addActiviteForCity($idActivite, $idVille, $latitude, $longitude, $description){
-        $requete = $this->getBdd()->prepare("INSERT into activites_by_ville(idActivite, idVille, latitude, longitude, description) values(?,?,?,?,?)");
-        $requete->execute([$idActivite, $idVille, $latitude, $longitude, $description]);
+        try {
+            $requete = $this->getBdd()->prepare("INSERT into activites_by_ville(idActivite, idVille, latitude, longitude, description) values(?,?,?,?,?)");
+            $requete->execute([$idActivite, $idVille, $latitude, $longitude, $description]);
+        } catch (Exception $e){
+            return false;
+        }
+        return true;
     }
 
     public function updateActiviteForCity($idActivite, $idVille, $latitude, $longitude, $description, $oldLatitude, $oldLongitude){
-        $requete = $this->getBdd()->prepare("UPDATE activites_by_ville set idActivite = ?, idVille = ?, latitude = ?, longitude = ?, description = ? where latitude = ? and longitude = ?");
-        $requete->execute([$idActivite, $idVille, $latitude, $longitude, $description, $oldLatitude, $oldLongitude]);
+        try{
+            $requete = $this->getBdd()->prepare("UPDATE activites_by_ville set idActivite = ?, idVille = ?, latitude = ?, longitude = ?, description = ? where latitude = ? and longitude = ?");
+            $requete->execute([$idActivite, $idVille, $latitude, $longitude, $description, $oldLatitude, $oldLongitude]);
+        } catch (Exception $e){
+            return false;
+        }
+        return true;
+    }
+
+    public function deleteActiviteForCity($idActivite, $idVille, $latitude, $longitude){
+        try {
+            $requete = $this->getBdd()->prepare("DELETE FROM activites_by_ville WHERE (latitude = ? AND longitude = ?)");
+            $requete->execute([$idActivite, $idVille, $latitude, $longitude]);
+        } catch (Exception $e){
+            return false;
+        }
+        return true;
     }
 
 }

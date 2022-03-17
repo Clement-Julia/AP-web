@@ -82,24 +82,48 @@ class Ville extends Modele {
         return $this->libelle;
     }
 
+    public function setLibelle($libelle){
+        $this->libelle = $libelle;
+    }
+
     public function getLatitude(){
         return $this->latitude;
+    }
+
+    public function setLatitude($latitude){
+        $this->latitude = $latitude;
     }
 
     public function getLongitude(){
         return $this->longitude;
     }
 
+    public function setLongitude($longitude){
+        $this->longitude = $longitude;
+    }
+
     public function getCode_postal(){
         return $this->code_postal;
+    }
+
+    public function setCode_postal($code_postal){
+        $this->code_postal = $code_postal;
     }
 
     public function getIdRegion(){
         return $this->idRegion;
     }
 
+    public function setIdRegion($idRegion){
+        $this->idRegion = $idRegion;
+    }
+
     public function getDescription(){
         return $this->description;
+    }
+
+    public function setDescription($description){
+        $this->description = $description;
     }
     
     public function getHebergements(){
@@ -122,8 +146,17 @@ class Ville extends Modele {
     }
 
     public function addVille($libelle, $latitude, $longitude, $code_postal, $region, $description, $uuid){
-        $requete = $this->getBdd()->prepare("INSERT into villes(libelle, latitude, longitude, code_postal, idRegion, description, uuid) values(?,?,?,?,?,?,?)");
-        $requete->execute([$libelle, $latitude, $longitude, $code_postal, $region, $description, $uuid]);
+        try {
+
+            $requete = $this->getBdd()->prepare("INSERT into villes(libelle, latitude, longitude, code_postal, idRegion, description, uuid) values(?,?,?,?,?,?,?)");
+            $requete->execute([$libelle, $latitude, $longitude, $code_postal, $region, $description, $uuid]);
+
+        } catch (Exception $e){
+            return false;
+        }
+
+        return true;
+        
     }
 
     public function countVille(){
@@ -148,14 +181,33 @@ class Ville extends Modele {
     }
 
     public function updateVille($libelle, $latitude, $longitude, $code_postal, $idRegion, $description, $uuid, $id){
-        $requete = $this->getBdd()->prepare("UPDATE villes set libelle = ?, latitude = ?, longitude = ?, code_postal = ?, idRegion = ?, description = ?, uuid = ? where idVille = ?");
-        $requete->execute([$libelle, $latitude, $longitude, $code_postal, $idRegion, $description, $uuid, $id]);
+        try {
+            $requete = $this->getBdd()->prepare("UPDATE villes set libelle = ?, latitude = ?, longitude = ?, code_postal = ?, idRegion = ?, description = ?, uuid = ? where idVille = ?");
+            $requete->execute([$libelle, $latitude, $longitude, $code_postal, $idRegion, $description, $uuid, $id]);
+        } catch (Exception $e){
+            return false;
+        }
+        return true;
     }
 
-    public function supVille($id, $uuid){
-        $requete = $this->getBdd()->prepare("call sup_ville(?)");
-        $requete->execute([$id]);
-        unlink("../src/uuid/".$uuid);
+    public function supVille($id, $uuid = null){
+        try {
+            $requete = $this->getBdd()->prepare("call delete_ville_by_id(?)");
+            $requete->execute([$id]);
+
+            // Si uuid est pas null (si on est pas en test unitaire (la raison est en lien avec le chemin relatif des fonctions))
+            if($uuid != null){
+                $folder = scandir("../assets/src/tuuid/".$uuid);
+                for($i = 2; $i < count($folder); $i++){
+                    unlink("../assets/src/uuid/".$uuid."/".$folder[$i]);
+                }
+                rmdir("../assets/src/uuid/".$uuid);
+            }
+            
+        } catch (Exception $e){
+            return false;
+        }
+        return true;
     }
     
     public function getFreeHebergement($date, $idVille){
@@ -209,6 +261,13 @@ class Ville extends Modele {
         }
 
         return $response;
+    }
+
+    public function getVillebyUuid($uuid){
+        $requete = $this->getBdd()->prepare("SELECT * FROM villes WHERE uuid = ?");
+        $requete->execute([$uuid]);
+        $infoVille = $requete->fetch(PDO::FETCH_ASSOC);
+        return $infoVille;
     }
 
 }
