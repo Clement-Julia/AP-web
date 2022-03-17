@@ -63,6 +63,13 @@ class Utilisateur extends Modele {
                 $return["error"] = 1;
             }else{
 
+                if($utilisateur["idRole"] == 2 && !$this->isThisIpIsAuthorizedForAdminConnection($utilisateur["idUtilisateur"])){
+                    $return["success"] = false;
+                    $return["error"] = 1;
+                    $return["admin_ip_error"] = true;
+                    return $return;
+                }
+
                 $this->idUtilisateur = $utilisateur["idUtilisateur"];
                 $this->idRole = $utilisateur["idRole"];
                 $this->email = $utilisateur["email"];
@@ -90,6 +97,16 @@ class Utilisateur extends Modele {
     public function isThisIpBanned(){
         $requete = $this->getBdd()->prepare("SELECT ip FROM banned_ips WHERE ip = ?");
         $requete->execute([$_SERVER['REMOTE_ADDR']]);
+        $return = $requete->fetch(PDO::FETCH_ASSOC);
+        if(!empty($return)){
+            return true;
+        }
+        return false;
+    }
+
+    public function isThisIpIsAuthorizedForAdminConnection($idUtilisateur){
+        $requete = $this->getBdd()->prepare("SELECT ip FROM allowed_ips WHERE idUtilisateur = ?");
+        $requete->execute([$idUtilisateur]);
         $return = $requete->fetch(PDO::FETCH_ASSOC);
         if(!empty($return)){
             return true;

@@ -15,7 +15,11 @@ if(!empty($_POST["email"]) && !empty($_POST["mdp"]) && !empty($_POST["g-recaptch
             if($return["success"] === false){
                 $_SESSION["try"]["last-try"] = $now;
                 $_SESSION["try"]["essai"] = $_SESSION["try"]["essai"] - 1;
-                header("location:../vues/connexion.php?erreur=login");
+                if(!empty($return["admin_ip_error"])){
+                    header("location:../vues/connexion.php?erreur=unauthorize");
+                } else {
+                    header("location:../vues/connexion.php?erreur=login");
+                }
             }else{
                 if(!empty($_POST["connection_cookies"]) && $_POST["connection_cookies"] == 1){
                     $connexion->setConnectionCookies();
