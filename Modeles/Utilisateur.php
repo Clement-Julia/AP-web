@@ -49,14 +49,16 @@ class Utilisateur extends Modele {
 
     public function connexion($email, $mdp){ 
         
+        $return = [];
+
         $requete = $this->getBdd()->prepare("SELECT * FROM utilisateurs WHERE email = ?");
         $requete->execute([$email]);
 
         if($requete->rowCount() > 0){
 
             $utilisateur = $requete->fetch(PDO::FETCH_ASSOC);
-            
-            if(!password_verify($mdp, $utilisateur["mdp"])){
+
+            if(!password_verify($mdp, $utilisateur["mdp"]) || $this->isThisIpBanned()){
                 $return["success"] = false;
                 $return["error"] = 1;
             }else{
@@ -85,7 +87,17 @@ class Utilisateur extends Modele {
         return $return;
     }
 
-    function insertLogForConnection(){
+    public function isThisIpBanned(){
+        $requete = $this->getBdd()->prepare("SELECT ip FROM banned_ips WHERE ip = ?");
+        $requete->execute([$_SERVER['REMOTE_ADDR']]);
+        $return = $requete->fetch(PDO::FETCH_ASSOC);
+        if(!empty($return)){
+            return true;
+        }
+        return false;
+    }
+
+    public function insertLogForConnection(){
 
         $now = new DateTime();
 
@@ -99,7 +111,7 @@ class Utilisateur extends Modele {
 
     }
     
-    function check_mdp_format($mdp){
+    public function check_mdp_format($mdp){
 
         $erreursMdp = [];
         $minuscule = preg_match("/[a-z]/", $mdp);
