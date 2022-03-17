@@ -220,7 +220,7 @@ if(!empty($_GET["erreur"]) && $_GET["erreur"] == "exceed"){
 
         <div class="form-group mt-3 d-flex flex-column align-items-center">
             <label class="checkbox-wrap form-checkbox <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>">Rester connecter
-                <input type="checkbox" id="stay_connected" name="connection_cookies" class="<?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" checked required>
+                <input type="checkbox" id="stay_connected" name="connection_cookies" class="<?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" value="1" >
                 <span class="checkmark"></span>
             </label>
         </div>
