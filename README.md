@@ -4,12 +4,12 @@ L’entreprise de développement sollicité est « J&T Développement ». Son st
 
 Diagramme de classe UML pour AP WEB :
 
-![alt text](https://github.com/Clement-Julia/AP-web/blob/main/assets/src/Schemas/Diagramme-classe-UML-AP-WEB.jpg)
+![alt text](https://github.com/Clement-Julia/AP-web/blob/main/doc/Diagramme-classe-UML-AP-WEB.jpg)
 
 Diagramme entité association pour AP WEB :
 
-![alt text](https://github.com/Clement-Julia/AP-web/blob/main/assets/src/Schemas/diagramme-entite-association-WEB.jpg)
+![alt text](https://github.com/Clement-Julia/AP-web/blob/main/doc/diagramme-entite-association-WEB.jpg)
 
 Diagramme des cas d'utilisation pour AP WEB :
 
-![alt text](https://github.com/Clement-Julia/AP-web/blob/main/assets/src/Schemas/diagramme-cas-utilisation.png)
+![alt text](https://github.com/Clement-Julia/AP-web/blob/main/doc/diagramme-cas-utilisation.jpg)
