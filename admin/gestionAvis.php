@@ -45,17 +45,16 @@ if(isset($_GET["success"])){
             <form method="GET" action="gestionAvis.php">
 
                 <div class="form-group text-center">
-                    <label for="libelle">Nom : </label>
-                    <input class="form-control" list="datalistOptions" name="libelle" id="exampleDataList" placeholder="Entrez le nom de l'hebergement à modifier" required autocomplete="off">
-                    <datalist id="datalistOptions">
+                    <label for="libelle">Hébergement  : </label>
+                    <select class="selectpicker" name="libelle" id="libelle" data-live-search="true" data-width="100%" title="Choisissez un hébergement">
                         <?php
                             foreach($infos as $info){
                                 ?>
-                                    <option value="<?= $info["libelle"] ?>"></option>
+                                    <option value="<?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?>"><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></option>
                                 <?php
                             }
                         ?>
-                    </datalist>
+                    </select>
                 </div>
 
                 <div class="form-group text-center mt-4">
@@ -83,7 +82,28 @@ if(isset($_GET["success"])){
                         <div class="card-body">
                             <p class="card-text"><?=$all["note"]?><i class="fas fa-star" style="color: #f2f200;"></i></p>
                             <p class="card-text"><?=$all["commentaire"]?></p>
-                            <a href="../controleurs/modifAvis.php?status=delete&admin=true&id=<?= $all["idAvis"] ?>&libelle=<?= $_GET["libelle"] ?>" class="btn btn-danger">Supprimer</a>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#modalDelete<?=$all["idAvis"]?>">Supprimer</button>
+                        </div>
+                    </div>
+
+                    <div id="modalDelete<?=$all["idAvis"]?>" class="modal fade">
+                        <div class="modal-dialog modal-confirm modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header flex-column">
+                                    <div class="icon-box">
+                                        <i class="material-icons"><i class="fas fa-times"></i></i>
+                                    </div>
+                                    <h4 class="modal-title w-100">Êtes-vous sûr ?</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Vous êtes sur le point de supprimer un avis de <?=$all["nom"] ." ". $all["prenom"]?> sur l'hébergement <?= $_GET["libelle"] ?></p>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
+                                    <a href="../controleurs/modifAvis.php?status=delete&admin=true&id=<?= $all["idAvis"] ?>&libelle=<?= $_GET["libelle"] ?>"> <button class="btn btn-danger">Supprimer</button></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <?php

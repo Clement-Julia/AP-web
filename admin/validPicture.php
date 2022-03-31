@@ -20,7 +20,7 @@ elseif(isset($_GET["error"])){?>
     <?php if(!empty($hap) && count($hap) > 0){ ?>
         <h1 class="mb-5">Demande d'ajout de photo :</h1>
         <div class="row table-responsive">
-            <table class="table table-hover table-striped mt-3 align-td">
+            <table id="Datatable-picture" class="table table-hover table-striped mt-3 align-td">
                 <thead class="bg-primary text-light">
                     <tr>
                     <th scope="col">Propriétaire</th>
@@ -54,6 +54,17 @@ elseif(isset($_GET["error"])){?>
                 </tbody>
             </table>
         </div>
+    
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#Datatable-picture').DataTable({
+                    language: {
+                        url: 'vendor/datatables/FR.json'
+                    }
+                });
+            } );
+        </script>
     <?php }else{ ?>
         <h3 class="text-muted">Aucune demande d'ajout de photo est en attente</h3>
     <?php } ?>
