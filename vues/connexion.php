@@ -7,7 +7,7 @@ if(!empty($_SESSION["try"]) && $_SESSION["try"]["essai"] != 3){
     }
 };
 
-if(!empty($_GET["erreur"]) && $_GET["erreur"] == "login"){
+if(!empty($_GET["erreur"]) && $_GET["erreur"] == "login" || !empty($_GET["erreur"]) && $_GET["erreur"] == "login2"){
     ?>
     <div class="container alert alert-warning mt-2">
         L'email ou le mot de passe est incorrect
@@ -251,6 +251,13 @@ if(!empty($_GET["erreur"]) && $_GET["erreur"] == "exceed"){
         }, false)
         })
     })()
+
+    document.addEventListener("DOMContentLoaded", function (){
+        setTimeout(() =>{
+            document.getElementById("mdp").value = "";
+            document.getElementById("email").value = "";
+        }, 550)
+    })
 
 </script>
 

@@ -70,8 +70,8 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                 <p class="card-text"><span class="bold">Ville : </span><?=$infos['villeNom']?></p>
                                                 <p class="card-text"><span class="bold">Hébergement : </span><?=$infos['nomHebergement']?></p>
                                                 <p class="card-text"><span class="bold">Description hébergement : </span><?=$infos['description']?></p>
-                                                <p class="card-text"><span class="bold">Date d'arrivée : </span><?=$reservationHebergement->getDateDebut()?></p>
-                                                <p class="card-text"><span class="bold">Date de départ : </span><?=$reservationHebergement->getDateFin()?></p>
+                                                <p class="card-text"><span class="bold">Date d'arrivée : </span><?=datetoFR($reservationHebergement->getDateDebut())?></p>
+                                                <p class="card-text"><span class="bold">Date de départ : </span><?=datetoFR($reservationHebergement->getDateFin())?></p>
                                                 <p class="card-text"><span class="bold">Code réservation : </span><?=$reservationHebergement->getCodeReservation()?></p>
                                                 <p class="card-text"><span class="bold">Prix : </span><?=$reservationHebergement->getPrix()?> €</p>
                                             </div>
@@ -81,7 +81,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                 <form action="../controleurs/editTravel.php" method="POST" class="editForm">
                                                     <select name="options[<?=$reservationHebergement->getIdReservationHebergement()?>]" class="form-select">
                                                         <option disabled selected class="row">Modification</option>
-                                                        <option value="1">La date du voyage</option>
+                                                        <option value="1">La date de l'étape</option>
                                                         <option value="2">La ville</option>
                                                         <option value="3">L'hébergement</option>
                                                         <option value="4">Supprimer cette étape</option>

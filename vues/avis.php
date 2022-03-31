@@ -6,6 +6,33 @@ $alls = $avis->getAllAvis();
 ?>
 
 <?php
+if(isset($_GET["success"]) && isset($_GET["update"])){
+    ?>
+    <div class="container alert alert-success mt-3">
+        <p>
+            L'avis a bien été modifié
+        </p>
+    </div>
+    <?php
+}
+if(isset($_GET["success"]) && isset($_GET["delete"])){
+    ?>
+    <div class="container alert alert-success mt-3">
+        <p>
+            L'avis a bien été supprimé
+        </p>
+    </div>
+    <?php
+}
+if(!empty($_GET["error"]) && $_GET["error"] == "rating"){
+    ?>
+    <div class="container alert alert-warning mt-3">
+        <p>
+            Les avis doivent être noté avec une note minimale de 1 étoile
+        </p>
+    </div>
+    <?php
+}
 
 if(!empty($_SESSION['idUtilisateur'])){
 ?>
@@ -28,59 +55,22 @@ if(!empty($_SESSION['idUtilisateur'])){
                     $x = 1;
                     if(count($luas)){
                         foreach($luas as $lua){
+                            $HebergementTemp = new Hebergement($lua["idHebergement"]);
+                            $Image = new Images($HebergementTemp->getUuid());
                             ?>
                             <div class ="col-12 col-md-4 mt-3">
                                 <div class="card text-center" style="max-width: 30rem;">
-                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal<?=$lua["idAvis"]?>">
-                                        <img src="https://img2.freepng.fr/20180505/wle/kisspng-w-hotels-starwood-marriott-international-logo-5aed9c54873c61.5086030315255214925539.jpg" class="card-img-top" style= "height: 300px">
+                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal<?=$x?>">
+                                        <img src="<?=$Image->getBanniere()?>" class="card-img-top" style= "height: 300px">
                                         <div class="card-body">
                                             <h5 class="card-title"><?=$lua["libelle"]?></h5>
                                             <p class="card-text"><?= $lua["description"]?></p>
                                         </div>
                                     </button>
                                 </div>
-                                <form method="post" action="../controleurs/addAvis.php?id=<?=$lua["idAvis"]?>">
-                                    <div class="modal fade" id="exampleModal<?=$lua["idAvis"]?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Publier un avis pour <?=$lua["libelle"]?></h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body pt-0">
-                                                    <!-- Système de rating -->
-                                                    <div class="rating">
-                                                        <input type="radio" name="rating" value="5" id="<?=$x?>">
-                                                        <label for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
-    
-                                                        <input type="radio" name="rating" value="4" id="<?=$x?>">
-                                                        <label for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
-    
-                                                        <input type="radio" name="rating" value="3" id="<?=$x?>">
-                                                        <label for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
-    
-                                                        <input type="radio" name="rating" value="2" id="<?=$x?>">
-                                                        <label for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
-                                                        
-                                                        <input type="radio" name="rating" value="1" id="<?=$x?>" checked>
-                                                        <label for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
-                                                    </div>
-                                                    <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."></textarea>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary">Publier</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
                             <?php
+                            $x++;
                         }
                     }else{
                         ?>
@@ -96,11 +86,13 @@ if(!empty($_SESSION['idUtilisateur'])){
                     <?php
                     if(count($alls)){
                         foreach($alls as $all){
+                            $HebergementTemp = new Hebergement($all["idHebergement"]);
+                            $Image = new Images($HebergementTemp->getUuid());
                             ?>
                             <div class ="col-12 col-md-4 mt-3">
                                 <div class="card text-center" style="max-width: 30rem;">
                                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal<?=$all["idAvis"]?>">
-                                        <img src="https://img2.freepng.fr/20180505/wle/kisspng-w-hotels-starwood-marriott-international-logo-5aed9c54873c61.5086030315255214925539.jpg"" class="card-img-top" style= "height: 300px">
+                                        <img src="<?=$Image->getBanniere()?>" class="card-img-top" style= "height: 300px">
                                         <div class="card-body" style="max-height: 85px;">
                                             <h5 class="card-title"><?=$all["libelle"]?></h5>
                                             <p class="card-text text-truncate"><?= $all["description"]?></p>
@@ -122,29 +114,97 @@ if(!empty($_SESSION['idUtilisateur'])){
         </div>
     </div>
 <?php
-foreach($alls as $all){
+
+foreach($luas as $lua){
+    $x = 1;
     ?>
-    <div class="modal fade" id="exampleModal<?=$all["idAvis"]?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-            <form method="post" action="../controleurs/modifAvis.php?id=<?=$all["idAvis"]?>" style="z-index: 1060">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Votre avis pour <?=$all["libelle"]?></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="exampleModal<?=$x?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <form method="post" action="../controleurs/addAvis.php?id=<?=$x?>">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-dark" id="exampleModalLabel">Publier un avis pour <?=$lua["libelle"]?></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-0">
+                        <div class="rating">
+                            <input type="radio" name="rating" value="5" id="<?=$x?>">
+                            <label for="<?=$x?>">☆</label>
+                            <?php $x++ ?>
+
+                            <input type="radio" name="rating" value="4" id="<?=$x?>">
+                            <label for="<?=$x?>">☆</label>
+                            <?php $x++ ?>
+
+                            <input type="radio" name="rating" value="3" id="<?=$x?>">
+                            <label for="<?=$x?>">☆</label>
+                            <?php $x++ ?>
+
+                            <input type="radio" name="rating" value="2" id="<?=$x?>">
+                            <label for="<?=$x?>">☆</label>
+                            <?php $x++ ?>
+                            
+                            <input type="radio" name="rating" value="1" id="<?=$x?>" checked>
+                            <label for="<?=$x?>">☆</label>
+                            <?php $x++ ?>
+                        </div>
+                        <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Publier</button>
+                    </div>
                 </div>
-                <div class="modal-body pt-0">
-                    <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."><?= htmlspecialchars($all["commentaire"], ENT_QUOTES) ?></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-warning" name="status" value="update">Modifier</button>
-                <button type="submit" class="btn btn-danger" name="status" value="delete">Supprimer</button>
-            </div>
-        </form>
+            </form>
         </div>
     </div>
     <?php
 }
+
+foreach($alls as $all){
+    ?>
+    <div class="modal fade" id="exampleModal<?=$all["idAvis"]?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <form method="post" action="../controleurs/modifAvis.php?id=<?=$all["idAvis"]?>" style="z-index: 1060">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-dark" id="exampleModalLabel">Votre avis pour <?=$all["libelle"]?></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-0">
+                        <div class="rating">
+                            <input type="radio" name="rating" value="5" id="<?=$x?> <?= (5 == $all["note"]) ? "checked" : "" ?>">
+                            <label for="<?=$x?>">☆</label>
+                            <?php $x++ ?>
+
+                            <input type="radio" name="rating" value="4" id="<?=$x?>" <?= (4 == $all["note"]) ? "checked" : "" ?>>
+                            <label for="<?=$x?>">☆</label>
+                            <?php $x++ ?>
+
+                            <input type="radio" name="rating" value="3" id="<?=$x?>" <?= (3 == $all["note"]) ? "checked" : "" ?>>
+                            <label for="<?=$x?>">☆</label>
+                            <?php $x++ ?>
+
+                            <input type="radio" name="rating" value="2" id="<?=$x?>" <?= (2 == $all["note"]) ? "checked" : "" ?>>
+                            <label for="<?=$x?>">☆</label>
+                            <?php $x++ ?>
+                            
+                            <input type="radio" name="rating" value="1" id="<?=$x?>" <?= (1 == $all["note"]) ? "checked" : "" ?>>
+                            <label for="<?=$x?>">☆</label>
+                            <?php $x++ ?>
+                        </div>
+                        <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."><?= htmlspecialchars($all["commentaire"], ENT_QUOTES) ?></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-warning" name="status" value="update">Modifier</button>
+                        <button type="submit" class="btn btn-danger" name="status" value="delete">Supprimer</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <?php
+}
+
 } else { ?>
     <div class="alert alert-warning">Vous devez être connecté pour accéder à ce contenu</div>
 <?php } ?>
