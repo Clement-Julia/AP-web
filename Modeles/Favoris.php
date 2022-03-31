@@ -41,4 +41,10 @@ class Favoris extends Modele {
         return  $requete->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getFiveFavorisForUser($idUtilisateur){
+        $requete = $this->getBdd()->prepare("SELECT * FROM favoris WHERE idUtilisateur = ? LIMIT 5");
+        $requete->execute([$idUtilisateur]);
+        return  $requete->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

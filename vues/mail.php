@@ -1,7 +1,8 @@
-<div id="body-connexion">
 <?php
 require_once "header.php";
+?>
 
+<?php
 if(!empty($_GET["success"]) && $_GET["success"] == "email"){
     ?>
     <div class="container alert alert-success mt-2">

@@ -44,30 +44,28 @@ if(isset($_GET["success"])){
 <div class="container">
     <h1 class="mb-3">Modification d'une activité:</h1>
     <?php
-    if(empty($_GET) || $_GET["activite"] == "error"){
+    if(empty($_GET["libelle"]) || empty($_GET["activite"]) || $_GET["activite"] == "error"){
         ?>
             <form method="GET" action="modifActivite.php">
 
                 <div class="form-group">
                     <div id="ville">
-                        <label for="DataListVille">Ville : </label>
-                        <input class="form-control" list="datalistVilles" id="DataListVille" placeholder="Entrez le nom de l'activité à modifier" required autocomplete="off">
-                        <datalist id="datalistVilles">
+                        <label for="id">Ville  : </label>
+                        <select class="selectpicker" name="libelle" id="selectVille" data-live-search="true" data-width="100%" title="Choisissez une ville">
                             <?php
                                 foreach($infos_v as $info){
                                     ?>
-                                        <option value="<?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?>"></option>
+                                        <option value="<?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?>"><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></option>
                                     <?php
                                 }
                             ?>
-                        </datalist>
+                        </select>
                     </div>
                     
                     <div id="activite" class="mt-5">
-                        <label for="DataListActivites">Activité : </label>
-                        <input class="form-control" list="datalistActivites" name="activite" id="DataListActivite" placeholder="Entrez le nom de l'activité à modifier" required autocomplete="off">
-                        <datalist id="datalistActivites">
-                        </datalist>
+                        <label for="id">Activité  : </label>
+                        <select class="selectpicker" id="selectActivite" name="activite" data-live-search="true" data-width="100%" title="Choisissez une activité">
+                        </select>
                     </div>
                 </div>
 
@@ -76,6 +74,8 @@ if(isset($_GET["success"])){
                 </div>
 
             </form>
+
+            <script src="js/activite.js"></script>
         
         <?php
     }else{
@@ -110,31 +110,30 @@ if(isset($_GET["success"])){
 
             <div class="form-group mt-4">
                 <label for="libelle">Ville : </label>
-                <input class="form-control" list="datalistVille" name="ville" id="DataListVille" placeholder="Entrez la ville où est pratiquée l'activité" value="<?= $ville->getLibelle() ?>" required autocomplete="off">
-                <datalist id="datalistVille">
+                <select class="selectpicker" name="ville" id="DataListVille" data-live-search="true" data-width="100%" data-latitude = "<?= $ville->getLatitude() ?>" data-longitude = "<?= $ville->getLongitude() ?>">
                     <?php
                         foreach($infos_v as $v){
                             ?>
-                                <option value="<?= $v["libelle"] ?>" data-latitude="<?= $v["latitude"] ?>" data-longitude="<?= $v["longitude"] ?>"></option>
+                                <option value="<?= htmlspecialchars($v["libelle"], ENT_QUOTES) ?>" data-latitude = "<?= $v["latitude"] ?>" data-longitude = "<?= $v["longitude"] ?>" <?= ($v["libelle"] == $ville->getLibelle()) ? "selected" : "" ?>><?= htmlspecialchars($v["libelle"], ENT_QUOTES) ?></option>
                             <?php
                         }
                     ?>
-                </datalist>
+                </select>
             </div>
 
             <div class="form-group mt-4">
-                <label for="libelle">Type d'activité : </label>
-                <input class="form-control" list="datalistActivite" name="activite" id="DataListActivite" placeholder="Entrez le type d'activité" value="<?= $typeActivite->getLibelle() ?>" required autocomplete="off">
-                <datalist id="datalistActivite">
+                <label for="activite">Type d'activité  : </label>
+                <select class="selectpicker" name="activite" id="DataListActivite" data-live-search="true" data-width="100%">
                     <?php
                         foreach($infos_a as $a){
                             ?>
-                                <option value="<?= $a["libelle"] ?>"></option>
+                                <option value="<?= htmlspecialchars($a["libelle"], ENT_QUOTES) ?>" <?= ($a["libelle"] == $typeActivite->getLibelle()) ? "selected" : "" ?>><?= htmlspecialchars($a["libelle"], ENT_QUOTES) ?></option>
                             <?php
                         }
                     ?>
-                </datalist>
+                </select>
             </div>
+
             <div class="form-group">
                 <label for="libelle">Description : </label>
                 <textarea class="form-control" name="description" id="description" cols="30" rows="10"><?= $activite["description"] ?></textarea>
@@ -178,7 +177,6 @@ if(isset($_GET["success"])){
     ?>
 </div>
 
-<script src="js/activite.js"></script>
 
 <?php
 require_once "footerAdmin.php";

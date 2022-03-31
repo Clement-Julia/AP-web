@@ -62,10 +62,10 @@ $bool = 0;
         ?>
             <form method="GET" action="modifRegion.php">
 
-                <div class="form-group text-center">
-                    <label for="libelle">Région  : </label>
-                    <input class="form-control" list="datalistOptions" name="id" id="exampleDataList" placeholder="Entrez le nom de larégion à modifier" required autocomplete="off">
-                    <datalist id="datalistOptions">
+                <div class="form-group mt-4">
+                    
+                    <label for="id">Région  : </label>
+                    <select class="selectpicker" name="id" data-live-search="true" data-width="100%" title="Choisissez une région">
                         <?php
                             foreach($infos as $info){
                                 ?>
@@ -73,7 +73,7 @@ $bool = 0;
                                 <?php
                             }
                         ?>
-                    </datalist>
+                    </select>
                 </div>
 
                 <div class="form-group text-center mt-4">

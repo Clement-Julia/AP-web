@@ -17,50 +17,55 @@ if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["li
     }
 
     if($error){
-        try{
+        $link = substr($link, strpos($link, "www."), 13);
+        if($link == "www.google.com" || $link == "www.google.fr"){
+            try{
 
-            if(!empty($_POST["link"])){
-                $_POST["latitude"] = substr($_POST["link"], strpos($_POST["link"], "3d") + 2);
-                $_POST["latitude"] = substr($_POST["latitude"], 0, 5 - strlen($_POST["latitude"]));
+                if(!empty($_POST["link"])){
+                    $_POST["latitude"] = substr($_POST["link"], strpos($_POST["link"], "3d") + 2);
+                    $_POST["latitude"] = substr($_POST["latitude"], 0, 5 - strlen($_POST["latitude"]));
+            
+                    $_POST["longitude"] = substr($_POST["link"], strpos($_POST["link"], "4d") + 2);
+                    $_POST["longitude"] = substr($_POST["longitude"], 0, 4 - strlen($_POST["latitude"]) - 3);
+                }
         
-                $_POST["longitude"] = substr($_POST["link"], strpos($_POST["link"], "4d") + 2);
-                $_POST["longitude"] = substr($_POST["longitude"], 0, 4 - strlen($_POST["latitude"]) - 3);
-            }
-    
-            //Création du dossier
-            $nom_doss = bin2hex(random_bytes(32));
-            while(file_exists("../assets/src/uuid/".$nom_doss) != false){
+                //Création du dossier
                 $nom_doss = bin2hex(random_bytes(32));
-            }
-            mkdir("../assets/src/uuid/".$nom_doss, 0700);
-    
-            if(!empty($_FILES["banniere"])){
-                $nameBan = "banniere";
-                $target_dir = "../assets/src/uuid/".$nom_doss."/";
-                $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
-                $target_file = $target_dir . $nameBan . "." . "png";
-                $check = getimagesize($_FILES["banniere"]["tmp_name"]);
-                move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
-            }
-    
-            //Création du(es) fichier(s)
-            for($i=0; $i < count($_FILES["file"]["name"]); $i++){
-                $newName = $_POST["libelle"].$i;
-                $target_dir = "../assets/src/uuid/".$nom_doss."/";
-                $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
-                $target_file = $target_dir . $newName . "." . "png";
-                $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
-                move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
-            }
-    
-            $hotel->addHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["adresse"], $_POST["prix"], $nom_doss, $_POST["proprio"]);
-            $info = $hotel->getHotelbyName($_POST["libelle"]);
-            $option->addOptions($info["idHebergement"], $_POST["options"]);
+                while(file_exists("../assets/src/uuid/".$nom_doss) != false){
+                    $nom_doss = bin2hex(random_bytes(32));
+                }
+                mkdir("../assets/src/uuid/".$nom_doss, 0700);
         
-            header("location:../admin/addHotel.php?success");
-    
-        }catch(exception $e){
-            header("location:../admin/addHotel.php?error=crash");
+                if(!empty($_FILES["banniere"])){
+                    $nameBan = "banniere";
+                    $target_dir = "../assets/src/uuid/".$nom_doss."/";
+                    $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
+                    $target_file = $target_dir . $nameBan . "." . "png";
+                    $check = getimagesize($_FILES["banniere"]["tmp_name"]);
+                    move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
+                }
+        
+                //Création du(es) fichier(s)
+                for($i=0; $i < count($_FILES["file"]["name"]); $i++){
+                    $newName = $_POST["libelle"].$i;
+                    $target_dir = "../assets/src/uuid/".$nom_doss."/";
+                    $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
+                    $target_file = $target_dir . $newName . "." . "png";
+                    $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
+                    move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
+                }
+        
+                $hotel->addHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["adresse"], $_POST["prix"], $nom_doss, $_POST["proprio"]);
+                $info = $hotel->getHotelbyName($_POST["libelle"]);
+                $option->addOptions($info["idHebergement"], $_POST["options"]);
+            
+                header("location:../admin/addHotel.php?success");
+        
+            }catch(exception $e){
+                header("location:../admin/addHotel.php?error=crash");
+            }  
+        }else{
+            header("location:../admin/addHotel.php?error=link");
         }
     }else{
         header("location:../admin/addHotel.php?error=ext");

@@ -116,9 +116,9 @@ class Region extends Modele {
     }
 
     public function UpdateRegion($idRegion, $description){
-        $requete = $this->getBdd()->prepare("UPDATE regions set description = ? where idRegion = ?");
+        $requete = $this->getBdd()->prepare("UPDATE regions set regions.description = ? where idRegion = ?");
 
-        $requete->execute([$idRegion, $description]);
+        $requete->execute([$description, $idRegion]);
     }
 
 }

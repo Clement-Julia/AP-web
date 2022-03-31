@@ -6,6 +6,13 @@ $_SESSION["supAvis"] = null;
 if($_SESSION["idRole"] != 2){
     header("location:../");
 }
+
+// if(http_response_code() == 404){
+//     header("location:../");
+    // include('my_404.php');
+    // die();
+// }
+
 ?>
 
 <html>
@@ -14,7 +21,7 @@ if($_SESSION["idRole"] != 2){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Admin</title>
-    <link rel="icon" href="https://img.icons8.com/fluency/2x/microsoft-admin.png">
+    <link rel="icon" href="src/microsoft-admin.png">
 
     <!-- Map Librairie -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
@@ -24,8 +31,15 @@ if($_SESSION["idRole"] != 2){
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
     <!-- Custom styles for this template-->
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/> -->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 
@@ -36,7 +50,7 @@ if($_SESSION["idRole"] != 2){
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-                <div class="sidebar-brand-text mx-3">Dashboard</div>
+                <div class="sidebar-brand-text mx-3">Tableau de bord</div>
             </a>
 
             <hr class="sidebar-divider my-0">
@@ -44,7 +58,7 @@ if($_SESSION["idRole"] != 2){
             <hr class="sidebar-divider">
 
             <div class="sidebar-heading">
-                Map
+                Carte
             </div>
 
             <li class="nav-item">
@@ -92,7 +106,7 @@ if($_SESSION["idRole"] != 2){
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven"
                     aria-expanded="true" aria-controls="collapseSeven">
-                    <i class="far fa-building"></i>
+                    <i class="fas fa-hiking"></i>
                     <span>Activité</span>
                 </a>
                 <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionSidebar">
@@ -119,6 +133,7 @@ if($_SESSION["idRole"] != 2){
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="addUser.php">Ajout</a>
                         <a class="collapse-item" href="modifUser.php">Modification</a>
+                        <a class="collapse-item" href="logUser.php">Logs</a>
                     </div>
                 </div>
             </li>
@@ -132,6 +147,20 @@ if($_SESSION["idRole"] != 2){
                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="gestionAvis.php">Gestion</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight"
+                    aria-expanded="true" aria-controls="collapseEight">
+                    <i class="far fa-map"></i>
+                    <span>Voyages</span>
+                </a>
+                <div id="collapseEight" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="gestionVoyage.php">Gestion</a>
+                        <a class="collapse-item" href="StatsVoyage.php">Statistique</a>
                     </div>
                 </div>
             </li>

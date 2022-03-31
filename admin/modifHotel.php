@@ -47,7 +47,7 @@ if(isset($_GET["success"])){
 }
 ?>
 
-<div class="container">
+<div class="container mb-2">
     <h1 class="mb-3">Modification d'un hébergement :</h1>
     <?php
     if(empty($_GET) || $_GET["libelle"] == "error"){
@@ -55,17 +55,16 @@ if(isset($_GET["success"])){
             <form method="GET" action="modifHotel.php">
 
                 <div class="form-group text-center">
-                    <label for="libelle">Nom : </label>
-                    <input class="form-control" list="datalistOptions" name="libelle" id="exampleDataList" placeholder="Entrez le nom de la ville à modifier" required autocomplete="off">
-                    <datalist id="datalistOptions">
+                    <label for="id">Hébergement  : </label>
+                    <select class="selectpicker" name="libelle" data-live-search="true" data-width="100%" title="Choisissez un hébergement">
                         <?php
                             foreach($infos as $info){
                                 ?>
-                                    <option value="<?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?>"></option>
+                                    <option value="<?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?>"><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></option>
                                 <?php
                             }
                         ?>
-                    </datalist>
+                    </select>
                 </div>
 
                 <div class="form-group text-center mt-4">
@@ -180,7 +179,7 @@ if(isset($_GET["success"])){
 
             <div class="form-group">
                 <label>Bannière :</label>
-                <div id="banniere">
+                <div id="banniere" class="d-flex">
                     <?php 
                         $filename = "../assets/src/uuid/" . $info_hotel["uuid"] . "/banniere.*";
                         $folder = scandir("../assets/src/uuid/".$info_hotel["uuid"]);
@@ -188,7 +187,7 @@ if(isset($_GET["success"])){
                             $ext = substr($folder[$i], strrpos($folder[$i], '.'));
                             if(strtok($folder[$i], '.') == "banniere"){
                                 ?>
-                                <img src="../assets/src/tuuid/<?=$info_hotel["uuid"]?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
+                                <img src="../assets/src/uuid/<?=$info_hotel["uuid"]?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
                                 <?php
                             }
                         }
@@ -205,16 +204,17 @@ if(isset($_GET["success"])){
             
             <div class="form-group">
                 <label>Images :</label>
-                <div id="image">
-                <?php
-                    $img = scandir("../assets/src/uuid/".$info_hotel["uuid"]);
-                    if(count($img) <= 2){
-                        ?>
-                            <span class="text-muted font-italic">Aucune photo n'a été demandée</span>
-                        <?php
-                    }else{
-                        lister_images("../assets/src/uuid/".$info_hotel["uuid"]);
-                    }
+                <div id="image" class="d-flex">
+                    <?php
+                        $filename = "../assets/src/uuid/" . $info_hotel["uuid"] . "/banniere.*";
+                        $img = scandir("../assets/src/uuid/".$info_hotel["uuid"]);
+                        if(count($img) <= 2 || count($img) <= 3 && !empty(glob($filename))){
+                            ?>
+                                <span class="text-muted font-italic">Cet hébergement ne possède pas de photo...</span>
+                            <?php
+                        }else{
+                            lister_images("../assets/src/uuid/".$info_hotel["uuid"]);
+                        }
                     ?>
                 </div>
             </div>

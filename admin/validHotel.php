@@ -20,7 +20,7 @@ elseif(isset($_GET["error"])){?>
     <?php if(count($hea) > 0){ ?>
         <h1 class="mb-5">Demande d'ajout d'hébergement en attente :</h1>
         <div class="row table-responsive">
-            <table class="table table-hover table-striped mt-3 align-td">
+            <table id="Datatable-hotel" class="table table-hover table-striped mt-3 align-td">
                 <thead class="bg-primary text-light">
                     <tr>
                         <th scope="col">Propriétaire</th>
@@ -55,6 +55,17 @@ elseif(isset($_GET["error"])){?>
                 </tbody>
             </table>
         </div>
+    
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#Datatable-hotel').DataTable({
+                    language: {
+                        url: 'vendor/datatables/FR.json'
+                    }
+                });
+            } );
+        </script>
     <?php }else{ ?>
         <h3 class="text-muted">Aucune demande d'hébergement est en attente</h3>
     <?php } ?>

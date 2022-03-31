@@ -66,15 +66,11 @@ async function supImage(id){
 	var fichier = $(idImg).attr("name");
 
 	var response = await fetch("../API/apiway.php?demande=image&name=" + fichier);
-    // var status = await response.json();
-	// console.log(status);
-	// if(status == "sup"){
-		div.removeChild(idImg);
-		div.removeChild(idBtn);
-	// } 
+	div.removeChild(idImg);
+	div.removeChild(idBtn);
 }
 
-$(".custom-select").change(function () {
+$("#region").change(function () {
 	$.get("../assets/src/regionCarte/position.json", function(data){
 		for(var i=0; i < data.length; i++){
 			if($(".custom-select option:selected").text() == data[i]["region"]){

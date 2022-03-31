@@ -8,7 +8,7 @@ $hotel = new Hebergement($_GET["id"]);
     <h1 class="mb-5">Demande d'ajout de photos pour l'hébergement <?= htmlspecialchars($hotel->getLibelle(), ENT_QUOTES) ?> :</h1>
     <div class="form-group">
         <label>Bannière :</label>
-        <div id="banniere">
+        <div id="banniere" class="d-flex">
             <?php 
                 $filename = "../assets/src/tuuid/" . $hotel->getUuid() . "/banniere.*";
                 $folder = scandir("../assets/src/tuuid/".$hotel->getUuid());
@@ -16,7 +16,7 @@ $hotel = new Hebergement($_GET["id"]);
                     $ext = substr($folder[$i], strrpos($folder[$i], '.'));
                     if(strtok($folder[$i], '.') == "banniere"){
                         ?>
-                        <img src="../assets/src/tuuid/<?=$hotel->getUuid()?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
+                        <img src="../assets/src/tuuid/<?=$hotel->getUuid()?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
                         <?php
                     }
                 }
@@ -32,7 +32,7 @@ $hotel = new Hebergement($_GET["id"]);
     </div>
     <div class="form-group">
         <label>Images :</label>
-        <div id="image">
+        <div id="image" class="d-flex">
             <?php
             $img = scandir("../assets/src/tuuid/".$hotel->getUuid());
             if(count($img) <= 2){

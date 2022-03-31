@@ -190,7 +190,7 @@ class Utilisateur extends Modele {
     public function getPrenom(){
         return $this->prenom;
     }
-    
+
     public function getBirth(){
         return $this->birth;
     }
@@ -273,6 +273,22 @@ class Utilisateur extends Modele {
         return $requete->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getAllLogs(){
+        $requete = $this->getBdd()->prepare("SELECT al.*, u.nom, u.prenom FROM access_logs al inner join utilisateurs u using(idUtilisateur)");
+        $requete->execute();
+        return $requete->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function banUser($idUtilisateur){
+        $requete = $this->getBdd()->prepare("UPDATE utilisateurs set actif = 0 where idUtilisateur = ?");
+        $requete->execute([$idUtilisateur]);
+    }
+
+    public function banIp($ip){
+        $requete = $this->getBdd()->prepare("INSERT INTO banned_ips(ip) value(?)");
+        $requete->execute([$ip]);
+    }
+    
     public function deleteUser($idUtilisateur = null){
 
         try {
