@@ -1,5 +1,5 @@
-ListVille = document.getElementById("DataListVille");
-ListActivite = document.getElementById("datalistActivites");
+ListVille = document.getElementById("selectVille");
+ListActivite = document.getElementById("selectActivite");
 
 ListVille.addEventListener("change", () => {
     ListActivite.innerHTML = '';
@@ -13,8 +13,15 @@ async function getActivites(){
             response.forEach((item) => {
                 var option = document.createElement('option');
                 option.value = item.description;
-                ListActivite.appendChild(option);
+                option.innerHTML = item.description;
+                ListActivite.append(option);
             })
+        }else{
+            var option = document.createElement('option');
+            option.innerHTML = "Il n'y a aucune activité pour cette ville...";
+            option.disabled = true;
+            ListActivite.append(option);
         }
+        $('#selectActivite').selectpicker('refresh');
     });
 }
