@@ -12,46 +12,44 @@ if (!empty($_POST['cancel']) && is_numeric($_POST['cancel'])){
     header("location: ../vues/index.php");
     
 } else if(!empty($_POST['validate']) && is_numeric($_POST['validate'])){
+    // On récupère le voyage et on va vérifier si chacune des réservations est encore disponible.
+    $ReservationVoyage = new ReservationVoyage();
+    $idReservationVoyage = $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']);
+    $Voyage = new ReservationVoyage($idReservationVoyage);
 
+    if($_SESSION['idUtilisateur'] == $Voyage->getIdUtilisateur()){
 
-        // On récupère le voyage et on va vérifier si chacune des réservations est encore disponible.
-        $ReservationVoyage = new ReservationVoyage();
-        $idReservationVoyage = $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']);
-        $Voyage = new ReservationVoyage($idReservationVoyage);
-
-        if($_SESSION['idUtilisateur'] == $Voyage->getIdUtilisateur()){
-
-            $ReservationsHebergements = $Voyage->getReservationHebergement();
+        $ReservationsHebergements = $Voyage->getReservationHebergement();
 
 
 
-            // On va boucler sur chacun des jours afin de vérifier si un voyageur autre que nous a déjà réservé sur ces dates
-            $_SESSION['resultats'] = [];
-            $Api = new Api();
+        // On va boucler sur chacun des jours afin de vérifier si un voyageur autre que nous a déjà réservé sur ces dates
+        $_SESSION['resultats'] = [];
+        $Api = new Api();
 
-            foreach($ReservationsHebergements as $reservation){
-                for($i = 0; $i < $reservation->getNbJours(); $i++){
+        foreach($ReservationsHebergements as $reservation){
+            for($i = 0; $i < $reservation->getNbJours(); $i++){
 
-                    $date = new DateTime($reservation->getDateDebut() . '+' . $i . ' days');
-                    $booking = $Api->getReservBetweenDate($date->format("Y-m-d"), $reservation->getIdHebergement());
-                    if(!empty($booking)){
-                        $_SESSION['resultats'][] = $reservation->getIdReservationHebergement();
-                        break;
-                    }
-                    
+                $date = new DateTime($reservation->getDateDebut() . '+' . $i . ' days');
+                $booking = $Api->getReservBetweenDate($date->format("Y-m-d"), $reservation->getIdHebergement());
+                if(!empty($booking)){
+                    $_SESSION['resultats'][] = $reservation->getIdReservationHebergement();
+                    break;
                 }
-
+                
             }
 
-            if(count($_SESSION['resultats']) > 0){
-                header("location: ../vues/resumeTravel.php");
-            } else {
-                $Voyage->updateIsBuilding($idReservationVoyage, False);
-                header("location: ../vues/index.php");
-            }
-        } else {
-            header("location: ../vues/resumeTravel.php");
         }
+
+        if(count($_SESSION['resultats']) > 0){
+            header("location: ../vues/resumeTravel.php");
+        } else {
+            $Voyage->updateIsBuilding($idReservationVoyage, False);
+            header("location: ../vues/index.php");
+        }
+    } else {
+        header("location: ../vues/resumeTravel.php");
+    }
 } else {
     header("location: ../vues/createTravel.php");
 }

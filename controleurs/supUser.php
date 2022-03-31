@@ -2,8 +2,12 @@
 require_once "traitement.php";
 $admin = new Admin();
 
+if(!empty($_GET["id"])){
+    $_SESSION["supUser"] = $_GET["id"];
+}
+
 if(empty($_SESSION["supUser"])){
-    header("location:../admin/modifVille.php");
+    header("location:../admin/modifUser.php");
 }
 
 if($_SESSION["idRole"] == 2){

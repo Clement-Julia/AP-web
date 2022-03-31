@@ -54,8 +54,8 @@ if(!empty($_SESSION['idUtilisateur'])){
                                     <div>Ville : <?=$infos['villeNom']?></div>
                                     <div>Hébergement : <?=$infos['nomHebergement']?></div>
                                     <div>Description hébergement : <?=$infos['description']?></div>
-                                    <div>Date d'arrivée : <?=$reservationHebergement->getDateDebut()?></div>
-                                    <div>Date de départ : <?=$reservationHebergement->getDateFin()?></div>
+                                    <div>Date d'arrivée : <?=dateToFr($reservationHebergement->getDateDebut())?></div>
+                                    <div>Date de départ : <?=dateToFr($reservationHebergement->getDateFin())?></div>
                                     <div>Code réservation : <?=$reservationHebergement->getCodeReservation()?></div>
                                     <div>Prix : <?=$reservationHebergement->getPrix()?>€</div>
                                 </div>
@@ -75,7 +75,25 @@ if(!empty($_SESSION['idUtilisateur'])){
                         <div class="card form-container mb-3">
                             <div class="card-body d-flex justify-content-center">
                                 <button class="mx-2 btn btn-success">Continuer ce voyage</button>
-                                <button name="cancel" value="1" class="mx-2 btn btn-danger">Supprimer ce voyage</button>
+                                <button type="button" class="mx-2 btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalDelete">Supprimer ce voyage</button>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDelete" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-dark" id="exampleModalLabel">Attention !</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-dark">
+                                        Vous êtes sur le point d'abandonner votre voyage et de le supprimer. Si vous continuez ce voyage sera supprimé et deviendra inaccessible. Êtes-vous sûr ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Retour</button>
+                                        <button type="submit" name="cancel" value="1" class="btn btn-danger">Valider et supprimer</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -118,8 +136,26 @@ if(!empty($_SESSION['idUtilisateur'])){
                         <div class="card my-3 form-container">
                             <div class="card-body d-flex justify-content-center">
                                 <button name="validate" value="1" class="mx-2 btn btn-success btn-sm">Valider et Payer</button>
-                                <button name="cancel" value="1" class="mx-2 btn btn-danger btn-sm">Supprimer ce voyage</button>
+                                <button type="button" class="mx-2 btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalDelete">Supprimer ce voyage</button>
                                 <button class="mx-2 btn btn-primary btn-sm">Retour</button>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDelete" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Attention !</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                    <div class="modal-body">
+                                        Vous êtes sur le point d'abandonner votre voyage et de le supprimer. Si vous continuez ce voyage sera supprimé et deviendra inaccessible. Êtes-vous sûr ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Retour</button>
+                                        <button type="submit" name="cancel" value="1" class="btn btn-danger">Valider et supprimer</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>

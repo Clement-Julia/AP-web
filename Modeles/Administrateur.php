@@ -51,7 +51,7 @@ class Admin extends Utilisateur {
 
     public function acceptHebergementEnAttente($idDemande, $uuid){
         $requete = $this->getBdd()->prepare("UPDATE hebergement set actif = 1, uuid = ? where idHebergement = ?");
-        $requete->execute([$idDemande, $uuid]);
+        $requete->execute([$uuid, $idDemande]);
     }
 
     public function supHebergementEnAttente($idDemande){
@@ -73,7 +73,6 @@ class Admin extends Utilisateur {
                 $req .= "'".$folder[$i]."'" . ",";
             }
             $req = substr($req, 0, -1);
-            $test = "SELECT h.*, u.nom, u.prenom, v.libelle as libelleVille, r.libelle as libelleRegion FROM hebergement h inner join utilisateurs u using(IdUtilisateur) left join villes v using(idVille) left join regions r using(idRegion) where h.uuid in ($req)";
             $requete = $this->getBdd()->prepare("SELECT h.*, u.nom, u.prenom, v.libelle as libelleVille, r.libelle as libelleRegion FROM hebergement h inner join utilisateurs u using(IdUtilisateur) left join villes v using(idVille) left join regions r using(idRegion) where h.uuid in ($req)");
             $requete->execute();
             $return = $requete->fetchAll(PDO::FETCH_ASSOC);

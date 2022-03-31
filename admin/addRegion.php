@@ -43,9 +43,9 @@ $regions = $region->getAllregions();
     <form method="POST" action="../controleurs/addRegion.php">
 
         <div class="form-group">
-            <label for="region">Nom : </label>
-            <select class="custom-select" aria-label="Default select example" name="region" required>
-                <option selected disabled>Selectionnez le nom de la région</option>
+            <label for="region">Région : </label>
+            <select class="custom-select" id="region" aria-label="Default select example" name="region" required>
+                <option selected disabled>Selectionnez la région</option>
                 <?php
                     foreach($response as $region){
                         if(empty($regions[$region->nom])){
@@ -66,12 +66,12 @@ $regions = $region->getAllregions();
         <div class="form-group">
             <div class="form-group mt-4">
                 <label for="latitude">Latitude : </label>
-                <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Entrez une latitude" autocomplete="off">
+                <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Entrez une latitude" autocomplete="off" disabled>
             </div>
 
             <div class="form-group">
                 <label for="longitude">Longitude : </label>
-                <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Entrez une longitude" autocomplete="off">
+                <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Entrez une longitude" autocomplete="off" disabled>
             </div>
         </div>
     

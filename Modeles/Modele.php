@@ -5,7 +5,8 @@ class Modele {
 
     protected function getBdd()
     {
-        $dsn = "mysql:host=localhost;dbname=apweb;charset=UTF8";
+        // $dsn = "mysql:host=localhost;dbname=apweb;charset=UTF8";
+        $dsn = "mysql:host=localhost;dbname=webtest;charset=UTF8";
         $username = "root";
         $password = "";
 

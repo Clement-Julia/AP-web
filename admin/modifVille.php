@@ -27,28 +27,36 @@ if(!empty($_GET["libelle"])){
         <?php
     }   
 }
+if(!empty($_GET["error"]) && $_GET["error"] == "ext"){
+    ?>
+    <div class="container alert alert-danger">
+        <p>
+            Les seules extension autorisée pour les images sont : .png, .jpeg et .jpg
+        </p>
+    </div>
+    <?php
+}
 $bool = 0;
 ?>
 
-<div class="container">
+<div class="container mb-2">
     <h1 class="mb-3">Modification d'une ville :</h1>
     <?php
-    if(empty($_GET) || $_GET["libelle"] == "error"){
+    if(empty($_GET) || $_GET["libelle"] == "error" || empty($_GET["libelle"])){
         ?>
             <form method="GET" action="modifVille.php">
 
-                <div class="form-group text-center">
-                    <label for="libelle">Nom : </label>
-                    <input class="form-control" list="datalistOptions" name="libelle" id="exampleDataList" placeholder="Entrez le nom de la ville à modifier" required autocomplete="off">
-                    <datalist id="datalistOptions">
+                <div class="form-group">
+                    <label for="id">Ville  : </label>
+                    <select class="selectpicker" name="libelle" data-live-search="true" data-width="100%" title="Choisissez une ville">
                         <?php
                             foreach($infos as $info){
                                 ?>
-                                    <option value="<?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?>"></option>
+                                    <option value="<?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?>"><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></option>
                                 <?php
                             }
                         ?>
-                    </datalist>
+                    </select>
                 </div>
 
                 <div class="form-group text-center mt-4">
@@ -99,7 +107,7 @@ $bool = 0;
 
             <div class="form-group">
                 <label for="cp">Code postal : </label>
-                <input type="text" class="form-control" name="cp" id="cp" placeholder="Entrez le code postal de la ville" required>
+                <input type="text" class="form-control" name="cp" id="cp" placeholder="Entrez le code postal de la ville"  value="<?= $info_ville["code_postal"] ?>" required>
             </div>
 
             <div class="form-group mt-4">
@@ -113,7 +121,7 @@ $bool = 0;
             
             <div class="form-group">
                 <label>Bannière :</label>
-                <div id="banniere">
+                <div id="banniere" class="d-flex">
                     <?php 
                         if(!empty($info_ville["uuid"])){
                             $filename = "../assets/src/uuid/" . $info_ville["uuid"] . "/banniere.*";
@@ -122,7 +130,7 @@ $bool = 0;
                                 $ext = substr($folder[$i], strrpos($folder[$i], '.'));
                                 if(strtok($folder[$i], '.') == "banniere"){
                                     ?>
-                                    <img src="../assets/src/tuuid/<?=$info_ville["uuid"]?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded float-start badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
+                                    <img src="../assets/src/uuid/<?=$info_ville["uuid"]?>/<?=$folder[$i]?>" name="banniere" class="img-fluid rounded badgetest <?= (!empty(glob($filename))) ? "" : "d-none" ?>" style="max-width: 300px">
                                     <?php
                                 }
                             }
@@ -144,12 +152,13 @@ $bool = 0;
 
             <div class="form-group">
                 <label>Images :</label>
-                <div id="image">
+                <div id="image" class="d-flex">
                     <?php
+                    $filename = "../assets/src/uuid/" . $info_ville["uuid"] . "/banniere.*";
                     $img = scandir("../assets/src/uuid/".$info_ville["uuid"]);
-                    if(count($img) <= 2){
+                    if(count($img) <= 2 || count($img) <= 3 && !empty(glob($filename))){
                         ?>
-                            <span class="text-muted font-italic">Aucune photo n'a été demandée</span>
+                            <span class="text-muted font-italic">Cette ville ne possède pas de photo...</span>
                         <?php
                     }else{
                         lister_images("../assets/src/uuid/".$info_ville["uuid"]);

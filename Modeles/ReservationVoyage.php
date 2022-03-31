@@ -202,15 +202,16 @@ class ReservationVoyage extends Modele {
                     $i++;
                 }
 
-                $tab[$i][$x]["ville"] = $test["ville"];
-                $tab[$i][$x]["hebergement"] = $test["hebergement"];
-                $tab[$i][$x]["description"] = $test["description"];
-                $tab[$i][$x]["code"] = $test["code"];
-                $tab[$i][$x]["is_building"] = $test["is_building"];
-                $tab[$i][$x]["prix"] = $test["prix"];
-                $tab[$i][$x]["dateDebut"] = $test["dateDebut"];
-                $tab[$i][$x]["dateFin"] = $test["dateFin"];
-                $tab[$i][$x]["nbjours"] = $test["nbjours"];
+                $tab[$i]["id"] = $id;
+                $tab[$i]["voyage"][$x]["ville"] = $test["ville"];
+                $tab[$i]["voyage"][$x]["hebergement"] = $test["hebergement"];
+                $tab[$i]["voyage"][$x]["description"] = $test["description"];
+                $tab[$i]["voyage"][$x]["code"] = $test["code"];
+                $tab[$i]["voyage"][$x]["is_building"] = $test["is_building"];
+                $tab[$i]["voyage"][$x]["prix"] = $test["prix"];
+                $tab[$i]["voyage"][$x]["dateDebut"] = $test["dateDebut"];
+                $tab[$i]["voyage"][$x]["dateFin"] = $test["dateFin"];
+                $tab[$i]["voyage"][$x]["nbjours"] = $test["nbjours"];
 
                 $x++;
                 
@@ -218,6 +219,40 @@ class ReservationVoyage extends Modele {
         }
 
         return $tab;
+    }
+
+    public function getVoyageById($idReservationVoyage){
+        $requete = $this->getBdd()->prepare("SELECT reservations_voyages.idReservationVoyage, villes.libelle as ville, hebergement.libelle as hebergement, hebergement.description as description, reservations_hebergement.code_reservation as code, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours FROM `reservations_voyages` inner join reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage INNER join hebergement USING(idHebergement) INNER join villes USING(idVille) where reservations_voyages.idReservationVoyage = ?");
+        $requete->execute([$idReservationVoyage]);
+        $result = $requete->fetchALL(PDO::FETCH_ASSOC);
+        
+        return $result;
+    }
+
+    public function getDateVoyage($idReservationVoyage){
+        $requete = $this->getBdd()->prepare("SELECT min(dateDebut) as dateDebut, max(dateFin) as dateFin FROM `reservations_voyages` rv RIGHT JOIN reservations_hebergement rh ON rv.idReservationVoyage = rh.idVoyage WHERE rv.idReservationVoyage = ?");
+        $requete->execute([$idReservationVoyage]);
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getCountVoyageByUser($idUtilisateur){
+        $requete = $this->getBdd()->prepare("SELECT count(DISTINCT idReservationVoyage) FROM `reservations_voyages` INNER JOIN `reservations_hebergement` on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage WHERE reservations_voyages.idUtilisateur = ?");
+        $requete->execute([$idUtilisateur]);
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllReservationVoyage(){
+        $requete = $this->getBdd()->prepare("SELECT rv.idReservationVoyage, rv.prix, u.nom, u.prenom, r.libelle FROM `reservations_voyages` rv
+        INNER JOIN reservations_hebergement rh on rv.idReservationVoyage = rh.idVoyage
+        INNER JOIN hebergement h USING(idHebergement)
+        INNER JOIN utilisateurs u ON rv.idUtilisateur = u.idUtilisateur
+        INNER JOIN villes v USING(idVille)
+        INNER JOIN regions r USING(idRegion)
+        WHERE rv.is_building = 0
+        GROUP BY rv.idReservationVoyage
+        ");
+        $requete->execute();
+        return $requete->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

@@ -79,9 +79,9 @@ class Avis extends Modele {
     }
 
     public function getHebergementbynonAvis($idUtilisateur){
-        $requete = $this->getBdd()->prepare("SELECT DISTINCT hebergement.* FROM hebergement inner join reservations_hebergement using(idHebergement) inner join utilisateurs on utilisateurs.idUtilisateur = reservations_hebergement.idUtilisateur LEFT join avis using(idHebergement) where utilisateurs.idUtilisateur = ? and avis.idUtilisateur is null and dateFin < ? ");
+        $requete = $this->getBdd()->prepare("SELECT DISTINCT h.* FROM hebergement h INNER JOIN reservations_hebergement rh using(idHebergement) INNER JOIN avis a USING(idHebergement) WHERE rh.idUtilisateur = ? AND rh.dateFin < ? and (SELECT count(avis.idAvis) FROM avis where avis.idUtilisateur = ? and avis.idHebergement = h.idHebergement) = 0;");
         $date = new DateTime();
-        $requete->execute([$idUtilisateur, $date->format(('Y-m-d'))]);
+        $requete->execute([$idUtilisateur, $date->format(('Y-m-d')), $idUtilisateur]);
         $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);
         return $infoAvis;
     }
@@ -91,10 +91,10 @@ class Avis extends Modele {
         $requete->execute([$note, $commentaire, $idUtilisateur, $idHebergement]);
     }
 
-    public function updateAvis($note, $commentaire, $idUtilisateur, $idHebergement){
-        $requete = $this->getBdd()->prepare("UPDATE avis set date = ?, note = ?, commentaire = ? where idUtilisateur = ? and idHebergement = ?");
+    public function updateAvis($note, $commentaire, $idAvis){
+        $requete = $this->getBdd()->prepare("UPDATE avis set date = ?, note = ?, commentaire = ? where idAvis = ?");
         $date = new DateTime();
-        $requete->execute([$date->format('Y-m-d'), $note, $commentaire, $idUtilisateur, $idHebergement]);
+        $requete->execute([$date->format('Y-m-d'), $note, $commentaire, $idAvis]);
     }
 
     public function supAvis($idAvis){

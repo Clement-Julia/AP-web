@@ -40,6 +40,15 @@ $info_u = $users->getAllUsers();
         </div>
         <?php
     }
+    if(!empty($_GET["error"]) && $_GET["error"] == "link"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                Le lien n'est pas un lien google maps
+            </p>
+        </div>
+        <?php
+    }
     if(isset($_GET["success"])){
         ?>
         <div class="container alert alert-success">
@@ -56,17 +65,16 @@ $info_u = $users->getAllUsers();
     <form method="POST" action="../controleurs/addHotel.php" enctype="multipart/form-data">
 
         <div class="form-group">
-            <label for="proprio">Propriétaire : </label>
-            <input class="form-control" list="datalistOptions" name="proprio" id="exampleDataList" placeholder="Entrez le nom du propriétaire de l'hébergement" required autocomplete="off" required>
-            <datalist id="datalistOptions">
+            <label for="proprio">Propriétaire  : </label>
+            <select class="selectpicker" name="proprio" id="proprio" data-live-search="true" data-width="100%" title="Choisissez un utilisateur">
                 <?php
                     foreach($info_u as $info){
                         ?>
-                            <option value="<?= $info["idUtilisateur"] ?>"><?= $info["nom"] . " " . $info["prenom"] ?></option>
+                            <option value="<?= htmlspecialchars($info["idUtilisateur"], ENT_QUOTES) ?>"><?= htmlspecialchars($info["nom"], ENT_QUOTES) . " " . htmlspecialchars($info["prenom"], ENT_QUOTES) ?></option>
                         <?php
                     }
                 ?>
-            </datalist>
+            </select>
         </div>
 
 
@@ -82,12 +90,11 @@ $info_u = $users->getAllUsers();
 
         <div class="form-group">
             <label for="ville">Appartenance : </label>
-            <select class="custom-select" aria-label="Default select example" name="ville" required>
-                <option selected disabled>Selectionnez le nom de la ville</option>
+            <select class="selectpicker text-muted" name="ville" data-live-search="true" data-width="100%" title="Choisissez une ville" required>
                 <?php
                     foreach($infos_v as $info){
                         ?>
-                            <option value="<?= $info["idVille"] ?>"><?= $info["libelle"] ?></option>
+                            <option value="<?= $info["idVille"] ?>"><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></option>
                         <?php
                     }
                 ?>

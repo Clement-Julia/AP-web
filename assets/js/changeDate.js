@@ -58,12 +58,12 @@ allTds.forEach(element => {
                 dateFinDiv.classList.remove('date-fin');
                 dateFinDiv.classList.add('date-debut');
             }
-
-            dStart.innerHTML = dateDebut;
-            dEnd.innerHTML = dateFin;
+            dStart.innerHTML = moment(dateDebut).format('DD/MM/YYYY');
+            dEnd.innerHTML = moment(dateFin).format('DD/MM/YYYY');
             // On test avec les infos du calendrier si les dates ne sont pas prise (petite vérif sympa pour le client)
             var date1 = new Date(dateDebut); 
-            var date2 = new Date(dateFin); 
+            var date2 = new Date(dateFin);
+            // date1 = moment(date1).format('YYYY-MM-DD');
             var eachDays = getDates(date1, date2)
             var indisponible = false;
             eachDays.forEach((item) => {

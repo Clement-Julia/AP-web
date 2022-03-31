@@ -179,8 +179,8 @@ if(!empty($_SESSION['idUtilisateur'])){
                             <h6>Avant modification :</h6>
                         </div>
                         <div class="card-body">
-                            <div>Date d'arrivée : <span class="float-right"><?=$Reservation->getDateDebut()?></span></div>
-                            <div>Date de départ : <span class="float-right"><?=$Reservation->getDateFin()?></span></div>
+                            <div>Date d'arrivée : <span class="float-right"><?=datetoFR($Reservation->getDateDebut())?></span></div>
+                            <div>Date de départ : <span class="float-right"><?=datetoFR($Reservation->getDateFin())?></span></div>
                             <div>Nombre de jour : <span class="float-right"><?=$Reservation->getNbJours()?></span></div>
                             <div id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>" >Prix : <span class="float-right"><?=$Reservation->getPrix()?> €</span></div>
                         </div>

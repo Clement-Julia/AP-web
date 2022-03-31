@@ -1,9 +1,9 @@
 <?php
 require_once "header.php";
 $user = new Utilisateur($_SESSION["idUtilisateur"]);
-$test = new ReservationVoyage();
-$test = $test->getVoyageByUser($_SESSION["idUtilisateur"]) ;
-
+$ReservationVoyage = new ReservationVoyage();
+$test = $ReservationVoyage->getVoyageByUser($_SESSION["idUtilisateur"]);
+    
 $pastArray = [];
 $todayArray = [];
 $nextArray = [];
@@ -15,7 +15,7 @@ foreach($test as $key => $voyage){
     $dateDebut = "";
     $dateFin = "";
 
-    foreach($voyage as $hebergement){
+    foreach($voyage["voyage"] as $hebergement){
         if($dateDebut == "" || $dateDebut > $hebergement['dateDebut']){
             $dateDebut = $hebergement['dateDebut'];
         }
@@ -38,29 +38,29 @@ foreach($test as $key => $voyage){
     }
 
 }
-
 if(count($pastArray) > 0){
     foreach($pastArray as $key => $value){
-        usort($pastArray[$key], "sortFunctionDate");
+        usort($pastArray[$key]["voyage"], "sortFunctionDate");
     }
 }
 if(count($todayArray) > 0){
     foreach($todayArray as $key => $value){
-        usort($todayArray[$key], "sortFunctionDate");
+        usort($todayArray[$key]["voyage"], "sortFunctionDate");
     }
 }
 if(count($nextArray) > 0){
     foreach($nextArray as $key => $value){
-        usort($nextArray[$key], "sortFunctionDate");
+        usort($nextArray[$key]["voyage"], "sortFunctionDate");
     }
 }
 
-$id = 0;
+$count = implode($ReservationVoyage->getCountVoyageByUser($_SESSION["idUtilisateur"]));
+
 error($_GET);
 
 ?>
 
-<div class="container rounded mt-4" id="form-container">
+<div class="container rounded mt-4 mb-5" id="form-container">
     <div class="row">
         <div class="col-md-3 border-right">
 
@@ -76,7 +76,7 @@ error($_GET);
             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 
                 <h6 class="text-center text-decoration-underline">Compte</h6>
-                <button class="border-profil text-profil nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                <button class="border-profil text-profil nav-link <?= (empty($_GET["tab"]) && empty($_GET["fav"])) ? "active" : "" ?>" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                 <i class="fas fa-id-card me-2"></i>Informations personnelles
                 </button>
                 <button class="border-profil text-profil nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">
@@ -84,18 +84,18 @@ error($_GET);
                 </button>
 
                 <h6 class="text-center text-decoration-underline mt-3">Achats</h6>
-                <button class="border-profil text-profil nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                <button class="border-profil text-profil nav-link <?= (!empty($_GET["tab"])) ? "active" : "" ?>" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">
                     <i class="fas fa-clock me-2"></i>Historique
                 </button>
-                <button class="border-profil text-profil nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+                <button class="border-profil text-profil nav-link <?= (!empty($_GET["fav"])) ? "active" : "" ?>" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">
                     <i class="fas fa-heart me-2"></i>Favoris
                 </button>
             </div>
         </div>
 
-        <div class="col-md-8 mt-3 border-right">
+        <div id="historique" class="col-md-8 mt-3 border-right">
             <div class="tab-content" id="v-pills-tabContent">
-                <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div class="tab-pane fade <?= (empty($_GET["tab"]) && empty($_GET["fav"])) ? "active show" : "" ?>" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                     <div class="p-3 py-5">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="text-right">Informations personnelles</h4>
@@ -114,7 +114,7 @@ error($_GET);
                             <div class="row mt-3">
                                 <div class="col-md-12 mt-3">
                                     <label class="labels">Âge</label>
-                                    <input type="number" name="age" class="form-control" placeholder="Entrez votre âge" value="<?= $user->getAgeByDate() ?>" disabled>
+                                    <input type="text" name="age" class="form-control" placeholder="Entrez votre âge" value="<?= $user->getAgeByDate() ?>" disabled>
                                 </div>
                             </div>
                             <div class="mt-5 text-center">
@@ -156,86 +156,94 @@ error($_GET);
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade mt-3" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                <div class="tab-pane fade <?= (!empty($_GET["tab"])) ? "active show" : "" ?> mt-3" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                     <div class="d-flex justify-content-center">
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="background text-light fs-5 nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Réalisé</button>
+                                <button class="background text-light fs-5 nav-link <?= (empty($_GET["part"])) ? "active show" : "" ?>" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Réalisé</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="background text-light fs-5 nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">En cours</button>
+                                <button class="background text-light fs-5 nav-link <?= (!empty($_GET["part"]) && $_GET["part"] == 2) ? "active show" : "" ?>" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">En cours</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="background text-light fs-5 nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">À venir</button>
+                                <button class="background text-light fs-5 nav-link <?= (!empty($_GET["part"]) && $_GET["part"] == 3) ? "active show" : "" ?>" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">À venir</button>
                             </li>
                         </ul>
                     </div>
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="tab-pane fade mb-2 <?= (empty($_GET["part"])) ? "active show" : "" ?>" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                             <div class="accordion accordion-flush" id="accordionFlushExample">
                                 <?php
-                                $i = 1;
                                 $index = 1;
+                                $limit = 0;
                                 if($pastArray){
                                     foreach($pastArray as $voyage){
+                                        $date = $ReservationVoyage->getDateVoyage($voyage["id"]);
                                         ?>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="flush-heading<?= $id ?>">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $id ?>" aria-expanded="false" aria-controls="flush-collapse<?= $id ?>">
-                                                        Voyage <?= $i ?>
-                                                    </button>
-                                                </h2>
-                                        <?php
-                                        foreach($voyage as $etapes){
-                                            ?>
-                                            
-                                                <div id="flush-collapse<?= $id ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?= $id ?>" data-bs-parent="#accordionFlushExample">
-                                                    <div class="accordion-body">
-                                                        <div class="mx-3 card">
-                                                            <div class="card-header"><h6>Etape : <?=$index?></h6></div>
-                                                            <div class="card-body">
-                                                                <div>
-                                                                    <span class="fw-bold">Ville :</span>
-                                                                    <?=$etapes['ville']?>
-                                                                </div>
-                                                                <div>
-                                                                    <span class="fw-bold">Hébergement :</span>
-                                                                    <?=$etapes['hebergement']?>
-                                                                </div>
-                                                                <div>
-                                                                    <span class="fw-bold">Description hébergement :</span>
-                                                                    <?=$etapes['description']?>
-                                                                </div>
-                                                                <div>
-                                                                    <span class="fw-bold">Date d'arrivée :</span>
-                                                                    <?=$etapes['dateDebut']?>
-                                                                </div>
-                                                                <div>
-                                                                    <span class="fw-bold">Date de départ :</span>
-                                                                    <?=$etapes['dateFin']?>
-                                                                </div>
-                                                                <div>
-                                                                    <span class="fw-bold">Code réservation :</span>
-                                                                    <?=$etapes['code']?>
-                                                                </div>
-                                                                <div>
-                                                                    <span class="fw-bold">Prix :</span>
-                                                                    <?=$etapes['prix']?>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-heading<?= $voyage["id"] ?>">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $voyage["id"] ?>" aria-expanded="false" aria-controls="flush-collapse<?= $voyage["id"] ?>">
+                                                Voyage du <?= dateToFr($date["dateDebut"]) ?> au <?= dateToFr($date["dateFin"]) ?>
+                                                </button>
+                                            </h2>
+                                            <?php
+                                            foreach($voyage["voyage"] as $etapes){
+                                                ?>
+                                                
+                                                    <div id="flush-collapse<?= $voyage["id"] ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?= $voyage["id"] ?>" data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            <div class="mx-3 card">
+                                                                <div class="card-header"><h6>Etape : <?=$index?></h6></div>
+                                                                <div class="card-body">
+                                                                    <div>
+                                                                        <span class="fw-bold">Ville :</span>
+                                                                        <?=$etapes['ville']?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Hébergement :</span>
+                                                                        <?=$etapes['hebergement']?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Description hébergement :</span>
+                                                                        <?=$etapes['description']?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Date d'arrivée :</span>
+                                                                        <?=dateToFr($etapes['dateDebut'])?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Date de départ :</span>
+                                                                        <?=dateToFr($etapes['dateFin'])?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Code réservation :</span>
+                                                                        <?=$etapes['code']?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Prix :</span>
+                                                                        <?=$etapes['prix']?>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            <?php
-                                            $index++;
-                                        }
-                                        ?>
+                                                <?php
+                                                $index++;
+                                            }
+                                            ?>
                                         </div>
                                         <?php
-                                        $id++;
                                         $index = 1;
-                                        $i++;
+                                        $limit++;
+                                        if($limit == 5 && !empty($_GET["tab"]) && !empty($_GET["part"])){
+                                            break;
+                                        }
                                     }
+                                    if(!empty($_GET["tab"]) && !empty($_GET["part"])){ ?>
+                                        <div class="d-flex justify-content-center mt-3">
+                                            <a href="?tab=all"><button class="btn btn-primary">Tout afficher</button></a>
+                                        </div>
+                                    <?php }
                                 }else{
                                     ?>
                                     <div class="alert alert-warning mt-2">Il semblerait que vous n'ayez pas effectué de voyage...</div>
@@ -244,97 +252,25 @@ error($_GET);
                                 ?>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div class="tab-pane fade mb-2 <?= (!empty($_GET["part"]) && $_GET["part"] == 2) ? "active show" : "" ?>" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                             <div class="accordion accordion-flush" id="accordionFlushExample">
                                 <?php
-                                $i = 1;
                                 $index = 1;
+                                $limit = 0;
                                 if($todayArray){
                                     foreach($todayArray as $voyage){
+                                        $date = $ReservationVoyage->getDateVoyage($voyage["id"]);
                                         ?>
                                         <div class="accordion-item">
-                                            <h2 class="accordion-header" id="flush-heading<?= $id ?>">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $id ?>" aria-expanded="false" aria-controls="flush-collapse<?= $id ?>">
-                                                    Voyage <?= $i ?>
+                                            <h2 class="accordion-header" id="flush-heading<?= $voyage["id"] ?>">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $voyage["id"] ?>" aria-expanded="false" aria-controls="flush-collapse<?= $voyage["id"] ?>">
+                                                    Voyage du <?= dateToFr($date["dateDebut"]) ?> au <?= dateToFr($date["dateFin"]) ?>
                                                 </button>
                                             </h2>
-                                        <?php
-                                        foreach($voyage as $etapes){
-                                            ?>
-                                            <div id="flush-collapse<?= $id ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?= $id ?>" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body">
-                                                    <div class="mx-3 card">
-                                                        <div class="card-header"><h6>Etape : <?=$index?></h6></div>
-                                                        <div class="card-body">
-                                                            <div>
-                                                                <span class="fw-bold">Ville :</span>
-                                                                <?=$etapes['ville']?>
-                                                            </div>
-                                                            <div>
-                                                                <span class="fw-bold">Hébergement :</span>
-                                                                <?=$etapes['hebergement']?>
-                                                            </div>
-                                                            <div>
-                                                                <span class="fw-bold">Description hébergement :</span>
-                                                                <?=$etapes['description']?>
-                                                            </div>
-                                                            <div>
-                                                                <span class="fw-bold">Date d'arrivée :</span>
-                                                                <?=$etapes['dateDebut']?>
-                                                            </div>
-                                                            <div>
-                                                                <span class="fw-bold">Date de départ :</span>
-                                                                <?=$etapes['dateFin']?>
-                                                            </div>
-                                                            <div>
-                                                                <span class="fw-bold">Code réservation :</span>
-                                                                <?=$etapes['code']?>
-                                                            </div>
-                                                            <div>
-                                                                <span class="fw-bold">Prix :</span>
-                                                                <?=$etapes['prix']?>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php
-                                        $index++;
-                                    }
-                                    ?>
-                                    </div>
-                                    <?php
-                                    $id++;
-                                    $i++;
-                                    $index = 1;
-                                }
-                                }else{
-                                    ?>
-                                    <div class="alert alert-warning mt-2">Il semblerait que vous n'avez pas de voyage en cours...</div>
-                                    <?php
-                                }
-                                ?>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                            <div class="accordion accordion-flush" id="accordionFlushExample">
-                                <?php
-                                $i = 1;
-                                $index = 1;
-                                if($nextArray){
-                                    foreach($nextArray as $voyage){
-                                        ?>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="flush-heading<?= $id ?>">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $id ?>" aria-expanded="false" aria-controls="flush-collapse<?= $id ?>">
-                                                        Voyage <?= $i ?>
-                                                    </button>
-                                                </h2>
-                                        <?php
-                                        foreach($voyage as $etapes){
-                                            ?>
-                                            
-                                                <div id="flush-collapse<?= $id ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?= $id ?>" data-bs-parent="#accordionFlushExample">
+                                            <?php
+                                            foreach($voyage["voyage"] as $etapes){
+                                                ?>
+                                                <div id="flush-collapse<?= $voyage["id"] ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?= $voyage["id"] ?>" data-bs-parent="#accordionFlushExample">
                                                     <div class="accordion-body">
                                                         <div class="mx-3 card">
                                                             <div class="card-header"><h6>Etape : <?=$index?></h6></div>
@@ -371,16 +307,23 @@ error($_GET);
                                                         </div>
                                                     </div>
                                                 </div>
-                                            <?php
-                                            $index++;
-                                        }
-                                        ?>
+                                                <?php
+                                                $index++;
+                                            }
+                                            ?>
                                         </div>
                                         <?php
-                                        $id++;
-                                        $i++;
                                         $index = 1;
+                                        $limit++;
+                                        if($limit == 5 && empty($_GET["tab"]) && empty($_GET["part"]) || !empty($_GET["tab"]) && !empty($_GET["part"]) && $_GET["part"] =! 2){
+                                            break;
+                                        }
                                     }
+                                    if(empty($_GET["tab"]) && empty($_GET["part"]) || !empty($_GET["tab"]) && !empty($_GET["part"]) && $_GET["part"] =! 2){ ?>
+                                        <div class="d-flex justify-content-center mt-3">
+                                            <a href="?tab=all&part=2"><button class="btn btn-primary">Tout afficher</button></a>
+                                        </div>
+                                    <?php }
                                 }else{
                                     ?>
                                     <div class="alert alert-warning mt-2">Il semblerait que vous n'avez pas de voyage en cours...</div>
@@ -389,9 +332,90 @@ error($_GET);
                                 ?>
                             </div>
                         </div>
+                        <div class="tab-pane fade mb-2 <?= (!empty($_GET["part"]) && $_GET["part"] == 3) ? "active show" : "" ?>" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                <?php
+                                $index = 1;
+                                $limit = 0;
+                                if($nextArray){
+                                    foreach($nextArray as $voyage){
+                                        $date = $ReservationVoyage->getDateVoyage($voyage["id"]);
+                                        ?>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-heading<?= $voyage["id"] ?>">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $voyage["id"] ?>" aria-expanded="false" aria-controls="flush-collapse<?= $voyage["id"] ?>">
+                                                Voyage du <?= dateToFr($date["dateDebut"]) ?> au <?= dateToFr($date["dateFin"]) ?>
+                                                </button>
+                                            </h2>
+                                            <?php
+                                            foreach($voyage["voyage"] as $etapes){
+                                                ?>
+                                                
+                                                    <div id="flush-collapse<?= $voyage["id"] ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?= $voyage["id"] ?>" data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            <div class="mx-3 card">
+                                                                <div class="card-header"><h6>Etape : <?=$index?></h6></div>
+                                                                <div class="card-body">
+                                                                    <div>
+                                                                        <span class="fw-bold">Ville :</span>
+                                                                        <?=$etapes['ville']?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Hébergement :</span>
+                                                                        <?=$etapes['hebergement']?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Description hébergement :</span>
+                                                                        <?=$etapes['description']?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Date d'arrivée :</span>
+                                                                        <?=$etapes['dateDebut']?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Date de départ :</span>
+                                                                        <?=$etapes['dateFin']?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Code réservation :</span>
+                                                                        <?=$etapes['code']?>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-bold">Prix :</span>
+                                                                        <?=$etapes['prix']?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php
+                                                $index++;
+                                            }
+                                            ?>
+                                        </div>
+                                        <?php
+                                        $index = 1;
+                                        $limit++;
+                                        if($limit == 5 && empty($_GET["tab"]) && empty($_GET["part"]) || !empty($_GET["tab"]) && !empty($_GET["part"]) && $_GET["part"] =! 3){
+                                            break;
+                                        }
+                                    }
+                                    if(empty($_GET["tab"]) && empty($_GET["part"]) || !empty($_GET["tab"]) && !empty($_GET["part"]) && $_GET["part"] =! 3){ ?>
+                                        <div class="d-flex justify-content-center mt-3">
+                                            <a href="?tab=all&part=3"><button class="btn btn-primary">Tout afficher</button></a>
+                                        </div>
+                                    <?php }
+                                }else{
+                                    ?>
+                                    <div class="alert alert-warning mt-2">Il semblerait que vous n'avez pas encore effectué de voyage...</div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="tab-pane fade mt-5" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                <div class="tab-pane fade <?= (!empty($_GET["fav"])) ? "active show" : "" ?> mt-5" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                     <?php
                         $Favoris = new Favoris();
                         $allFavoris = $Favoris->getAllFavorisForUser($_SESSION['idUtilisateur']);

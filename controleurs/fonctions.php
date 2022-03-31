@@ -25,10 +25,11 @@ function lister_images($repertoire){
                         if($fichier == "banniere.png" || $fichier == "banniere.jpg" || $fichier == "banniere.jpeg"){
                             $bool = 1;
                         }else{
+                            $img = resizePicture($repertoire."/".$fichier, 200, 200);
                             echo
-                            '<img src="'.$repertoire."/".$fichier.'"id="img'.$i.'" name="'.$repertoire."/".$fichier.'" class="img-fluid rounded float-start badgetest" style="max-width: 300px">' . 
+                            '<img src="'.$repertoire."/".$fichier.'"id="img'.$i.'" name="'.$repertoire."/".$fichier.'" class="rounded badgetest fluid-picture" width="400" height="400">' . 
                             '<button type="button" id="'.$i.'" style="visibility: hidden" onclick="supImage(this.id)">
-                                <span class="badge badge-danger rounded position-badge" style="visibility: visible"><i class="fas fa-times fa-lg" aria-hidden=true></i></span>
+                                <span class="badge badge-danger rounded position-badge" style="visibility: visible"><i class="fas fa-trash-alt"></i></span>
                             </button>';
                             $i++;
                         }
@@ -121,8 +122,12 @@ function timestampAddDay($nbJours = 1){
     return $plusUnJour->getTimestamp();
 }
 
-function Translate($chaine, $langFrom, $langTo)
-{
+function dateToFr($date){
+    $date = new DateTime($date);
+    return $date->format("d/m/Y");
+}
+
+function Translate($chaine, $langFrom, $langTo){
 	$chaine = urlencode($chaine);
 	$url = 'http://translate.google.com/translate_a/t?client=p&text='.$chaine.'&hl='.$langFrom.'&sl='.$langFrom.'&tl='.$langTo.'&ie=UTF-8&oe=UTF-8&multires=1&otf=1&pc=1&trs=1&ssel=3&tsel=6&sc=1';
 
@@ -136,3 +141,128 @@ function Translate($chaine, $langFrom, $langTo)
     
 	return $retour[1];
 }
+
+function resizePicture($file, $w, $h, $crop=FALSE){
+    list($width, $height) = getimagesize($file);
+    $r = $width / $height;
+    if ($crop) {
+        if ($width > $height) {
+            $width = ceil($width-($width*abs($r-$w/$h)));
+        } else {
+            $height = ceil($height-($height*abs($r-$w/$h)));
+        }
+        $newwidth = $w;
+        $newheight = $h;
+    } else {
+        if ($w/$h > $r) {
+            $newwidth = $h*$r;
+            $newheight = $h;
+        } else {
+            $newheight = $w/$r;
+            $newwidth = $w;
+        }
+    }
+    $src = imagecreatefromjpeg($file);
+    $dst = imagecreatetruecolor($newwidth, $newheight);
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+    return $dst;
+}
+
+function createResizedImage(string $imagePath = '', string $newPath = '', int $newWidth = 0, int $newHeight = 0, string $outExt = 'DEFAULT') : ?string
+{
+    if (!$newPath or !file_exists ($imagePath)) {
+        return null;
+    }
+
+    $types = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF, IMAGETYPE_BMP, IMAGETYPE_WEBP];
+    $type = exif_imagetype ($imagePath);
+
+    if (!in_array ($type, $types)) {
+        return "test";
+    }
+
+    list ($width, $height) = getimagesize ($imagePath);
+
+    $outBool = in_array ($outExt, ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp']);
+
+    switch ($type) {
+        case IMAGETYPE_JPEG:
+            $image = imagecreatefromjpeg ($imagePath);
+            if (!$outBool) $outExt = 'jpg';
+            break;
+        case IMAGETYPE_PNG:
+            $image = imagecreatefrompng ($imagePath);
+            if (!$outBool) $outExt = 'png';
+            break;
+        case IMAGETYPE_GIF:
+            $image = imagecreatefromgif ($imagePath);
+            if (!$outBool) $outExt = 'gif';
+            break;
+        case IMAGETYPE_BMP:
+            $image = imagecreatefrombmp ($imagePath);
+            if (!$outBool) $outExt = 'bmp';
+            break;
+        case IMAGETYPE_WEBP:
+            $image = imagecreatefromwebp ($imagePath);
+            if (!$outBool) $outExt = 'webp';
+    }
+
+    $newImage = imagecreatetruecolor ($newWidth, $newHeight);
+
+    //TRANSPARENT BACKGROUND
+    $color = imagecolorallocatealpha ($newImage, 0, 0, 0, 127); //fill transparent back
+    imagefill ($newImage, 0, 0, $color);
+    imagesavealpha ($newImage, true);
+
+    //ROUTINE
+    imagecopyresampled ($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+    // Rotate image on iOS
+    if(function_exists('exif_read_data') && $exif = exif_read_data($imagePath, 'IFD0'))
+    {
+        if(isset($exif['Orientation']) && isset($exif['Make']) && !empty($exif['Orientation']) && preg_match('/(apple|ios|iphone)/i', $exif['Make'])) {
+            switch($exif['Orientation']) {
+                case 8:
+                    if ($width > $height) $newImage = imagerotate($newImage,90,0);
+                    break;
+                case 3:
+                    $newImage = imagerotate($newImage,180,0);
+                    break;
+                case 6:
+                    $newImage = imagerotate($newImage,-90,0);
+                    break;
+            }
+        }
+    }
+
+    switch (true) {
+        case in_array ($outExt, ['jpg', 'jpeg']): $success = imagejpeg ($newImage, $newPath);
+            break;
+        case $outExt === 'png': $success = imagepng ($newImage, $newPath);
+            break;
+        case $outExt === 'gif': $success = imagegif ($newImage, $newPath);
+            break;
+        case  $outExt === 'bmp': $success = imagebmp ($newImage, $newPath);
+            break;
+        case  $outExt === 'webp': $success = imagewebp ($newImage, $newPath);
+    }
+
+    if (!$success) {
+        return null;
+    }
+
+    return $newPath;
+}
+
+// $path = "../assets/src/uuid/";
+// $allfolder = scandir("../assets/src/uuid/");
+// for ($i = 2; $i < count($allfolder); $i++){
+//     $path = "../assets/src/uuid/".$allfolder[$i];
+//     $folder = scandir("../assets/src/uuid/".$allfolder[$i]);
+//     // print_r($folder);
+//     for ($x = 2; $x < count($folder); $x++){
+//         // echo $path.$folder[$x];
+//         echo createResizedImage($path."/".$folder[$x], $path."/".$folder[$x], 250, 200);
+//     }
+// }

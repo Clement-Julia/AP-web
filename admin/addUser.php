@@ -4,8 +4,48 @@ require_once "headerAdmin.php";
 $date = new DateTime();
 ?>
 
+<?php
+    if(!empty($_GET["error"]) && $_GET["error"] == "crash"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                La fonctionnalité est actuellement indisponible <br>
+                Pour plus d'information contacter le développeur
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["error"]) && $_GET["error"] == "all"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                Tous les champs doivent être rempli
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["error"]) && $_GET["error"] == "age"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                L'utilisateur doit avoir plus de 18 ans
+            </p>
+        </div>
+        <?php
+    }
+    if(isset($_GET["success"])){
+        ?>
+        <div class="container alert alert-success">
+            <p>
+                L'utilisateur a bien été créé !
+            </p>
+        </div>
+        <?php
+    }
+?>
+
 <div class="container mt-3">
-    <h1>Formulaire d'inscription :</h1>
+    <h1>Ajout d'utilisateur :</h1>
     <form method="POST" action = "../controleurs/inscriptionAdmin.php" class="needs-validation" novalidate>
 
         <div class="form-group my-3">

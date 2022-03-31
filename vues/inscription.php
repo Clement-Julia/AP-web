@@ -1,10 +1,10 @@
 <?php
 require_once "header.php";
-// require_once "../assets/css/style_inscription.php";
 
 $date = new DateTime();
 ?>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 
     html{
@@ -31,13 +31,22 @@ $date = new DateTime();
         background: #000;
         opacity: .3;
         z-index: -1;
-        height: 100%;
+        <?= (!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "height: 850px;" : "height: 100%;" ?>
     }
 
-    @media (max-height: 700px) {
-        body, body:after {
+    .container{
+        @media (min-height: 720px) {
+            body:after {
+                background-size: auto;
+                height: 850px;
+            }
+        }
+    }
+
+    @media only screen and (hover: none) and (pointer: coarse) {
+        body:after {
             background-size: auto;
-            height: 700px;
+            height: 900px;
         }
     }
 
@@ -171,7 +180,7 @@ $date = new DateTime();
     }
 </style>
 
-<div class="container mt-3 d-flex flex-column align-items-center">
+<div class="container mt-3 d-flex flex-column align-items-center" id="container">
     <h1>Inscription :</h1>
     <form method="POST" action = "../controleurs/inscription.php" class="needs-validation" novalidate>
 
@@ -190,8 +199,10 @@ $date = new DateTime();
         </div>
 
         <div class="form-group my-3">
-            <input type="password" class="form-input <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all" || $_GET["erreur"] == "mdp")) ? "is-invalid" : ""?>" name="mdp" id="mpd" placeholder="Mot de passe" required>
-            <!-- <small id="aideUserName" class="form-text">Le mot de passe doit contenir : au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial</small> -->
+            <input type="password" class="form-input <?=(!empty($_GET["erreur"]) && ($_GET["erreur"] == "all" || $_GET["erreur"] == "mdp")) ? "is-invalid" : ""?>" name="mdp" id="mdp" placeholder="Mot de passe" required>
+            <button type="button" class="popup-info errspan text-white" data-bs-toggle="tooltip" data-bs-html="true" title="<u>Doit contenir</u> :<br>-12 caractères<br>-Une majuscule<br>-Une minuscule<br>-Un chiffre<br>-Un caractère spécial">
+                <i class="fas fa-info-circle"></i>
+            </button>
 
             <div class="valid-feedback">Ok !</div>
             <div class="invalid-feedback">Votre mot-de-passe ne remplit pas les conditions</div>
@@ -205,7 +216,7 @@ $date = new DateTime();
         </div>
 
         <div class="form-group my-3">
-            <input type="date" class="form-input <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" name="age" id="age" min=0 placeholder="Date de naissance" max="<?= $date->format('Y-m-d') ?>" required>
+            <input type="date" class="form-input <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all" || !empty($_GET["erreur"]) && $_GET["erreur"] == "age") ? "is-invalid" : ""?>" name="age" id="age" min=0 placeholder="Date de naissance" max="<?= $date->format('Y-m-d') ?>" required>
 
             <div class="valid-feedback">Ok !</div>
             <div class="invalid-feedback">Date incorrect</div>
@@ -359,7 +370,21 @@ $date = new DateTime();
     document.getElementById('approuved').addEventListener('click', function(e) {
         document.getElementById("invalidCheck").checked = true
     });
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    document.addEventListener("DOMContentLoaded", function (){
+        setTimeout(() =>{
+            document.getElementById("mdp").value = "";
+            document.getElementById("email").value = "";
+        }, 550)
+    })
+
 </script>
+
 
 <?php
 require_once "footer.php";

@@ -2,3 +2,4 @@
 composer.json
 /Vues/InsertionSQLMassive.php
 /Modele/Modele.php
+composer.lock
