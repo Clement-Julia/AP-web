@@ -14,6 +14,13 @@ if(!empty($_GET["erreur"]) && $_GET["erreur"] == "login" || !empty($_GET["erreur
     </div>
     <?php
 }
+if(!empty($_GET["erreur"]) && $_GET["erreur"] == "unauthorize"){
+    ?>
+    <div class="container alert alert-warning mt-2">
+        L'adresse IP de ce compte n'est pas connue, veuillez contacter un administrateur de la base de données.
+    </div>
+    <?php
+}
 if(!empty($_GET["erreur"]) && $_GET["erreur"] == "exceed"){
     ?>
     <div class="container alert alert-warning mt-2">
@@ -220,7 +227,7 @@ if(!empty($_GET["erreur"]) && $_GET["erreur"] == "exceed"){
 
         <div class="form-group mt-3 d-flex flex-column align-items-center">
             <label class="checkbox-wrap form-checkbox <?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>">Rester connecter
-                <input type="checkbox" id="stay_connected" name="connection_cookies" class="<?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" checked required>
+                <input type="checkbox" id="stay_connected" name="connection_cookies" class="<?=(!empty($_GET["erreur"]) && $_GET["erreur"] == "all") ? "is-invalid" : ""?>" value="1" >
                 <span class="checkmark"></span>
             </label>
         </div>

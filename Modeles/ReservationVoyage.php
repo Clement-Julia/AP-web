@@ -85,7 +85,7 @@ class ReservationVoyage extends Modele {
             $codeReservation = "VOY" . rand(10000, 99999);
             $requete = $this->getBdd()->prepare("SELECT code_reservation FROM reservations_hebergement WHERE code_reservation = ?");
             $requete->execute([$codeReservation]);
-            $code = $requete->fetch(PDO::FETCH_ASSOC);
+            $code = $requete->fetch(PDO::FETCH_ASSOC)['code_reservation'];
         }
 
         $requete = $this->getBdd()->prepare("INSERT INTO reservations_voyages (prix, code_reservation, idUtilisateur, is_building) VALUE (?, ?, ?, ?)");
@@ -115,8 +115,13 @@ class ReservationVoyage extends Modele {
     }
 
     public function updateTravelPrice($price, $idReservationVoyage){
-        $requete = $this->getBdd()->prepare("UPDATE reservations_voyages SET prix = ? WHERE idReservationVoyage = ?");
-        $requete->execute([$price, $idReservationVoyage]);
+        try {
+            $requete = $this->getBdd()->prepare("UPDATE reservations_voyages SET prix = ? WHERE idReservationVoyage = ?");
+            $requete->execute([$price, $idReservationVoyage]);
+        } catch (Exception $e){
+            return false;
+        }
+        return true;
     }
 
     public function getVilleLatLngByUserId($idUtilisateur){
@@ -148,8 +153,13 @@ class ReservationVoyage extends Modele {
     }
 
     public function deleteBuildingTravelByUserId($idUtilisateur){
-        $requete = $this->getBdd()->prepare("DELETE reservations_voyages, reservations_hebergement FROM reservations_voyages INNER JOIN reservations_hebergement ON reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage WHERE (reservations_voyages.idUtilisateur = ? OR reservations_hebergement.idUtilisateur = ?) AND is_building = ?");
-        $requete->execute([$idUtilisateur, $idUtilisateur, true]);
+        try {
+            $requete = $this->getBdd()->prepare("DELETE reservations_voyages, reservations_hebergement FROM reservations_voyages INNER JOIN reservations_hebergement ON reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage WHERE (reservations_voyages.idUtilisateur = ? OR reservations_hebergement.idUtilisateur = ?) AND is_building = ?");
+            $requete->execute([$idUtilisateur, $idUtilisateur, true]);
+        } catch (Exception $e){
+            return false;
+        }
+        return true;
     }
 
     public function deleteBuildingWithIdReservationVoyage($idReservationVoyage){

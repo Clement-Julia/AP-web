@@ -38,23 +38,37 @@ class Utilisateur extends Modele {
 
         $mdp = password_hash($mdp, PASSWORD_BCRYPT);
         $requete = $this->getBdd()->prepare("INSERT INTO utilisateurs(email, mdp, nom, prenom, DoB, idRole, acceptRGPD, dateAcceptRGPD) VALUES (?, ?, ?, ?, ?, ?, ?, now())");
-        $requete->execute([$email, $mdp, $nom, $prenom, $age, $idRole, $rgpd]);
+        try {
+            $requete->execute([$email, $mdp, $nom, $prenom, $age, $idRole, $rgpd]);
+        } catch (Exception $e) {
+            return false;
+        }
+        return true;
 
     }
 
     public function connexion($email, $mdp){ 
         
+        $return = [];
+
         $requete = $this->getBdd()->prepare("SELECT * FROM utilisateurs WHERE email = ?");
         $requete->execute([$email]);
 
         if($requete->rowCount() > 0){
 
             $utilisateur = $requete->fetch(PDO::FETCH_ASSOC);
-            
-            if(!password_verify($mdp, $utilisateur["mdp"])){
+
+            if(!password_verify($mdp, $utilisateur["mdp"]) || $this->isThisIpBanned()){
                 $return["success"] = false;
                 $return["error"] = 1;
             }else{
+
+                if($utilisateur["idRole"] == 2 && !$this->isThisIpIsAuthorizedForAdminConnection($utilisateur["idUtilisateur"])){
+                    $return["success"] = false;
+                    $return["error"] = 1;
+                    $return["admin_ip_error"] = true;
+                    return $return;
+                }
 
                 $this->idUtilisateur = $utilisateur["idUtilisateur"];
                 $this->idRole = $utilisateur["idRole"];
@@ -70,14 +84,51 @@ class Utilisateur extends Modele {
 
                 $return["success"] = true;
                 $return["error"] = 0;
+
+                $boolean = $this->insertLogForConnection();
+
             }
 
 
         }
         return $return;
     }
+
+    public function isThisIpBanned(){
+        $requete = $this->getBdd()->prepare("SELECT ip FROM banned_ips WHERE ip = ?");
+        $requete->execute([$_SERVER['REMOTE_ADDR']]);
+        $return = $requete->fetch(PDO::FETCH_ASSOC);
+        if(!empty($return)){
+            return true;
+        }
+        return false;
+    }
+
+    public function isThisIpIsAuthorizedForAdminConnection($idUtilisateur){
+        $requete = $this->getBdd()->prepare("SELECT ip FROM allowed_ips WHERE idUtilisateur = ?");
+        $requete->execute([$idUtilisateur]);
+        $return = $requete->fetch(PDO::FETCH_ASSOC);
+        if(!empty($return)){
+            return true;
+        }
+        return false;
+    }
+
+    public function insertLogForConnection(){
+
+        $now = new DateTime();
+
+        try {
+            $requete = $this->getBdd()->prepare("INSERT INTO access_logs (date, ip, idUtilisateur) VALUES(?,?,?)");
+            $requete->execute([$now->format('Y-m-d H:i:s'), $_SERVER['REMOTE_ADDR'], $_SESSION['idUtilisateur']]);
+        } catch (Exception $e){
+            return false;
+        }
+        return true;
+
+    }
     
-    function check_mdp_format($mdp){
+    public function check_mdp_format($mdp){
 
         $erreursMdp = [];
         $minuscule = preg_match("/[a-z]/", $mdp);
@@ -132,12 +183,20 @@ class Utilisateur extends Modele {
         return $this->nom;
     }
 
+    public function setNom($nom){
+        $this->nom = $nom;
+    }
+
     public function getPrenom(){
         return $this->prenom;
     }
 
     public function getBirth(){
         return $this->birth;
+    }
+
+    public function setBirth($birth){
+        $this->birth = $birth;
     }
 
     public function getAgeByDate(){
@@ -156,6 +215,7 @@ class Utilisateur extends Modele {
     }
 
     public function countUser(){
+
         $requete = $this->getBdd()->prepare("SELECT count(idUtilisateur) as nbr from utilisateurs");
         $requete->execute();
         $info_nbr = $requete->fetch(PDO::FETCH_ASSOC);
@@ -227,6 +287,26 @@ class Utilisateur extends Modele {
     public function banIp($ip){
         $requete = $this->getBdd()->prepare("INSERT INTO banned_ips(ip) value(?)");
         $requete->execute([$ip]);
+    }
+    
+    public function deleteUser($idUtilisateur = null){
+
+        try {
+
+            if($idUtilisateur == null){
+                $requete = $this->getBdd()->prepare("call sup_user(?)");
+                $requete->execute([$this->idUtilisateur]);
+            } else {
+                $requete = $this->getBdd()->prepare("call sup_user(?)");
+                $requete->execute([$idUtilisateur]);
+            }
+
+        } catch (Exception $e){
+            return false;
+        }
+
+        return true;
+        
     }
 
 }

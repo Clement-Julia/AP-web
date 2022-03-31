@@ -45,6 +45,7 @@ if(!empty($_COOKIE["connection_cookies"])){
         $_SESSION["prenom"] = $user["prenom"];
         $_SESSION["idRole"] = $user["idRole"];
         $_SESSION["email"] = $user["email"];
+        $Utilisateur->insertLogForConnection();
     }
 }
 if(!empty($_SESSION['idUtilisateur'])){
