@@ -7,14 +7,6 @@ $admin = new Admin();
 $hotel = new Hebergement();
 $ville = new Ville($demande["idVille"]);
 
-if(!$ville->getUuid()){
-    echo "test";
-}else{
-    echo $ville->getUuid();
-    echo $ville->getLibelle();
-}
-exit;
-
 if($_GET["command"] == "acc"){
 
     try{

@@ -19,9 +19,9 @@ if($_GET["status"] == "wait" && !empty($_POST["email"])){
         $message = str_replace("{lien}", 'https://loocalacool.ipssi-sio.fr/vues/index.php', $message);
 
         $headers[] = 'MIME-Version: 1.0';
-        $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+        $headers[] = 'Content-type: text/html; charset=UTF-8';
 
-        // mail($to, $subject, $message, implode("\r\n", $headers));
+        mail($to, $subject, $message, implode("\r\n", $headers));
         header("location:../vues/mail.php?wait");
     }else{
         $to  = $_POST["email"];
@@ -31,9 +31,9 @@ if($_GET["status"] == "wait" && !empty($_POST["email"])){
         $message = str_replace("{lien}", 'https://loocalacool.ipssi-sio.fr/vues/index.php', $message);
 
         $headers[] = 'MIME-Version: 1.0';
-        $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+        $headers[] = 'Content-type: text/html; charset=UTF-8';
 
-        // mail($to, $subject, $message, implode("\r\n", $headers));
+        mail($to, $subject, $message, implode("\r\n", $headers));
         header("location:../vues/mail.php?success=email");
     }
 }else if($_GET["status"] == "code"){
@@ -54,6 +54,7 @@ if($_GET["status"] == "wait" && !empty($_POST["email"])){
 }elseif($_GET["status"] == "reset"){
     if($_POST["new_mdp"] == $_POST["new_verif"]){
         $admin->updateUser_mdp($_POST["new_mdp"], $_SESSION["idUtilisateur"]);
+        $_SESSION["try"] = ["essai" => 3, "last-try" => $now];
         header("location:../vues/connexion.php?success=mdp");
     }else{
         header("location:../vues/mail.php?reset&error=mdp");
