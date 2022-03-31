@@ -120,7 +120,7 @@ foreach($luas as $lua){
     ?>
     <div class="modal fade" id="exampleModal<?=$x?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form method="post" action="../controleurs/addAvis.php?id=<?=$x?>">
+            <form method="post" action="../controleurs/addAvis.php?id=<?=$lua['idHebergement']?>&dateFin=<?=$lua['dateFin'];?>">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title text-dark" id="exampleModalLabel">Publier un avis pour <?=$lua["libelle"]?></h5>

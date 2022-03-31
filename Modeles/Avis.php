@@ -79,22 +79,30 @@ class Avis extends Modele {
     }
 
     public function getHebergementbynonAvis($idUtilisateur){
-        $requete = $this->getBdd()->prepare("SELECT DISTINCT h.* FROM hebergement h INNER JOIN reservations_hebergement rh using(idHebergement) INNER JOIN avis a USING(idHebergement) WHERE rh.idUtilisateur = ? AND rh.dateFin < ? and (SELECT count(avis.idAvis) FROM avis where avis.idUtilisateur = ? and avis.idHebergement = h.idHebergement) = 0;");
-        $date = new DateTime();
-        $requete->execute([$idUtilisateur, $date->format(('Y-m-d')), $idUtilisateur]);
+        $requete = $this->getBdd()->prepare("SELECT h.*, rh.dateFin FROM hebergement h INNER JOIN reservations_hebergement rh using(idHebergement) LEFT JOIN avis ON rh.dateFin = avis.date WHERE rh.idUtilisateur = ? AND avis.date IS NULL AND rh.dateFin < NOW()");
+        $requete->execute([$idUtilisateur]);
         $infoAvis =  $requete->fetchALL(PDO::FETCH_ASSOC);
         return $infoAvis;
     }
 
-    public function addAvis($note, $commentaire, $idUtilisateur, $idHebergement){
-        $requete = $this->getBdd()->prepare("INSERT into avis(date, note, commentaire, idUtilisateur, idHebergement) values(now(),?,?,?,?)");
-        $requete->execute([$note, $commentaire, $idUtilisateur, $idHebergement]);
+    public function addAvis($note, $commentaire, $idUtilisateur, $idHebergement, $dateFinReservationHebergement){
+        $requete = $this->getBdd()->prepare("INSERT into avis(date, note, commentaire, idUtilisateur, idHebergement) values(?,?,?,?,?)");
+        $requete->execute([$dateFinReservationHebergement, $note, $commentaire, $idUtilisateur, $idHebergement]);
     }
 
     public function updateAvis($note, $commentaire, $idAvis){
-        $requete = $this->getBdd()->prepare("UPDATE avis set date = ?, note = ?, commentaire = ? where idAvis = ?");
-        $date = new DateTime();
-        $requete->execute([$date->format('Y-m-d'), $note, $commentaire, $idAvis]);
+        $requete = $this->getBdd()->prepare("UPDATE avis set note = ?, commentaire = ? where idAvis = ?");
+        $requete->execute([$note, $commentaire, $idAvis]);
+    }
+
+    public function isThisOpinionBelongToHim($idAvis){
+        $requete = $this->getBdd()->prepare("SELECT COUNT(*) as Nb FROM avis where idAvis = ? AND idUtilisateur = ?");
+        $requete->execute([$idAvis, $_SESSION['idUtilisateur']]);
+        $infoAvis =  $requete->fetch(PDO::FETCH_ASSOC)['Nb'];
+        if($infoAvis == 0){
+            return false;
+        }
+        return true;
     }
 
     public function supAvis($idAvis){
