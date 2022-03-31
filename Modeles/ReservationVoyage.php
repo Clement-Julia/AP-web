@@ -80,19 +80,21 @@ class ReservationVoyage extends Modele {
 
     public function insertBaseTravel($prix, $idUtilisateur, $boolean){
 
-        $code = "qqch";
-        while($code != null){
-            $codeReservation = "VOY" . rand(10000, 99999);
-            $requete = $this->getBdd()->prepare("SELECT code_reservation FROM reservations_hebergement WHERE code_reservation = ?");
-            $requete->execute([$codeReservation]);
-            $code = $requete->fetch(PDO::FETCH_ASSOC)['code_reservation'];
+        while(empty($codeReservationVOY)){
+            $codeReservationVOY = "VOY" . rand(100000000, 999999999);
+            $requete = $this->getBddPublic()->prepare("SELECT code_reservation FROM reservations_voyages WHERE code_reservation = ?");
+            $requete->execute([$codeReservationVOY]);
+            $return = $requete->fetch(PDO::FETCH_ASSOC)['code_reservation'];
+            if(!empty($return)){
+                $codeReservationVOY = $return;
+            }
         }
 
         $requete = $this->getBdd()->prepare("INSERT INTO reservations_voyages (prix, code_reservation, idUtilisateur, is_building) VALUE (?, ?, ?, ?)");
-        $requete->execute([$prix, $codeReservation, $idUtilisateur, $boolean]);
+        $requete->execute([$prix, $codeReservationVOY, $idUtilisateur, $boolean]);
 
         $requete = $this->getBdd()->prepare("SELECT idReservationVoyage FROM reservations_voyages WHERE idUtilisateur = ? AND prix = ? AND code_reservation = ? AND is_building = ?");
-        $requete->execute([$idUtilisateur, $prix, $codeReservation, $boolean]);
+        $requete->execute([$idUtilisateur, $prix, $codeReservationVOY, $boolean]);
         return $requete->fetch(PDO::FETCH_ASSOC)['idReservationVoyage'];
 
     }

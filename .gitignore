@@ -1,2 +1,4 @@
 /vendor/
 composer.json
+/Vues/InsertionSQLMassive.php
+/Modele/Modele.php

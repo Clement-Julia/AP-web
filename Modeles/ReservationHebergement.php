@@ -102,16 +102,18 @@ class ReservationHebergement extends Modele {
 
     public function insertReservationHebergement(int $idUtilisateur, int $idVoyage, $prix, $dateDebut, $dateFin, int $nbJours, int $idHebergement){
 
-        $code = "qqch";
-        while($code != null){
-            $codeReservation = "HEB" . rand(10000, 99999);
-            $requete = $this->getBdd()->prepare("SELECT code_reservation FROM reservations_hebergement WHERE code_reservation = ?");
-            $requete->execute([$codeReservation]);
-            $code = $requete->fetch(PDO::FETCH_ASSOC);
+        while(empty($codeReservationHEB)){
+            $codeReservationHEB = "HEB" . rand(100000000, 999999999);
+            $requete = $this->getBddPublic()->prepare("SELECT code_reservation FROM reservations_hebergement WHERE code_reservation = ?");
+            $requete->execute([$codeReservationHEB]);
+            $return = $requete->fetch(PDO::FETCH_ASSOC)['code_reservation'];
+            if(!empty($return)){
+                $codeReservationHEB = $return;
+            }
         }
 
         $requete = $this->getBdd()->prepare("INSERT INTO reservations_hebergement (idUtilisateur, idVoyage, code_reservation, prix, dateDebut, dateFin, nbJours, idHebergement) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $requete->execute([$idUtilisateur, $idVoyage, $codeReservation, $prix, $dateDebut, $dateFin, $nbJours, $idHebergement]);
+        $requete->execute([$idUtilisateur, $idVoyage, $codeReservationHEB, $prix, $dateDebut, $dateFin, $nbJours, $idHebergement]);
 
     }
 
