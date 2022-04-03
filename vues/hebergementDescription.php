@@ -164,7 +164,9 @@ if(!empty($_SESSION['idUtilisateur'])){
                             <div class="card-header text-light"><h6>Détail du prix</h6></div>
                             <div class="card-body">
                                 <span>Vous allez réserver : </span>
-                                <span id="nbJours">0 nuit</span> à <span id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>"><?=$Hebergement->getPrix()?> €</span> <br> Montant total : <span id="prix">0 €</span>
+                                <span id="nbJours">0 nuit</span> à <span id="prixHebergement" data-prix="<?=$Hebergement->getPrix()?>"><?=$Hebergement->getPrix()?> €</span> 
+                                <br>Soit une arrivée le <?=$dateDebut->format('Y-m-d');?> à partir de 14h00 et un départ le <span id="dateDeDepartInfoUtilisateur">?</span> au matin
+                                <br> Montant total : <span id="prix">0 €</span>
                             </div>
                         </div>
                         <div>

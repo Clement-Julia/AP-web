@@ -14,6 +14,7 @@ var dateDebut = document.getElementsByClassName('date-debut')[0].id;
 var dateFin = null;
 var valid = false;
 var nbJoursVoyage = 0;
+var spanDateDepart = document.getElementById('dateDeDepartInfoUtilisateur');
 
 var bookingDays = [];
 idCalendars.querySelectorAll('td div.booking').forEach((item) => {
@@ -36,7 +37,7 @@ allTds.forEach(element => {
 
             var date1 = new Date(dateDebut); 
             var date2 = new Date(dateFin); 
-
+            date2.setDate(date2.getDate() + 1);
             var diff_temps = date2.getTime() - date1.getTime(); 
             diff_jours = diff_temps / (1000 * 3600 * 24);
 
@@ -85,6 +86,7 @@ async function validity(dateDebut, diff_jours){
         alertDanger.innerHTML = check.message;
         nbJours.innerHTML = "?";
         prix.innerHTML = "?";
+        spanDateDepart.innerHTML = "?";
         return false;
     }
     if(check.code == 200){
@@ -99,6 +101,9 @@ async function validity(dateDebut, diff_jours){
         }
         nbJoursVoyage = diff_jours;
         prix.innerHTML = (prixHebergement * diff_jours).toFixed(2) + " €";
+        var dateFin = new Date(dateDebut);
+        dateFin = new Date(dateFin.setDate(dateFin.getDate() + diff_jours));
+        spanDateDepart.innerHTML = dateFin.toISOString().slice(0, 10);
 
         return true;
     }

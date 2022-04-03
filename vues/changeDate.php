@@ -12,6 +12,7 @@ if(!empty($_SESSION['idUtilisateur'])){
         $today = new DateTime();
         $dateDebut = new DateTime($Reservation->getDateDebut());
         $dateFin = new DateTime($Reservation->getDateFin());
+        $dateFin = $dateFin->modify('-1 days');
         $PreviousMonth = new DateTime($dateDebut->format('Y-m-d') . '-1 month');
         $NextMonth = new DateTime($dateDebut->format('Y-m-d') . '+1 month');
 

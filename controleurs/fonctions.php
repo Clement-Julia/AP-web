@@ -266,3 +266,12 @@ function createResizedImage(string $imagePath = '', string $newPath = '', int $n
 //         echo createResizedImage($path."/".$folder[$x], $path."/".$folder[$x], 250, 200);
 //     }
 // }
+
+function pre($array){
+    echo "<pre>";
+    print_r($array);
+    echo "</pre>";
+}
+function br(){
+    echo "<br>";
+}

@@ -212,8 +212,9 @@ class Ville extends Modele {
     
     public function getFreeHebergement($date, $idVille){
 
-        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement LEFT JOIN villes using(idVille) LEFT JOIN reservations_hebergement USING(idHebergement) where idVille = ?");
-        $requete->execute([$idVille]);
+        // $requete = $this->getBdd()->prepare("SELECT * FROM hebergement LEFT JOIN villes using(idVille) LEFT JOIN reservations_hebergement USING(idHebergement) where idVille = ?");
+        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement INNER JOIN hebergement USING(idHebergement) where idVille = ? AND reservations_hebergement.dateDebut >= ?");
+        $requete->execute([$idVille, $date->format('Y-m-d')]);
         $hebergements = $requete->fetchAll(PDO::FETCH_ASSOC);
 
         $response = [];
@@ -237,7 +238,7 @@ class Ville extends Modele {
                     } else {
                         $origin = new DateTime($date->format('Y-m-d'));
                         $target = new DateTime($array[key($array)]);
-                        $nbJours = $origin->diff($target)->d - 1;
+                        $nbJours = $origin->diff($target)->format('%a');
 
                         if($nbJours > 15){
                             $response[$Hebergement->getIdHebergement()][0] = "Disponible plus de 14 nuits";
@@ -259,7 +260,6 @@ class Ville extends Modele {
                 
             
         }
-
         return $response;
     }
 

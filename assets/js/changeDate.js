@@ -59,7 +59,11 @@ allTds.forEach(element => {
                 dateFinDiv.classList.add('date-debut');
             }
             dStart.innerHTML = moment(dateDebut).format('DD/MM/YYYY');
-            dEnd.innerHTML = moment(dateFin).format('DD/MM/YYYY');
+            dEndPlusUnJour = new Date(dateFin);
+            dEndPlusUnJour.setDate(dEndPlusUnJour.getDate() + 1);
+            var dateDepart = moment(dEndPlusUnJour.toISOString().slice(0, 10)).format('DD/MM/YYYY')
+
+            dEnd.innerHTML = dateDepart
             // On test avec les infos du calendrier si les dates ne sont pas prise (petite vérif sympa pour le client)
             var date1 = new Date(dateDebut); 
             var date2 = new Date(dateFin);
@@ -75,7 +79,7 @@ allTds.forEach(element => {
 
             // on transforme la différence de temps en un nombre de jour
             var diff_temps = date2.getTime() - date1.getTime(); 
-            diff_jours = diff_temps / (1000 * 3600 * 24);
+            diff_jours = (diff_temps / (1000 * 3600 * 24)) + 1;
 
             // Cette condition permet d'éviter une requête fetch à tous les clicks alors que seul le deuxième click de sélection permet un changement et demande donc de vérifier
             if((element.id == dateDebut || element.id == dateFin) && element.dataset.bool == "False"){
@@ -113,7 +117,8 @@ function getDates(startDate, stopDate) {
 async function validity(){
     var response = await fetch("../API/apiway.php?demande=checkValidity&da=" + dateDebut + "&nbj=" + diff_jours);
     var check = await response.json();
-   
+
+
     if(check.code == 401){
         alertWarning.classList.remove('d-none');
         alertWarning.innerHTML = check.message;
