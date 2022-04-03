@@ -52,7 +52,6 @@ if(!empty($_SESSION['idUtilisateur'])){
             <div class="tab-pane fade show active mb-3" id="pills-0" role="tabpanel" aria-labelledby="pills-0-tab">
                 <div class="row">
                 <?php
-                    $x = 1;
                     if(count($luas)){
                         foreach($luas as $lua){
                             $HebergementTemp = new Hebergement($lua["idHebergement"]);
@@ -60,17 +59,17 @@ if(!empty($_SESSION['idUtilisateur'])){
                             ?>
                             <div class ="col-12 col-md-4 mt-3">
                                 <div class="card text-center" style="max-width: 30rem;">
-                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal<?=$x?>">
+                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal<?=$lua['idHebergement'].'-'.$lua['dateFin']?>">
                                         <img src="<?=$Image->getBanniere()?>" class="card-img-top" style= "height: 300px">
                                         <div class="card-body">
                                             <h5 class="card-title"><?=$lua["libelle"]?></h5>
+                                            <p><?=$lua["dateFin"]?></p>
                                             <p class="card-text"><?= $lua["description"]?></p>
                                         </div>
                                     </button>
                                 </div>
                             </div>
                             <?php
-                            $x++;
                         }
                     }else{
                         ?>
@@ -95,7 +94,8 @@ if(!empty($_SESSION['idUtilisateur'])){
                                         <img src="<?=$Image->getBanniere()?>" class="card-img-top" style= "height: 300px">
                                         <div class="card-body" style="max-height: 85px;">
                                             <h5 class="card-title"><?=$all["libelle"]?></h5>
-                                            <p class="card-text text-truncate"><?= $all["description"]?></p>
+                                            <p><?=$all["date"]?></p>
+                                            <!-- <p class="card-text text-truncate"><?= $all["description"]?></p> -->
                                         </div>
                                     </button>
                                 </div>
@@ -115,10 +115,10 @@ if(!empty($_SESSION['idUtilisateur'])){
     </div>
 <?php
 
+$x = 1;
 foreach($luas as $lua){
-    $x = 1;
     ?>
-    <div class="modal fade" id="exampleModal<?=$x?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal<?=$lua['idHebergement'].'-'.$lua['dateFin']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <form method="post" action="../controleurs/addAvis.php?id=<?=$lua['idHebergement']?>&dateFin=<?=$lua['dateFin'];?>">
                 <div class="modal-content">
@@ -148,7 +148,7 @@ foreach($luas as $lua){
                             <label for="<?=$x?>">☆</label>
                             <?php $x++ ?>
                         </div>
-                        <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."></textarea>
+                        <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..." rows="6"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Publier</button>
@@ -168,11 +168,12 @@ foreach($alls as $all){
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title text-dark" id="exampleModalLabel">Votre avis pour <?=$all["libelle"]?></h5>
+                        <p><?=$all["date"]?></p>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body pt-0">
                         <div class="rating">
-                            <input type="radio" name="rating" value="5" id="<?=$x?> <?= (5 == $all["note"]) ? "checked" : "" ?>">
+                            <input type="radio" name="rating" value="5" id="<?=$x?>" <?= (5 == $all["note"]) ? "checked" : "" ?>>
                             <label for="<?=$x?>">☆</label>
                             <?php $x++ ?>
 
@@ -192,7 +193,7 @@ foreach($alls as $all){
                             <label for="<?=$x?>">☆</label>
                             <?php $x++ ?>
                         </div>
-                        <textarea class="form-control" name="commentaire" id="commentaire" placeholder="Votre avis..."><?= htmlspecialchars($all["commentaire"], ENT_QUOTES) ?></textarea>
+                        <textarea class="form-control" name="commentaire" id="commentaire" rows="6" placeholder="Votre avis..."><?= htmlspecialchars($all["commentaire"], ENT_QUOTES) ?></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-warning" name="status" value="update">Modifier</button>
@@ -208,6 +209,20 @@ foreach($alls as $all){
 } else { ?>
     <div class="alert alert-warning">Vous devez être connecté pour accéder à ce contenu</div>
 <?php } ?>
+
+<style>
+    .modal-content{
+        min-width: 600px;
+        min-height: 400px;
+    }
+
+    @media (max-width: 800px) {
+        .modal-content{
+            min-width: 90%;
+            min-height: 400px;
+        }
+    }
+</style>
 
 <?php
 require_once "footer.php";
