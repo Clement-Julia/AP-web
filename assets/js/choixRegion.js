@@ -40,6 +40,7 @@ async function regionDescription(idregion){
     var description = await response.json();
     document.getElementById('description').innerHTML = description.description;
     document.getElementById('link').href = "createTravel.php?idRegion=" + idregion;
+    document.getElementById('link').style.display = "block";
     var containerDescription = document.getElementById('description-region');
     var linkContainer = document.getElementById('link-container');
     if(linkContainer.classList.contains('d-none')){
@@ -59,5 +60,10 @@ async function regionDescription(idregion){
         case "22":
             containerDescription.style.backgroundImage = "url('../assets/src/img/aquitaine.jpg')";
             break;
+    }
+    console.log(idregion)
+    if(idregion != "2"){
+        document.getElementById('description').innerHTML = "Cette région n'a pas encore d'hébergement disponible. Nous travaillons avec nos partenaires à ce sujet";
+        document.getElementById('link').style.display = "none";
     }
 }
