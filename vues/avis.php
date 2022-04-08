@@ -48,7 +48,7 @@ if(!empty($_SESSION['idUtilisateur'])){
             </ul>
         </div>
 
-        <div class="tab-content" id="pills-tabContent">
+        <div class="tab-content mb-3" id="pills-tabContent">
             <div class="tab-pane fade show active mb-3" id="pills-0" role="tabpanel" aria-labelledby="pills-0-tab">
                 <div class="row">
                 <?php
@@ -63,8 +63,8 @@ if(!empty($_SESSION['idUtilisateur'])){
                                         <img src="<?=$Image->getBanniere()?>" class="card-img-top" style= "height: 300px">
                                         <div class="card-body">
                                             <h5 class="card-title"><?=$lua["libelle"]?></h5>
-                                            <p><?=$lua["dateFin"]?></p>
-                                            <p class="card-text"><?= $lua["description"]?></p>
+                                            <p><?=dateToFR($lua["dateFin"])?></p>
+                                            <p class="card-text text-truncate"><?= $lua["description"]?></p>
                                         </div>
                                     </button>
                                 </div>
@@ -94,8 +94,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                                         <img src="<?=$Image->getBanniere()?>" class="card-img-top" style= "height: 300px">
                                         <div class="card-body" style="max-height: 85px;">
                                             <h5 class="card-title"><?=$all["libelle"]?></h5>
-                                            <p><?=$all["date"]?></p>
-                                            <!-- <p class="card-text text-truncate"><?= $all["description"]?></p> -->
+                                            <p><?=dateToFR($all["date"])?></p>
                                         </div>
                                     </button>
                                 </div>
@@ -113,6 +112,20 @@ if(!empty($_SESSION['idUtilisateur'])){
             </div>
         </div>
     </div>
+
+    <style>
+        .modal-content{
+            min-width: 600px;
+            min-height: 400px;
+        }
+
+        @media (max-width: 800px) {
+            .modal-content{
+                min-width: 90%;
+                min-height: 400px;
+            }
+        }
+    </style>
 <?php
 
 $x = 1;
@@ -209,20 +222,6 @@ foreach($alls as $all){
 } else { ?>
     <div class="alert alert-warning">Vous devez être connecté pour accéder à ce contenu</div>
 <?php } ?>
-
-<style>
-    .modal-content{
-        min-width: 600px;
-        min-height: 400px;
-    }
-
-    @media (max-width: 800px) {
-        .modal-content{
-            min-width: 90%;
-            min-height: 400px;
-        }
-    }
-</style>
 
 <?php
 require_once "footer.php";

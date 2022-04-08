@@ -45,4 +45,6 @@ if($_GET["update"] == "info"){
     }else{
         header("location:../vues/profil.php?error=all");
     }
+}else{
+    header("location:../vues/profil.php?error=all");
 }

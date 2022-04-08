@@ -54,4 +54,6 @@ if($_GET["command"] == "acc"){
     }catch(exception $e){
         header("location:../admin/validHotel.php?error");
     }
+}else{
+    header("location:../admin/validHotel.php?error");
 }

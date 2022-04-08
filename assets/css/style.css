@@ -1286,6 +1286,7 @@ body{
     z-index: 2;
 }
 
-::-webkit-calendar-picker-indicator {
-    filter: invert(1);
+.fav-size{
+    height: 152px;
+    width: 210px;
 }

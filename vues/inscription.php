@@ -178,6 +178,10 @@ $date = new DateTime();
     #connexion, #inscription{
         color: white !important;
     }
+
+    ::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
 </style>
 
 <div class="container mt-3 d-flex flex-column align-items-center" id="container">

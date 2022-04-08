@@ -2,7 +2,7 @@
 require_once "../controleurs/traitement.php";
 $inscription = new Utilisateur();
 
-if(!empty($_POST["nom"]) && !empty($_POST["prenom"]) && !empty($_POST["age"]) && !empty($_POST["mdp"]) && !empty($_POST["mdpVerif"]) && !empty($_POST["email"])){
+if(!empty($_POST["nom"]) && is_string($_POST["nom"]) && !empty($_POST["prenom"]) && is_string($_POST["prenom"]) && !empty($_POST["age"]) && is_numeric($_POST["nom"]) && !empty($_POST["mdp"]) && !empty($_POST["mdpVerif"]) && !empty($_POST["email"])){
     $erreur = $inscription->check_mdp_format($_POST["mdp"]);
 
     $exist = $inscription->emailExiste($_POST["email"]);

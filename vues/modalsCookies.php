@@ -1,3 +1,7 @@
+<?php
+    $_SESSION['previous_location'] = basename($_SERVER["SCRIPT_FILENAME"]);
+?>
+
 <button type="button" id="cookie-alert" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Launch demo modal
 </button>

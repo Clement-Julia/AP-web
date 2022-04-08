@@ -6,7 +6,7 @@ $option = new Option();
 $user = new Utilisateur();
 
 
-if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["link"]) && !empty($_POST["adresse"]) && !empty($_FILES["file"]) || empty($_POST["latitude"]) && empty($_POST["longitude"]) && !empty($_POST["link"]) && !empty($_POST["adresse"]) && !empty($_FILES["file"])){
+if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && empty($_POST["link"]) && !empty($_POST["adresse"]) && !empty($_FILES["file"]) || empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && !empty($_POST["link"]) && !empty($_POST["adresse"]) && !empty($_FILES["file"])){
     $error = false;
 
     for($i=0; $i < count($_FILES["file"]["name"]); $i++){

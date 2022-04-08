@@ -40,4 +40,6 @@ if($_GET["command"] == "acc"){
     }catch(exception $e){
         header("location:../admin/validPicture.php?error");
     }
+}else{
+    header("location:../admin/validPicture.php?error");
 }

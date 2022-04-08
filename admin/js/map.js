@@ -35,7 +35,7 @@ $(document).ready(function() {
     $(".currentLongitude").val(e.latlng.lng);
   });
 
-  if($("#DataListVille").data()){
+  if($("#DataListVille").val()){
     latitude = $('#latitude').val();
     longitude = $('#longitude').val();
     map.setView([latitude, longitude], 12);

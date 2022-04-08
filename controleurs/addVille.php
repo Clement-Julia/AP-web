@@ -2,7 +2,7 @@
 require_once "traitement.php";
 $ville = new Ville();
 
-if(!empty($_POST["latitude"]) && !empty($_POST["longitude"]) && empty($_POST["link"]) && !empty($_POST["cp"]) && count($_FILES["file"]) > 0 || empty($_POST["latitude"]) && empty($_POST["longitude"]) && !empty($_POST["link"]) && !empty($_POST["cp"]) && count($_FILES["file"]) > 0){
+if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && empty($_POST["link"]) && !empty($_POST["cp"]) && count($_FILES["file"]) > 0 || empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && !empty($_POST["link"]) && !empty($_POST["cp"]) && count($_FILES["file"]) > 0){
     $error = false;
 
     for($i=0; $i < count($_FILES["file"]["name"]); $i++){

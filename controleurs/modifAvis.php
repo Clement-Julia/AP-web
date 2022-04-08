@@ -2,7 +2,7 @@
 require_once "../controleurs/traitement.php";
 $avis = new Avis();
 
-if(!empty($_POST["rating"])){
+if(!empty($_POST["rating"]) && is_numeric($_POST["rating"])){
     if($_POST["status"] == "update"){
 
         $boolean = $avis->isThisOpinionBelongToHim($_GET["id"]);

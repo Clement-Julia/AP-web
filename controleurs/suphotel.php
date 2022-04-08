@@ -7,7 +7,7 @@ if(empty($_SESSION["supHotel"])){
     header("location:../admin/modifVille.php");
 }
 
-if(!empty($_GET["libelle"])){
+if(!empty($_GET["libelle"]) && is_string($_GET["libelle"])){
     try{
         $hotel->supHotel($_SESSION["supHotel"]);
         $id = $hotel->getHotelbyName($_SESSION["supHotel"]);

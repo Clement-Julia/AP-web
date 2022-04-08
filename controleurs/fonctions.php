@@ -49,7 +49,7 @@ function coupe_phrase($string, $limit = 100, $fin= '...')
     return rtrim(mb_substr($string, 0, $limit, 'UTF-8')) . $fin;
 }
 
-function error($type){
+function error(){
     if(!empty($_GET["error"]) && $_GET["error"] == "crash"){
         ?>
         <div class="container alert alert-danger mt-3">

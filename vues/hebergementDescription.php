@@ -63,6 +63,11 @@ if(!empty($_SESSION['idUtilisateur'])){
                         background-color: #27272773 !important;
                         backdrop-filter: blur(12px);
                     }
+
+                    .accordion-button::after {
+                        position: absolute;
+                        right: 15px;
+                    }
                 </style>
 
                 <div data-idHebergement="<?=$_GET["idHebergement"]?>" id="hebergement-description-container" class="form-container text-light mb-2">
@@ -203,9 +208,9 @@ if(!empty($_SESSION['idUtilisateur'])){
                                         ?>
                                         <div class="accordion-item form-containers">
                                             <h2 class="accordion-header" id="heading<?=$i?>">
-                                                <button class="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapse<?=$i?>">
-                                                    <?= $avis["nom"] . " " . $avis["prenom"] . " - " . $avis['date'] . "   ";?>
-                                                    <div class="rating ms-5">
+                                                <button class="accordion-button collapsed text-dark d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapse<?=$i?>">
+                                                    <span><?= $avis["nom"] . " " . $avis["prenom"] . " - " . dateToFR($avis['date']) . "   ";?></span>
+                                                    <div class="rating mx-5">
                                                         <input type="radio" name="<?=$name?>" value="5" id="<?=$x?>" <?= (5 == $avis["note"]) ? "checked" : "" ?> disabled>
                                                         <label class="rating_size" for="<?=$x?>">☆</label>
                                                         <?php $x++ ?>
@@ -241,97 +246,185 @@ if(!empty($_SESSION['idUtilisateur'])){
                                     ?>
                                 </div>
                                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                                    <?php
-                                    foreach($avis_desc as $avis){
-                                        $name = "rating" . $i;
-                                        ?>
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="heading<?=$i?>">
-                                                <button class="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapse<?=$i?>">
-                                                    <?= $avis["nom"] . " " . $avis["prenom"] . " - " . $avis['date'] . "   ";?>
-                                                    <div class="rating ms-5">
-                                                        <input type="radio" name="<?=$name?>" value="5" id="<?=$x?>" <?= (5 == $avis["note"]) ? "checked" : "" ?> disabled>
-                                                        <label class="rating_size" for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
-
-                                                        <input type="radio" name="<?=$name?>" value="4" id="<?=$x?>" <?= (4 == $avis["note"]) ? "checked" : "" ?> disabled>
-                                                        <label class="rating_size" for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
-
-                                                        <?php $x++ ?>
-                                                        <input type="radio" name="<?=$name?>" value="3" id="<?=$x?>"<?= (3 == $avis["note"]) ? "checked" : "" ?> disabled>
-                                                        <label class="rating_size" for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
-
-                                                        <input type="radio" name="<?=$name?>" value="2" id="<?=$x?>"<?= (2 == $avis["note"]) ? "checked" : "" ?> disabled>
-                                                        <label class="rating_size" for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
-                                                        
-                                                        <input type="radio" name="<?=$name?>" value="1" id="<?=$x?>" <?= (1 == $avis["note"]) ? "checked" : "" ?> disabled>
-                                                        <label class="rating_size" for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
-                                                    </div>
-                                                </button>
-                                            </h2>
-                                            <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#pills-profile">
-                                                <div class="accordion-body text-dark">
-                                                    <?=  htmlspecialchars($avis["commentaire"], ENT_QUOTES) ?>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="tab-content" id="pills-tabContent">
+                                        
                                         <?php
-                                        $i++;
-                                    }
-                                    ?>
+                                        $count_tab = 1;
+                                        $count_avis = 0;
+                                        $first = true;
+                                        foreach($avis_desc as $avis){
+                                            $name = "rating" . $i;
+                                            ?>
+
+                                            <?php if($count_avis == 0){ ?>
+                                            <div class="tab-pane fade <?= ($first) ? "show active" : "" ?>" id="pills-<?=$count_tab?>" role="tabpanel" aria-labelledby="pills-<?=$count_tab?>-tab">
+                                            <?php }?>
+
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="heading<?=$i?>">
+                                                        <button class="accordion-button collapsed text-dark d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapse<?=$i?>">
+                                                            <span><?= $avis["nom"] . " " . $avis["prenom"] . " - " . dateToFR($avis['date']) . "   ";?></span>
+                                                            <div class="rating mx-5">
+                                                                <input type="radio" name="<?=$name?>" value="5" id="<?=$x?>" <?= (5 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                                <label class="rating_size" for="<?=$x?>">☆</label>
+                                                                <?php $x++ ?>
+
+                                                                <input type="radio" name="<?=$name?>" value="4" id="<?=$x?>" <?= (4 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                                <label class="rating_size" for="<?=$x?>">☆</label>
+                                                                <?php $x++ ?>
+
+                                                                <?php $x++ ?>
+                                                                <input type="radio" name="<?=$name?>" value="3" id="<?=$x?>"<?= (3 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                                <label class="rating_size" for="<?=$x?>">☆</label>
+                                                                <?php $x++ ?>
+
+                                                                <input type="radio" name="<?=$name?>" value="2" id="<?=$x?>"<?= (2 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                                <label class="rating_size" for="<?=$x?>">☆</label>
+                                                                <?php $x++ ?>
+                                                                
+                                                                <input type="radio" name="<?=$name?>" value="1" id="<?=$x?>" <?= (1 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                                <label class="rating_size" for="<?=$x?>">☆</label>
+                                                                <?php $x++ ?>
+                                                            </div>
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#pills-profile">
+                                                        <div class="accordion-body text-dark">
+                                                            <?=  htmlspecialchars($avis["commentaire"], ENT_QUOTES) ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                            <?php
+                                                $i++;
+                                                $count_avis++;
+                                                $first = false;
+                                            ?>
+
+                                            <?php if($count_avis == 5){ ?>
+                                            </div>
+                                            <?php }
+                                                
+                                            if($count_avis == 5){
+                                                $count_avis = 0;
+                                                $count_tab++;
+                                            }
+                                        }
+                                        if($count_avis < 5){ ?>
+                                            </div>
+                                        <?php }
+                                        ?>
+                                    
+                                    </div>
+
+                                    <nav aria-label="" class="mt-3">
+                                        <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+
+                                            <?php
+                                            for($count_list = 1; $count_list <= $count_tab; $count_list++){
+                                                ?>
+                                                <li class="page-item" role="presentation">
+                                                    <button class="nav-link page-link <?= ($count_list == 1) ? "active" : "" ?>" id="pills-<?=$count_list?>-tab" data-bs-toggle="pill" data-bs-target="#pills-<?=$count_list?>" type="button" role="tab" aria-controls="pills-<?=$count_list?>" aria-selected="true"><?=$count_list?></button>
+                                                </li>
+                                                <?php
+                                            }
+                                            ?>
+                        
+                                        </ul>
+                                    </nav>
+
                                 </div>
                                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                                    <?php
-                                    foreach($avis_asc as $avis){
-                                        $name = "rating" . $i;
-                                        ?>
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="heading<?=$i?>">
-                                                <button class="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapse<?=$i?>">
-                                                    <?= $avis["nom"] . " " . $avis["prenom"] . " - " . $avis['date'] . "   ";?>
-                                                    <div class="rating ms-5">
-                                                        <input type="radio" name="<?=$name?>" value="5" id="<?=$x?>" <?= (5 == $avis["note"]) ? "checked" : "" ?> disabled>
-                                                        <label class="rating_size" for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
+                                    <div class="tab-content" id="pills-tabContent">
+                                        
+                                        <?php
+                                        $count_tab = 1;
+                                        $count_avis = 0;
+                                        $first = true;
+                                        foreach($avis_asc as $avis){
+                                            $name = "rating" . $i;
+                                            ?>
 
-                                                        <input type="radio" name="<?=$name?>" value="4" id="<?=$x?>" <?= (4 == $avis["note"]) ? "checked" : "" ?> disabled>
-                                                        <label class="rating_size" for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
+                                            <?php if($count_avis == 0){ ?>
+                                            <div class="tab-pane fade <?= ($first) ? "show active" : "" ?>" id="pills-<?=$count_tab+10?>" role="tabpanel" aria-labelledby="pills-<?=$count_tab+10?>-tab">
+                                            <?php }?>
 
-                                                        <?php $x++ ?>
-                                                        <input type="radio" name="<?=$name?>" value="3" id="<?=$x?>"<?= (3 == $avis["note"]) ? "checked" : "" ?> disabled>
-                                                        <label class="rating_size" for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="heading<?=$i?>">
+                                                    <button class="accordion-button collapsed text-dark d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapse<?=$i?>">
+                                                        <span><?= $avis["nom"] . " " . $avis["prenom"] . " - " . dateToFR($avis['date']) . "   ";?></span>
+                                                        <div class="rating mx-5">
+                                                            <input type="radio" name="<?=$name?>" value="5" id="<?=$x?>" <?= (5 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                            <label class="rating_size" for="<?=$x?>">☆</label>
+                                                            <?php $x++ ?>
 
-                                                        <input type="radio" name="<?=$name?>" value="2" id="<?=$x?>"<?= (2 == $avis["note"]) ? "checked" : "" ?> disabled>
-                                                        <label class="rating_size" for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
-                                                        
-                                                        <input type="radio" name="<?=$name?>" value="1" id="<?=$x?>" <?= (1 == $avis["note"]) ? "checked" : "" ?> disabled>
-                                                        <label class="rating_size" for="<?=$x?>">☆</label>
-                                                        <?php $x++ ?>
+                                                            <input type="radio" name="<?=$name?>" value="4" id="<?=$x?>" <?= (4 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                            <label class="rating_size" for="<?=$x?>">☆</label>
+                                                            <?php $x++ ?>
+
+                                                            <?php $x++ ?>
+                                                            <input type="radio" name="<?=$name?>" value="3" id="<?=$x?>"<?= (3 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                            <label class="rating_size" for="<?=$x?>">☆</label>
+                                                            <?php $x++ ?>
+
+                                                            <input type="radio" name="<?=$name?>" value="2" id="<?=$x?>"<?= (2 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                            <label class="rating_size" for="<?=$x?>">☆</label>
+                                                            <?php $x++ ?>
+                                                            
+                                                            <input type="radio" name="<?=$name?>" value="1" id="<?=$x?>" <?= (1 == $avis["note"]) ? "checked" : "" ?> disabled>
+                                                            <label class="rating_size" for="<?=$x?>">☆</label>
+                                                            <?php $x++ ?>
+                                                        </div>
+                                                    </button>
+                                                </h2>
+                                                <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#pills-contact">
+                                                    <div class="accordion-body text-dark">
+                                                        <?= htmlspecialchars($avis["commentaire"], ENT_QUOTES) ?>
                                                     </div>
-                                                </button>
-                                            </h2>
-                                            <div id="collapse<?=$i?>" class="accordion-collapse collapse" aria-labelledby="heading<?=$i?>" data-bs-parent="#pills-contact">
-                                                <div class="accordion-body text-dark">
-                                                    <?= htmlspecialchars($avis["commentaire"], ENT_QUOTES) ?>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <?php
-                                        $i++;
-                                    }
-                                    ?>
+
+                                            <?php
+                                            $i++;
+                                            $count_avis++;
+                                            $first = false;
+                                            ?>
+
+                                            <?php if($count_avis == 5){ ?>
+                                            </div>
+                                            <?php }
+                                                
+                                            if($count_avis == 5){
+                                                $count_avis = 0;
+                                                $count_tab++;
+                                            }
+                                        }
+                                        if($count_avis < 5){ ?>
+                                            </div>
+                                        <?php }
+                                        ?>
+                                    
+                                    </div>
+
+                                    <nav aria-label="" class="mt-3">
+                                        <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+
+                                            <?php
+                                            for($count_list = 1; $count_list <= $count_tab; $count_list++){
+                                                ?>
+                                                <li class="page-item" role="presentation">
+                                                    <button class="nav-link page-link <?= ($count_list == 1) ? "active" : "" ?>" id="pills-<?=$count_list+10?>-tab" data-bs-toggle="pill" data-bs-target="#pills-<?=$count_list+10?>" type="button" role="tab" aria-controls="pills-<?=$count_list+10?>" aria-selected="true"><?=$count_list?></button>
+                                                </li>
+                                                <?php
+                                            }
+                                            ?>
+                        
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
                     </div>
-
 
                     <div class="card form-container text-light">
                         <div class="card-body d-flex justify-content-center">

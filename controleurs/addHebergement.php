@@ -2,8 +2,11 @@
 require_once "traitement.php";
 
 if (!empty($_GET['idHebergement']) &&
+    is_numeric($_GET['idHebergement']) &&
     !empty($_GET['nbNuit']) &&
-    !empty($_GET['continue']
+    is_numeric($_GET['nbNuit']) &&
+    !empty($_GET['continue'] &&
+    is_numeric($_GET['continue'])
     )
     ){
 
