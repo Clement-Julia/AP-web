@@ -296,13 +296,13 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                 </div>
                                             
                                             <?php
-                                                $i++;
-                                                $count_avis++;
-                                                $first = false;
+                                            $i++;
+                                            $count_avis++;
+                                            $first = false;
                                             ?>
 
                                             <?php if($count_avis == 5){ ?>
-                                            </div>
+                                                </div>
                                             <?php }
                                                 
                                             if($count_avis == 5){
@@ -310,14 +310,16 @@ if(!empty($_SESSION['idUtilisateur'])){
                                                 $count_tab++;
                                             }
                                         }
-                                        if($count_avis < 5){ ?>
+                                        if($count_avis < 5 && $count_avis != 0){ ?>
                                             </div>
-                                        <?php }
+                                        <?php }else{
+                                            $count_tab--;
+                                        }
                                         ?>
                                     
                                     </div>
 
-                                    <nav aria-label="" class="mt-3">
+                                    <nav aria-label="positif" class="mt-3">
                                         <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
 
                                             <?php
@@ -392,21 +394,23 @@ if(!empty($_SESSION['idUtilisateur'])){
 
                                             <?php if($count_avis == 5){ ?>
                                             </div>
-                                            <?php }
+                                            <?php }else{
+                                                $count_tab--;
+                                            }
                                                 
                                             if($count_avis == 5){
                                                 $count_avis = 0;
                                                 $count_tab++;
                                             }
                                         }
-                                        if($count_avis < 5){ ?>
+                                        if($count_avis < 5 && $count_avis != 0){ ?>
                                             </div>
                                         <?php }
                                         ?>
                                     
                                     </div>
 
-                                    <nav aria-label="" class="mt-3">
+                                    <nav aria-label="negatif" class="mt-3">
                                         <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
 
                                             <?php
@@ -425,7 +429,6 @@ if(!empty($_SESSION['idUtilisateur'])){
                             </div>
                         </div>
                     </div>
-
                     <div class="card form-container text-light">
                         <div class="card-body d-flex justify-content-center">
                             <button id="submit" class="btn btn-success btn-sm">Valider</button>
@@ -438,7 +441,6 @@ if(!empty($_SESSION['idUtilisateur'])){
                             </div>
                         </div>
                     </div>
-                    <div id="hd-avis"></div>
                 </div>
 
                 <script src="../assets/js/hebergementDescription.js"></script>
