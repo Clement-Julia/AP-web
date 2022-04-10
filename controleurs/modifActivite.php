@@ -9,6 +9,8 @@ if(!empty($_POST["activite"]) && is_string($_POST["activite"]) && !empty($_POST[
         $idActivite = $activite->getActiviteByName($_POST["activite"]);
         $ville = $ville->getVillebyName($_POST["ville"]);
         $activite->updateActiviteForCity($idActivite["idActivite"], $ville["idVille"], $_POST["currentLatitude"], $_POST["currentLongitude"], $_POST["description"], $_POST["oldLatitude"], $_POST["oldLongitude"]);
+        // print_r($_POST);
+        // exit;
         header("location:../admin/modifActivite.php?success");
     }
     catch(exception $e)

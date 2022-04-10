@@ -36,13 +36,22 @@ if(!empty($_GET["error"]) && $_GET["error"] == "ext"){
     </div>
     <?php
 }
+if(isset($_GET["success"])){
+    ?>
+    <div class="container alert alert-success">
+        <p>
+            La ville a bien été modifiée !
+        </p>
+    </div>
+    <?php
+}
 $bool = 0;
 ?>
 
 <div class="container mb-2">
     <h1 class="mb-3">Modification d'une ville :</h1>
     <?php
-    if(empty($_GET) || $_GET["libelle"] == "error" || empty($_GET["libelle"])){
+    if(empty($_GET) || !empty($_GET["libelle"]) && $_GET["libelle"] == "error" || empty($_GET["libelle"])){
         ?>
             <form method="GET" action="modifVille.php">
 
@@ -81,7 +90,7 @@ $bool = 0;
                 <select class="custom-select" aria-label="Default select example" name="region" required>
                     <option selected disabled>Selectionnez le nom de la région</option>
                     <?php
-                        foreach($infos as $info){
+                        foreach($infos_region as $info){
                             ?>
                                 <option value="<?= $info["idRegion"] ?>" <?= ($info["idRegion"] == $info_ville["idRegion"]) ? "selected" : "" ?>><?= htmlspecialchars($info["libelle"], ENT_QUOTES) ?></option>
                             <?php

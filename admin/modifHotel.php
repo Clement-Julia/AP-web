@@ -50,7 +50,7 @@ if(isset($_GET["success"])){
 <div class="container mb-2">
     <h1 class="mb-3">Modification d'un hébergement :</h1>
     <?php
-    if(empty($_GET) || $_GET["libelle"] == "error"){
+    if(empty($_GET) || !empty($_GET["libelle"]) && $_GET["libelle"] == "error" || isset($_GET["success"])){
         ?>
             <form method="GET" action="modifHotel.php">
 
@@ -166,7 +166,7 @@ if(isset($_GET["success"])){
 
             <div class="form-group">
                 <label for="adresse">Adresse : </label>
-                <input type="text" class="form-control" name="adresse" id="adresse" placeholder="Entrez l'adresse de l'hébergement" required>
+                <input type="text" class="form-control" name="adresse" id="adresse" placeholder="Entrez l'adresse de l'hébergement" value="<?= $info_hotel["adresse"] ?>" required>
             </div>
 
             <div class="form-group mt-4">

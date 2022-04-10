@@ -31,8 +31,8 @@ $(document).ready(function() {
 
     $("#latitude").val(e.latlng.lat);
     $("#longitude").val(e.latlng.lng);
-    $(".currentLatitude").val(e.latlng.lat);
-    $(".currentLongitude").val(e.latlng.lng);
+    $("#currentLatitude").val(e.latlng.lat);
+    $("#currentLongitude").val(e.latlng.lng);
   });
 
   if($("#DataListVille").val()){

@@ -4,6 +4,26 @@ require_once "headerAdmin.php";
 $limit = 10;
 $ReservationVoyage = new ReservationVoyage();
 $infos = $ReservationVoyage->getAllReservationVoyage();
+
+if(!empty($_GET["error"]) && $_GET["error"] == "crash"){
+    ?>
+    <div class="container alert alert-danger">
+        <p>
+            La fonctionnalité est actuellement indisponible <br>
+            Pour plus d'information contacter le développeur
+        </p>
+    </div>
+    <?php
+}
+if(isset($_GET["success"])){
+    ?>
+    <div class="container alert alert-success">
+        <p>
+            Le voyage a bien été supprimé !
+        </p>
+    </div>
+    <?php
+}
 ?>
 
 <div class="container-fluid">
@@ -48,7 +68,7 @@ $infos = $ReservationVoyage->getAllReservationVoyage();
                                             <a href="vueVoyage.php?id=<?= $info["idReservationVoyage"] ?>" class="text-light btn btn-warning">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="../controleurs/supVoyage.php" class="text-light btn btn-danger">
+                                            <a href="../controleurs/supTravel.php?id=<?= $info["idReservationVoyage"] ?>" class="text-light btn btn-danger">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                         </span>

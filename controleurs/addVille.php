@@ -38,23 +38,27 @@ if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST
             }
             mkdir("../assets/src/uuid/".$nom_doss, 0700);
 
-            if(!empty($_FILES["banniere"])){
+            if(!$_FILES["banniere"]["error"]){
                 $nameBan = "bannière";
+                $ext = substr($_FILES["banniere"]["name"], strrpos($_FILES["banniere"]["name"], '.'));
                 $target_dir = "../assets/src/uuid/".$nom_doss."/";
                 $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
-                $target_file = $target_dir . $nameBan . "." . "png";
+                $target_file = $target_dir . $nameBan . $ext;
                 $check = getimagesize($_FILES["banniere"]["tmp_name"]);
                 move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
             }
 
             //Création du(es) fichier(s)
-            for($i=0; $i < count($_FILES["file"]["name"]); $i++){
-                $newName = $_POST["libelle"].$i;
-                $target_dir = "../assets/src/uuid/".$nom_doss."/";
-                $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
-                $target_file = $target_dir . $newName . "." . "png";
-                $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
-                move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
+            if(!$_FILES["file"]["error"]){
+                for($i=0; $i < count($_FILES["file"]["name"]); $i++){
+                    $newName = $_POST["libelle"].$i;
+                    $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));
+                    $target_dir = "../assets/src/uuid/".$nom_doss."/";
+                    $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
+                    $target_file = $target_dir . $newName . $ext;
+                    $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
+                    move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
+                }
             }
             
             $ville->addVille($_POST["libelle"], $_POST["latitude"], $_POST["longitude"], $_POST["cp"], $_POST["region"], $_POST["description"], $nom_doss);

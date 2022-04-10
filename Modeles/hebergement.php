@@ -133,7 +133,7 @@ class Hebergement extends Modele {
 
     public function updateHotel($libelle, $description, $idVille, $latitude, $longitude, $adresse, $prix, $uuid, $id){
 
-        $requete = $this->getBdd()->prepare("UPDATE hebergement set libelle = ?, description = ?, idVille = ?, latitude = ?, longitude = ?, adresse = ? prix = ?, uuid = ? where idHebergement = ?");
+        $requete = $this->getBdd()->prepare("UPDATE hebergement set libelle = ?, hebergement.description = ?, idVille = ?, latitude = ?, longitude = ?, adresse = ?, prix = ?, uuid = ? where idHebergement = ?");
 
         $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $adresse, $prix, $uuid, $id]);
     }

@@ -164,6 +164,16 @@ class ReservationVoyage extends Modele {
         return true;
     }
 
+    public function deleteBuildingTravelByTravelId($idReservationVoyage){
+        try {
+            $requete = $this->getBdd()->prepare("DELETE reservations_voyages, reservations_hebergement FROM reservations_voyages INNER JOIN reservations_hebergement ON reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage WHERE reservations_voyages.idReservationVoyage = ? OR reservations_hebergement.idVoyage = ?");
+            $requete->execute([$idReservationVoyage, $idReservationVoyage]);
+        } catch (Exception $e){
+            return false;
+        }
+        return true;
+    }
+
     public function deleteBuildingWithIdReservationVoyage($idReservationVoyage){
         $requete = $this->getBdd()->prepare("call sup_reservation_voyage(?,?)");
         $requete->execute([$idReservationVoyage, true]);

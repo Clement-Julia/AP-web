@@ -28,61 +28,62 @@ if(
     $Hotel = new Hebergement($_GET["id"]);
 
     if($error){
-        try{
-            $repertoire = "../assets/src/uuid/".$Hotel->getUuid();
-            if(is_dir($repertoire)){  
-                if($iteration = opendir($repertoire)){  
-                    while(($fichier = readdir($iteration)) !== false){  
-                        if($fichier != "." && $fichier != ".."){
-                            $fichier_info = finfo_open(FILEINFO_MIME_TYPE);
-                            $mime_type = finfo_file($fichier_info, $repertoire."/".$fichier);
-                            if(strpos($mime_type, 'image/') === 0){
-                                $test = substr($fichier, strlen($_POST["libelle"]), strlen($_POST["libelle"]));
-                                $pos = substr($test, 0, strrpos($test, ".")) + 1;
-                            }
-                        }  
-                    }  
-                    closedir($iteration);  
-                }  
-            }
-            if(empty($pos)){
-                $pos=0;
-            }
-    
-            if($Hotel->getUuid() == null){
+
+        if($Hotel->getUuid() == null){
+            $nom_doss = bin2hex(random_bytes(32));
+            while(file_exists("../assets/src/uuid/".$nom_doss) != false){
                 $nom_doss = bin2hex(random_bytes(32));
-                while(file_exists("../assets/src/uuid/".$nom_doss) != false){
-                    $nom_doss = bin2hex(random_bytes(32));
-                }
-                mkdir("../assets/src/uuid/".$nom_doss, 0700);
-                $Hotel->setUuid($nom_doss);
             }
-    
-            if(!empty($_FILES["banniere"])){
-                $nameBan = "banniere";
-                $target_dir = "../assets/src/uuid/".$Hotel->getUuid()."/";
-                $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
-                $target_file = $target_dir . $nameBan . "." . "png";
-                $check = getimagesize($_FILES["banniere"]["tmp_name"]);
-                move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
+            mkdir("../assets/src/uuid/".$nom_doss, 0700);
+            $Hotel->setUuid($nom_doss);
+        }
+
+        $folder = scandir("../assets/src/uuid/".$Hotel->getUuid());
+        $pos = 1;
+        for($i = 2; $i < count($folder); $i++){
+            $ext = substr($folder[$i], strrpos($folder[$i], '.'));
+            if(strtok($folder[$i], '.') != "banniere"){
+                $pos++;
             }
-    
-            if(!empty($_FILES["file"])){
-                for($i=0; $i < (count($_FILES["file"]["name"])); $i++){
-                    $newName = $_POST["libelle"].$pos;
-                    $target_dir = "../assets/src/uuid/". $Hotel->getUuid() ."/";
-                    $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
-                    $target_file = $target_dir . $newName . "." . "png";
-                    // $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
-                    move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
-                    $pos++;
+        }
+
+        if(!$_FILES["banniere"]["error"]){
+
+            print_r($_FILES["banniere"]);exit;
+            
+            for($i = 2; $i < count($folder); $i++){
+                if(strtok($folder[$i], '.') == "banniere"){
+                    unlink("../assets/src/uuid/".$Hotel->getUuid()."/".$folder[$i]);
                 }
             }
-    
+
+            $nameBan = "banniere";
+            $ext = substr($_FILES["banniere"]["name"], strrpos($_FILES["banniere"]["name"], '.'));
+            $target_dir = "../assets/src/uuid/".$Hotel->getUuid()."/";
+            $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
+            $target_file = $target_dir . $nameBan . $ext;
+            $check = getimagesize($_FILES["banniere"]["tmp_name"]);
+            move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
+        }
+
+        if(!$_FILES["file"]["error"]){
+            for($i=0; $i < (count($_FILES["file"]["name"])); $i++){
+                $newName = $_POST["libelle"].$pos;
+                $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));
+                $target_dir = "../assets/src/uuid/". $Hotel->getUuid() ."/";
+                $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
+                $target_file = $target_dir . $newName . $ext;
+                // $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
+                move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
+                $pos++;
+            }
+        }
+
+        try{
             $option = new Option();
             $option->supOptions($_GET["id"]);
             $option->addOptions($_GET["id"], $_POST["options"]);
-            $Hotel->updateHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["adresse"], $_POST["longitude"], $_POST["prix"], $Hotel->getUuid(), $_GET["id"]);
+            $Hotel->updateHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["adresse"], $_POST["prix"], $Hotel->getUuid(), $_GET["id"]);
     
             header("location:../admin/modifHotel.php?success");
         }catch(exception $e){

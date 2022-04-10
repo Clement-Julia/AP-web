@@ -93,7 +93,7 @@ class Activite extends Modele {
 
     public function updateActiviteForCity($idActivite, $idVille, $latitude, $longitude, $description, $oldLatitude, $oldLongitude){
         try{
-            $requete = $this->getBdd()->prepare("UPDATE activites_by_ville set idActivite = ?, idVille = ?, latitude = ?, longitude = ?, description = ? where latitude = ? and longitude = ?");
+            $requete = $this->getBdd()->prepare("UPDATE activites_by_ville set idActivite = ?, idVille = ?, latitude = ?, longitude = ?, description = ? where latitude like ? and longitude like ?");
             $requete->execute([$idActivite, $idVille, $latitude, $longitude, $description, $oldLatitude, $oldLongitude]);
         } catch (Exception $e){
             return false;

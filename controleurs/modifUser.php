@@ -1,9 +1,10 @@
 <?php
 require_once "traitement.php";
+$user = new Utilisateur();
 $admin = new Admin();
 
 if(!empty($_POST["email"])){
-    $exist = $connexion->emailExiste($_POST["email"]);
+    $exist = $user->emailExiste($_POST["email"]);
     if($exist){
         try{
             $admin->updateUser($_POST["email"], $_POST["nom"], $_POST["prenom"], $_POST["age"], $_GET["id"]);
