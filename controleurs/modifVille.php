@@ -11,13 +11,14 @@ if(
 ){
     $error = false;
 
-    for($i=0; $i < count($_FILES["file"]["name"]); $i++){
-        $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));
-        if(strtolower($ext) != ".png" && strtolower($ext) != ".jpeg" && strtolower($ext) != ".jpg"){
-            $error = true;
+    if(!$_FILES["file"]["error"][0]){
+        for($i=0; $i < count($_FILES["file"]["name"]); $i++){
+            $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));
+            if(strtolower($ext) != ".png" && strtolower($ext) != ".jpeg" && strtolower($ext) != ".jpg"){
+                $error = true;
+            }
         }
     }
-
     if(!empty($_POST["link"])){
         $link = substr($_POST["link"], strpos($_POST["link"], "www."), 13);
 
@@ -26,10 +27,10 @@ if(
         }
     }
 
-    if($error){
+    if(!$error){
 
         // on vérifie que chaque fichier est bien une image;
-        if(count($_FILES["file"]["tmp_name"]) > 1){
+        if(!$_FILES["file"]["error"][0]){
             foreach($_FILES["file"]["tmp_name"] as $image){
                 if(!exif_imagetype($image)){
                     header("location:../admin/modifVille.php?error=file");
@@ -55,9 +56,8 @@ if(
             }
         }
 
-        if(!$_FILES["banniere"]["error"]){
+        if(!$_FILES["banniere"]["error"][0]){
 
-            print_r($_FILES["banniere"]);exit;
             for($i = 2; $i < count($folder); $i++){
                 if(strtok($folder[$i], '.') == "banniere"){
                     unlink("../assets/src/uuid/".$Ville->getUuid()."/".$folder[$i]);
@@ -72,7 +72,7 @@ if(
             move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
         }
 
-        if(!$_FILES["banniere"]["error"]){
+        if(!$_FILES["file"]["error"][0]){
 
             for($i=0; $i < count($_FILES["file"]["name"]); $i++){
                 $newName = $_POST["libelle"].$pos;

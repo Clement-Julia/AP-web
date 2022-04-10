@@ -36,7 +36,6 @@ if (
                 $booking = $Api->getReservBetweenDate($date->format("Y-m-d"), $Hebergement->getIdHebergement());
                 if(!empty($booking)){
                     header('location: ../vues/changeDate.php?error=date-de-voyage-deja-prise');
-                    exit;
                 }
 
                 $reserve = $Api->getOurOwnReserv($date->format("Y-m-d"), $_SESSION['idUtilisateur'], $_SESSION['idReservationHebergement'], $date->format("Y-m-d"));

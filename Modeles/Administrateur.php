@@ -3,7 +3,7 @@
 class Admin extends Utilisateur {
 
     public function getAllUsers(){
-        $requete = $this->getBdd()->prepare("SELECT * FROM utilisateurs");
+        $requete = $this->getBdd()->prepare("SELECT * FROM utilisateurs where actif = 1");
         $requete->execute();
         $AllUser = $requete->fetchALL(PDO::FETCH_ASSOC);
         return $AllUser;

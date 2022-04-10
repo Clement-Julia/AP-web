@@ -161,7 +161,7 @@ $bool = 0;
 
             <div class="form-group">
                 <label>Images :</label>
-                <div id="image" class="d-flex">
+                <div id="image" class="d-flex flex-wrap">
                     <?php
                     $filename = "../assets/src/uuid/" . $info_ville["uuid"] . "/banniere.*";
                     $img = scandir("../assets/src/uuid/".$info_ville["uuid"]);

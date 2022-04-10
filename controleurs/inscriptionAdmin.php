@@ -25,6 +25,5 @@ if(!empty($_POST["nom"]) && is_string($_POST["nom"]) && !empty($_POST["prenom"])
         header("location:../admin/addUser.php?erreur=email");
     }
 }else {
-    // exit;
     header("location:../admin/addUser.php?erreur=all");
 }

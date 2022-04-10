@@ -1,7 +1,7 @@
 <?php
 require_once "traitement.php";
 $region = new Region();
-// print_r($_POST);exit;
+
 if(!empty($_POST["description"]) && is_string($_POST["description"])){
     try{
         $region->updateRegion($_GET["id"], $_POST["description"]);

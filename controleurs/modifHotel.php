@@ -17,17 +17,21 @@ if(
         }
     }
 
+    $error = false;
+
     // on vérifie les ext des images 
-    for($i=0; $i < count($_FILES["file"]["name"]); $i++){
-        $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));
-        if(strtolower($ext) != ".png" && strtolower($ext) != ".jpeg" && strtolower($ext) != ".jpg"){
-            $error = true;
+    if(!$_FILES["file"]["error"][0]){
+        for($i=0; $i < count($_FILES["file"]["name"]); $i++){
+            $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));
+            if(strtolower($ext) != ".png" && strtolower($ext) != ".jpeg" && strtolower($ext) != ".jpg"){
+                $error = true;
+            }
         }
     }
 
     $Hotel = new Hebergement($_GET["id"]);
 
-    if($error){
+    if(!$error){
 
         if($Hotel->getUuid() == null){
             $nom_doss = bin2hex(random_bytes(32));
@@ -47,9 +51,7 @@ if(
             }
         }
 
-        if(!$_FILES["banniere"]["error"]){
-
-            print_r($_FILES["banniere"]);exit;
+        if(!$_FILES["banniere"]["error"][0]){
             
             for($i = 2; $i < count($folder); $i++){
                 if(strtok($folder[$i], '.') == "banniere"){
@@ -62,18 +64,16 @@ if(
             $target_dir = "../assets/src/uuid/".$Hotel->getUuid()."/";
             $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
             $target_file = $target_dir . $nameBan . $ext;
-            $check = getimagesize($_FILES["banniere"]["tmp_name"]);
             move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
         }
 
-        if(!$_FILES["file"]["error"]){
+        if(!$_FILES["file"]["error"][0]){
             for($i=0; $i < (count($_FILES["file"]["name"])); $i++){
                 $newName = $_POST["libelle"].$pos;
                 $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));
                 $target_dir = "../assets/src/uuid/". $Hotel->getUuid() ."/";
                 $imageFileType = strtolower(pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION));
                 $target_file = $target_dir . $newName . $ext;
-                // $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
                 move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
                 $pos++;
             }
@@ -90,8 +90,8 @@ if(
             header("location:../admin/modifHotel.php?error=crash");
         }
     }else{
-        header("location:../admin/modifHotel.php?error=ext");
+        header("location:../admin/modifHotel.php?libelle=".$_GET["libelle"]."&error=ext");
     }
 }else{
-    header("location:../admin/modifHotel.php?error=all");
+    header("location:../admin/modifHotel.php?libelle=".$_GET["libelle"]."&error=all");
 }

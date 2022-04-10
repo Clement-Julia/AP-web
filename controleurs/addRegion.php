@@ -3,8 +3,7 @@ require_once "traitement.php";
 
 $region = new Region();
 
-print_r($_POST);
-if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && !empty($_POST["description"])){
+if(!empty($_POST["currentLatitude"]) && is_numeric($_POST["currentLatitude"]) && !empty($_POST["currentLongitude"]) && is_numeric($_POST["currentLongitude"])){
     try{
         $region->addRegion($_POST["region"], $_POST["description"], $_POST["longitude"], $_POST["latitude"]);
     

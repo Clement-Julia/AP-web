@@ -475,7 +475,7 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
 .position-badge{
 	position: relative;
     right: 40px;
-    top: -60px;
+    top: 0px;
 	cursor: pointer;
 }
 

@@ -160,7 +160,6 @@ if($_SESSION["idRole"] != 2){
                 <div id="collapseEight" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="gestionVoyage.php">Gestion</a>
-                        <a class="collapse-item" href="StatsVoyage.php">Statistique</a>
                     </div>
                 </div>
             </li>

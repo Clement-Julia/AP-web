@@ -17,6 +17,42 @@ $date = new DateTime();
         </div>
         <?php
     }
+    if(!empty($_GET["error"]) && $_GET["error"] == "age"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                L'utilisateur doit avoir plus de 18 ans.
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["error"]) && $_GET["error"] == "mdp"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                Les mots de passes ne sont pas identique.
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["error"]) && $_GET["error"] == "email"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                Un compte existe déjà avec cet email.
+            </p>
+        </div>
+        <?php
+    }
+    if(!empty($_GET["error"]) && $_GET["error"] == "all"){
+        ?>
+        <div class="container alert alert-danger">
+            <p>
+                Tous les champs doivents être rempli.
+            </p>
+        </div>
+        <?php
+    }
     if(isset($_GET["success"])){
         ?>
         <div class="container alert alert-success">

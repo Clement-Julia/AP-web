@@ -67,11 +67,13 @@ $regions = $region->getAllregions();
             <div class="form-group mt-4">
                 <label for="latitude">Latitude : </label>
                 <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Entrez une latitude" autocomplete="off" disabled>
+                <input type="hidden" name="currentLatitude" id="currentLatitude">
             </div>
 
             <div class="form-group">
                 <label for="longitude">Longitude : </label>
                 <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Entrez une longitude" autocomplete="off" disabled>
+                <input type="hidden" name="currentLongitude" id="currentLongitude">
             </div>
         </div>
     

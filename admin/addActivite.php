@@ -57,7 +57,7 @@ $infos_a = $activités->getAllActivite();
         </div>
 
         <div class="form-group mt-4">
-            <label for="activite">Type d'activité  : </label>
+            <label for="activite">Choix de l'icone de l'activité  : </label>
             <select class="selectpicker" name="activite" id="DataListActivite" data-live-search="true" data-width="100%" title="Choisissez un type d'activité">
                 <?php
                     foreach($infos_a as $a){

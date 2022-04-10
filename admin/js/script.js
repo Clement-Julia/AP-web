@@ -76,6 +76,8 @@ $("#region").change(function () {
 			if($(".custom-select option:selected").text() == data[i]["region"]){
 				$("#longitude").val(data[i]["coordinateX"]);
 				$("#latitude").val(data[i]["coordinateY"]);
+				$("#currentLongitude").val(data[i]["coordinateX"]);
+				$("#currentLatitude").val(data[i]["coordinateY"]);
 			}
 		}
 	});

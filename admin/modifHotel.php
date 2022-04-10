@@ -102,7 +102,7 @@ if(isset($_GET["success"])){
 
         $_SESSION["supHotel"] = $info_hotel["idHebergement"];
         ?>
-        <form method="POST" action="../controleurs/modifHotel.php?id=<?= $info_hotel["idHebergement"] ?>" multipart="" enctype="multipart/form-data">
+        <form method="POST" action="../controleurs/modifHotel.php?id=<?= $info_hotel["idHebergement"] ?>&libelle=<?= $_GET["libelle"] ?>" multipart="" enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="libelle">Nom : </label>
@@ -204,7 +204,7 @@ if(isset($_GET["success"])){
             
             <div class="form-group">
                 <label>Images :</label>
-                <div id="image" class="d-flex">
+                <div id="image" class="d-flex flex-wrap">
                     <?php
                         $filename = "../assets/src/uuid/" . $info_hotel["uuid"] . "/banniere.*";
                         $img = scandir("../assets/src/uuid/".$info_hotel["uuid"]);
