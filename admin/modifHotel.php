@@ -36,6 +36,25 @@ if(!empty($_GET["error"]) && $_GET["error"] == "ext"){
     </div>
     <?php
 }
+if(!empty($_GET["error"]) && $_GET["error"] == "crash"){
+    ?>
+    <div class="container alert alert-danger">
+        <p>
+            La fonctionnalité est actuellement indisponible <br>
+            Pour plus d'information contacter le développeur
+        </p>
+    </div>
+    <?php
+}
+if(!empty($_GET["error"]) && $_GET["error"] == "all"){
+    ?>
+    <div class="container alert alert-danger">
+        <p>
+            Tous les champs sont obligatoires
+        </p>
+    </div>
+    <?php
+}
 if(isset($_GET["success"])){
     ?>
     <div class="container alert alert-success">
@@ -50,7 +69,7 @@ if(isset($_GET["success"])){
 <div class="container mb-2">
     <h1 class="mb-3">Modification d'un hébergement :</h1>
     <?php
-    if(empty($_GET) || !empty($_GET["libelle"]) && $_GET["libelle"] == "error" || isset($_GET["success"])){
+    if(empty($_GET) || !empty($_GET["libelle"]) && $_GET["libelle"] == "error" || isset($_GET["success"]) || empty($_GET["libelle"]) && !empty($_GET["error"])){
         ?>
             <form method="GET" action="modifHotel.php">
 
@@ -75,26 +94,6 @@ if(isset($_GET["success"])){
         
         <?php
     }else{
-        if(!empty($_GET["error"]) && $_GET["error"] == "crash"){
-            ?>
-            <div class="container alert alert-danger">
-                <p>
-                    La fonctionnalité est actuellement indisponible <br>
-                    Pour plus d'information contacter le développeur
-                </p>
-            </div>
-            <?php
-        }
-        if(!empty($_GET["error"]) && $_GET["error"] == "all"){
-            ?>
-            <div class="container alert alert-danger">
-                <p>
-                    Tous les champs sont obligatoires
-                </p>
-            </div>
-            <?php
-        }
-
         $villes = new Ville();
         $infos = $villes->getAllville();
         $hotels = new Hebergement();

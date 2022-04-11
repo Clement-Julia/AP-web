@@ -11,9 +11,11 @@ if(
     !empty($_POST["adresse"]) && is_string($_POST["adresse"])
 ){
     // on vérifie que chaque option est bien un nombre
-    foreach($_POST["options"] as $key => $value){
-        if(!is_numeric($value)){
-            header("location:../admin/modifHotel.php");
+    if(!empty($_POST["options"])){
+        foreach($_POST["options"] as $key => $value){
+            if(!is_numeric($value)){
+                header("location:../admin/modifHotel.php");
+            }
         }
     }
 
@@ -51,8 +53,7 @@ if(
             }
         }
 
-        if($_FILES['banniere']['error'][0] != 4){
-            
+        if($_FILES['banniere']['error'] != 4){
             for($i = 2; $i < count($folder); $i++){
                 if(strtok($folder[$i], '.') == "banniere"){
                     unlink("../assets/src/uuid/".$Hotel->getUuid()."/".$folder[$i]);
@@ -80,9 +81,11 @@ if(
         }
 
         try{
-            $option = new Option();
-            $option->supOptions($_GET["id"]);
-            $option->addOptions($_GET["id"], $_POST["options"]);
+            if(!empty($_POST["options"])){
+                $option = new Option();
+                $option->supOptions($_GET["id"]);
+                $option->addOptions($_GET["id"], $_POST["options"]);
+            }
             $Hotel->updateHotel($_POST["libelle"], $_POST["description"], $_POST["ville"], $_POST["latitude"], $_POST["longitude"], $_POST["adresse"], $_POST["prix"], $Hotel->getUuid(), $_GET["id"]);
     
             header("location:../admin/modifHotel.php?success");
