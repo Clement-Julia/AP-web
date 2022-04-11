@@ -3,7 +3,7 @@ require_once "headerAdmin.php";
 $admin = new Admin();
 $logs = $admin->getAllLogs();
 
-$banIps = $admin->getbanIp();
+$banIps = (array)$admin->getbanIp();
 
 $date = new DateTime();
 ?>
