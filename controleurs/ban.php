@@ -12,13 +12,14 @@ if($_SESSION["idRole"] == 2){
         }
     }elseif($_GET["ban"] == "ip"){
         try{
-            $admin->BanIp($_GET["ip"]);
-            header("location:../admin/modifUser.php?success");
+            $user->BanIp($_GET["ip"]);
+            header("location:../admin/logUser.php?success");
         }catch(exception $e){
-            header("location:../admin/modifUser.php?crash");
+            echo $e; exit;
+            header("location:../admin/logUser.php?crash");
         }
     }else{
-        header("location:../admin/modifUser.php?crash");
+        header("location:../");
     }
 }else{
     header("location:../");

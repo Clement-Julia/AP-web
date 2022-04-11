@@ -11,7 +11,7 @@ if(
 ){
     $error = false;
 
-    if(!$_FILES["file"]["error"][0]){
+    if($_FILES['file']['error'][0] != 4){
         for($i=0; $i < count($_FILES["file"]["name"]); $i++){
             $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));
             if(strtolower($ext) != ".png" && strtolower($ext) != ".jpeg" && strtolower($ext) != ".jpg"){
@@ -30,7 +30,7 @@ if(
     if(!$error){
 
         // on vérifie que chaque fichier est bien une image;
-        if(!$_FILES["file"]["error"][0]){
+        if($_FILES['file']['error'][0] != 4){
             foreach($_FILES["file"]["tmp_name"] as $image){
                 if(!exif_imagetype($image)){
                     header("location:../admin/modifVille.php?error=file");
@@ -56,7 +56,7 @@ if(
             }
         }
 
-        if(!$_FILES["banniere"]["error"][0]){
+        if($_FILES['banniere']['error'] != 4){
 
             for($i = 2; $i < count($folder); $i++){
                 if(strtok($folder[$i], '.') == "banniere"){
@@ -72,7 +72,7 @@ if(
             move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
         }
 
-        if(!$_FILES["file"]["error"][0]){
+        if($_FILES['file']['error'][0] != 4){
 
             for($i=0; $i < count($_FILES["file"]["name"]); $i++){
                 $newName = $_POST["libelle"].$pos;
@@ -85,13 +85,13 @@ if(
             }
         }
         try{
-
-
             $Ville->updateVille($_POST["libelle"], $_POST["latitude"], $_POST["longitude"], $_POST["cp"], $_POST["region"], $_POST["description"], $Ville->getUuid(), $_GET["id"]);
             header("location:../admin/modifVille.php?success");
         }catch(exception $e){
             header("location:../admin/modifVille.php?error=crash");
         }
+    }else{
+        header("location:../admin/modifVille.php?error=ext");
     }
 }else{
     header("location:../admin/modifVille.php?error=all");

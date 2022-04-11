@@ -3,6 +3,8 @@ require_once "headerAdmin.php";
 $admin = new Admin();
 $logs = $admin->getAllLogs();
 
+$banIps = $admin->getbanIp();
+
 $date = new DateTime();
 ?>
 
@@ -53,9 +55,19 @@ $date = new DateTime();
                             <td><?=$log["date"]?></td>
                             <td><?=$log["date"]?></td>
                             <td>
-                                <a href="banIpUser.php?id=<?=$log["ip"]?>" class="btn btn-danger" title="Bannir l'ip">
-                                    <i class="fas fa-gavel"></i>
-                                </a>
+                                <?php
+                                if(in_array($log["ip"], $banIps)){
+                                    ?>
+                                    <small>Cette ip est déjà bannie</small>
+                                    <?php
+                                }else{
+                                    ?>
+                                    <a href="../controleurs/ban.php?ip=<?=$log["ip"]?>&ban=ip" class="btn btn-danger" title="Bannir l'ip">
+                                        <i class="fas fa-gavel"></i>
+                                    </a>
+                                    <?php
+                                }
+                                ?>
                             </td>
                         </tr>
                         <?php

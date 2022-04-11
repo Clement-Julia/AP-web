@@ -6,10 +6,10 @@ $option = new Option();
 $user = new Utilisateur();
 
 
-if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && empty($_POST["link"]) && !empty($_POST["adresse"]) && !empty($_FILES["file"]) || empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && !empty($_POST["link"]) && !empty($_POST["adresse"]) && !empty($_FILES["file"])){
+if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && empty($_POST["link"]) && !empty($_POST["adresse"]) || empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && !empty($_POST["link"]) && !empty($_POST["adresse"])){
     $error = false;
 
-    if(!$_FILES["file"]["error"][0]){
+    if($_FILES['file']['error'][0] != 4){
         for($i=0; $i < count($_FILES["file"]["name"]); $i++){
             $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));
             if(strtolower($ext) != ".png" && strtolower($ext) != ".jpeg" && strtolower($ext) != ".jpg"){
@@ -44,7 +44,7 @@ if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST
             }
             mkdir("../assets/src/uuid/".$nom_doss, 0700);
     
-            if(!$_FILES["banniere"]["error"][0]){
+            if($_FILES['banniere']['error'][0] != 4){
                 $nameBan = "banniere";
                 $ext = substr($_FILES["banniere"]["name"], strrpos($_FILES["banniere"]["name"], '.'));
                 $target_dir = "../assets/src/uuid/".$nom_doss."/";
@@ -55,7 +55,7 @@ if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST
             }
     
             //Création du(es) fichier(s)
-            if(!$_FILES["file"]["error"][0]){
+            if($_FILES['file']['error'][0] != 4){
                 for($i=0; $i < count($_FILES["file"]["name"]); $i++){
                     $newName = $_POST["libelle"].$i;
                     $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));

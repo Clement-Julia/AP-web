@@ -288,6 +288,12 @@ class Utilisateur extends Modele {
         $requete = $this->getBdd()->prepare("INSERT INTO banned_ips(ip) value(?)");
         $requete->execute([$ip]);
     }
+
+    public function getbanIp(){
+        $requete = $this->getBdd()->prepare("SELECT ip FROM banned_ips");
+        $requete->execute();
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
     
     public function deleteUser($idUtilisateur = null){
 

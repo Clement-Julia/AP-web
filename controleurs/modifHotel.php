@@ -20,7 +20,7 @@ if(
     $error = false;
 
     // on vérifie les ext des images 
-    if(!$_FILES["file"]["error"][0]){
+    if($_FILES['file']['error'][0] != 4){
         for($i=0; $i < count($_FILES["file"]["name"]); $i++){
             $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));
             if(strtolower($ext) != ".png" && strtolower($ext) != ".jpeg" && strtolower($ext) != ".jpg"){
@@ -51,7 +51,7 @@ if(
             }
         }
 
-        if(!$_FILES["banniere"]["error"][0]){
+        if($_FILES['banniere']['error'][0] != 4){
             
             for($i = 2; $i < count($folder); $i++){
                 if(strtok($folder[$i], '.') == "banniere"){
@@ -67,7 +67,7 @@ if(
             move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
         }
 
-        if(!$_FILES["file"]["error"][0]){
+        if($_FILES['file']['error'][0] != 4){
             for($i=0; $i < (count($_FILES["file"]["name"])); $i++){
                 $newName = $_POST["libelle"].$pos;
                 $ext = substr($_FILES["file"]["name"][$i], strrpos($_FILES["file"]["name"][$i], '.'));
