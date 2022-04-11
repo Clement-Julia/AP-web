@@ -212,8 +212,8 @@ class Ville extends Modele {
     
     public function getFreeHebergement($date, $idVille){
 
-        // $requete = $this->getBdd()->prepare("SELECT * FROM hebergement LEFT JOIN villes using(idVille) LEFT JOIN reservations_hebergement USING(idHebergement) where idVille = ?");
-        $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement INNER JOIN hebergement USING(idHebergement) where idVille = ? AND reservations_hebergement.dateDebut >= ?");
+        // $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement INNER JOIN hebergement USING(idHebergement) where idVille = ? AND reservations_hebergement.dateDebut >= ?");
+        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement LEFT JOIN reservations_hebergement USING(idHebergement) where idVille = ? AND (reservations_hebergement.dateDebut >= ? OR reservations_hebergement.dateDebut IS NULL)");
         $requete->execute([$idVille, $date->format('Y-m-d')]);
         $hebergements = $requete->fetchAll(PDO::FETCH_ASSOC);
 
