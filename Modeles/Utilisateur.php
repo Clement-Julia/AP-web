@@ -63,12 +63,12 @@ class Utilisateur extends Modele {
                 $return["error"] = 1;
             }else{
 
-                if($utilisateur["idRole"] == 2 && !$this->isThisIpIsAuthorizedForAdminConnection($utilisateur["idUtilisateur"])){
-                    $return["success"] = false;
-                    $return["error"] = 1;
-                    $return["admin_ip_error"] = true;
-                    return $return;
-                }
+                // if($utilisateur["idRole"] == 2 && !$this->isThisIpIsAuthorizedForAdminConnection($utilisateur["idUtilisateur"])){
+                //     $return["success"] = false;
+                //     $return["error"] = 1;
+                //     $return["admin_ip_error"] = true;
+                //     return $return;
+                // }
 
                 $this->idUtilisateur = $utilisateur["idUtilisateur"];
                 $this->idRole = $utilisateur["idRole"];

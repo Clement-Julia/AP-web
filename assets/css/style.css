@@ -899,6 +899,10 @@ body{
         order: -1;
         width: 100%;
         height: 350px;
+        flex-direction: column;
+    }
+    #map #map__image, #map #description-region{
+        width: 100%;
     }
     #choose-town-bot{
         display: none;

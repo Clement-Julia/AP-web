@@ -57,7 +57,7 @@ if(!empty($_SESSION['idUtilisateur'])){
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav align-items-center">
-                <a class="nav-link active" aria-current="page" href="index.php"><img id="logo" src="../assets/src/img/locallacol.png" alt="Logo du site loocalacool"></a>
+                <a class="nav-link active" aria-current="page" href="index.php"><img id="logo" src="../assets/src/img/loocalacool-logo.png" alt="Logo du site loocalacool"></a>
                 <?=(!empty($_SESSION["idRole"]) && $_SESSION["idRole"] == 2 ? "<a href='../admin' class='nav-link white'>Accès admin</a>" : "");?>
                 <?= !empty($_SESSION['idUtilisateur']) && $ReservationVoyage->getIdBuildingTravelByUserId($_SESSION['idUtilisateur']) != null ? "<a href='resumeTravel.php?building=1' class='nav-link white'>Vous avez un voyage en construction</a>" : "" ;?>
             </div>

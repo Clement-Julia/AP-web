@@ -4,8 +4,10 @@ require_once "header.php";
 if(!empty($_SESSION['idUtilisateur'])){
 
     unset($_SESSION['idReservationHebergement']);
+    $Region = new Region();
+    $AllIdRegion = $Region->getAllIdregions();
     // (SECURITE) On vérifie que le paramètre récupéré est bien du type INT attendu
-    if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) || !isset($_GET['idRegion'])){
+    if ((!empty($_GET['idRegion']) && is_numeric($_GET['idRegion'])) && in_array($_GET['idRegion'], $AllIdRegion) || !isset($_GET['idRegion'])){
 
         $_SESSION["section"] = 1;
 
@@ -106,23 +108,34 @@ if(!empty($_SESSION['idUtilisateur'])){
                 <!----------------------------------------------->
                     
                 <div id="choose-town-bot">
+                    <?php
+                    if(Count($Lodgings) > 0){
+                    ?>
                     <div class="row">
                     <?php
-                    foreach ($Lodgings as $item){
-                    $VilleTemp = new Ville($item->getIdVille());
-                    $Image = new Images($VilleTemp->getUuid());
-                    ?>
-                        <div class="col-xs-3 col-md-4 mb-3 col-lg-3 d-flex align-items-stretch flex-wrap">
-                            <div id="<?= $item->getIdVille()?>" data-id="<?= $item->getIdVille()?>" data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" data-zoom="9" class="card ct-a js-marker">
-                                <img class="img-fluid banniere-ville" alt="100%x280" src="<?=$Image->getBanniere()?>">
-                                <div class="card-body ct-text-ville">
-                                    <h6 class="card-title"><?= $item->getLibelle()?></h6>
+                        foreach ($Lodgings as $item){
+                        $VilleTemp = new Ville($item->getIdVille());
+                        $Image = new Images($VilleTemp->getUuid());
+                        ?>
+                            <div class="col-xs-3 col-md-4 mb-3 col-lg-3 d-flex align-items-stretch flex-wrap">
+                                <div id="<?= $item->getIdVille()?>" data-id="<?= $item->getIdVille()?>" data-name="<?= $item->getLibelle()?>" data-lat="<?= $item->getLatitude()?>" data-lng="<?= $item->getLongitude()?>" data-zoom="9" class="card ct-a js-marker">
+                                    <img class="img-fluid banniere-ville" alt="100%x280" src="<?=$Image->getBanniere()?>">
+                                    <div class="card-body ct-text-ville">
+                                        <h6 class="card-title"><?= $item->getLibelle()?></h6>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php }
-                    ?>
+                        <?php } ?>
                     </div>
+                    <?php
+                    } else {
+                        ?>
+                        <div class="alert alert-warning" style="height: 100px;">
+                            Il n'y a pas d'hébergement disponible pour le moment dans cette région, il n'est donc pas possible d'afficher des villes.
+                        </div>
+                        <?php
+                    }
+                    ?>
                 </div>
 
                 <!----------------------------------------------->

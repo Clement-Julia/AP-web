@@ -80,6 +80,16 @@ class Region extends Modele {
         return $Allregion;
     }
 
+    public function getAllIdregions(){
+        $requete = $this->getBdd()->prepare("SELECT idRegion FROM regions");
+        $requete->execute();
+        $Allregion = $requete->fetchALL(PDO::FETCH_ASSOC);
+        foreach($Allregion as $id){
+            $return[]= $id['idRegion'];
+        }
+        return $return;
+    }
+
     public function getTownByRegionId($idRegion){
 
         $requete = $this->getBdd()->prepare("SELECT idVille, villes.libelle, villes.latitude, villes.longitude FROM regions INNER JOIN villes USING(idRegion) WHERE idRegion = ?");
