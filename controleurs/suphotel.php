@@ -1,21 +1,22 @@
 <?php
 require_once "traitement.php";
-$hotel = new Hebergement();
-$options = new Option();
 
 if(empty($_SESSION["supHotel"])){
     header("location:../admin/modifVille.php");
 }
 
-if(!empty($_GET["libelle"]) && is_string($_GET["libelle"])){
+$hotel = new Hebergement($_SESSION["supHotel"]);
+$options = new Option();
+
+
+if($_SESSION["idRole"] == 2){
     try{
-        $hotel->supHotel($_SESSION["supHotel"]);
-        $id = $hotel->getHotelbyName($_SESSION["supHotel"]);
-        $options->supOptions($id["idHebergement"]);
-        header("location:../admin/modifHotel.php");
+        $hotel->supHotel($_SESSION["supHotel"], $hotel->getUuid());
+        $options->supOptions($_SESSION["supHotel"]);
+        header("location:../admin/modifHotel?success.php");
     }catch(exception $e){
-        header("location:../admin/index.php");
+        header("location:../admin/modifHotel?crash.php");
     }
 }else{
-    header("location:../vues/index.php");
+    header("location:../vues/");
 }

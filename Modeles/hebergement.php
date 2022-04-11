@@ -138,7 +138,16 @@ class Hebergement extends Modele {
         $requete->execute([$libelle, $description, $idVille, $latitude, $longitude, $adresse, $prix, $uuid, $id]);
     }
 
-    public function supHotel($idHebergement){
+    public function supHotel($idHebergement, $uuid){
+        if($uuid != null){
+            $folder = scandir("../assets/src/uuid/".$uuid);
+            for($i = 2; $i < count($folder); $i++){
+                unlink("../assets/src/uuid/".$uuid."/".$folder[$i]);
+            }
+            rmdir("../assets/src/uuid/".$uuid);
+        }
+        
+
         $requete = $this->getBdd()->prepare("call sup_hebergement(?)");
         $requete->execute([$idHebergement]);
     }

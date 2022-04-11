@@ -197,7 +197,7 @@ class Ville extends Modele {
 
             // Si uuid est pas null (si on est pas en test unitaire (la raison est en lien avec le chemin relatif des fonctions))
             if($uuid != null){
-                $folder = scandir("../assets/src/tuuid/".$uuid);
+                $folder = scandir("../assets/src/uuid/".$uuid);
                 for($i = 2; $i < count($folder); $i++){
                     unlink("../assets/src/uuid/".$uuid."/".$folder[$i]);
                 }

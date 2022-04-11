@@ -1,15 +1,16 @@
 <?php
 require_once "traitement.php";
-$ville = new Ville();
-$info = $ville->getVillebyName($_GET["libelle"]);
 
 if(empty($_SESSION["supVille"])){
     header("location:../admin/modifVille.php");
 }
 
-if(!empty($_GET["libelle"]) && is_string($_GET["libelle"])){
+$ville = new Ville($_SESSION["supVille"]);
+
+
+if($_SESSION["idRole"] == 2){
     try{
-        $ville->supVille($_SESSION["supVille"], $info["uuid"]);
+        $ville->supVille($_SESSION["supVille"], $ville->getUuid());
         header("location:../admin/modifVille.php");
     }catch(exception $e){
         header("location:../admin/modifVille.php");
