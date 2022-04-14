@@ -69,14 +69,14 @@ if(empty($_GET["id"])){
     ?>
     <div class="container mb-4">
         <h1>Liste des utilisateurs :</h1>
-        <table id="Datatable-user" class="table table-hover mt-3 align-td" width="100%" cellspacing="0">
+        <table id="Datatable-user" class="table table-hover mt-3 align-td display responsive nowrap" width="100%" cellspacing="0">
             <thead class="bg-primary text-light">
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Prénom</th>
-                    <th scope="col" class="text-center">Action</th>
+                    <th scope="col" class="none">Id</th>
+                    <th scope="col" class="none">Email</th>
+                    <th scope="col" class="all">Nom</th>
+                    <th scope="col" class="all">Prénom</th>
+                    <th scope="col" class="none text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -88,7 +88,7 @@ if(empty($_GET["id"])){
                             <td><?=htmlspecialchars($user["email"], ENT_QUOTES)?></td>
                             <td><?=htmlspecialchars($user["nom"], ENT_QUOTES)?></td>
                             <td><?=htmlspecialchars($user["prenom"], ENT_QUOTES)?></td>
-                            <td class="d-flex justify-content-center">
+                            <td class="d-none d-md-flex justify-content-center">
                                 <span>
                                     <a href="../controleurs/ban.php?id=<?=$user["idUtilisateur"]?>&ban=user" class="btn btn-danger" title="Bannir">
                                         <i class="fas fa-gavel"></i>
@@ -140,7 +140,8 @@ if(empty($_GET["id"])){
             $('#Datatable-user').DataTable({
                 language: {
                     url: 'vendor/datatables/FR.json'
-                }
+                },
+                responsive: true
             });
         } );
     </script>

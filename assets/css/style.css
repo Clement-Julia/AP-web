@@ -307,6 +307,10 @@ body{
     border-radius: 15px;
 }
 
+.leaflet-top{
+    z-index: auto;
+}
+
 /* ----------------------------------------- */
 .popup-container {
     display: flex;
@@ -1082,8 +1086,13 @@ body{
 #navbar{
     background-color: #27272773 !important;
     backdrop-filter: blur(12px);
+    width: 100%;
 }
-
+@media (max-width: 1000px) {
+    #navbar{
+        padding-top: 0px !important;
+    }
+}
 #form-container{
     background-color: #27272773 !important;
     backdrop-filter: blur(1px);

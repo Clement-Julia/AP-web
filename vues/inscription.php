@@ -2,8 +2,15 @@
 require_once "header.php";
 
 $date = new DateTime();
-?>
 
+if(isset($_GET["success"])){
+    ?>
+    <div class="container alert alert-success mt-3">
+        Vous avez bien été inscrit !
+    </div>
+    <?php
+}
+?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 

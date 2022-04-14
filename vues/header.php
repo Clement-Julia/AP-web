@@ -81,5 +81,6 @@ if(!empty($_SESSION['idUtilisateur'])){
                 <?php
             }
         ?>
+        <?=(!empty($_SESSION["idRole"]) && $_SESSION["idRole"] == 2 ? "<a href='../admin' class='nav-link white d-block d-lg-none'>Accès admin</a>" : "");?>
     </div>
 </nav>

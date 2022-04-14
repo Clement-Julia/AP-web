@@ -20,16 +20,16 @@ elseif(isset($_GET["error"])){?>
     <?php if(count($hea) > 0){ ?>
         <h1 class="mb-5">Demande d'ajout d'hébergement en attente :</h1>
         <div class="row table-responsive">
-            <table id="Datatable-hotel" class="table table-hover table-striped mt-3 align-td">
+            <table id="Datatable-hotel" class="table table-hover table-striped mt-3 align-td display responsive nowrap" width="100%">
                 <thead class="bg-primary text-light">
                     <tr>
-                        <th scope="col">Propriétaire</th>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Descritption</th>
-                        <th scope="col">Ville</th>
-                        <th scope="col">Prix</th>
-                        <th scope="col" style ="min-width: 175px !important;">Date de la demande</th>
-                        <th scope="col" class="action text-center">Action</th>
+                        <th scope="col" class="none">Propriétaire</th>
+                        <th scope="col" class="all">Nom</th>
+                        <th scope="col" class="none">Descritption</th>
+                        <th scope="col" class="none">Ville</th>
+                        <th scope="col" class="none">Prix</th>
+                        <th scope="col" class="none" style ="min-width: 175px !important;">Date de la demande</th>
+                        <th scope="col" class="action none text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,7 +44,7 @@ elseif(isset($_GET["error"])){?>
                                 <td><?= htmlspecialchars($demande["nomVille"], ENT_QUOTES)?></td>
                                 <td><?=$demande["prix"]?>€</td>
                                 <td><?=$demande["dateEnregistrement"]?></td>
-                                <td class="btn-group d-flex" >
+                                <td class="btn-group d-none d-md-flex" >
                                     <a href="../controleurs/demandeHebergement.php?id=<?=$demande["idHebergement"]?>&command=acc" class="btn btn-success">Accepter</a>
                                     <a href="../controleurs/demandeHebergement.php?id=<?=$demande["idHebergement"]?>&command=ref" class="btn btn-danger">Refuser</a>
                                 </td>
@@ -62,7 +62,8 @@ elseif(isset($_GET["error"])){?>
                 $('#Datatable-hotel').DataTable({
                     language: {
                         url: 'vendor/datatables/FR.json'
-                    }
+                    },
+                    responsive : true
                 });
             } );
         </script>

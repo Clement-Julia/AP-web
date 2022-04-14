@@ -20,15 +20,15 @@ elseif(isset($_GET["error"])){?>
     <?php if(!empty($hap) && count($hap) > 0){ ?>
         <h1 class="mb-5">Demande d'ajout de photo :</h1>
         <div class="row table-responsive">
-            <table id="Datatable-picture" class="table table-hover table-striped mt-3 align-td">
+            <table id="Datatable-picture" class="table table-hover table-striped mt-3 align-td display responsive nowrap" width="100%">
                 <thead class="bg-primary text-light">
                     <tr>
-                    <th scope="col">Propriétaire</th>
-                    <th scope="col">Hébergement</th>
-                    <th scope="col">Ville</th>
-                    <th scope="col">Région</th>
-                    <th scope="col" style ="min-width: 175px !important;">Date de création</th>
-                    <th scope="col" class="action text-center">Action</th>
+                    <th scope="col" class="none">Propriétaire</th>
+                    <th scope="col" class="all">Hébergement</th>
+                    <th scope="col" class="none">Ville</th>
+                    <th scope="col" class="none">Région</th>
+                    <th scope="col" class="none" style ="min-width: 175px !important;">Date de création</th>
+                    <th scope="col" class="action none text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +42,7 @@ elseif(isset($_GET["error"])){?>
                                 <td><?= htmlspecialchars($demande["libelleVille"], ENT_QUOTES)?></td>
                                 <td><?= htmlspecialchars($demande["libelleRegion"], ENT_QUOTES)?></td>
                                 <td><?=$demande["dateEnregistrement"]?></td>
-                                <td class="btn-group d-flex" >
+                                <td class="btn-group d-none d-md-flex" >
                                     <a href="../controleurs/demandePicture.php?id=<?=$demande["idHebergement"]?>&command=acc" class="btn btn-success">Accepter</a>
                                     <a href="validPictureView.php?id=<?=$demande["idHebergement"]?>" class="btn btn-warning">Gérer</a>
                                     <a href="../controleurs/demandePicture.php?id=<?=$demande["idHebergement"]?>&command=ref" class="btn btn-danger">Refuser</a>
@@ -61,7 +61,8 @@ elseif(isset($_GET["error"])){?>
                 $('#Datatable-picture').DataTable({
                     language: {
                         url: 'vendor/datatables/FR.json'
-                    }
+                    },
+                    responsive : true
                 });
             } );
         </script>

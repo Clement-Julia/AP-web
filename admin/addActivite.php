@@ -73,7 +73,7 @@ $infos_a = $activités->getAllActivite();
             <textarea class="form-control" name="description" id="description" cols="30" rows="10"></textarea>
         </div>
         <div class="form-group row mt-5">
-            <div class="col-6 d-flex flex-column justify-content-center">
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
                 <div class="form-group">
                     <label for="latitude">Latitude : </label>
                     <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Clicker sur la map pour la définir" autocomplete="off" disabled>
@@ -86,7 +86,7 @@ $infos_a = $activités->getAllActivite();
                     <input type="hidden" id="currentLongitude" name="currentLongitude">
                 </div>
             </div>
-            <div class="col-6" id="map"></div>
+            <div class="col-12 col-md-6" id="map"></div>
         </div>
         <div class="form-group text-center mt-4">
             <button type="submit" class="btn btn-primary">Ajouter</button>

@@ -33,15 +33,15 @@ $date = new DateTime();
 <div class="container mb-4">
     <?php if(!empty($logs)){ ?>
         <h1 class="mb-4">Journal des utilisateurs :</h1>
-        <table id="Datatable-user" class="table table-hover align-td">
+        <table id="Datatable-user" class="table table-hover align-td  display responsive nowrap" width="100%">
             <thead class="bg-primary text-light">
                 <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Prénom</th>
-                <th scope="col">Ip</th>
-                <th scope="col">Heure</th>
-                <th scope="col">Date</th>
-                <th scope="col" class="action text-center">Action</th>
+                <th scope="col" class="all">Nom</th>
+                <th scope="col" class="all">Prénom</th>
+                <th scope="col" class="none">Ip</th>
+                <th scope="col" class="none">Heure</th>
+                <th scope="col" class="none">Date</th>
+                <th scope="col" class="action text-center none">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -86,7 +86,8 @@ $date = new DateTime();
         $('#Datatable-user').DataTable({
             language: {
                 url: 'vendor/datatables/FR.json'
-            }
+            },
+            responsive: true
         });
     } );
 </script>
