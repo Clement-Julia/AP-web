@@ -20,15 +20,15 @@ elseif(isset($_GET["error"])){?>
     <?php if(!empty($hap) && count($hap) > 0){ ?>
         <h1 class="mb-5">Demande d'ajout de photo :</h1>
         <div class="row table-responsive">
-            <table id="Datatable-picture" class="table table-hover table-striped mt-3 align-td display responsive nowrap" width="100%">
+            <table id="Datatable-picture" class="table table-hover table-striped mt-3 align-td display nowrap" width="100%">
                 <thead class="bg-primary text-light">
                     <tr>
-                    <th scope="col" class="none">Propriétaire</th>
+                    <th scope="col" class="desktop">Propriétaire</th>
                     <th scope="col" class="all">Hébergement</th>
-                    <th scope="col" class="none">Ville</th>
-                    <th scope="col" class="none">Région</th>
-                    <th scope="col" class="none" style ="min-width: 175px !important;">Date de création</th>
-                    <th scope="col" class="action none text-center">Action</th>
+                    <th scope="col" class="desktop">Ville</th>
+                    <th scope="col" class="desktop">Région</th>
+                    <th scope="col" class="desktop" style ="min-width: 175px !important;">Date de création</th>
+                    <th scope="col" class="action desktop text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>

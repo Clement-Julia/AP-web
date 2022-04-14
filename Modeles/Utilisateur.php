@@ -59,6 +59,7 @@ class Utilisateur extends Modele {
             $utilisateur = $requete->fetch(PDO::FETCH_ASSOC);
 
             if(!password_verify($mdp, $utilisateur["mdp"]) || $this->isThisIpBanned()){
+                exit;
                 $return["success"] = false;
                 $return["error"] = 1;
             }else{

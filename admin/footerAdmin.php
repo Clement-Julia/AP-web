@@ -14,6 +14,7 @@
     <script src="vendor/datatables/dataTables.rowreorder.js"></script>
     <script src="vendor/datatables/dataTables.responsive.js"></script>
     <script src="vendor/datatables/dataTables.responsive.bootstrap4.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     

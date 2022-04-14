@@ -34,14 +34,14 @@ if(isset($_GET["success"])){
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="Datatable-travel" width="100%" cellspacing="0">
+                <table class="table table-bordered display nowrap" id="Datatable-travel" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Voyage</th>
-                            <th>Utilisateur</th>
-                            <th>Région</th>
-                            <th>Prix</th>
-                            <th>Action</th>
+                            <th class="all">Voyage</th>
+                            <th class="desktop">Utilisateur</th>
+                            <th class="desktop">Région</th>
+                            <th class="desktop">Prix</th>
+                            <th class="desktop">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,7 +89,8 @@ if(isset($_GET["success"])){
         $('#Datatable-travel').DataTable({
             language: {
                 url: 'vendor/datatables/FR.json'
-            }
+            },
+            responsive: true
         });
     } );
 </script>
