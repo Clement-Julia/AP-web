@@ -1,0 +1,7 @@
+# force redirection to https (uncomment on production)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    #RewriteCond %{ENV:HTTPS} !on [OR]
+    #RewriteCond %{ENV:HTTP_HOST} ^www\. [NC]
+    ##RewriteRule ^ https://loocalacool.ipssi-sio.fr%{ENV:REQUEST_URI} [R=302,L,NE]
+</IfModule>
