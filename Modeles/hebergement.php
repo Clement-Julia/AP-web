@@ -111,7 +111,7 @@ class Hebergement extends Modele {
     }
 
     public function getAllHotel(){
-        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement");
+        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement WHERE actif = 1");
         $requete->execute();
         $Allhotel = $requete->fetchALL(PDO::FETCH_ASSOC);
         return $Allhotel;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 11 avr. 2022 à 17:27
+-- Généré le : lun. 11 avr. 2022 à 23:13
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -26,13 +26,13 @@ DELIMITER $$
 -- Procédures
 --
 DROP PROCEDURE IF EXISTS `delete_ville_by_id`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_ville_by_id` (IN `p_idVille` INT)  BEGIN
+CREATE  PROCEDURE `delete_ville_by_id` (IN `p_idVille` INT)  BEGIN
 	DELETE FROM villes 
     WHERE idVille = p_idVille;
 END$$
 
 DROP PROCEDURE IF EXISTS `est_reserver`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `est_reserver` (`p_idHebergement` INT, OUT `nbr` INT)  BEGIN
+CREATE  PROCEDURE `est_reserver` (`p_idHebergement` INT, OUT `nbr` INT)  BEGIN
 	SELECT COUNT(*) into nbr
     FROM reservations_voyages
     INNER JOIN reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage
@@ -43,7 +43,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `est_reserver` (`p_idHebergement` IN
 END$$
 
 DROP PROCEDURE IF EXISTS `get_infos_about_to_all`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_infos_about_to_all` (IN `p_id_hebergement` INT)  BEGIN
+CREATE  PROCEDURE `get_infos_about_to_all` (IN `p_id_hebergement` INT)  BEGIN
 	SELECT SUM(nbJours) as nuitees, hebergement.dateEnregistrement, COUNT(*) as nbReservation FROM reservations_hebergement 
                 INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage 
                 INNER JOIN hebergement USING(idHebergement) 
@@ -53,7 +53,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_infos_about_to_all` (IN `p_id_h
   END$$
 
 DROP PROCEDURE IF EXISTS `get_infos_about_to_year`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_infos_about_to_year` (IN `p_id_hebergement` INT, IN `p_date` DATETIME)  BEGIN
+CREATE  PROCEDURE `get_infos_about_to_year` (IN `p_id_hebergement` INT, IN `p_date` DATETIME)  BEGIN
 	SELECT SUM(nbJours) as nuitees, hebergement.dateEnregistrement, COUNT(*) as nbReservation FROM reservations_hebergement 
                 INNER JOIN reservations_voyages ON reservations_hebergement.idVoyage = reservations_voyages.idReservationVoyage 
                 INNER JOIN hebergement USING(idHebergement) 
@@ -68,7 +68,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_infos_about_to_year` (IN `p_id_
        END$$
 
 DROP PROCEDURE IF EXISTS `obtenir_infos_gains`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenir_infos_gains` (IN `p_id_hebergement` INT, IN `p_1_mois` DATETIME, IN `p_3_mois` DATETIME, IN `p_6_mois` DATETIME, IN `p_1_an` DATETIME)  BEGIN
+CREATE  PROCEDURE `obtenir_infos_gains` (IN `p_id_hebergement` INT, IN `p_1_mois` DATETIME, IN `p_3_mois` DATETIME, IN `p_6_mois` DATETIME, IN `p_1_an` DATETIME)  BEGIN
 	SELECT 
     	( 
          SELECT SUM(reservations_hebergement.prix) FROM reservations_hebergement
@@ -113,56 +113,56 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenir_infos_gains` (IN `p_id_hebe
 END$$
 
 DROP PROCEDURE IF EXISTS `sup_avis`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_avis` (IN `p_idAvis` INT)  BEGIN
+CREATE  PROCEDURE `sup_avis` (IN `p_idAvis` INT)  BEGIN
 	DELETE
     FROM avis
     where idAvis = p_idAvis;
 END$$
 
 DROP PROCEDURE IF EXISTS `sup_favoris`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_favoris` (`p_idHebergement` INT, `p_idUtilisateur` INT)  BEGIN
+CREATE  PROCEDURE `sup_favoris` (`p_idHebergement` INT, `p_idUtilisateur` INT)  BEGIN
 	DELETE
     from favoris
     where idHebergement = p_idHebergement and idUtilisateur = p_idUtilisateur;
 END$$
 
 DROP PROCEDURE IF EXISTS `sup_hebergement`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_hebergement` (IN `p_idHebergement` INT)  BEGIN
+CREATE  PROCEDURE `sup_hebergement` (IN `p_idHebergement` INT)  BEGIN
 	DELETE
     from hebergement
     where idHebergement = p_idHebergement;
 END$$
 
 DROP PROCEDURE IF EXISTS `sup_option_by_herbergement`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_option_by_herbergement` (IN `p_idHebergement` INT)  BEGIN
+CREATE  PROCEDURE `sup_option_by_herbergement` (IN `p_idHebergement` INT)  BEGIN
 	DELETE
     from options_by_hebergement
     where idHebergement = p_idHebergement;
 END$$
 
 DROP PROCEDURE IF EXISTS `sup_reservations_hebergement`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_reservations_hebergement` (IN `p_idReservationHebergement` INT)  BEGIN
+CREATE  PROCEDURE `sup_reservations_hebergement` (IN `p_idReservationHebergement` INT)  BEGIN
 	DELETE
     from reservations_hebergement
     where idReservationHebergement = p_idReservationHebergement;
 END$$
 
 DROP PROCEDURE IF EXISTS `sup_reservation_voyage`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_reservation_voyage` (`p_idReservationVoyage` INT, `p_is_building` INT)  BEGIN
+CREATE  PROCEDURE `sup_reservation_voyage` (`p_idReservationVoyage` INT, `p_is_building` INT)  BEGIN
 	DELETE
     FROM reservations_voyages
     WHERE idReservationVoyage = p_idReservationVoyage and is_building = p_is_building;
 END$$
 
 DROP PROCEDURE IF EXISTS `sup_user`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_user` (IN `p_idUser` INT)  BEGIN
+CREATE  PROCEDURE `sup_user` (IN `p_idUser` INT)  BEGIN
 	DELETE
     from utilisateurs
     where idUtilisateur = p_idUser;
 END$$
 
 DROP PROCEDURE IF EXISTS `sup_villes`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sup_villes` (`p_idVille` INT)  BEGIN
+CREATE  PROCEDURE `sup_villes` (`p_idVille` INT)  BEGIN
 	DELETE
     FROM reservations_voyages
     WHERE idVilles = p_idVille;
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `access_logs` (
   `ip` varchar(20) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
   PRIMARY KEY (`idLog`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `access_logs`
@@ -202,7 +202,8 @@ INSERT INTO `access_logs` (`idLog`, `date`, `ip`, `idUtilisateur`) VALUES
 (10, '2022-04-10 19:12:51', '::1', 1),
 (11, '2022-04-11 09:46:25', '::1', 1),
 (12, '2022-04-11 16:28:13', '::1', 1),
-(13, '2022-04-11 17:04:05', '::1', 8);
+(13, '2022-04-11 17:04:05', '::1', 8),
+(14, '2022-04-11 22:10:09', '::1', 1);
 
 -- --------------------------------------------------------
 
@@ -352,10 +353,7 @@ INSERT INTO `activites_by_ville` (`idActivite`, `idVille`, `latitude`, `longitud
 (14, 20, 47.2635, -0.137269, 'La visite du cadre noir, école nationale d\'équitation, est un incontournable de Saumur. Réjouira les petits et les grands'),
 (18, 20, 47.2665, -0.0356024, 'La visite de Villerbernier et ses cépages sont indispensable à tout amateur de vin (et confirmé)'),
 (10, 20, 47.2714, -0.054056, 'La Métairie, le restaurant spécialisé dans les produits de la mer et qui vous veut du bien'),
-(25, 20, 47.2347, -0.10873, 'La location de vélo pour faire le tour de la ville et de ses alentours se fait ici ! Electrique ou manuel, il y en a pour tous'),
-(9999, 9999, 48.5621, -0.5412, 'Une superbe activité'),
-(9999, 9999, 48.5621, -0.5412, 'Une superbe activité'),
-(9999, 9999, 48.5621, -0.5412, 'Une superbe activité');
+(25, 20, 47.2347, -0.10873, 'La location de vélo pour faire le tour de la ville et de ses alentours se fait ici ! Electrique ou manuel, il y en a pour tous');
 
 -- --------------------------------------------------------
 
@@ -906,9 +904,10 @@ INSERT INTO `avis_response` (`idResponse`, `idAvis`, `idUtilisateur`, `reponse`,
 
 DROP TABLE IF EXISTS `banned_ips`;
 CREATE TABLE IF NOT EXISTS `banned_ips` (
-  `id_banned_ip` int(11) NOT NULL,
-  `ip` varchar(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `id_banned_ip` int(11) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(20) NOT NULL,
+  PRIMARY KEY (`id_banned_ip`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -958,7 +957,7 @@ CREATE TABLE IF NOT EXISTS `hebergement` (
   `dateEnregistrement` date DEFAULT NULL,
   `actif` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idHebergement`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `hebergement`
@@ -966,14 +965,14 @@ CREATE TABLE IF NOT EXISTS `hebergement` (
 
 INSERT INTO `hebergement` (`idHebergement`, `libelle`, `adresse`, `description`, `idVille`, `latitude`, `longitude`, `prix`, `uuid`, `idUtilisateur`, `dateEnregistrement`, `actif`) VALUES
 (1, 'Hotel de Nantes', '', 'un hôtel basé en bretagne', 13, 47.2184, -1.55362, '70.45', 'a68686210e9bae009424e9b7c7200227feccc185c5d45b439e932dd18c739a09', 2, '2019-01-01', 1),
-(2, 'Hotel d\'Anger', '', 'Hôtel en plein milieu du centre ville, à 100 mètres des meilleurs restaurant.', 14, 47.4711, -0.547307, '89.46', 'fed294478907c1a2d2cd743cf46c673ace7853b0604b3b002c88c90d80f27c6e', 2, '2019-01-01', 1),
+(2, 'Hotel d\'Anger', '25 rue des jonquilles', 'Hôtel en plein milieu du centre ville, à 100 mètres des meilleurs restaurant.', 14, 47.4711, -0.547307, '89.46', 'fed294478907c1a2d2cd743cf46c673ace7853b0604b3b002c88c90d80f27c6e', 2, '2019-01-01', 1),
 (3, 'Hôtel de traverse', '', 'En plein centre de Montaigu, à 100 mètres du meilleur ELerclec du coin.', 15, 46.9833, -1.3167, '36.67', '3a33f82391ef817b7c9e1c87014aabd601205876ee14de5c9ff095230dca1364', 9, '2019-01-01', 1),
 (5, 'Studio sur l\'île de Nantes', '', 'A 500 mètres du hangar à banane, un lieu rempli de d\'activité, votre séjour sera merveilleux', 13, 47.204, -1.54562, '58.99', '27452debd8f1d167a1f1fe3dcd81d3e7c8e0e2c9599db140c36a188c03a80ae6', 2, '2019-01-01', 1),
 (6, 'Studio de 40 m² ', '', 'Un bel espace à vivre cosy et confortable', 17, 47.0594, -0.879787, '63.78', 'cb2e08fd69c01edf91165270f17920670e392806275a902b5fd771b76d4cc122', 2, '2019-01-01', 1),
 (7, 'Château des Ducs de Bretagne', '', 'Au cœur même de Nantes, ce château vous ravira par l\'espace qu\'il vous offre', 13, 47.2159, -1.54931, '100.08', '89cc8aaaf79ecf5731e75fe872aec9a227671aa0fafba342b478995ed1e49736', 9, '2019-01-01', 1),
-(8, 'Chambre d\'hôpital', '', 'Au cœur même du service de médecine interne, cette chambre vous assura du repos et de bons soins.', 14, 47.4826, -0.557617, '103.00', '', 2, '2019-01-01', 1),
+(8, 'Chambre d\'hôpital', '102 rue louis pasteur', 'Au cœur même du service de médecine interne, cette chambre vous assura du repos et de bons soins.', 14, 47.4826, -0.557617, '103.00', '2149afd016df30cbc2c5855d870912e93dcd14e7d32a9a0536acdf9b985ed7b7', 2, '2019-01-01', 1),
 (9, 'Cabane 2 pièces 25m²', '', 'Au sein du parc Henri Joyau, dans un espace naturel et classé Parc d\'or 1991, profitez d\'un séjour paisible.', 15, 46.98, -1.32003, '24.33', 'eee7049f923c0b79d3d0eb7c2311e9a5b68d4df45fee46d73d3c7bc01b55073e', 2, '2019-01-01', 1),
-(10, 'Maison 60m² 3 pièces', '', 'Située en face du lac du Maine, cet hébergement vous offrira une vue imprenable sur la nature.', 14, 47.4642, -0.593099, '75.14', '', 9, '2019-01-01', 1),
+(10, 'Maison 60m² 3 pièces', '14 avenue du maréchal ferrant', 'Située en face du lac du Maine, cet hébergement vous offrira une vue imprenable sur la nature.', 14, 47.4642, -0.593099, '75.14', '51f14c03cb402404244738b7108f3362a18445c254f9da9700c6cc86577ea004', 9, '2019-01-01', 1),
 (11, 'Appartement Jules Ferry', '', 'En plein centre du collège Jules Ferry. Vous serez au milieu de la future élite  Montaigusienne. Avec une réussite nationale de plus de 50% au brevet, l\'inspiration pour le futur prix Nobel de physique n\'est plus qu\'à quelques pas.', 15, 46.9716, -1.30607, '66.01', '7d379de6d89e7428e04a8d0bfe149ea4961080896207dbc650c0386e2b4799c3', 2, '2019-01-01', 1),
 (12, 'Ibis budget chambre lit double', '', 'A deux pas du Mc Donald, vous êtes en plein milieu d\'un centre commercial. Un vrai régal pour tout acheteur compulsif qui se respecte.', 17, 47.0456, -0.902766, '45.06', 'f2e5a72627e7e830a2e6bb4b67c558a844b56cb7832192f3d0d5e050d5d52335', 2, '2019-01-01', 1),
 (13, 'Maison de 150m²', '', 'Au cœur de Mon Plaisir, lieu dit d\'Anger, vous profiterez de notre maison familiale équipé tout confort !', 14, 47.4887, -0.529603, '150.00', 'd0511559f470c90b11d4e0eb45a13fe01ed3e939c8863d4ecb5272a716bc7c9d', 2, '2019-01-01', 1),
@@ -1275,7 +1274,15 @@ INSERT INTO `options_by_hebergement` (`idHebergement`, `idOption`) VALUES
 (42, 1),
 (42, 5),
 (42, 8),
-(42, 10);
+(42, 10),
+(43, 1),
+(43, 4),
+(43, 9),
+(43, 10),
+(43, 11),
+(44, 3),
+(44, 5),
+(44, 7);
 
 -- --------------------------------------------------------
 
@@ -2788,7 +2795,7 @@ CREATE TABLE IF NOT EXISTS `villes` (
   `description` text,
   `uuid` text,
   PRIMARY KEY (`idVille`)
-) ENGINE=MyISAM AUTO_INCREMENT=76 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `villes`
@@ -2799,7 +2806,7 @@ INSERT INTO `villes` (`idVille`, `libelle`, `code_postal`, `latitude`, `longitud
 (14, 'Angers', '49000', 47.4711, -0.547307, 2, NULL, '11539904062a636cdce19cebbbddd21cc90ef526074f308a57a46efe6e15569c'),
 (15, 'Montaigu-Vendée', '85600', 46.9833, -1.3167, 2, NULL, '0bc741d18209d385b105da6436ee86d40d8c5a7479aeb9b1ba29cef211f3a747'),
 (17, 'Cholet', '49300', 47.0594, -0.879787, 2, NULL, '298832a6b17b152006d9704a7e8c26533d4d20ab584eadda0fdaacb82e0879a7'),
-(19, 'La Roche-sur-Yon', '85000', 46.6705, -1.42697, 2, NULL, '8157a057441e8921ad3b474ab3e4201bfa9970708dfe68db36bb2d3120914be1'),
+(19, 'La Roche-sur-Yon', '85000', 46.6705, -1.42697, 2, '', '8157a057441e8921ad3b474ab3e4201bfa9970708dfe68db36bb2d3120914be1'),
 (20, 'Saumur', '49400', 47.2596, -0.0785177, 2, NULL, 'fd40cce8c261f9db2fb7c0fac9403adf29baea97106d2900a73da2fe0eae7b15'),
 (21, 'Pornic', '44210', 47.1153, -2.10401, 2, NULL, '2cb6bcb101e86f3ad4b88e2750d4dc191e77bd169bf4b079fa8bf67b0ddd901a'),
 (22, 'La Flèche', '72200', 47.6968, -0.0746149, 2, NULL, '49aabb5dfc7ddedcf980566f1f28da2c40a16acc73d48a8c177c0195cfe31545');
