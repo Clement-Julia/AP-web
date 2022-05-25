@@ -38,7 +38,7 @@ if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST
             while(file_exists("../src/uuid/".$nom_doss) != false){
                 $nom_doss = bin2hex(random_bytes(32));
             }
-            mkdir("../assets/src/uuid/".$nom_doss, 0700);
+            mkdir("../assets/src/uuid/".$nom_doss, 0777);
 
             if($_FILES['banniere']['error'] != 4){
                 $nameBan = "banniere";
@@ -48,6 +48,7 @@ if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST
                 $target_file = $target_dir . $nameBan . $ext;
                 $check = getimagesize($_FILES["banniere"]["tmp_name"]);
                 move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
+                chmod($target_file, 0777);
             }
 
             //Création du(es) fichier(s)
@@ -60,6 +61,7 @@ if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST
                     $target_file = $target_dir . $newName . $ext;
                     $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
                     move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
+                    chmod($target_file, 0777);
                 }
             }
             

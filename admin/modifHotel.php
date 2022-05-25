@@ -233,7 +233,7 @@ if(isset($_GET["success"])){
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
-                                <a href="../controleurs/supHotel.php"><button type="button" class="btn btn-danger">Oui</button></a>
+                                <a href="../controleurs/suphotel.php"><button type="button" class="btn btn-danger">Oui</button></a>
                             </div>
                         </div>
                     </div>

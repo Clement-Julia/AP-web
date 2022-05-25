@@ -5,6 +5,8 @@ $hotel = new Hebergement();
 $option = new Option();
 $user = new Utilisateur();
 
+$_POST["latitude"] = str_replace(",", ".", $_POST["latitude"]);
+$_POST["longitude"] = str_replace(",", ".", $_POST["longitude"]);
 
 if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && empty($_POST["link"]) && !empty($_POST["adresse"]) || empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && empty($_POST["longitude"]) && is_numeric($_POST["longitude"]) && !empty($_POST["link"]) && !empty($_POST["adresse"])){
     $error = false;
@@ -42,7 +44,8 @@ if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST
             while(file_exists("../assets/src/uuid/".$nom_doss) != false){
                 $nom_doss = bin2hex(random_bytes(32));
             }
-            mkdir("../assets/src/uuid/".$nom_doss, 0700);
+            mkdir("../assets/src/uuid/".$nom_doss, 0777);
+            chmod("../assets/src/uuid/".$nom_doss, 0777);
     
             if($_FILES['banniere']['error'][0] != 4){
                 $nameBan = "banniere";
@@ -52,6 +55,7 @@ if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST
                 $target_file = $target_dir . $nameBan . $ext;
                 $check = getimagesize($_FILES["banniere"]["tmp_name"]);
                 move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
+                chmod($target_file, 0777);
             }
     
             //Création du(es) fichier(s)
@@ -64,6 +68,7 @@ if(!empty($_POST["latitude"]) && is_numeric($_POST["latitude"]) && !empty($_POST
                     $target_file = $target_dir . $newName . $ext;
                     $check = getimagesize($_FILES["file"]["tmp_name"][$i]);
                     move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
+                    chmod($target_file, 0777);
                 }
             }
     

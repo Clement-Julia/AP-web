@@ -17,7 +17,7 @@ if($_GET["command"] == "acc"){
             while(file_exists("../src/uuid/".$nom_doss_ville) != false){
                 $nom_doss_ville = bin2hex(random_bytes(32));
             }
-            mkdir("../assets/src/uuid/".$nom_doss_ville, 0700);
+            mkdir("../assets/src/uuid/".$nom_doss_ville, 0777);
 
             //Création du dossier uuid hébergement
             $nom_doss_hotel = bin2hex(random_bytes(32));
@@ -25,7 +25,7 @@ if($_GET["command"] == "acc"){
                 $nom_doss_hotel = bin2hex(random_bytes(32));
             }
 
-            mkdir("../assets/src/uuid/".$nom_doss, 0700);
+            mkdir("../assets/src/uuid/".$nom_doss, 0777);
             $ville->updateVille($ville->getLibelle(), $ville->getLatitude(), $ville->getLongitude(), $ville->getCode_postal(), $ville->getIdRegion(), $ville->getDescription(), $nom_doss_ville, $ville->getIdVille());
             $admin->acceptHebergementEnAttente($demande["idHebergement"], $nom_doss_hotel);
         }else{
@@ -35,7 +35,7 @@ if($_GET["command"] == "acc"){
             while(file_exists("../src/uuid/".$nom_doss_hotel) != false){
                 $nom_doss_hotel = bin2hex(random_bytes(32));
             }
-            mkdir("../assets/src/uuid/".$nom_doss_hotel, 0700);
+            mkdir("../assets/src/uuid/".$nom_doss_hotel, 0777);
 
             $admin->acceptHebergementEnAttente($demande["idHebergement"], $nom_doss_hotel);
         }

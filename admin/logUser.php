@@ -33,7 +33,7 @@ $date = new DateTime();
 <div class="container mb-4">
     <?php if(!empty($logs)){ ?>
         <h1 class="mb-4">Journal des utilisateurs :</h1>
-        <table id="Datatable-user" class="table table-hover align-td  display responsive nowrap" width="100%">
+        <table id="Datatable-user" class="table table-hover align-td  display nowrap" width="100%">
             <thead class="bg-primary text-light">
                 <tr>
                 <th scope="col" class="all">Nom</th>

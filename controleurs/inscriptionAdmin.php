@@ -14,9 +14,9 @@ if(!empty($_POST["nom"]) && is_string($_POST["nom"]) && !empty($_POST["prenom"])
         if(count($erreur) == 0 || $_POST["mdp"] != $_POST["mdpVerif"]){
             if($now->diff($date)->y >= 18){
                 $inscription->inscription($_POST["email"], $_POST["mdp"], $_POST["nom"], $_POST["prenom"], $_POST["age"], 1, 1);
-                header("location:../admin/addUser?success");
+                header("location:../admin/addUser.php?success");
             }else{
-                header("location:../admin/addUser?erreur=age");
+                header("location:../admin/addUser.php?erreur=age");
             }
         }else{
             header("location:../admin/addUser.php?erreur=mdp");

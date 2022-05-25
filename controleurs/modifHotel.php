@@ -40,7 +40,8 @@ if(
             while(file_exists("../assets/src/uuid/".$nom_doss) != false){
                 $nom_doss = bin2hex(random_bytes(32));
             }
-            mkdir("../assets/src/uuid/".$nom_doss, 0700);
+            mkdir("../assets/src/uuid/".$nom_doss, 0777);
+            chmod("../assets/src/uuid/".$nom_doss, 0777);
             $Hotel->setUuid($nom_doss);
         }
 
@@ -66,6 +67,7 @@ if(
             $imageFileType = strtolower(pathinfo($_FILES["banniere"]["name"],PATHINFO_EXTENSION));
             $target_file = $target_dir . $nameBan . $ext;
             move_uploaded_file($_FILES["banniere"]["tmp_name"], $target_file);
+            chmod($target_file, 0777);
         }
 
         if($_FILES['file']['error'][0] != 4){
@@ -77,6 +79,7 @@ if(
                 $target_file = $target_dir . $newName . $ext;
                 move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file);
                 $pos++;
+                chmod($target_file, 0777);
             }
         }
 

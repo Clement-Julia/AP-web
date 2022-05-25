@@ -20,12 +20,12 @@ elseif(isset($_GET["error"])){?>
     <?php if(count($hea) > 0){ ?>
         <h1 class="mb-5">Demande d'ajout d'hébergement en attente :</h1>
         <div class="row table-responsive">
-            <table id="Datatable-hotel" class="table table-hover table-striped mt-3 align-td display nowrap" width="100%">
+            <table id="Datatable-hotel" class="table table-hover table-striped mt-3 align-td display" width="100%">
                 <thead class="bg-primary text-light">
                     <tr>
                         <th scope="col" class="desktop">Propriétaire</th>
                         <th scope="col" class="all">Nom</th>
-                        <th scope="col" class="desktop">Descritption</th>
+                        <th scope="col" class="desktop" style="word-break: break-all;">Description</th>
                         <th scope="col" class="desktop">Ville</th>
                         <th scope="col" class="desktop">Prix</th>
                         <th scope="col" class="desktop" style ="min-width: 175px !important;">Date de la demande</th>
@@ -40,7 +40,7 @@ elseif(isset($_GET["error"])){?>
                             <tr>
                                 <td><?= htmlspecialchars($demande["nom"], ENT_QUOTES) . " " . htmlspecialchars($demande["prenom"], ENT_QUOTES)?></td>
                                 <td><?= htmlspecialchars($demande["libelle"], ENT_QUOTES)?></td>
-                                <td><?= htmlspecialchars($demande["description"], ENT_QUOTES)?></td>
+                                <td style="word-break: break-all;"><?= htmlspecialchars($demande["description"], ENT_QUOTES)?></td>
                                 <td><?= htmlspecialchars($demande["nomVille"], ENT_QUOTES)?></td>
                                 <td><?=$demande["prix"]?>€</td>
                                 <td><?=$demande["dateEnregistrement"]?></td>
@@ -63,7 +63,10 @@ elseif(isset($_GET["error"])){?>
                     language: {
                         url: 'vendor/datatables/FR.json'
                     },
-                    responsive : true
+                    responsive : true,
+                    "columnDefs": [
+                        {'max-width': '20%', 'targets': 2}
+                    ],
                 });
             } );
         </script>
