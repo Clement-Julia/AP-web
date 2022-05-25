@@ -28,10 +28,17 @@ require_once "header.php";
                 <form action="../controleurs/startTravelTime.php" method="POST">
                     <div id="modal-connecter" class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Quelle est la date de votre départ ?</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Informations générales</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <label for="date">Titre du voyage :</label>
+                            <input id="title" name="title" type="text" require>
+
+                            <label for="date" class="mt-5">Nombre de participant :</label>
+                            <input id="nbparticipant" name="nbParticipant" type="number" require>
+                            i
+                            <label for="date" class="mt-5">Date de départ :</label>
                             <input id="start-date" name="date" type="date" require>
                         </div>
                         <div class="modal-footer">

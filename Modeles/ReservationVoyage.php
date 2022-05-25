@@ -78,7 +78,7 @@ class ReservationVoyage extends Modele {
         return $this->isBuilding;
     }
 
-    public function insertBaseTravel($prix, $idUtilisateur, $boolean){
+    public function insertBaseTravel($prix, $idUtilisateur, $boolean, $title, $nbParticipant){
 
         while(empty($codeReservationVOY)){
             $codeReservationVOY = "VOY" . rand(100000000, 999999999);
@@ -90,8 +90,8 @@ class ReservationVoyage extends Modele {
             }
         }
 
-        $requete = $this->getBdd()->prepare("INSERT INTO reservations_voyages (prix, code_reservation, idUtilisateur, is_building) VALUE (?, ?, ?, ?)");
-        $requete->execute([$prix, $codeReservationVOY, $idUtilisateur, $boolean]);
+        $requete = $this->getBdd()->prepare("INSERT INTO reservations_voyages (prix, code_reservation, title, nbParticipant, idUtilisateur, is_building) VALUE (?, ?, ?, ?, ?, ?)");
+        $requete->execute([$prix, $codeReservationVOY, $title, $nbParticipant, $idUtilisateur, $boolean]);
 
         $requete = $this->getBdd()->prepare("SELECT idReservationVoyage FROM reservations_voyages WHERE idUtilisateur = ? AND prix = ? AND code_reservation = ? AND is_building = ?");
         $requete->execute([$idUtilisateur, $prix, $codeReservationVOY, $boolean]);
@@ -196,7 +196,7 @@ class ReservationVoyage extends Modele {
     }
     
     public function getVoyageByUser($idUtilisateur){
-        $requete = $this->getBdd()->prepare("SELECT reservations_voyages.idReservationVoyage, villes.libelle as ville, hebergement.libelle as hebergement, hebergement.description as description, reservations_hebergement.code_reservation as code, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours FROM `reservations_voyages` inner join reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage INNER join hebergement USING(idHebergement) INNER join villes USING(idVille) where reservations_hebergement.idUtilisateur = ?");
+        $requete = $this->getBdd()->prepare("SELECT reservations_voyages.idReservationVoyage, villes.libelle as ville, hebergement.libelle as hebergement, hebergement.description as description, reservations_hebergement.code_reservation as code, is_building, reservations_hebergement.prix, dateDebut, dateFin, nbjours, reservations_voyages.title as title FROM `reservations_voyages` inner join reservations_hebergement on reservations_voyages.idReservationVoyage = reservations_hebergement.idVoyage INNER join hebergement USING(idHebergement) INNER join villes USING(idVille) where reservations_hebergement.idUtilisateur = ?");
         $requete->execute([$idUtilisateur]);
         $result = $requete->fetchALL(PDO::FETCH_ASSOC);
 
@@ -213,6 +213,7 @@ class ReservationVoyage extends Modele {
                 }
 
                 $tab[$i]["id"] = $id;
+                $tab[$i]["title"] = $test["title"];
                 $tab[$i]["voyage"][$x]["ville"] = $test["ville"];
                 $tab[$i]["voyage"][$x]["hebergement"] = $test["hebergement"];
                 $tab[$i]["voyage"][$x]["description"] = $test["description"];

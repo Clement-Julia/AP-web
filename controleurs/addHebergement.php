@@ -49,7 +49,7 @@ if (!empty($_GET['idHebergement']) &&
                 $idVoyage = $isBuilding['idReservationVoyage'];
                 $Voyage = new ReservationVoyage($idVoyage);
             } else {
-                $idVoyage = $Voyage->insertBaseTravel($prixNuitsHebergement, $_SESSION['idUtilisateur'], true);
+                $idVoyage = $Voyage->insertBaseTravel($prixNuitsHebergement, $_SESSION['idUtilisateur'], true, $_SESSION["title"], $_SESSION["nbParticipant"]);
             }
             
             $newTravelPrice = $Voyage->getPrix() + $prixNuitsHebergement;

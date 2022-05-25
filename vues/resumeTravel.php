@@ -35,11 +35,16 @@ if(!empty($_SESSION['idUtilisateur'])){
             <div class="form-container mt-5">
                 <?php if (!empty($_GET['building'])){ ?>
                     <div class="card mb-3 form-container">
-                        <div class="card-header text-center text-light"><h4>Voici le dernier voyage que nous recensons pour vous :</h4></div>
+                        <div class="card-header text-center text-light">
+                            <h4>
+                                Voici le dernier voyage que nous recensons pour vous : <br>
+                                <?= $_SESSION["title"] ?>
+                            </h4>
+                        </div>
                     </div>
                 <?php } else { ?>
                     <div class="card mb-3 form-container">
-                        <div class="card-header text-center text-light"><h3>Votre voyage</h3></div>
+                        <div class="card-header text-center text-light"><h3><?= $_SESSION["title"] ?></h3></div>
                     </div>
                 <?php } ?>
                 <?php 

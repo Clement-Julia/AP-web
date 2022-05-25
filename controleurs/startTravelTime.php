@@ -16,6 +16,8 @@ if (!empty($_POST['date']) && isValidDate($_POST['date'])
         $isBuilding = $ReservationVoyage->getIsBuildingByUserId($_SESSION['idUtilisateur']);
 
         $_SESSION['date'] = $_POST['date'];
+        $_SESSION['nbParticipant'] = $_POST['nbParticipant'];
+        $_SESSION['title'] = $_POST['title'];
 
         if (!empty($isBuilding)){
             header('Location: ../vues/resumeTravel.php?building=1');

@@ -105,6 +105,7 @@ if(!empty($_SESSION['idUtilisateur'])){
                     
                 <div id="separation">
                 </div>
+                
                 <!----------------------------------------------->
                     
                 <div id="choose-town-bot">

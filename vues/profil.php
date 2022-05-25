@@ -183,7 +183,7 @@ error();
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="flush-heading<?= $voyage["id"] ?>">
                                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $voyage["id"] ?>" aria-expanded="false" aria-controls="flush-collapse<?= $voyage["id"] ?>">
-                                                Voyage du <?= dateToFr($date["dateDebut"]) ?> au <?= dateToFr($date["dateFin"]) ?>
+                                                <?= (isset($voyage["title"])) ? $voyage["title"] : "Voyage du " . dateToFr($date["dateDebut"]) ." au ". dateToFr($date["dateFin"]) ?>
                                                 </button>
                                             </h2>
                                             <div id="flush-collapse<?= $voyage["id"] ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?= $voyage["id"] ?>" data-bs-parent="#accordionFlushExample">
@@ -265,7 +265,7 @@ error();
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="flush-heading<?= $voyage["id"] ?>">
                                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $voyage["id"] ?>" aria-expanded="false" aria-controls="flush-collapse<?= $voyage["id"] ?>">
-                                                    Voyage du <?= dateToFr($date["dateDebut"]) ?> au <?= dateToFr($date["dateFin"]) ?>
+                                                <?= (isset($voyage["title"])) ? $voyage["title"] : "Voyage du " . dateToFr($date["dateDebut"]) ." au ". dateToFr($date["dateFin"]) ?>
                                                 </button>
                                             </h2>
                                             <div id="flush-collapse<?= $voyage["id"] ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?= $voyage["id"] ?>" data-bs-parent="#accordionFlushExample">
@@ -347,8 +347,7 @@ error();
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="flush-heading<?= $voyage["id"] ?>">
                                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $voyage["id"] ?>" aria-expanded="false" aria-controls="flush-collapse<?= $voyage["id"] ?>">
-                                                Voyage du <?= dateToFr($date["dateDebut"]) ?> au <?= dateToFr($date["dateFin"]) ?>
-                                                </button>
+                                                <?= (isset($voyage["title"])) ? $voyage["title"] : "Voyage du " . dateToFr($date["dateDebut"]) ." au ". dateToFr($date["dateFin"]) ?>
                                             </h2>
                                             <div id="flush-collapse<?= $voyage["id"] ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?= $voyage["id"] ?>" data-bs-parent="#accordionFlushExample">
                                                 <?php

@@ -31,7 +31,7 @@ if(!empty($_SESSION['idUtilisateur'])){
 
             $Ville = new Ville($_GET["idVille"]);
             $idRegion = $Ville->getIdRegion();
-            $Hebergs = $Ville->getFreeHebergement($dateDebut, $Ville->getIdVille());
+            $Hebergs = $Ville->getFreeHebergement($dateDebut, $Ville->getIdVille(), $_SESSION["nbParticipant"]);
             $avis = new Avis();
 
             // Lorsqu'on modifie manuellement l'idVille dans l'url, si la ville choisi ne correspond pas à la région -> erreur
@@ -60,34 +60,41 @@ if(!empty($_SESSION['idUtilisateur'])){
                         <a href="createTravel.php?idRegion=<?=$Ville->getIdRegion()?>" class="btn btn-sm btn-secondary back-button text-light"><</a>
                     </div>
                     <div id="choose-hebergement">
-                        <div class="row">
+                        <div class="row <?= (!$Hebergs) ?? "me-4" ?>">
                         <?php
-                        foreach ($Hebergs as $item)
-                        {
-                            $HebergementTemp = new Hebergement($item[1]->getIdHebergement());
-                            $Image = new Images($HebergementTemp->getUuid());
-                            $average = $avis->getAverageAvis($item[1]->getIdHebergement());
-                            if($item[0] != "indisponible" && $item[0] != "disponible 0 nuit"){?>
-
-                            <!-- <div class="col-xs-12 col-sm-12 col-md-6 mb-3 col-xl-4"> -->
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-xl-6 col-xxl-4 d-flex align-items-stretch flex-wrap">
-                                <div id="<?= $item[1]->getIdHebergement()?>" data-hebergement="1" data-id="<?= $item[1]->getIdHebergement()?>" data-name="<?= $item[1]->getLibelle()?>" data-lat="<?= $item[1]->getLatitude()?>" data-lng="<?= $item[1]->getLongitude()?>" data-zoom="12" data-price="<?=$item[1]->getPrix()?>" class="card ct-a js-marker">
-                                    <img class="img-fluid" alt="100%x280" src="<?=$Image->getBanniere()?>">
-                                    <div class="card-body hv-text-hebergement">
-                                        <h6 class="card-title"><?= htmlspecialchars($item[1]->getLibelle(), ENT_QUOTES)?></h6>
-                                        <p><?= coupe_phrase(htmlspecialchars($item[1]->getDescription(), ENT_QUOTES))?></p>
-                                        <div class="row">
-                                            <div class="col ps-0">Prix : <?= $item[1]->getPrix()?> €</div>
-                                            <div class="<?= ($average != 0) ? "col-6 d-flex justify-content-end align-items-center" : "col-12 ps-0" ?>">
-                                                <?= ($average != 0) ? $average.'<i class="fas fa-star" style="color: #f2f200;"></i>' : "<span class='text-muted fst-italic d-flex'>Aucun avis n'a été publié...</span> "?>
+                        if($Hebergs){
+                            foreach ($Hebergs as $item)
+                            {
+                                $HebergementTemp = new Hebergement($item[1]->getIdHebergement());
+                                $Image = new Images($HebergementTemp->getUuid());
+                                $average = $avis->getAverageAvis($item[1]->getIdHebergement());
+                                if($item[0] != "indisponible" && $item[0] != "disponible 0 nuit"){?>
+    
+                                <!-- <div class="col-xs-12 col-sm-12 col-md-6 mb-3 col-xl-4"> -->
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-xl-6 col-xxl-4 d-flex align-items-stretch flex-wrap">
+                                    <div id="<?= $item[1]->getIdHebergement()?>" data-hebergement="1" data-id="<?= $item[1]->getIdHebergement()?>" data-name="<?= $item[1]->getLibelle()?>" data-lat="<?= $item[1]->getLatitude()?>" data-lng="<?= $item[1]->getLongitude()?>" data-zoom="12" data-price="<?=$item[1]->getPrix()?>" class="card ct-a js-marker">
+                                        <img class="img-fluid" alt="100%x280" src="<?=$Image->getBanniere()?>">
+                                        <div class="card-body hv-text-hebergement">
+                                            <h6 class="card-title"><?= htmlspecialchars($item[1]->getLibelle(), ENT_QUOTES)?></h6>
+                                            <p><?= coupe_phrase(htmlspecialchars($item[1]->getDescription(), ENT_QUOTES))?></p>
+                                            <div class="row">
+                                                <div class="col-12 ps-0">Prix : <?= $item[1]->getPrix()?> €</div>
+                                                <div class="col-12 ps-0">Place : <?= $item[1]->getPlace()?></div>
+                                                <div class="col-12 ps-0">
+                                                    <?= ($average != 0) ? $average.'<i class="fas fa-star" style="color: #f2f200;"></i>' : "<span class='text-muted fst-italic d-flex'>Aucun avis n'a été publié...</span> "?>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="card-footer text-muted"><?=$item[0]?></div>
                                     </div>
-                                    <div class="card-footer text-muted"><?=$item[0]?></div>
                                 </div>
-                            </div>
-
-                        <?php }
+    
+                            <?php }
+                            }
+                        }else{
+                            ?>
+                                <div class="alert alert-warning mt-1">Aucun hébérgement n'est disponible pour vos critères</div>
+                            <?php
                         }
                         ?>
                         </div>

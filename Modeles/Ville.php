@@ -37,7 +37,7 @@ class Ville extends Modele {
             foreach ($infosHebergement as $item){
 
                 $hebergement = new Hebergement();
-                $hebergement->initialiserHebergement($item["idHebergement"], $item["libelle"], $item["description"], $item["idVille"], $item["latitude"], $item["longitude"], $item["adresse"], $item["prix"], $item["uuid"]);
+                $hebergement->initialiserHebergement($item["idHebergement"], $item["libelle"], $item["description"], $item["idVille"], $item["latitude"], $item["longitude"], $item["adresse"], $item["prix"], $item["uuid"], $item["place"]);
                 $this->hebergements[] = $hebergement;
 
             }
@@ -210,11 +210,11 @@ class Ville extends Modele {
         return true;
     }
     
-    public function getFreeHebergement($date, $idVille){
+    public function getFreeHebergement($date, $idVille, $nbParticipant){
 
         // $requete = $this->getBdd()->prepare("SELECT * FROM reservations_hebergement INNER JOIN hebergement USING(idHebergement) where idVille = ? AND reservations_hebergement.dateDebut >= ?");
-        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement LEFT JOIN reservations_hebergement USING(idHebergement) where idVille = ? AND (reservations_hebergement.dateDebut >= ? OR reservations_hebergement.dateDebut IS NULL)");
-        $requete->execute([$idVille, $date->format('Y-m-d')]);
+        $requete = $this->getBdd()->prepare("SELECT * FROM hebergement LEFT JOIN reservations_hebergement USING(idHebergement) where idVille = ? AND (reservations_hebergement.dateDebut >= ? OR reservations_hebergement.dateDebut IS NULL) AND hebergement.place >= ?");
+        $requete->execute([$idVille, $date->format('Y-m-d'), $nbParticipant]);
         $hebergements = $requete->fetchAll(PDO::FETCH_ASSOC);
 
         $response = [];

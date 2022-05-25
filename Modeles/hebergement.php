@@ -11,6 +11,7 @@ class Hebergement extends Modele {
     private $adresse;
     private $prix;
     private $uuid;
+    private $place;
     private $options = [];
 
     public function __construct($idHebergement = null){
@@ -30,6 +31,7 @@ class Hebergement extends Modele {
             $this->adresse = $infoHotel["adresse"];
             $this->prix = $infoHotel["prix"];
             $this->uuid = $infoHotel["uuid"];
+            $this->place = $infoHotel["place"];
             
             $requete = $this->getBdd()->prepare("SELECT * FROM options_by_hebergement INNER JOIN options USING(idOption) WHERE idHebergement = ?");
             $requete->execute([$idHebergement]);
@@ -45,7 +47,7 @@ class Hebergement extends Modele {
         
     }
 
-    public function initialiserHebergement($idHebergement, $libelle, $description, $idVille, $latitude, $longitude, $adresse, $prix, $uuid){
+    public function initialiserHebergement($idHebergement, $libelle, $description, $idVille, $latitude, $longitude, $adresse, $prix, $uuid, $place){
 
         $this->idHebergement = $idHebergement;
         $this->libelle = $libelle;
@@ -56,6 +58,7 @@ class Hebergement extends Modele {
         $this->adresse = $adresse;
         $this->prix = $prix;
         $this->uuid = $uuid;
+        $this->place = $place;
 
     }
 
@@ -101,6 +104,10 @@ class Hebergement extends Modele {
 
     public function getOptions(){
         return $this->options;
+    }
+
+    public function getPlace(){
+        return $this->place;
     }
 
     public function countHotel(){
